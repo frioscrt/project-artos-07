@@ -95,6 +95,12 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .face.back{transform:rotateY(180deg)}
 .card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
 .card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
+.face .emb{opacity:0}
+.card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
+.card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
+@keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
+@keyframes sheen{from{translate:0 0}to{translate:1400px 0}}
+@media (prefers-reduced-motion: reduce){.card.flipped .back .emb{animation:none;opacity:.2}.card.flipped .back .sheen{animation:none}}
 .card-fig.gone .card{opacity:0;filter:blur(8px)}
 .card-fig.gone figcaption{opacity:0}
 .scene p.sys{text-indent:0;margin:1.6em 0;color:var(--ice);text-align:center;font-size:.95em;letter-spacing:.01em}
@@ -201,6 +207,8 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
         <rect width="856" height="540" rx="34" fill="url(#kb)"/>
         <rect x="6" y="6" width="844" height="528" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
         <rect width="856" height="540" filter="url(#smudge)" mask="url(#smm)" opacity=".55"/>
+        <defs><linearGradient id="sh-key" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#e8f0ec" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+        <rect class="sheen" x="-300" y="-40" width="300" height="620" fill="url(#sh-key)" transform="skewX(-18)"/>
       </svg>
     </span>
   </button>

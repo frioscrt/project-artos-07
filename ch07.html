@@ -95,6 +95,12 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .face.back{transform:rotateY(180deg)}
 .card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
 .card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
+.face .emb{opacity:0}
+.card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
+.card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
+@keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
+@keyframes sheen{from{translate:0 0}to{translate:1400px 0}}
+@media (prefers-reduced-motion: reduce){.card.flipped .back .emb{animation:none;opacity:.2}.card.flipped .back .sheen{animation:none}}
 .card-fig.gone .card{opacity:0;filter:blur(8px)}
 .card-fig.gone figcaption{opacity:0}
 .scene p.sys{text-indent:0;margin:1.6em 0;color:var(--ice);text-align:center;font-size:.95em;letter-spacing:.01em}
@@ -346,8 +352,11 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
         <text x="428" y="494" text-anchor="middle" fill="#7c8786" font-family="Literata, Georgia, serif" font-size="22" letter-spacing="1">Một lần. Tối đa ba người.</text>
       </svg>
       <svg class="face back" viewBox="0 0 856 540" aria-hidden="true">
+        <defs><linearGradient id="sh-teleport" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#e8f0ec" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
         <rect width="856" height="540" rx="34" fill="#1d2326"/>
         <rect x="6" y="6" width="844" height="528" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g class="emb" fill="none" stroke="#7d8b8f" stroke-width="2" stroke-linecap="round"><circle cx="428" cy="270" r="150"/><circle cx="428" cy="270" r="138" stroke-width="1"/><path d="M536.4 270.0 C492.6 303.9 414.7 318.3 445.5 323.9 C385.2 349.2 345.0 286.3 351.5 325.6 C336.1 281.7 373.1 196.8 347.2 211.3 C407.6 155.1 493.9 189.9 439.6 234.4 C503.0 219.5 491.2 327.5 471.1 270.0"/><path d="M486.2 360.6 C464.7 370.6 399.7 311.8 393.5 371.7 C405.7 310.6 309.6 270.4 385.2 285.4 C408.3 268.2 414.3 228.3 361.0 228.8 C405.1 243.7 452.6 157.5 418.4 191.7 C436.3 182.6 529.5 211.9 454.2 243.2 C462.5 241.1 477.2 292.4 502.7 277.7 C506.4 294.2 433.7 309.0 464.6 327.0"/><path d="M398.7 334.1 C382.4 324.6 358.9 259.5 330.9 306.1 C335.7 261.4 397.6 241.9 346.7 232.8 C378.6 241.4 418.6 168.1 399.7 194.1 C419.4 249.8 480.0 242.5 471.6 174.7 C441.4 234.6 504.1 305.9 470.7 254.1 C456.1 264.4 500.2 361.6 468.7 288.6 C504.0 356.4 394.0 362.6 464.8 368.8 C437.7 289.4 420.1 280.8 404.9 320.5"/><path d="M376.6 277.3 C388.5 264.1 398.6 161.7 359.9 205.8 C413.2 248.0 476.8 222.5 432.3 217.9 C496.6 175.6 443.5 268.7 455.6 251.5 C496.0 234.6 470.0 349.0 529.7 302.3 C497.3 302.5 431.8 288.7 447.6 321.2 C424.4 339.0 412.9 277.6 379.4 352.7 C348.3 312.5 314.7 274.2 386.4 275.9"/><path d="M359.2 190.3 C451.5 173.8 486.2 254.3 481.6 181.5 C484.3 256.6 451.5 301.8 479.9 282.2 C451.0 317.3 398.6 347.5 433.6 335.9 C400.3 324.0 393.1 263.6 342.1 306.1 C356.2 226.0 437.2 159.3 389.8 225.7"/><path d="M442.0 222.7 C447.0 196.7 527.3 260.1 503.4 229.0 C488.0 249.9 456.8 283.5 533.9 301.3 C489.9 302.7 432.8 368.0 469.6 346.6 C435.5 316.1 405.5 340.5 410.2 330.1 C405.4 302.6 343.8 292.8 384.4 293.7 C339.0 326.7 356.5 178.8 362.7 250.7 C414.6 261.2 454.3 174.9 376.7 175.6 C424.9 252.9 452.0 254.8 451.3 191.2"/><path d="M468.2 258.3 C546.9 279.4 431.9 304.5 450.5 303.0 C432.8 310.2 368.0 293.4 401.1 304.7 C332.4 299.7 391.4 225.4 320.4 231.3 C351.2 200.1 454.1 150.3 430.1 203.0 C449.8 254.2 464.5 274.5 471.7 257.3"/></g>
+        <rect class="sheen" x="-300" y="-40" width="300" height="620" fill="url(#sh-teleport)" transform="skewX(-18)"/>
       </svg>
     </span>
   </button>
