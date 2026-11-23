@@ -1201,21 +1201,41 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
   }
   addEventListener('scroll', function () { if (playing) switchTo(sceneNow()); }, { passive: true });
 
-  var btn = document.getElementById('sound');
-  if (btn) btn.onclick = function () {
-    if (!ac) {
-      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) { btn.disabled = true; return; }
-      ac = new AC(); master = gain(0.5);
-      var comp = ac.createDynamicsCompressor(); master.connect(comp); comp.connect(ac.destination);
-    }
-    playing = !playing;
-    btn.setAttribute('aria-pressed', playing);
-    if (playing) { ac.resume(); curKey = null; switchTo(sceneNow()); }
-    else if (current) {
-      var n = ac.currentTime, old = current; current = null; curKey = null;
+  // Tiếng mặc định bật và nhớ lựa chọn qua các chương. Trình duyệt chỉ cho phát tiếng sau lần chạm/bấm đầu tiên,
+  // nên khi đang "bật" mà chưa phát được thì tiếng tự chạy ở lần chạm đầu tiên vào trang.
+  var btn = document.getElementById('sound'), want = true;
+  try { want = localStorage.getItem('a07-sound') !== 'off'; } catch (e) {}
+  function ensureCtx() {
+    if (ac) return true;
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) { if (btn) btn.disabled = true; return false; }
+    ac = new AC(); master = gain(0.5);
+    var comp = ac.createDynamicsCompressor(); master.connect(comp); comp.connect(ac.destination);
+    return true;
+  }
+  function startSound() { if (playing || !ensureCtx()) return; playing = true; ac.resume(); curKey = null; switchTo(sceneNow()); }
+  function stopSound() {
+    playing = false;
+    if (ac && current) {
+      var n = ac.currentTime, old = current; current = null;
       old.g.gain.cancelScheduledValues(n); old.g.gain.setValueAtTime(old.g.gain.value, n); old.g.gain.linearRampToValueAtTime(0, n + 0.6);
       setTimeout(function () { old.stops.forEach(function (f) { try { f(); } catch (e) {} }); old.g.disconnect(); }, 800);
     }
+    curKey = null;
+  }
+  function show() { if (btn) btn.setAttribute('aria-pressed', want); }
+  show();
+  function firstGesture(e) {
+    if (btn && (e.target === btn || btn.contains(e.target))) return; // bấm thẳng vào nút thì để nút xử lý
+    ['pointerdown', 'keydown', 'touchend'].forEach(function (t) { removeEventListener(t, firstGesture, true); });
+    if (want) startSound();
+  }
+  ['pointerdown', 'keydown', 'touchend'].forEach(function (t) { addEventListener(t, firstGesture, true); });
+  if (btn) btn.onclick = function () {
+    if (want && !playing) { startSound(); return; } // đang bật mà chưa phát: lần bấm này để phát
+    want = !want;
+    try { localStorage.setItem('a07-sound', want ? 'on' : 'off'); } catch (e) {}
+    show();
+    want ? startSound() : stopSound();
   };
   document.addEventListener('visibilitychange', function () { if (ac && playing) document.hidden ? ac.suspend() : ac.resume(); });
 })();
