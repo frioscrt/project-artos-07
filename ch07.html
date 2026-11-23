@@ -96,6 +96,24 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
 .card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
 .face .emb{opacity:0}
+.type-row{display:flex;justify-content:center;gap:18px;margin:2em 0 2.2em;padding:0}
+.tslot{display:flex;flex-direction:column;align-items:center;gap:.6em;width:min(38vw,150px)}
+.tcard{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent}
+.tcard .card-inner{aspect-ratio:540/856;transform:none}
+.tcard.flipped .card-inner{transform:rotateY(180deg)}
+.tcard .face{border-radius:6%}
+.tname{font-size:14px;color:var(--soft);font-style:italic}
+.type-row .tslot{opacity:0;transform:translateY(18px) rotate(-6deg)}
+.type-row.dealt .tslot{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.type-row.dealt .tslot + .tslot{transition-delay:.25s}
+.tcard .pulse{transform-origin:270px 420px;animation:pulse 3.6s ease-in-out infinite}
+.tcard .p2{animation-delay:.4s}.tcard .p3{animation-delay:.8s}
+@keyframes pulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+.tcard .ghost{animation:ghost 4s ease-in-out infinite}
+@keyframes ghost{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-18px,8px);opacity:.7}}
+.tcard.rule .glitch{animation:glitch 2.8s steps(1) infinite}
+@keyframes glitch{0%{opacity:.5}8%{opacity:0}11%{opacity:.6;transform:translateX(14px)}14%{opacity:0}60%{opacity:.3;transform:none}63%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.type-row .tslot{opacity:1;transform:none}.tcard .pulse,.tcard .ghost,.tcard.rule .glitch{animation:none}}
 .card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
 .card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
 @keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
@@ -226,19 +244,157 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <p>“Bảy hệ là những hệ gì hả anh?”</p>
 <p>Luke giơ bàn tay phải lên, đếm trên từng ngón, chậm rãi, như người nhẩm lại một bài học thuộc từ lâu mà chẳng còn chắc mình nhớ đúng.</p>
 <p>“Vũ trang. Có lẽ là loại năng lực như Leon. Một món vũ khí nào đó đi theo chủ nhân vĩnh viễn, có lẽ chỉ cần chờ chủ nhân của nó gọi ra và sử dụng. Anh thật sự không đoán được hạn chế của chúng là gì…”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Vũ trang (Arms). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-arms" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-arms)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><path d="M270 170 V560" stroke-width="10"/><path d="M200 560 H340" stroke-width="12"/><path d="M270 560 V660" stroke-width="16"/><path d="M270 150 l-20 46 h40 z" fill="#c9cfc6" stroke-width="4"/></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Arms</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Vũ trang</span></span>
+</figure>
 <p>“Như thanh kiếm tre của anh ạ?”</p>
 <p>“Không, cái của anh là thẻ nhặt được, ai cầm cũng dùng được. Em thấy rồi đấy.” Anh gập ngón thứ nhất xuống. “Nếu là năng lực hệ Vũ trang thì món vũ khí đấy gần như có linh tính, nó thuộc hoàn toàn về chủ nhân sở hữu năng lực ấy. Chẳng ai lấy mất được hết.”</p>
 <p>“Còn gì nữa ạ?”</p>
 <p>“Nguyên tố. Điều khiển được nước, đất, gió… nhưng có lẽ phải là thứ có sẵn quanh mình. Anh từng thấy một số kẻ sử dụng năng lực nguyên tố như điều khiển nước trong môi trường xung quanh. Nhưng hẳn là nó không thể tự tạo ra được nước thật, nó chỉ là điều khiển mà thôi. Anh không chắc nữa…”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Nguyên tố (Element). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-element" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-element)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="8"><path d="M140 360 q32 -36 65 0 t65 0 t65 0 t65 0"/><path d="M140 450 q32 -36 65 0 t65 0 t65 0 t65 0"/><path d="M140 540 q32 -36 65 0 t65 0 t65 0 t65 0"/></g><path d="M270 200 c44 44 44 80 0 92 c-44 -12 -44 -48 0 -92z" stroke-width="6"/></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Element</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Nguyên tố</span></span>
+</figure>
 <p>“Thế thì phải mang theo chai nước à?”</p>
 <p>“Người khôn thì mang thật.” Khoé miệng anh khẽ động, rồi anh gập ngón thứ hai. “Tăng cường. Khoẻ hơn, nhanh hơn, mắt tinh tai thính hơn. Nhưng rơi vào người yếu thì cũng chỉ hơn người thường được một chút.”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Tăng cường (Enhance). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-enhance" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-enhance)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><path d="M110 420 Q270 270 430 420 Q270 570 110 420 Z" stroke-width="8"/><circle cx="270" cy="420" r="46" stroke-width="8"/><circle cx="270" cy="420" r="13" fill="#c9cfc6"/><g stroke-width="5" opacity=".6"><path d="M270 230 V280 M160 270 l24 34 M380 270 l-24 34 M270 610 V560"/></g></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Enhance</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Tăng cường</span></span>
+</figure>
 <p>Cô gật đầu, cố nhớ.</p>
 <p>“Linh cảm. Đọc được người ta đang nghĩ gì, đang thấy gì trong lòng, có khi làm người ta thấy thế này thế kia. Nhưng không bắt ai làm gì được đâu.” Ngón thứ tư gập xuống. “Chuyển hoá. Đổi hình dạng, ẩn đi, hoặc dịch chuyển như cậu Felix.”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Linh cảm (Psyche). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-psyche" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-psyche)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><circle cx="270" cy="420" r="16" fill="#c9cfc6"/><g stroke-width="6"><circle class="pulse p1" cx="270" cy="420" r="60" opacity=".85"/><circle class="pulse p2" cx="270" cy="420" r="110" opacity=".55"/><circle class="pulse p3" cx="270" cy="420" r="160" opacity=".3"/></g></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Psyche</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Linh cảm</span></span>
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Chuyển hoá (Shift). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-shift" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-shift)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="7"><circle cx="225" cy="320" r="40"/><path d="M150 570 C150 420 300 420 300 570"/></g><g class="ghost" stroke-width="5" stroke-dasharray="14 12" opacity=".6"><circle cx="320" cy="300" r="40"/><path d="M245 550 C245 400 395 400 395 550"/></g></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Shift</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Chuyển hoá</span></span>
+</figure>
 <p>Ngón cuối cùng. Anh hết ngón trên một bàn tay, mà cánh tay kia thì không giơ lên được, nên anh lại xoè ngón cái ra.</p>
 <p>“Khế ước. Có lẽ là năng lực trói buộc với linh vật nào đó, hoặc người nào đó. Anh chưa thật sự thấy năng lực này nhiều để có thể hiểu rõ. Nhưng anh nghĩ nó có cơ chế khá giống với Vũ trang đấy.”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard" aria-label="Hệ Khế ước (Bond). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-bond" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-bond)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="7"><circle cx="220" cy="420" r="82"/><circle cx="320" cy="420" r="82"/></g></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Bond</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Khế ước</span></span>
+</figure>
 <p>Clevia nhìn bàn tay anh, nhẩm lại một lượt.</p>
 <p>“Mới có sáu.”</p>
 <p>“Quy tắc.” Anh nhún vai, động tác chỉ có một bên vai. “Anh chưa gặp ai cả. Người ta kể thì kể thế, chứ hỏi nó làm được gì thì chẳng ai nói cả.”</p>
+<figure class="type-row">
+  <span class="tslot"><button type="button" class="tcard rule" aria-label="Hệ Quy tắc (Rule). Chạm để lật">
+    <span class="card-inner">
+      <svg class="face front" viewBox="0 0 540 856" aria-hidden="true">
+        <defs><linearGradient id="tc-rule" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient></defs>
+        <rect width="540" height="856" rx="34" fill="url(#tc-rule)"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><path class="glitch" d="M190 420 H350" stroke-width="3"/></g>
+        <text x="270" y="750" text-anchor="middle" fill="#a4aeac" font-family="Literata, Georgia, serif" font-style="italic" font-size="58">Rule</text>
+      </svg>
+      <svg class="face back" viewBox="0 0 540 856" aria-hidden="true">
+        <rect width="540" height="856" rx="34" fill="#1a2023"/>
+        <rect x="6" y="6" width="528" height="844" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#56636a" stroke-width="2.4" opacity=".8"><circle cx="270" cy="400" r="150"/><circle cx="270" cy="400" r="138" stroke-width="1"/><path d="M378.4 400.0 C334.6 433.9 256.7 448.3 287.5 453.9 C227.2 479.2 187.0 416.3 193.5 455.6 C178.1 411.7 215.1 326.8 189.2 341.3 C249.6 285.1 335.9 319.9 281.6 364.4 C345.0 349.5 333.2 457.5 313.1 400.0"/><path d="M328.2 490.6 C306.7 500.6 241.7 441.8 235.5 501.7 C247.7 440.6 151.6 400.4 227.2 415.4 C250.3 398.2 256.3 358.3 203.0 358.8 C247.1 373.7 294.6 287.5 260.4 321.7 C278.3 312.6 371.5 341.9 296.2 373.2 C304.5 371.1 319.2 422.4 344.7 407.7 C348.4 424.2 275.7 439.0 306.6 457.0"/><path d="M240.7 464.1 C224.4 454.6 200.9 389.5 172.9 436.1 C177.7 391.4 239.6 371.9 188.7 362.8 C220.6 371.4 260.6 298.1 241.7 324.1 C261.4 379.8 322.0 372.5 313.6 304.7 C283.4 364.6 346.1 435.9 312.7 384.1 C298.1 394.4 342.2 491.6 310.7 418.6 C346.0 486.4 236.0 492.6 306.8 498.8 C279.7 419.4 262.1 410.8 246.9 450.5"/><path d="M218.6 407.3 C230.5 394.1 240.6 291.7 201.9 335.8 C255.2 378.0 318.8 352.5 274.3 347.9 C338.6 305.6 285.5 398.7 297.6 381.5 C338.0 364.6 312.0 479.0 371.7 432.3 C339.3 432.5 273.8 418.7 289.6 451.2 C266.4 469.0 254.9 407.6 221.4 482.7 C190.3 442.5 156.7 404.2 228.4 405.9"/><path d="M201.2 320.3 C293.5 303.8 328.2 384.3 323.6 311.5 C326.3 386.6 293.5 431.8 321.9 412.2 C293.0 447.3 240.6 477.5 275.6 465.9 C242.3 454.0 235.1 393.6 184.1 436.1 C198.2 356.0 279.2 289.3 231.8 355.7"/><path d="M284.0 352.7 C289.0 326.7 369.3 390.1 345.4 359.0 C330.0 379.9 298.8 413.5 375.9 431.3 C331.9 432.7 274.8 498.0 311.6 476.6 C277.5 446.1 247.5 470.5 252.2 460.1 C247.4 432.6 185.8 422.8 226.4 423.7 C181.0 456.7 198.5 308.8 204.7 380.7 C256.6 391.2 296.3 304.9 218.7 305.6 C266.9 382.9 294.0 384.8 293.3 321.2"/><path d="M310.2 388.3 C388.9 409.4 273.9 434.5 292.5 433.0 C274.8 440.2 210.0 423.4 243.1 434.7 C174.4 429.7 233.4 355.4 162.4 361.3 C193.2 330.1 296.1 280.3 272.1 333.0 C291.8 384.2 306.5 404.5 313.7 387.3"/></g>
+        <text x="270" y="690" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="30" letter-spacing="8">PROJECT ARTOS 07</text>
+      </svg>
+    </span>
+  </button>
+  <span class="tname">Quy tắc</span></span>
+</figure>
 <p>“Nghe như truyện ma.”</p>
 <p>“Ừ. Như truyện ma.”</p>
 <p>“Thế năng lực của anh là hệ nào trong bảy hệ đó?”</p>
@@ -1167,6 +1323,13 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
     });
   }
   addEventListener('scroll', checkCards, { passive: true }); checkCards();
+  // thẻ hệ: lật khi chạm, chia ra khi người đọc tới
+  [].forEach.call(document.querySelectorAll('.tcard'), function (b) { b.addEventListener('click', function () { b.classList.toggle('flipped'); }); });
+  var rows = [].slice.call(document.querySelectorAll('.type-row'));
+  if ('IntersectionObserver' in window) {
+    var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('dealt'); tio.unobserve(e.target); } }); }, { rootMargin: '0px 0px -15% 0px' });
+    rows.forEach(function (r) { tio.observe(r); });
+  } else rows.forEach(function (r) { r.classList.add('dealt'); });
 
   /* ---------- tiếng nền ---------- */
   var ac = null, master = null, current = null, curKey = null, playing = false, noiseBuf = null;

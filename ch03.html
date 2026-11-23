@@ -96,6 +96,24 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
 .card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
 .face .emb{opacity:0}
+.type-row{display:flex;justify-content:center;gap:18px;margin:2em 0 2.2em;padding:0}
+.tslot{display:flex;flex-direction:column;align-items:center;gap:.6em;width:min(38vw,150px)}
+.tcard{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent}
+.tcard .card-inner{aspect-ratio:540/856;transform:none}
+.tcard.flipped .card-inner{transform:rotateY(180deg)}
+.tcard .face{border-radius:6%}
+.tname{font-size:14px;color:var(--soft);font-style:italic}
+.type-row .tslot{opacity:0;transform:translateY(18px) rotate(-6deg)}
+.type-row.dealt .tslot{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.type-row.dealt .tslot + .tslot{transition-delay:.25s}
+.tcard .pulse{transform-origin:270px 420px;animation:pulse 3.6s ease-in-out infinite}
+.tcard .p2{animation-delay:.4s}.tcard .p3{animation-delay:.8s}
+@keyframes pulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+.tcard .ghost{animation:ghost 4s ease-in-out infinite}
+@keyframes ghost{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-18px,8px);opacity:.7}}
+.tcard.rule .glitch{animation:glitch 2.8s steps(1) infinite}
+@keyframes glitch{0%{opacity:.5}8%{opacity:0}11%{opacity:.6;transform:translateX(14px)}14%{opacity:0}60%{opacity:.3;transform:none}63%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.type-row .tslot{opacity:1;transform:none}.tcard .pulse,.tcard .ghost,.tcard.rule .glitch{animation:none}}
 .card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
 .card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
 @keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
@@ -986,6 +1004,13 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
     });
   }
   addEventListener('scroll', checkCards, { passive: true }); checkCards();
+  // thẻ hệ: lật khi chạm, chia ra khi người đọc tới
+  [].forEach.call(document.querySelectorAll('.tcard'), function (b) { b.addEventListener('click', function () { b.classList.toggle('flipped'); }); });
+  var rows = [].slice.call(document.querySelectorAll('.type-row'));
+  if ('IntersectionObserver' in window) {
+    var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('dealt'); tio.unobserve(e.target); } }); }, { rootMargin: '0px 0px -15% 0px' });
+    rows.forEach(function (r) { tio.observe(r); });
+  } else rows.forEach(function (r) { r.classList.add('dealt'); });
 
   /* ---------- tiếng nền ---------- */
   var ac = null, master = null, current = null, curKey = null, playing = false, noiseBuf = null;
