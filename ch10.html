@@ -318,7 +318,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <p>Bà bán thuốc há miệng. Màu trầu đỏ quạch nhuộm khắp kẽ răng.</p>
 <p>Rồi bà nhảy qua mặt sạp.</p>
 <p>Clevia không kịp lùi. Cô không kịp làm gì cả. Cô chỉ thấy hai bàn tay nhăn nheo ấy vươn tới, những móng tay dài, vàng khè, cong như móng chim, nhắm thẳng vào mặt cô. Và cô nghe thấy Luke hét lên tên cô, một tiếng thôi, khàn, đứt, như sợi dây đàn bị kéo căng quá mức.</p>
-<p>Không khí quanh người cô bừng sáng.</p>
+<p data-fx="dome">Không khí quanh người cô bừng sáng.</p>
 <p>Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng cô đã thấy sáng nay bao quanh Ruby. Hai bàn tay của bà bán thuốc cào vào đó, và Clevia nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên. Rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
 <p>Clevia quay sang Luke. Anh đang đứng cách cô hai bước, một tay đặt trên túi áo, chỗ tấm thẻ Protect của anh từng nằm. Cái túi áo giờ đã lép kẹp.</p>
 <p>Anh chỉ có một tấm.</p>
@@ -1719,6 +1719,9 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
      - p[data-fx]: khi đoạn văn chạm giữa màn hình thì bật hiệu ứng; cuộn ngược lên trên đoạn đó thì cho bật lại được.
        chains = xích buông từ mép trên xuống, lắc rồi đứng, rồi rút lên
        smoke  = khói xám tràn qua trang rồi tan
+       water  = mặt nước gợn tràn qua trang (nhìn từ dưới nước lên)
+       door   = khung cửa sáng lên từng nét giữa trang
+       dome   = vòm sáng mờ bung ra bọc lấy trang
        flicker = từ đoạn này tới hết chương, trang tối theo nhịp lửa chao
      - body[data-open="dark"]: mở chương trong bóng tối, sáng lại dần. */
   (function () {
@@ -1822,8 +1825,8 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
       shade.style.opacity = dark.toFixed(3);
       // xích, khói
       for (var i = shots.length - 1; i >= 0; i--) {
-        var sh = shots[i], t = (now - sh.t0) / 1000;
-        var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : true;
+        var sh = shots[i], t = Math.max(0, (now - sh.t0) / 1000);
+        var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : true;
         if (done) shots.splice(i, 1); else busy = true;
       }
       if (busy) requestAnimationFrame(frame); else { running = false; g.clearRect(0, 0, W, H); shade.style.opacity = 0; }
@@ -1877,6 +1880,61 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
         gr.addColorStop(0, rgba(col, 0.42 * k)); gr.addColorStop(0.6, rgba(col, 0.2 * k)); gr.addColorStop(1, rgba(col, 0));
         g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
       }
+      return false;
+    }
+
+
+    // mặt nước gợn tràn qua trang, như đang chìm dưới nước nhìn lên
+    function drawWater(t, R) {
+      if (t > 8) return true;
+      var k = t < 1.2 ? t / 1.2 : t < 4.5 ? 1 : Math.max(0, 1 - (t - 4.5) / 3.5);
+      var tint = g.createLinearGradient(0, 0, 0, H); tint.addColorStop(0, rgba(C.dark ? '#2a4446' : '#cfe0dc', 0.5 * k)); tint.addColorStop(1, rgba(C.dark ? '#0b1416' : '#7f9a96', 0.55 * k));
+      g.fillStyle = tint; g.fillRect(0, 0, W, H);
+      g.strokeStyle = rgba(C.dark ? '#d8ebe4' : '#ffffff', 0.35 * k); g.lineWidth = 1.2;
+      for (var r = 0; r < 7; r++) {
+        g.beginPath();
+        for (var x = 0; x <= W; x += W / 50) { var y = H * (0.04 + r * 0.035) + Math.sin(x / W * 8 + t * (0.9 + r * 0.15) + r) * H * 0.008 + Math.sin(x / W * 21 - t * 1.4) * H * 0.004; x ? g.lineTo(x, y) : g.moveTo(x, y); }
+        g.stroke();
+      }
+      for (var i = 0; i < 4; i++) { var bx = W * (0.15 + i * 0.22) + Math.sin(t * 0.3 + i) * W * 0.03; g.fillStyle = rgba('#ffffff', (0.05 + 0.03 * Math.sin(t * 0.6 + i)) * k); g.beginPath(); g.moveTo(bx - W * 0.03, 0); g.lineTo(bx + W * 0.03, 0); g.lineTo(bx + W * 0.12, H); g.lineTo(bx - W * 0.06, H); g.fill(); }
+      g.fillStyle = rgba(C.dark ? '#d8ebe4' : '#ffffff', 0.5 * k);
+      for (var b = 0; b < 22; b++) { var sp = 0.12 + R[b] * 0.12, by = H * (1.05 - ((t * sp + R[b + 22]) % 1.1)), bx2 = R[b + 11] * W + Math.sin(t * 2 + b) * 5; g.beginPath(); g.arc(bx2, by, 1.5 + R[(b + 30) % 60] * 3, 0, 7); g.fill(); }
+      return false;
+    }
+
+    // khung cửa sáng lên từng nét giữa trang rồi tan
+    function drawDoor(t, R) {
+      if (t > 6.5) return true;
+      var fade = t > 4.4 ? Math.max(0, 1 - (t - 4.4) / 2.1) : 1, pr = Math.min(1, t / 2.2);
+      var dw = Math.min(W * 0.36, H * 0.24), dh = dw * 2, x = W / 2 - dw / 2, y = H * 0.48 - dh / 2;
+      var pts = [[x, y + dh], [x, y], [x + dw, y], [x + dw, y + dh]], ink = C.dark ? '#f3c27a' : '#a8641f';
+      g.save(); g.globalAlpha = fade;
+      if (pr >= 1) { var ins = g.createLinearGradient(0, y, 0, y + dh), a = Math.min(1, (t - 2.2) / 0.6); ins.addColorStop(0, rgba(C.dark ? '#f9f1dc' : '#fff8e6', 0.55 * a)); ins.addColorStop(1, rgba(C.dark ? '#f9f1dc' : '#fff8e6', 0.05)); g.fillStyle = ins; g.fillRect(x, y, dw, dh); }
+      g.strokeStyle = ink; g.lineWidth = Math.max(2, W / 200); g.lineCap = 'round'; g.shadowColor = ink; g.shadowBlur = 16;
+      g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+      var done = pr * 3;
+      for (var i = 0; i < 3; i++) { var u = Math.max(0, Math.min(1, done - i)); if (u <= 0) break; g.lineTo(pts[i][0] + (pts[i + 1][0] - pts[i][0]) * u, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * u); }
+      g.stroke(); g.shadowBlur = 0;
+      if (pr < 1) { var j = Math.min(2, Math.floor(done)), v = done - j, px = pts[j][0] + (pts[j + 1][0] - pts[j][0]) * v, py = pts[j][1] + (pts[j + 1][1] - pts[j][1]) * v, sp = g.createRadialGradient(px, py, 0, px, py, dw * 0.25); sp.addColorStop(0, rgba('#fff2c8', 0.9)); sp.addColorStop(1, rgba('#fff2c8', 0)); g.fillStyle = sp; g.fillRect(px - dw * 0.25, py - dw * 0.25, dw * 0.5, dw * 0.5); }
+      g.restore();
+      return false;
+    }
+
+    // vòm sáng mờ bung ra bọc lấy trang, rung nhẹ rồi lịm dần
+    function drawDome(t, R) {
+      if (t > 7) return true;
+      var grow = t < 0.7 ? 1 - Math.pow(1 - t / 0.7, 3) : 1, fade = t > 4.5 ? Math.max(0, 1 - (t - 4.5) / 2.5) : 1;
+      var cx = W / 2, cy = H * 0.55, rx = W * 0.62 * grow, ry = H * 0.62 * grow, col = C.dark ? '#cfe6ff' : '#5f93c8';
+      g.save(); g.globalAlpha = fade;
+      var gr = g.createRadialGradient(cx, cy, Math.min(rx, ry) * 0.55, cx, cy, Math.max(rx, ry));
+      gr.addColorStop(0, rgba(col, 0)); gr.addColorStop(0.75, rgba(col, 0.08)); gr.addColorStop(0.95, rgba(col, 0.42)); gr.addColorStop(1, rgba(col, 0));
+      g.translate(cx, cy); g.scale(1, ry / Math.max(1, rx)); g.translate(-cx, -cy);
+      g.fillStyle = gr; g.fillRect(cx - rx, cy - rx, rx * 2, rx * 2);
+      var wob = 1 + 0.01 * Math.sin(t * 9) * Math.exp(-t);
+      g.strokeStyle = rgba(col, 0.6); g.lineWidth = 1.5; g.beginPath(); g.arc(cx, cy, rx * 0.97 * wob, 0, 7); g.stroke();
+      // vệt ánh trượt quanh mép vòm
+      var a0 = t * 1.4; g.strokeStyle = rgba('#ffffff', 0.7); g.lineWidth = 3; g.beginPath(); g.arc(cx, cy, rx * 0.97 * wob, a0, a0 + 0.5); g.stroke();
+      g.restore();
       return false;
     }
 
