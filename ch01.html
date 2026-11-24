@@ -54,6 +54,28 @@ header.bar{
 header.bar.hide{transform:translateY(-110%);opacity:0}
 .book{color:inherit;text-decoration:none;font-style:italic;font-size:16px}
 .tools{display:flex;gap:0}
+.menu-btn{font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:999px;height:40px;padding:0 14px 0 12px;cursor:pointer;display:flex;align-items:center;gap:.5em;white-space:nowrap}
+.menu-btn:hover{color:var(--ink)}
+.menu-btn .ic{display:inline-block;width:14px;height:10px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
+.menu-btn .ic::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid currentColor;transform:translateY(-50%)}
+.drawer{position:fixed;inset:0;z-index:40}
+.dr-shade{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .28s}
+.dr-panel{position:absolute;top:0;left:0;bottom:0;width:min(86vw,360px);background:var(--bg);border-right:1px solid var(--line);
+  padding:calc(14px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .28s cubic-bezier(.3,.7,.2,1);box-shadow:12px 0 40px -20px rgba(0,0,0,.6)}
+.drawer.on .dr-shade{opacity:1}.drawer.on .dr-panel{transform:none}
+.dr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-h{font-style:italic;color:var(--soft);font-size:16px}
+.dr-x{font:inherit;background:none;border:0;color:var(--soft);width:40px;height:40px;font-size:18px;cursor:pointer}
+.dr-go{display:flex;gap:10px;margin-bottom:16px}
+.dr-go a{flex:1;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
+.dr-list{list-style:none;margin:0;padding:0;overflow:auto;flex:1;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.dr-list li{border-bottom:1px solid var(--line)}
+.dr-list a{display:flex;gap:.9em;align-items:baseline;padding:.75em .2em;color:var(--ink);text-decoration:none;line-height:1.35;font-size:16px}
+.dr-list .n{flex:0 0 1.6em;color:var(--soft);font-variant-numeric:tabular-nums;font-size:.85em}
+.dr-list a[aria-current]{color:var(--lamp)}
+.dr-list a[aria-current] .n::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-right:6px;vertical-align:middle}
+
 .tools button{
   font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid transparent;
   border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
@@ -257,6 +279,39 @@ em .nm{font-style:italic}
 .gate .s{font-size:15px;color:var(--soft)}
 .gate:hover .t{color:var(--lamp)}
 
+
+/* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
+:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+.scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
+.scene p.say + p:not(.say){margin-top:.55em}
+.say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
+.say .q{color:var(--ink)}
+.say:not(.say-x) .q{text-shadow:0 0 .01px var(--sp)}
+.scene p.say[data-act~="line"]{position:relative;margin:1.6em -4px 1.6em -14px;padding:1em 1.1em 1em 1.2em;border:1px solid color-mix(in srgb,var(--sp) 45%,transparent);border-left:3px solid var(--sp);
+  border-radius:3px 14px 14px 14px;background:color-mix(in srgb,var(--sp) 9%,var(--bg));box-shadow:0 10px 26px -18px color-mix(in srgb,var(--sp) 80%,#000)}
+.scene p.say[data-act~="line"] .q{font-size:1.18em;line-height:1.45;font-style:italic;color:color-mix(in srgb,var(--sp) 55%,var(--ink))}
+.scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
+.scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+/* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}
+.scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
+  background-size:100% 100%;background-repeat:no-repeat}
+.scene p.pw-on.say{border-left-width:3px}
+.scene p.pw-flash{animation:pwSweep 1.4s var(--pwd,0s) cubic-bezier(.2,.7,.2,1) both}
+@keyframes pwSweep{
+  0%{background-size:0% 100%;border-left-color:transparent;text-shadow:none}
+  30%{background-size:100% 100%;border-left-color:var(--pw);text-shadow:0 0 14px color-mix(in srgb,var(--pw) 70%,transparent)}
+  100%{background-size:100% 100%;text-shadow:none}
+}
+.scene p.pw-on b.pw-tag{display:none}
+@media (prefers-reduced-motion: reduce){.scene p.pw-flash,.scene p.say[data-act~="line"].seen{animation:none}}
 @media (min-width:720px){
   :root{--size:20px}
   header.bar{padding-left:28px;padding-right:28px}
@@ -270,7 +325,7 @@ em .nm{font-style:italic}
 <body>
 <div class="progress" aria-hidden="true"></div>
 <header class="bar">
-  <a class="book" href="index.html">Project Artos 07</a>
+  <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương, trang chủ và sổ tay"><span class="ic"></span>Chương 1</button>
   <div class="tools">
     <button type="button" id="smaller" aria-label="Chữ nhỏ hơn">A−</button>
     <button type="button" id="bigger" aria-label="Chữ to hơn">A+</button>
@@ -278,6 +333,14 @@ em .nm{font-style:italic}
     <button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button>
   </div>
 </header>
+<div class="drawer" id="drawer" hidden>
+  <div class="dr-shade" data-close></div>
+  <nav class="dr-panel" aria-label="Chọn chương">
+    <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a></div>
+    <ol class="dr-list"><li><a href="ch01.html" aria-current="page"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li></ol>
+  </nav>
+</div>
 <main>
   <div class="opening">
     <p class="chapno">Chương 1</p>
@@ -372,13 +435,13 @@ em .nm{font-style:italic}
 <p>Suốt cả ngày hôm đó, thế giới dường như cứ đáp lại cô chậm mất một nhịp. Vòi nước trong nhà tắm đã chảy rồi mới nghe tiếng nước, ở giảng đường cô đặt bút xuống bàn mà tiếng lách cách lại đến sau động tác nửa nhịp, đủ để cô nhận ra nhưng không đủ để đứa ngồi cạnh nhận ra, cô lật trang vở, tờ giấy đã nằm yên rồi tiếng sột soạt mới vang lên, như một tiếng vọng lỡ hẹn. Đến trưa thì <span class="nm nm-person">Clevia</span> bắt đầu tránh chạm vào những thứ không cần chạm, không hẳn vì sợ, chỉ là mỗi lần chạm vào, cái cảm giác mình đang đi trước thế giới một bước lại quay về, kéo theo một thứ gì đó khó chịu không tên cứ mắc nghẹn nơi cổ họng.</p>
 <p>Giữa buổi chiều, cô rời giảng đường sớm, đi đường tắt vòng ra sau nhà thể chất để sang thư viện. Đó là thói quen từ hồi năm nhất, giờ trống thì trốn vào góc trong cùng với mấy cuốn tiểu thuyết trinh thám, vì cô chẳng biết làm gì khác với khoảng thời gian thừa ra ấy. Phía sau nhà thể chất thoáng đãng hơn hẳn, phảng phất mùi cỏ vừa tưới, xen lẫn tiếng kiếm tre va vào nhau lách cách từ sân tập bên cạnh.</p>
 <p>Cô dừng lại trước máy bán nước cuối hành lang, không phải vì khát, mà vì cần một cái cớ để đứng yên một chỗ và lấy lại nhịp thở. Cô vừa giơ tay lên định bấm nút, ngón tay còn cách mặt máy cả một gang, thì lon nước đã rơi xuống khay đánh “cạch” một tiếng, to hơn hẳn mức cần thiết. <span class="nm nm-person">Clevia</span> tái mặt, nhìn trân trân vào cái máy như đang chờ nó tự giải thích.</p>
-<p>“Máy này dạo này hay dở chứng lắm.”</p>
+<p class="say say-x"><span class="q">“Máy này dạo này hay dở chứng lắm.”</span></p>
 <p>Giọng nói vang lên ngay sau lưng, gần đến mức cô giật bắn mình. Cô quay lại, và nhận ra ngay người đứng trên tầng hai hôm qua, dù hôm nay anh ta mặc áo tập của câu lạc bộ kiếm đạo với cái logo trước ngực đã bạc màu vì giặt nhiều lần, mái tóc nâu hơi rối vì mồ hôi. Nhìn gần thì anh ta chẳng có gì đặc biệt, cao, vai rộng, nụ cười dễ dãi của người quen bắt chuyện với người lạ, chỉ riêng đôi mắt là không khớp với phần còn lại. Nó tĩnh quá, chăm chú quá, như thể đang đọc cô chứ không phải đang nhìn cô.</p>
-<p>“Vâng,” <span class="nm nm-person">Clevia</span> đáp, ngắn gọn.</p>
+<p class="say say-clevia"><span class="q">“Vâng,”</span> <span class="nm nm-person">Clevia</span> đáp, ngắn gọn.</p>
 <p>Anh ta cúi xuống nhặt lon nước trong khay, đưa cho cô. Cô đón lấy, cẩn thận để ngón tay mình không chạm vào tay anh.</p>
-<p>“Em có hay gặp mấy chuyện kiểu này không?” anh hỏi, giọng bình thản, không giống hỏi thăm cho có.</p>
-<p>“Chuyện kiểu này là chuyện gì ạ?”</p>
-<p>“Mọi thứ xảy ra trước khi em kịp làm gì.”</p>
+<p class="say say-luke"><span class="q">“Em có hay gặp mấy chuyện kiểu này không?”</span> anh hỏi, giọng bình thản, không giống hỏi thăm cho có.</p>
+<p class="say say-x"><span class="q">“Chuyện kiểu này là chuyện gì ạ?”</span></p>
+<p class="say say-x"><span class="q">“Mọi thứ xảy ra trước khi em kịp làm gì.”</span></p>
 <p><span class="nm nm-person">Clevia</span> im lặng. Hình ảnh ổ khoá tự bật mở tối qua loé lên trong đầu, và cô đẩy nó đi như người ta xua một con côn trùng ra khỏi tầm mắt. “Không ạ.”</p>
 <p>Anh gật đầu, cái kiểu gật đầu của người chấp nhận câu trả lời mà không hề tin vào nó. “Anh là <span class="nm nm-person first">Luke</span>, bên câu lạc bộ kiếm đạo,” anh nói, hất cằm về phía sân tập, rồi quay đi luôn, như thể cuộc nói chuyện đã kết thúc đúng như anh dự tính.</p>
 <p><span class="nm nm-person">Clevia</span> đứng nhìn theo, không hiểu vì sao anh ta lại hỏi như vậy, càng không biết anh ta biết được những gì. Cô chỉ biết một điều, mấy anh trưởng câu lạc bộ thể thao vui vẻ thì chẳng ai đi hỏi người lạ những câu như thế, ít nhất là không bằng ánh mắt đó. Còn câu hỏi cứ lởn vởn trong đầu cô từ lúc nhận ra anh, rằng hôm qua anh nhìn theo cô làm gì, thì cô vẫn không sao mở miệng ra hỏi được.</p>
@@ -387,16 +450,16 @@ em .nm{font-style:italic}
 <section class="scene" data-sound="bench">
 <figure class="plate"><canvas class="art" data-art="bench" role="img" aria-label="Hàng ghế đá trước thư viện, bóng ghế kéo dài trong nắng xế"></canvas></figure>
 <p>Cô ngồi xuống băng ghế đá trước cửa thư viện, đặt lon nước bên cạnh, vẫn chưa mở. Nắng xế chiều đổ nghiêng xuống mặt sân, kéo bóng hàng ghế dài ra trên nền gạch, tiếng sinh viên từ những toà nhà xung quanh vọng lại, vừa ồn ào lại vừa xa xăm. <span class="nm nm-person">Clevia</span> cúi nhìn hai bàn tay mình thật lâu, như thể câu trả lời nằm đâu đó trong những đường chỉ tay, nhưng chúng chẳng nói với cô điều gì cả.</p>
-<p>“Không uống à?”</p>
+<p class="say say-x"><span class="q">“Không uống à?”</span></p>
 <p>Lần này cô không giật mình. Có lẽ cô đã đoán trước anh ta sẽ quay lại, hoặc đến khi điều đó thật sự xảy ra, cô cũng không thấy ngạc nhiên lắm. <span class="nm nm-person">Luke</span> ngồi xuống đầu kia băng ghế, giữ một khoảng cách vừa đủ để không ai thấy là sỗ sàng, không nhìn cô mà nhìn ra sân trường, nơi mấy đứa năm nhất đang í ới kéo nhau đi căng tin.</p>
-<p>“Em không khát.”</p>
+<p class="say say-x"><span class="q">“Em không khát.”</span></p>
 <p>Một lúc lâu không ai nói gì. <span class="nm nm-person">Luke</span> nhặt một viên sỏi dưới chân ghế, thả xuống đất, và tiếng lách cách vang lên đúng lúc, không sớm, cũng không muộn. <span class="nm nm-person">Clevia</span> nhận ra điều đó, nhận ra cả việc mình đang để ý đến nó, và không hiểu tại sao một viên sỏi rơi đúng nhịp lại khiến lòng cô nhẹ đi một chút.</p>
-<p>“Em có bao giờ thấy đồ đạc quanh mình dễ dùng hơn với người khác không?” <span class="nm nm-person">Luke</span> hỏi. “Kiểu khoá kẹt, máy hay hỏng, nhưng đến lượt em thì lại chạy ngon lành.”</p>
+<p class="say say-luke"><span class="q">“Em có bao giờ thấy đồ đạc quanh mình dễ dùng hơn với người khác không?”</span> <span class="nm nm-person">Luke</span> hỏi. <span class="q">“Kiểu khoá kẹt, máy hay hỏng, nhưng đến lượt em thì lại chạy ngon lành.”</span></p>
 <p><span class="nm nm-person">Clevia</span> khựng lại một nhịp rồi mới đáp. “Chắc trùng hợp thôi anh.”</p>
-<p>“Có thể.” Anh không ép. “Anh hỏi vì hồi trước anh cũng nói y như vậy.”</p>
+<p class="say say-luke"><span class="q">“Có thể.”</span> Anh không ép. <span class="q">“Anh hỏi vì hồi trước anh cũng nói y như vậy.”</span></p>
 <p>Cô quay sang nhìn anh. Anh vẫn nhìn ra sân, vẫn cái vẻ thản nhiên như đang bàn chuyện hôm nay trời mưa hay nắng, nhưng câu vừa rồi chẳng phải chuyện thời tiết, và cả hai người đều biết thế.</p>
-<p>“Anh biết em đang bị sao không?” cô hỏi thẳng.</p>
-<p>“Cụ thể thì không.” Anh ngừng một chút. “Nhưng anh biết em không tưởng tượng ra đâu.”</p>
+<p class="say say-clevia" data-act="line"><span class="q">“Anh biết em đang bị sao không?”</span> cô hỏi thẳng.</p>
+<p class="say say-luke"><span class="q">“Cụ thể thì không.”</span> Anh ngừng một chút. <span class="q">“Nhưng anh biết em không tưởng tượng ra đâu.”</span></p>
 <p>Anh đứng dậy, phủi tay vào ống quần. “Khi nào em thấy chuyện này vượt quá sức mình thì cứ lên phòng câu lạc bộ tìm anh. Anh sẽ nói cho em những gì anh biết.” Anh đứng lại thêm một giây, như đang cân nhắc có nên nói thêm gì nữa không, rồi lại thôi, thong thả bước về phía sân tập với dáng đi của người vừa xong một cuộc trò chuyện bình thường. Chỉ vài giây sau, anh đã lẫn vào đám sinh viên đang tập, lại trở thành một anh trưởng câu lạc bộ kiếm đạo chẳng có gì đáng để ý, và <span class="nm nm-person">Clevia</span> cứ nhìn theo mãi cho đến khi không còn phân biệt được anh với những người khác nữa.</p>
 <p>Cô không về ngay mà ngồi thêm một lúc trên băng ghế, bên lon nước chưa mở và vệt nắng đang trườn dần khỏi mặt sân. Không phải yên tâm, cũng chẳng phải sợ hãi, mà là cái cảm giác của một người vừa thấy một cánh cửa mở ra ở nơi mình không ngờ tới nhất, và đang đứng lặng trước nó, chưa biết nên bước vào hay quay đi.</p>
 <p>Ở đâu đó rất sâu bên trong, khoảng trống quen thuộc vẫn nằm yên, không đau, không rõ hình thù, nhưng hôm nay nó nặng hơn một chút, như thể chính nó cũng đang chờ đợi một điều gì đó.</p>
@@ -437,6 +500,10 @@ em .nm{font-style:italic}
     last=y;
   },{passive:true});
 })();
+(function(){var d=document.getElementById('drawer'),b=document.getElementById('menu');if(!d||!b)return;
+function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
+function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
+b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.
@@ -1980,6 +2047,20 @@ em .nm{font-style:italic}
       p._armed = true;
       if (p.dataset.fx === 'flicker') flickFrom = p;
     });
+    // tô nổi đoạn chữ của lần kích hoạt năng lực nhân vật chính: loé sáng lúc hiệu ứng chạy, rồi giữ lại vạch màu nhẹ
+    var WHO = { chains: 'leon', anomaly: 'luke', protect: 'luke', keysense: 'clevia', keyburst: 'clevia' };
+    function power(p, who, delay) {
+      who = who || WHO[p && p.dataset.fx]; if (!p || !who) return;
+      var list = [p], q = p.nextElementSibling;
+      while (q && list.length < 3) { if (q.tagName === 'P' && !q.classList.contains('sys')) list.push(q); else if (q.tagName !== 'P' && !q.classList.contains('card-fig')) break; q = q.nextElementSibling; }
+      setTimeout(function () {
+        list.forEach(function (el, i) {
+          el.classList.add('pw', 'pw-' + who); el.classList.remove('pw-flash'); void el.offsetWidth;
+          el.style.setProperty('--pwd', (i * 0.18) + 's'); el.classList.add('pw-on', 'pw-flash');
+        });
+      }, Math.max(0, delay || 0));
+    }
+    window.a07power = power;
     function check() {
       var mid = innerHeight * 0.55;
       fxPs.forEach(function (p) {
@@ -1990,7 +2071,7 @@ em .nm{font-style:italic}
           p._armed = false; var now0 = performance.now();
           // dùng năng lực / dùng thẻ: vòng tròn rối loé lên trước, rồi mới tới hiệu ứng riêng
           if (p.dataset.cast) { cast(); now0 += 850; }
-          shots.push({ kind: p.dataset.fx, t0: now0, R: seeds() }); kick();
+          shots.push({ kind: p.dataset.fx, t0: now0, R: seeds() }); kick(); power(p, null, now0 - performance.now());
           if (window.a07sfx) { var kd = p.dataset.fx; setTimeout(function () { window.a07sfx(kd); }, now0 - performance.now()); }
         }
         else if (!p._armed && top > innerHeight * 0.9) p._armed = true; // cuộn ngược lên: cho bật lại
@@ -2389,13 +2470,13 @@ em .nm{font-style:italic}
     /* ---- năng lực riêng của nhân vật chính (cùng cấp với xích của Leon) ---- */
     function gear(x, y, r, teeth, rot, a) {
       var grd = g.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r * 1.1);
-      grd.addColorStop(0, rgba('#ffe7a8', a)); grd.addColorStop(0.5, rgba('#c9922e', a)); grd.addColorStop(1, rgba('#6b4612', a));
+      grd.addColorStop(0, rgba('#f6c9d1', a)); grd.addColorStop(0.5, rgba('#8e2238', a)); grd.addColorStop(1, rgba('#3d0a16', a));
       g.save(); g.translate(x, y); g.rotate(rot); g.beginPath();
       for (var i = 0; i < teeth * 2; i++) { var a0 = i / (teeth * 2) * 6.283, a1 = (i + 1) / (teeth * 2) * 6.283, rr = i % 2 ? r * 0.86 : r; g.arc(0, 0, rr, a0, a1); }
       g.closePath(); g.fillStyle = grd; g.fill();
-      g.fillStyle = rgba('#140d05', 0.9 * a); g.beginPath(); g.arc(0, 0, r * 0.28, 0, 7); g.fill();
+      g.fillStyle = rgba('#12040a', 0.9 * a); g.beginPath(); g.arc(0, 0, r * 0.28, 0, 7); g.fill();
       for (var s = 0; s < 5; s++) { var sa = s / 5 * 6.283; g.beginPath(); g.arc(Math.cos(sa) * r * 0.56, Math.sin(sa) * r * 0.56, r * 0.13, 0, 7); g.fill(); }
-      g.strokeStyle = rgba('#fff2c8', 0.6 * a); g.lineWidth = 1.5; g.beginPath(); g.arc(0, 0, r * 0.7, 3.6, 5.2); g.stroke();
+      g.strokeStyle = rgba('#ffdfe4', 0.6 * a); g.lineWidth = 1.5; g.beginPath(); g.arc(0, 0, r * 0.7, 3.6, 5.2); g.stroke();
       g.restore();
     }
     function sparks(x, y, t, n, R, off, spread, col) {
@@ -2404,11 +2485,11 @@ em .nm{font-style:italic}
     }
     function quake(a, t) { main.style.transform = a > 0.02 ? 'translate(' + (Math.sin(t * 95) * 9 * a).toFixed(1) + 'px,' + (Math.cos(t * 81) * 7 * a).toFixed(1) + 'px)' : ''; }
 
-    // Clevia, Unlock: trang sập tối, bánh răng vàng khổng lồ lao vào từ mép trang khớp vào nhau, năm cái lẫy to bị đẩy lên từng cái,
-    // rồi quai khoá bật tung lên khỏi màn hình, bánh răng văng ra, lửa vàng toé xuống. (Chỉ là cảm giác chạm thấu ổ khoá, không gì hơn.)
+    // Clevia, Unlock: trang sập tối, bánh răng đỏ rượu khổng lồ lao vào từ mép trang khớp vào nhau, năm cái lẫy to bị đẩy lên từng cái,
+    // rồi quai khoá bật tung lên khỏi màn hình, bánh răng văng ra, lửa đỏ toé xuống. (Chỉ là cảm giác chạm thấu ổ khoá, không gì hơn.)
     MORE.keysense = function (t, R) {
       if (t > 4.4) { main.style.transform = ''; return true; }
-      var cx = W / 2, cy = H * 0.52, m = Math.min(W, H), hot = '#fff3d6', shake = 0;
+      var cx = W / 2, cy = H * 0.52, m = Math.min(W, H), hot = '#ffe8ec', shake = 0;
       var dim = t < 0.15 ? t / 0.15 : t < 3.2 ? 1 : Math.max(0, 1 - (t - 3.2) / 1.2);
       wash('#040304', 0.55 * dim); edge('#000000', 0.6 * dim, 0.1);
       var burst = t > 2.6 ? t - 2.6 : -1, gone = burst > 0 ? Math.min(1, burst / 1.1) : 0, fa = t > 3.6 ? Math.max(0, 1 - (t - 3.6) / 0.8) : 1;
@@ -2420,18 +2501,18 @@ em .nm{font-style:italic}
         var x = sx + (fx - sx) * e, y = sy + (fy - sy) * e, rot = (i % 2 ? -1 : 1) * (t * 1.6 + (1 - e) * 4);
         if (gone > 0) { x += q[0] * m * 1.8 * gone * gone; y += (q[1] * m * 1.8 * gone + 600 * burst * burst * 0.3); rot += (i % 2 ? -1 : 1) * gone * 6; }
         gear(x, y, q[2] * m, q[3], rot, fa);
-        if (tt > 0.22 && tt < 0.95) { sparks(fx - q[0] * q[2] * m, fy - q[1] * q[2] * m, tt - 0.22, 10, R, i * 11, 2.6); if (tt < 0.36) shake = Math.max(shake, 1 - (tt - 0.22) / 0.14); }
+        if (tt > 0.22 && tt < 0.95) { sparks(fx - q[0] * q[2] * m, fy - q[1] * q[2] * m, tt - 0.22, 10, R, i * 11, 2.6, '#e87a8e'); if (tt < 0.36) shake = Math.max(shake, 1 - (tt - 0.22) / 0.14); }
       });
       // lõi khoá ở giữa
       var cr = m * 0.17, la = Math.min(1, t / 0.4) * fa;
-      var cg = g.createRadialGradient(cx - cr * 0.3, cy - cr * 0.3, 0, cx, cy, cr); cg.addColorStop(0, rgba('#ffe7a8', la)); cg.addColorStop(1, rgba('#7a5216', la));
+      var cg = g.createRadialGradient(cx - cr * 0.3, cy - cr * 0.3, 0, cx, cy, cr); cg.addColorStop(0, rgba('#f6c9d1', la)); cg.addColorStop(1, rgba('#4e0f1f', la));
       g.fillStyle = cg; g.beginPath(); g.arc(cx, cy, cr, 0, 7); g.fill();
-      g.save(); g.translate(cx, cy); g.rotate(burst > 0 ? Math.min(1, burst / 0.12) * 1.57 : 0); g.fillStyle = rgba('#1a1006', la); g.beginPath(); g.arc(0, -cr * 0.2, cr * 0.22, 0, 7); g.fill(); g.fillRect(-cr * 0.1, -cr * 0.15, cr * 0.2, cr * 0.55); g.restore();
+      g.save(); g.translate(cx, cy); g.rotate(burst > 0 ? Math.min(1, burst / 0.12) * 1.57 : 0); g.fillStyle = rgba('#14040a', la); g.beginPath(); g.arc(0, -cr * 0.2, cr * 0.22, 0, 7); g.fill(); g.fillRect(-cr * 0.1, -cr * 0.15, cr * 0.2, cr * 0.55); g.restore();
       // năm cái lẫy bị đẩy lên
       for (var k = 0; k < 5; k++) {
         var pt = 1.25 + k * 0.24, up = t < pt ? 0 : Math.min(1, (t - pt) / 0.08), px = cx + (k - 2) * cr * 0.42, pw = cr * 0.24, ph = cr * 0.9, py = cy - cr - ph * 0.55 - up * ph * 0.35;
         if (gone > 0) py -= gone * H * 0.2;
-        var pg2 = g.createLinearGradient(px - pw / 2, 0, px + pw / 2, 0); pg2.addColorStop(0, rgba('#8a5e1a', la)); pg2.addColorStop(0.4, rgba('#ffe2a0', la)); pg2.addColorStop(1, rgba('#7a5216', la));
+        var pg2 = g.createLinearGradient(px - pw / 2, 0, px + pw / 2, 0); pg2.addColorStop(0, rgba('#5a1222', la)); pg2.addColorStop(0.4, rgba('#f0b8c2', la)); pg2.addColorStop(1, rgba('#4e0f1f', la));
         g.fillStyle = pg2; g.fillRect(px - pw / 2, py, pw, ph);
         if (up > 0 && t - pt < 0.3) { shake = Math.max(shake, 0.45 * (1 - (t - pt) / 0.3)); var fl = g.createRadialGradient(px, py, 0, px, py, pw * 3); fl.addColorStop(0, rgba(hot, 0.9 * (1 - (t - pt) / 0.3))); fl.addColorStop(1, rgba(hot, 0)); g.fillStyle = fl; g.fillRect(px - pw * 3, py - pw * 3, pw * 6, pw * 6); }
       }
@@ -2440,15 +2521,15 @@ em .nm{font-style:italic}
       if (t > 0.5) {
         var sa = Math.min(1, (t - 0.5) / 0.3) * fa, sw = cr * 1.7, sy0 = cy - cr * 2.3 - (1 - Math.min(1, (t - 0.5) / 0.3)) * H * 0.4;
         g.save(); g.translate(cx - sw / 2, sy0 + cr * 1.2 - lift); g.rotate(srot); g.lineCap = 'round'; g.lineWidth = cr * 0.36;
-        var sg = g.createLinearGradient(0, -cr, sw, 0); sg.addColorStop(0, rgba('#6b4612', sa)); sg.addColorStop(0.5, rgba('#ffe7a8', sa)); sg.addColorStop(1, rgba('#6b4612', sa)); g.strokeStyle = sg;
+        var sg = g.createLinearGradient(0, -cr, sw, 0); sg.addColorStop(0, rgba('#3d0a16', sa)); sg.addColorStop(0.5, rgba('#f6c9d1', sa)); sg.addColorStop(1, rgba('#3d0a16', sa)); g.strokeStyle = sg;
         g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -cr * 0.6); g.arc(sw / 2, -cr * 0.6, sw / 2, 3.1416, 0); g.lineTo(sw, 0); g.stroke(); g.restore();
       }
       // cú bật: loé trắng, sóng vòng, lửa vàng toé
       if (burst > 0) {
         if (burst < 0.4) shake = Math.max(shake, 1.4 * (1 - burst / 0.4));
         var f0 = g.createRadialGradient(cx, cy, 0, cx, cy, m * 0.9); f0.addColorStop(0, rgba(hot, 0.9 * Math.max(0, 1 - burst / 0.35))); f0.addColorStop(1, rgba(hot, 0)); g.fillStyle = f0; g.fillRect(0, 0, W, H);
-        for (var q2 = 0; q2 < 3; q2++) { var u2 = (burst - q2 * 0.08) / 0.9; if (u2 <= 0 || u2 > 1) continue; g.strokeStyle = rgba('#ffe2a0', 0.9 * (1 - u2)); g.lineWidth = 6 * (1 - u2) + 1; g.beginPath(); g.arc(cx, cy, m * (0.15 + u2 * 1.1), 0, 7); g.stroke(); }
-        sparks(cx, cy - cr, burst, 40, R, 5, 5.5);
+        for (var q2 = 0; q2 < 3; q2++) { var u2 = (burst - q2 * 0.08) / 0.9; if (u2 <= 0 || u2 > 1) continue; g.strokeStyle = rgba('#f0b8c2', 0.9 * (1 - u2)); g.lineWidth = 6 * (1 - u2) + 1; g.beginPath(); g.arc(cx, cy, m * (0.15 + u2 * 1.1), 0, 7); g.stroke(); }
+        sparks(cx, cy - cr, burst, 40, R, 5, 5.5, '#e87a8e');
       }
       quake(shake, t);
       return false;
@@ -2879,7 +2960,7 @@ em .nm{font-style:italic}
     function clack(heavy) {
       if (!live()) return; var o = out(1), n = ac.currentTime;
       burst(o, 'bandpass', heavy ? 1700 : 3000, 3, 0.7, 0.035, n); tone(o, 'triangle', heavy ? 650 : 1400, heavy ? 280 : 620, 0.14, 0.06, n);
-      burst(o, 'bandpass', heavy ? 1100 : 2300, 4, 0.45, 0.05, n + 0.075); tone(o, 'sine', heavy ? 130 : 210, 55, 0.3, 0.14, n + 0.075);
+      burst(o, 'bandpass', heavy ? 1100 : 2300, 4, 0.45, 0.05, n + 0.075); tone(o, 'triangle', heavy ? 2900 : 3600, heavy ? 2600 : 3300, 0.6, 0.05, n + 0.075);
     }
     function pinTick(i) { if (live()) { var o = out(1); tone(o, 'triangle', 2300 + i * 210, 1700 + i * 210, 0.05, 0.03); burst(o, 'highpass', 5000, 1, 0.05, 0.015); } }
     function rattle(v) { if (live()) burst(out(1), 'bandpass', 3000 + Math.random() * 1800, 7, v, 0.025); }
@@ -2918,7 +2999,7 @@ em .nm{font-style:italic}
         if (bronze) pins.forEach(function (r) { r.classList.add('on'); });
         box.classList.remove('holding'); box.classList.add('done'); if (!sound) box.classList.add('quiet');
         btn.setAttribute('aria-label', 'Ổ khoá đã mở');
-        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(true); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst'); }, 250); }
+        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(true); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst'); }, 250); if (window.a07power) { var tp = box.nextElementSibling; if (!tp || tp.tagName !== 'P') tp = box.previousElementSibling; window.a07power(tp, 'clevia', 250); } }
       }
       function down(e) {
         if (done || (e.button && e.button > 0)) return;
@@ -3145,7 +3226,7 @@ em .nm{font-style:italic}
       s.connect(fl); fl.connect(g); g.connect(o); s.start(n, Math.random() * 0.5); s.stop(n + dur + 0.05);
     }
     function sine(o, f, v, dur, at, type) { var x = ac.createOscillator(), g = gain(0); x.type = type || 'sine'; x.frequency.value = f; g.gain.setValueAtTime(v, at); g.gain.exponentialRampToValueAtTime(0.0001, at + dur); x.connect(g); g.connect(o); x.start(at); x.stop(at + dur + 0.05); }
-    function clank(o, at, v) { [523, 1371, 2307, 3790].forEach(function (f, i) { sine(o, f * (0.95 + Math.random() * 0.1), v * [0.5, 0.35, 0.22, 0.12][i], 0.25 + 0.35 / (i + 1), at); }); nz(o, 'bandpass', 2600, 1800, 2, v * 1.6, 0.06, at); sine(o, 70, v * 2.2, 0.25, at); }
+    function clank(o, at, v) { [523, 1371, 2307, 3790].forEach(function (f, i) { sine(o, f * (0.95 + Math.random() * 0.1), v * [0.5, 0.35, 0.22, 0.12][i], 0.25 + 0.35 / (i + 1), at); }); nz(o, 'bandpass', 2600, 1800, 2, v * 1.6, 0.06, at); nz(o, 'highpass', 5000, 7000, 1, v * 0.8, 0.03, at); }
     function clink(o, at, v) { sine(o, 2400 + Math.random() * 1800, v, 0.12, at, 'triangle'); }
     /* bộ tiếng "anime": vang dài (convolver), bão hoà cho cú nổ dày, tiếng dồn lên trước cú đánh */
     var busD = null, busW = null, sat = null;
@@ -3166,16 +3247,16 @@ em .nm{font-style:italic}
       f.frequency.setValueAtTime(300, at); f.frequency.exponentialRampToValueAtTime(7000, at + dur);
       g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(v, at + dur * 0.95); g.gain.linearRampToValueAtTime(0, at + dur + 0.02);
       s.connect(f); f.connect(g); g.connect(o); s.start(at); s.stop(at + dur + 0.05);
-      var x = ac.createOscillator(), xg = gain(0.0001); x.type = 'sawtooth'; x.frequency.setValueAtTime(90, at); x.frequency.exponentialRampToValueAtTime(900, at + dur);
-      var lp = filt('lowpass', 1800); xg.gain.setValueAtTime(0.0001, at); xg.gain.exponentialRampToValueAtTime(v * 0.25, at + dur * 0.95); xg.gain.linearRampToValueAtTime(0, at + dur + 0.02);
+      var x = ac.createOscillator(), xg = gain(0.0001); x.type = 'sawtooth'; x.frequency.setValueAtTime(260, at); x.frequency.exponentialRampToValueAtTime(1600, at + dur);
+      var lp = filt('lowpass', 3200); xg.gain.setValueAtTime(0.0001, at); xg.gain.exponentialRampToValueAtTime(v * 0.25, at + dur * 0.95); xg.gain.linearRampToValueAtTime(0, at + dur + 0.02);
       x.connect(lp); lp.connect(xg); xg.connect(o); x.start(at); x.stop(at + dur + 0.05);
     }
-    // cú nổ: tiếng trầm rơi xuống tận đáy + cú đập + bụi, đi qua bão hoà cho dày
+    // cú đánh: không dùng tiếng trầm kiểu trống (Clair không ưa) — chỉ có tiếng nứt sắc, kim loại toé và ngân
     function boom(at, v) {
-      bus(); var o = hard(v);
-      var x = ac.createOscillator(), g = gain(0); x.frequency.setValueAtTime(140, at); x.frequency.exponentialRampToValueAtTime(32, at + 0.7);
-      g.gain.setValueAtTime(1, at); g.gain.exponentialRampToValueAtTime(0.0001, at + 0.9); x.connect(g); g.connect(o); x.start(at); x.stop(at + 0.95);
-      nz(o, 'lowpass', 3000, 200, 0.7, 0.9, 0.35, at); nz(wet(v * 0.5), 'bandpass', 1800, 400, 1, 0.5, 0.6, at + 0.01);
+      bus(); var o = wet(v);
+      nz(o, 'highpass', 2500, 6000, 0.8, 0.5, 0.18, at);                     // nứt sắc
+      nz(o, 'bandpass', 3800, 1600, 3, 0.35, 0.3, at + 0.01);               // rít kim loại
+      [2093, 3136, 4699].forEach(function (f, i) { sine(o, f * (0.98 + Math.random() * 0.04), 0.12 / (i + 1), 0.9 - i * 0.2, at, 'triangle'); });
     }
     function whoosh(at, dur, v, up) { bus(); nz(wet(v), 'bandpass', up ? 400 : 4000, up ? 4000 : 300, 1.6, 1, dur, at); }
     // tiếng kim loại ngân dài kiểu "shiiing"
@@ -3217,7 +3298,7 @@ em .nm{font-style:italic}
         for (var j = 0; j < 10; j++) clink(wet(1), n + 0.6 + j * 0.08, 0.04);    // bánh răng văng, rơi lách cách
       },
       anomaly: function (o, n) {
-        bus(); whoosh(n, 0.6, 0.5, false); nz(wet(1), 'lowpass', 3000, 120, 1, 0.5, 0.7, n);  // âm thanh xung quanh bị hút mất
+        bus(); whoosh(n, 0.6, 0.5, false); nz(wet(1), 'lowpass', 3000, 400, 1, 0.5, 0.7, n);  // âm thanh xung quanh bị hút mất
         sine(wet(1), 5400, 0.02, 4.3, n + 0.1);                                   // ù tai: thời gian ngừng
         // (bỏ tiếng tim đập: Clair nghe như tiếng trống, 24/11; trang vẫn đập theo nhịp tim bằng hình)
         [0.35, 1.35, 2.35].forEach(function (w) { var og = wet(0.2); sine(og, 1320, 0.5, 1.2, n + w); sine(og, 1980, 0.25, 1, n + w); whoosh(n + w, 0.9, 0.2, false); }); // sóng dò "ping"
@@ -3493,6 +3574,14 @@ em .nm{font-style:italic}
       fit(); addEventListener('resize', fit);
     });
   })();
+
+/* câu thoại đắt hiện lên nhẹ khi cuộn tới */
+(function () {
+  var ls = [].slice.call(document.querySelectorAll('p.say[data-act~="line"]'));
+  if (!ls.length || !window.IntersectionObserver) return;
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -15% 0px' });
+  ls.forEach(function (l) { io.observe(l); });
+})();
 
 })();
 

@@ -54,6 +54,28 @@ header.bar{
 header.bar.hide{transform:translateY(-110%);opacity:0}
 .book{color:inherit;text-decoration:none;font-style:italic;font-size:16px}
 .tools{display:flex;gap:0}
+.menu-btn{font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:999px;height:40px;padding:0 14px 0 12px;cursor:pointer;display:flex;align-items:center;gap:.5em;white-space:nowrap}
+.menu-btn:hover{color:var(--ink)}
+.menu-btn .ic{display:inline-block;width:14px;height:10px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
+.menu-btn .ic::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid currentColor;transform:translateY(-50%)}
+.drawer{position:fixed;inset:0;z-index:40}
+.dr-shade{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .28s}
+.dr-panel{position:absolute;top:0;left:0;bottom:0;width:min(86vw,360px);background:var(--bg);border-right:1px solid var(--line);
+  padding:calc(14px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .28s cubic-bezier(.3,.7,.2,1);box-shadow:12px 0 40px -20px rgba(0,0,0,.6)}
+.drawer.on .dr-shade{opacity:1}.drawer.on .dr-panel{transform:none}
+.dr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-h{font-style:italic;color:var(--soft);font-size:16px}
+.dr-x{font:inherit;background:none;border:0;color:var(--soft);width:40px;height:40px;font-size:18px;cursor:pointer}
+.dr-go{display:flex;gap:10px;margin-bottom:16px}
+.dr-go a{flex:1;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
+.dr-list{list-style:none;margin:0;padding:0;overflow:auto;flex:1;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.dr-list li{border-bottom:1px solid var(--line)}
+.dr-list a{display:flex;gap:.9em;align-items:baseline;padding:.75em .2em;color:var(--ink);text-decoration:none;line-height:1.35;font-size:16px}
+.dr-list .n{flex:0 0 1.6em;color:var(--soft);font-variant-numeric:tabular-nums;font-size:.85em}
+.dr-list a[aria-current]{color:var(--lamp)}
+.dr-list a[aria-current] .n::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-right:6px;vertical-align:middle}
+
 .tools button{
   font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid transparent;
   border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
@@ -257,6 +279,39 @@ em .nm{font-style:italic}
 .gate .s{font-size:15px;color:var(--soft)}
 .gate:hover .t{color:var(--lamp)}
 
+
+/* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
+:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+.scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
+.scene p.say + p:not(.say){margin-top:.55em}
+.say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
+.say .q{color:var(--ink)}
+.say:not(.say-x) .q{text-shadow:0 0 .01px var(--sp)}
+.scene p.say[data-act~="line"]{position:relative;margin:1.6em -4px 1.6em -14px;padding:1em 1.1em 1em 1.2em;border:1px solid color-mix(in srgb,var(--sp) 45%,transparent);border-left:3px solid var(--sp);
+  border-radius:3px 14px 14px 14px;background:color-mix(in srgb,var(--sp) 9%,var(--bg));box-shadow:0 10px 26px -18px color-mix(in srgb,var(--sp) 80%,#000)}
+.scene p.say[data-act~="line"] .q{font-size:1.18em;line-height:1.45;font-style:italic;color:color-mix(in srgb,var(--sp) 55%,var(--ink))}
+.scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
+.scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+/* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}
+.scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
+  background-size:100% 100%;background-repeat:no-repeat}
+.scene p.pw-on.say{border-left-width:3px}
+.scene p.pw-flash{animation:pwSweep 1.4s var(--pwd,0s) cubic-bezier(.2,.7,.2,1) both}
+@keyframes pwSweep{
+  0%{background-size:0% 100%;border-left-color:transparent;text-shadow:none}
+  30%{background-size:100% 100%;border-left-color:var(--pw);text-shadow:0 0 14px color-mix(in srgb,var(--pw) 70%,transparent)}
+  100%{background-size:100% 100%;text-shadow:none}
+}
+.scene p.pw-on b.pw-tag{display:none}
+@media (prefers-reduced-motion: reduce){.scene p.pw-flash,.scene p.say[data-act~="line"].seen{animation:none}}
 @media (min-width:720px){
   :root{--size:20px}
   header.bar{padding-left:28px;padding-right:28px}
@@ -326,21 +381,36 @@ em .nm{font-style:italic}
 :root:not([data-theme="light"]) .st-title{text-shadow:0 0 18px rgba(143,211,224,.4)}}
 :root[data-theme="dark"] body{background:radial-gradient(120% 50% at 50% 0%,#17303a 0%,#0e1517 55%) fixed #0e1517}
 :root[data-theme="dark"] .st-title{text-shadow:0 0 18px rgba(143,211,224,.4)}
-.st-back{display:inline-block;margin-top:3em;color:var(--lamp);text-decoration:none;border-bottom:1px solid currentColor;line-height:1.3}
+.st-go{display:flex;flex-wrap:wrap;gap:10px;margin-top:3em}
+.st-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
+.st-go a.st-cur{background:var(--veil);border-color:var(--lamp)}
+.st-go a[hidden]{display:none}
 </style>
 </head>
 <body>
 <header class="bar">
-  <a class="book" href="index.html">Project Artos 07</a>
+  <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương và trang chủ"><span class="ic"></span>Mục lục</button>
   <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
 </header>
+<div class="drawer" id="drawer" hidden>
+  <div class="dr-shade" data-close></div>
+  <nav class="dr-panel" aria-label="Chọn chương">
+    <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a></div>
+    <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li></ol>
+  </nav>
+</div>
 <main class="st">
   <h1 class="st-title">Sổ tay của Luke</h1>
   <p class="st-note">“Anh chỉ đoán thôi. Có khi sai, có khi mai lại nghĩ khác.”</p>
   <p class="st-sub">Đây là những gì Luke nghĩ về năng lực của người đã gặp, không phải sự thật của Artos. Đọc tới chương nào, sổ mở tới chương đó.</p>
   <label class="st-pick">Đã đọc tới <select id="upto" aria-label="Đã đọc tới chương"></select></label>
   <div id="out"></div>
-  <a class="st-back" id="back" href="index.html">Về mục lục</a>
+  <nav class="st-go" aria-label="Đi tiếp">
+    <a class="st-cur" id="back" href="index.html">Bắt đầu đọc</a>
+    <a class="st-next" id="nextch" href="#" hidden></a>
+    <a class="st-home" href="index.html">Trang chủ</a>
+  </nav>
 </main>
 <script>
 (function(){
@@ -362,7 +432,15 @@ em .nm{font-style:italic}
   for(var i=1;i<=D.max;i++) opts+='<option value="'+i+'">chương '+i+'</option>';
   sel.innerHTML=opts; sel.value=String(seen);
   sel.onchange=function(){render(+sel.value)};
-  if(seen) document.getElementById('back').href='ch'+(seen<10?'0':'')+seen+'.html', document.getElementById('back').textContent='Đọc tiếp chương '+seen;
+  var CH=[{"n":"01","title":"Thứ gì đó đã bị bỏ quên"},{"n":"02","title":"Bảy ngày"},{"n":"03","title":"Bữa Tiệc Đầu Tiên"},{"n":"04","title":"Hai mươi cái tên"},{"n":"05","title":"Lửa bếp"},{"n":"06","title":"Xích"},{"n":"07","title":"Việc làng"},{"n":"08","title":"Chỗ thứ ba"},{"n":"09","title":"Con số trên bảng"},{"n":"10","title":"Chợ trưa"},{"n":"11","title":"Cổng hầm"}];
+  function href(n){return 'ch'+(n<10?'0':'')+n+'.html'}
+  function has(n){return CH.some(function(c){return +c.n===n})}
+  function title(n){var c=CH.filter(function(c){return +c.n===n})[0];return c?c.title:''}
+  // nút: quay lại chương đang đọc (chương mở gần nhất), sang chương sau
+  var curN=last?+last[1]:seen, bk=document.getElementById('back'), nx=document.getElementById('nextch');
+  if(curN&&has(curN)){bk.href=href(curN);bk.textContent='Quay lại chương '+curN}
+  else if(CH.length){bk.href=href(+CH[0].n)}
+  if(curN&&has(curN+1)){nx.hidden=false;nx.href=href(curN+1);nx.textContent='Sang chương '+(curN+1)+': '+title(curN+1)}
   function render(n){
     var out='', ppl=D.people.map(function(p){var st=p.steps.filter(function(s){return s.ch<=n});return st.length?{p:p,st:st,cur:st[st.length-1],gone:p.dead&&p.dead<=n}:null}).filter(Boolean);
     if(!ppl.length){document.getElementById('out').innerHTML='<p class="st-empty">Sổ còn trống. Luke chưa kịp đoán gì về ai.</p>';return}
@@ -395,6 +473,10 @@ em .nm{font-style:italic}
   }
   render(seen);
 })();
+(function(){var d=document.getElementById('drawer'),b=document.getElementById('menu');if(!d||!b)return;
+function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
+function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
+b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();
 </script>
 </body>
 </html>
