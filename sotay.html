@@ -561,8 +561,8 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .st-title{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(38px,10vw,64px);line-height:1.05;letter-spacing:-.02em;margin:.1em 0 .3em}
 .st-note{font-style:italic;color:var(--ink);margin:0 0 .4em;font-size:1.05em}
 .st-sub{color:var(--soft);font-size:15px;line-height:1.5;margin:0 0 1.6em}
-.st-pick{display:flex;align-items:center;gap:.6em;font-size:15px;color:var(--soft);margin:0 0 2.4em}
-.st-pick select{font:inherit;color:var(--ink);background:var(--veil);border:1px solid var(--line);border-radius:2px;padding:.3em .5em}
+.st-pick{font-size:15px;color:var(--soft);margin:0 0 2.4em;padding-left:.8em;border-left:2px solid var(--line)}
+.st-pick b{color:var(--ink);font-weight:600}
 .st h2{font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin:2.8em 0 1em;padding-bottom:.6em;border-bottom:1px solid var(--line)}
 .st-empty{color:var(--soft);font-style:italic}
 /* bảng tier */
@@ -638,8 +638,8 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 <main class="st">
   <h1 class="st-title">Sổ tay của Luke</h1>
   <p class="st-note">“Anh chỉ đoán thôi. Có khi sai, có khi mai lại nghĩ khác.”</p>
-  <p class="st-sub">Đây là những gì Luke nghĩ về năng lực của người đã gặp, không phải sự thật của Artos. Đọc tới chương nào, sổ mở tới chương đó.</p>
-  <label class="st-pick">Đã đọc tới <select id="upto" aria-label="Đã đọc tới chương"></select></label>
+  <p class="st-sub">Đây là những gì Luke nghĩ về năng lực của người đã gặp, không phải sự thật của Artos. Đọc hết chương nào, sổ tự mở tới chương đó.</p>
+  <p class="st-pick" id="upto" hidden></p>
   <div id="out"></div>
   <nav class="st-go" aria-label="Đi tiếp">
     <a class="st-cur" id="back" href="index.html">Bắt đầu đọc</a>
@@ -658,15 +658,17 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   label(); tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label()};
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
   function mark(id,cls){return '<svg viewBox="0 0 100 100" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+(D.marks[id]||'')+'</g></svg>'}
-  // chương đã đọc: lấy số lớn nhất từng mở (a07-max), hoặc chương mở gần nhất
-  var seen=+(get('a07-max')||0), last=(get('a07-last')||'').match(/^ch(\d+)\.html$/);
-  if(last) seen=Math.max(seen,+last[1]);
-  var q=location.hash.match(/^#ch(\d+)$/); if(q) seen=+q[1];
-  seen=Math.min(seen,D.max);
-  var sel=document.getElementById('upto'), opts='<option value="0">chưa đọc</option>';
-  for(var i=1;i<=D.max;i++) opts+='<option value="'+i+'">chương '+i+'</option>';
-  sel.innerHTML=opts; sel.value=String(seen);
-  sel.onchange=function(){render(+sel.value)};
+  // tự theo tiến độ: sổ mở tới chương người đọc đã đọc HẾT (a07-done, ghi khi cuộn tới cuối chương)
+  var opened=+(get('a07-max')||0), last=(get('a07-last')||'').match(/^ch(\d+)\.html$/);
+  if(last) opened=Math.max(opened,+last[1]);
+  var dn=get('a07-done'); if(dn===null){dn=+(get('a07-max')||0); if(dn) store('a07-done',dn)} dn=+dn||0; // người đọc cũ: giữ như trước
+  var q=location.hash.match(/^#ch(\d+)$/); if(q && +q[1]<=opened && +q[1]>dn){dn=+q[1]; store('a07-done',dn)} // bấm từ cuối chương
+  var seen=Math.min(dn,D.max), up=document.getElementById('upto');
+  if(seen){
+    var reading=Math.max(opened,last?+last[1]:0);
+    up.innerHTML='Sổ đang mở tới hết <b>chương '+seen+'</b>.'+(reading>seen&&reading<=D.max?' Đọc hết chương '+reading+', sổ sẽ tự mở thêm.':'');
+    up.hidden=false;
+  }
   var CH=[{"n":"01","title":"Thứ gì đó đã bị bỏ quên"},{"n":"02","title":"Bảy ngày"},{"n":"03","title":"Bữa Tiệc Đầu Tiên"},{"n":"04","title":"Hai mươi cái tên"},{"n":"05","title":"Lửa bếp"},{"n":"06","title":"Xích"},{"n":"07","title":"Việc làng"},{"n":"08","title":"Chỗ thứ ba"},{"n":"09","title":"Con số trên bảng"},{"n":"10","title":"Chợ trưa"},{"n":"11","title":"Cổng hầm"},{"n":"12","title":"Bên trong hầm tối"}];
   function href(n){return 'ch'+(n<10?'0':'')+n+'.html'}
   function has(n){return CH.some(function(c){return +c.n===n})}
