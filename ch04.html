@@ -143,6 +143,23 @@ em .nm{font-style:italic}
 @keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
 @keyframes nmlitice{0%{text-shadow:0 0 0 transparent;filter:brightness(1)}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor;filter:brightness(1.35)}100%{text-shadow:0 0 0 transparent;filter:brightness(1)}}
 @media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
+/* chỗ chạm được: nhịp tròn màu đèn đập liên tục tới khi người đọc chạm, chữ gợi ý màu đèn; tranh động không có dấu này */
+.tap-host{position:relative}
+.tapdot{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;pointer-events:none;z-index:2}
+.tapdot::before,.tapdot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--lamp);opacity:0;animation:tapring 2.4s ease-out infinite}
+.tapdot::after{animation-delay:.6s}
+.tapdot i{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--lamp);box-shadow:0 0 14px var(--lamp);opacity:.85;animation:tapcore 2.4s ease-in-out infinite}
+@keyframes tapring{0%{transform:scale(.3);opacity:.95}100%{transform:scale(2.4);opacity:0}}
+@keyframes tapcore{0%,100%{transform:scale(.8)}50%{transform:scale(1.2)}}
+.act-lock .tapdot{top:62%}
+.touched .tapdot{display:none}
+.act .act-hint,.card-fig figcaption,.row-hint{color:var(--lamp);font-style:normal;font-size:13px;letter-spacing:.08em}
+.act-hint::before,.card-fig figcaption::before,.row-hint::before{content:"";display:inline-block;width:7px;height:7px;margin-right:.6em;border-radius:50%;background:var(--lamp);box-shadow:0 0 8px var(--lamp);vertical-align:.1em;animation:tapcore 2.4s ease-in-out infinite}
+.touched .act-hint::before,.touched figcaption::before,.touched .row-hint::before{animation:none;opacity:.4}
+.row-hint{display:block;text-align:center;margin:-1.2em 0 2.2em}
+.nudge{animation:nudge 1.3s ease-out}
+@keyframes nudge{0%{filter:none;transform:none}25%{filter:drop-shadow(0 0 16px var(--lamp));transform:scale(1.035)}100%{filter:none;transform:none}}
+@media (prefers-reduced-motion: reduce){.tapdot::before,.tapdot::after,.tapdot i,.act-hint::before,.card-fig figcaption::before,.row-hint::before{animation:none}.nudge{animation:none}}
 /* tương tác người đọc */
 .act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
@@ -2319,7 +2336,85 @@ em .nm{font-style:italic}
         }
       } catch (e) {}
     }
+    /* ---- năng lực riêng của nhân vật chính (cùng cấp với xích của Leon) ---- */
+    // Clevia, Unlock: trang tối đi, cơ cấu bên trong ổ khoá hiện lên thành nét sáng như bản vẽ, từng cái lẫy được đẩy lên,
+    // lõi khoá xoay "cạch", mọi nét bùng sáng rồi tan ra ngoài. (Chỉ cho thấy cảm giác chạm thấu cơ cấu, không gì hơn.)
+    MORE.keysense = function (t, R) {
+      if (t > 4.3) return true;
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), ink = C.dark ? '#f3c27a' : '#b0681c', hot = '#fff3d6';
+      var dim = t < 0.3 ? t / 0.3 : t < 2.9 ? 1 : Math.max(0, 1 - (t - 2.9) / 1.2);
+      edge('#000000', (C.dark ? 0.85 : 0.72) * dim, 0.08); wash('#05070a', 0.25 * dim);
+      var rev = Math.min(1, Math.max(0, (t - 0.2) / 1.1)), turn = t < 2.7 ? 0 : Math.min(1, (t - 2.7) / 0.18), out = t < 2.85 ? 0 : (t - 2.85) / 1.4;
+      var sc = 1 + out * 0.6, a = rev * (out > 0 ? Math.max(0, 1 - out) : 1), R0 = m * 0.36 * sc;
+      g.save(); g.translate(cx, cy); g.lineCap = 'round'; g.shadowColor = ink; g.shadowBlur = 10 + 20 * (turn * (1 - out));
+      var col = turn > 0 && out < 0.5 ? hot : ink;
+      g.strokeStyle = rgba(col, 0.85 * a); g.fillStyle = rgba(col, 0.85 * a);
+      // vành răng cưa xoay chậm
+      g.save(); g.rotate(t * 0.25); g.lineWidth = 1.2; g.beginPath();
+      var teeth = 48; for (var i = 0; i <= teeth * rev; i++) { var aa = i / teeth * 6.283, r1 = R0, r2 = R0 * (i % 2 ? 1.04 : 1); g.lineTo(Math.cos(aa) * r2, Math.sin(aa) * r2); } g.stroke(); g.restore();
+      // thân khoá và lõi
+      g.lineWidth = 1.5; g.beginPath(); g.arc(0, 0, R0 * 0.82, -1.57, -1.57 + 6.283 * rev); g.stroke();
+      g.save(); g.rotate(turn * 0.55); g.lineWidth = 2; g.beginPath(); g.arc(0, 0, R0 * 0.5, -1.57, -1.57 + 6.283 * Math.min(1, rev * 1.3)); g.stroke();
+      // rãnh chìa trong lõi
+      g.lineWidth = 1.2; g.beginPath(); g.moveTo(-R0 * 0.32, 0); g.lineTo(R0 * 0.32, 0); g.moveTo(-R0 * 0.2, -R0 * 0.08); g.lineTo(R0 * 0.2, -R0 * 0.08); g.stroke(); g.restore();
+      // tia mảnh toả ra như kim la bàn
+      g.lineWidth = 0.6; for (var j = 0; j < 24; j++) { if (j / 24 > rev) break; var ja = j / 24 * 6.283; g.beginPath(); g.moveTo(Math.cos(ja) * R0 * 1.08, Math.sin(ja) * R0 * 1.08); g.lineTo(Math.cos(ja) * R0 * (1.15 + (j % 3 ? 0 : 0.1)), Math.sin(ja) * R0 * (1.15 + (j % 3 ? 0 : 0.1))); g.stroke(); }
+      // sáu chồng lẫy: lò xo + chốt, được đẩy lên lần lượt
+      var pw = R0 * 0.09, gap = R0 * 0.15, top = -R0 * 0.78, shear = -R0 * 0.5;
+      for (var k = 0; k < 6; k++) {
+        if (k / 6 > rev * 1.2) break;
+        var x = (k - 2.5) * gap, pushT = 1.15 + k * 0.24, up = t < pushT ? 0 : Math.min(1, (t - pushT) / 0.12), lift = up * R0 * 0.12;
+        // lò xo
+        g.lineWidth = 1; g.beginPath(); var sy0 = top, sy1 = shear - R0 * 0.16 - lift; for (var z = 0; z <= 8; z++) { var zy = sy0 + (sy1 - sy0) * z / 8; g.lineTo(x + (z % 2 ? pw * 0.6 : -pw * 0.6), zy); } g.stroke();
+        // chốt
+        g.lineWidth = 1.6; g.strokeRect(x - pw / 2, shear - R0 * 0.16 - lift, pw, R0 * 0.16); g.strokeRect(x - pw / 2, shear - lift, pw, R0 * 0.22);
+        if (up > 0 && t - pushT < 0.35) { var fl = g.createRadialGradient(x, shear, 0, x, shear, pw * 3); fl.addColorStop(0, rgba(hot, 0.9 * (1 - (t - pushT) / 0.35))); fl.addColorStop(1, rgba(hot, 0)); g.fillStyle = fl; g.fillRect(x - pw * 3, shear - pw * 3, pw * 6, pw * 6); }
+      }
+      // đường cắt (chỗ các chốt phải thẳng hàng)
+      if (rev > 0.6) { g.setLineDash([4, 6]); g.lineWidth = 0.8; g.strokeStyle = rgba(col, 0.5 * a); g.beginPath(); g.moveTo(-R0 * 0.55, shear); g.lineTo(R0 * 0.55, shear); g.stroke(); g.setLineDash([]); }
+      g.restore();
+      // "cạch": vòng sáng bung ra
+      if (t > 2.7) for (var q = 0; q < 4; q++) { var u = (t - 2.7 - q * 0.1) / 1.2; if (u <= 0 || u > 1) continue; g.strokeStyle = rgba(hot, 0.8 * (1 - u)); g.lineWidth = 3 * (1 - u) + 0.5; g.beginPath(); g.arc(cx, cy, m * (0.1 + u * 0.9), 0, 7); g.stroke(); }
+      if (t > 2.7 && t < 3.1) { var fx = g.createRadialGradient(cx, cy, 0, cx, cy, m * 0.5); fx.addColorStop(0, rgba(hot, 0.7 * (1 - (t - 2.7) / 0.4))); fx.addColorStop(1, rgba(hot, 0)); g.fillStyle = fx; g.fillRect(0, 0, W, H); }
+      return false;
+    };
+    // bản ngắn cho ổ khoá người đọc tự mở bằng tay: cơ cấu đã thấu sẵn, chỉ còn cú xoay và bùng sáng
+    MORE.keyburst = function (t, R) { return t > 1.75 ? true : MORE.keysense(t + 2.55, R); };
+
+    // Luke, Anomaly Sense: mọi thứ chậm lại và nhạt màu, tiếng tim đập, từng vòng sóng dò quét qua trang,
+    // làm những hạt bụi trong không khí loé lên; tới một chỗ thì sóng vấp phải thứ lệch nhịp và nó giật nhoè.
+    MORE.anomaly = function (t, R) {
+      if (t > 5) return true;
+      var cx = W / 2, cy = H * 0.55, m = Math.max(W, H), ice = C.dark ? '#cfeef5' : '#2e7484', bad = C.dark ? '#ff8a6a' : '#c2412a';
+      var k = t < 0.5 ? t / 0.5 : t < 3.9 ? 1 : Math.max(0, 1 - (t - 3.9) / 1.1);
+      wash(C.dark ? '#7f8a8c' : '#a9b2b4', (C.dark ? 0.12 : 0.3) * k); edge('#000000', 0.55 * k, 0.2);
+      var beat = [0.45, 0.72, 1.75, 2.02, 3.05, 3.32]; beat.forEach(function (b) { var u = t - b; if (u > 0 && u < 0.25) edge('#000000', 0.25 * (1 - u / 0.25) * k, 0.25); });
+      var ax = W * (R[0] > 0.5 ? 0.72 : 0.28), ay = H * (0.28 + R[1] * 0.2), ad = Math.hypot(ax - cx, ay - cy);
+      // bụi lơ lửng, chỉ hiện khi sóng quét qua
+      var waves = [0.4, 1.4, 2.4];
+      for (var i = 0; i < 60; i++) {
+        var px = R[i] * W, py = R[(i * 7 + 3) % 60] * H, d = Math.hypot(px - cx, py - cy), lit = 0;
+        waves.forEach(function (w0) { var rr = (t - w0) * m * 0.55; if (rr > 0) lit = Math.max(lit, Math.max(0, 1 - Math.abs(rr - d) / 40)); });
+        if (lit > 0.01) { g.fillStyle = rgba(ice, 0.9 * lit * k); g.beginPath(); g.arc(px, py, 1.6, 0, 7); g.fill(); }
+      }
+      waves.forEach(function (w0) { var u = t - w0, rr = u * m * 0.55; if (u <= 0 || rr > m) return; g.strokeStyle = rgba(ice, 0.85 * (1 - rr / m) * k); g.lineWidth = 1.8; g.beginPath(); g.arc(cx, cy, rr, 0, 7); g.stroke(); g.lineWidth = 0.6; g.beginPath(); g.arc(cx, cy, rr * 0.96, 0, 7); g.stroke(); });
+      // chỗ lệch nhịp: sóng đầu tiên chạm tới thì nó hiện ra, giật nhoè, lệch màu
+      var found = 0.4 + ad / (m * 0.55);
+      if (t > found) {
+        var u2 = t - found, fa = Math.min(1, u2 / 0.15) * k, jit = (R[(Math.floor(t * 18)) % 60] - 0.5) * 8;
+        for (var c = 0; c < 3; c++) {
+          var off = (c - 1) * (3 + 2 * Math.sin(t * 30)), rr2 = 18 + 6 * Math.sin(t * 9 + c);
+          g.strokeStyle = rgba(c === 1 ? bad : (c ? '#5fd0ff' : '#ff5fa0'), (c === 1 ? 0.9 : 0.4) * fa); g.lineWidth = c === 1 ? 2 : 1.2;
+          g.beginPath(); for (var s = 0; s <= 14; s++) { var aa = s / 14 * 6.283, j = (R[(s * 5 + c + Math.floor(t * 12)) % 60] - 0.5) * 10; g.lineTo(ax + off + jit * 0.3 + Math.cos(aa) * (rr2 + j), ay + Math.sin(aa) * (rr2 + j)); } g.closePath(); g.stroke();
+        }
+        if (Math.floor(t * 14) % 3 === 0) { g.fillStyle = rgba(bad, 0.25 * fa); g.fillRect(ax - 40 + jit, ay - 2, 80, 3); g.fillRect(ax - 25 - jit, ay + 9, 50, 2); }
+        // đường dò kéo từ tâm tới chỗ lệch
+        g.setLineDash([3, 7]); g.strokeStyle = rgba(ice, 0.45 * fa); g.lineWidth = 1; g.beginPath(); g.moveTo(cx, cy); g.lineTo(ax, ay); g.stroke(); g.setLineDash([]);
+      }
+      return false;
+    };
     window.a07cast = cast; // ổ khoá trong acts.js gọi khi bật mở
+    window.a07shot = function (kind, quiet) { shots.push({ kind: kind, t0: performance.now(), R: seeds() }); kick(); if (!quiet && window.a07sfx) window.a07sfx(kind); };
 
     check(); if (openT0 != null) kick();
   })();
@@ -2680,7 +2775,7 @@ em .nm{font-style:italic}
         if (bronze) pins.forEach(function (r) { r.classList.add('on'); });
         box.classList.remove('holding'); box.classList.add('done'); if (!sound) box.classList.add('quiet');
         btn.setAttribute('aria-label', 'Ổ khoá đã mở');
-        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(); }
+        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst', true); }, 250); }
       }
       function down(e) {
         if (done || (e.button && e.button > 0)) return;
@@ -2920,12 +3015,55 @@ em .nm{font-style:italic}
         nz(o, 'bandpass', 4200, 1200, 4, 0.25, 0.5, n + 5.1);                 // giật ngược về
         for (var j = 0; j < 10; j++) clink(o, n + 5.1 + j * 0.045, 0.03);
       },
+      keysense: function (o, n) {
+        nz(o, 'lowpass', 200, 900, 1, 0.35, 1.6, n);                               // cơ cấu hiện ra: tiếng ù dâng lên
+        for (var k = 0; k < 6; k++) { sine(o, 2600 + k * 160, 0.05, 0.05, n + 1.15 + k * 0.24, 'triangle'); nz(o, 'highpass', 5000, 5000, 1, 0.05, 0.02, n + 1.15 + k * 0.24); }
+        S.keyburst(o, n + 2.55);
+      },
+      keyburst: function (o, n) { clank(o, n + 0.15, 0.06); nz(o, 'bandpass', 2000, 900, 3, 0.4, 0.06, n + 0.15); [1046, 1568, 2093, 3136].forEach(function (f, i) { sine(o, f, 0.03, 1.4, n + 0.2 + i * 0.05); }); },
+      anomaly: function (o, n) {
+        sine(o, 5400, 0.012, 3.6, n + 0.2);                                         // tiếng ù tai mảnh
+        [0.45, 0.72, 1.75, 2.02, 3.05, 3.32].forEach(function (b, i) { sine(o, 58, i % 2 ? 0.28 : 0.4, 0.22, n + b); sine(o, 110, 0.08, 0.12, n + b); });
+        [0.4, 1.4, 2.4].forEach(function (w) { nz(o, 'bandpass', 3000, 600, 2, 0.06, 0.9, n + w); });
+        var x = ac.createOscillator(), g2 = gain(0), st = n + 1.05; x.type = 'sawtooth'; x.frequency.value = 92; var lp = filt('bandpass', 900, 3); g2.gain.setValueAtTime(0, st); g2.gain.linearRampToValueAtTime(0.03, st + 0.05);
+        for (var q = 0; q < 20; q++) g2.gain.setValueAtTime(q % 2 ? 0.005 : 0.03, st + 0.08 + q * 0.07); g2.gain.linearRampToValueAtTime(0, st + 2.6); x.connect(lp); lp.connect(g2); g2.connect(o); x.start(st); x.stop(st + 2.7);
+      },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
     window.a07sfx = function (name) {
       if (!S[name] || !playing || !ac || ac.state !== 'running') return;
       try { var o = gain(1); o.connect(master); S[name](o, ac.currentTime); } catch (e) {}
     };
+  })();
+
+  /* làm nổi các chỗ chạm được (khoá, kính, thẻ lật, thẻ hệ) để người đọc lướt nhanh không bỏ qua:
+     nhịp tròn đập tới khi chạm; lần đầu cuộn tới thì vật đó loé lên một cái kèm tiếng "tinh" nhỏ */
+  (function () {
+    var groups = [];
+    [].forEach.call(document.querySelectorAll('.act-lock'), function (b) { groups.push([b, b.querySelector('.lockbtn')]); });
+    [].forEach.call(document.querySelectorAll('.act-glass'), function (b) { groups.push([b, b]); });
+    [].forEach.call(document.querySelectorAll('.card-fig'), function (b) { groups.push([b, b.querySelector('.card')]); });
+    [].forEach.call(document.querySelectorAll('.type-row'), function (b) {
+      var h = document.createElement('span'); h.className = 'row-hint'; h.textContent = 'chạm để lật'; h.setAttribute('aria-hidden', 'true'); b.parentNode.insertBefore(h, b.nextSibling);
+      groups.push([b, b.querySelector('.tcard')]);
+    });
+    if (!groups.length) return;
+    groups.forEach(function (gp) {
+      var box = gp[0], host = gp[1]; if (!host) return;
+      host.classList.add('tap-host');
+      var d = document.createElement('span'); d.className = 'tapdot'; d.setAttribute('aria-hidden', 'true'); d.innerHTML = '<i></i>'; host.appendChild(d);
+      box.addEventListener('pointerdown', function () { box.classList.add('touched'); var h = box.nextSibling; if (h && h.className === 'row-hint') h.classList.add('touched'); }, { passive: true });
+    });
+    if (!window.IntersectionObserver) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; io.unobserve(e.target);
+        if (e.target.classList.contains('touched') || e.target.classList.contains('done')) return;
+        var h = e.target._host; h.classList.remove('nudge'); void h.offsetWidth; h.classList.add('nudge');
+        if (playing && ac && ac.state === 'running') { try { var o = gain(1); o.connect(master); [1760, 2637].forEach(function (f, i) { var x = ac.createOscillator(), g = gain(0), n = ac.currentTime + i * 0.09; x.frequency.value = f; g.gain.setValueAtTime(0.03, n); g.gain.exponentialRampToValueAtTime(0.0001, n + 0.6); x.connect(g); g.connect(o); x.start(n); x.stop(n + 0.65); }); } catch (er) {} }
+      });
+    }, { rootMargin: '0px 0px -35% 0px' });
+    groups.forEach(function (gp) { if (gp[1]) { gp[0]._host = gp[1]; io.observe(gp[0]); } });
   })();
 
 })();
