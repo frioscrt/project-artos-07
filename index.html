@@ -343,28 +343,49 @@ em .nm{font-style:italic}
 .cmt{margin:3.4em auto 0;max-width:34em;text-align:left}
 .cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
 .cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
-.cmt-list{list-style:none;margin:0 0 1.8em;padding:0}
-.cmt-list li{padding:1em 0;border-bottom:1px solid var(--line)}
-.cmt-list li:first-child{border-top:1px solid var(--line)}
-.cmt-list .who{display:flex;justify-content:space-between;gap:1em;margin:0 0 .35em;font-size:14px}
-.cmt-list .who b{color:var(--lamp);font-weight:600}
-.cmt-list .who time{color:var(--soft)}
-.cmt-list .tx{margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
-.cmt-list .me{animation:cmtin .8s ease both}
-@keyframes cmtin{from{opacity:0;transform:translateY(10px)}}
+.cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
+.cc{perspective:1200px}
+.cc .ci{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,1.25,.5,1)}
+.cc.back .ci{transform:rotateY(180deg)}
+.cc .cf,.cc .cb{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px}
+.cc .cf{position:relative;overflow:hidden;padding:14px 16px 16px;border:1px solid color-mix(in srgb,var(--seal) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--seal) 10%,transparent),transparent 65%)}
+.cc .cf::before{content:"";position:absolute;left:16px;right:16px;top:0;height:2px;background:var(--seal);opacity:.8;border-radius:0 0 2px 2px}
+.cc .cf>svg{position:absolute;right:-18px;bottom:-18px;width:96px;height:96px;fill:none;stroke:var(--seal);stroke-width:1;opacity:.13}
+.cc .cf>svg .d{fill:var(--seal);stroke:none}
+.cc .cb{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(circle at 50% 45%,#1d3550,#0b1520 75%);border:1px solid #2a4a66;color:#9fd0de}
+.cc .cb svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2;opacity:.85}
+.cc .cb svg .d{fill:#D4697E;stroke:none}
+.cc .cb span{font-size:10px;letter-spacing:.32em;opacity:.7}
+.cc .who{display:flex;align-items:center;gap:10px;margin:4px 0 8px;font-size:14px}
+.cc .seal{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--seal);color:var(--seal);font-size:14px;font-weight:600;position:relative}
+.cc .seal::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px dashed var(--seal);opacity:.45}
+.cc .who b{color:var(--ink);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc .who time{color:var(--soft);font-size:13px;font-variant-numeric:tabular-nums}
+.cc .tx{position:relative;margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
+.cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
+@media (prefers-reduced-motion: reduce){.cc .ci{transition:none}.cc.back .ci{transform:none}.cc .cb{display:none}}
 .cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
-.bl-form{display:flex;flex-direction:column;gap:10px}
-.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px;padding:.7em .8em;width:100%;box-sizing:border-box}
-.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.5}
-.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--lamp)}
+.bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
+.bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:.6em .1em;width:100%;box-sizing:border-box}
+.bl-form textarea{min-height:5.5em;resize:vertical;line-height:1.5}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-bottom-color:var(--lamp)}
 .bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.bl-form button{font:inherit;font-size:16px;color:var(--lamp);background:transparent;border:1px solid var(--lamp);border-radius:999px;padding:.55em 1.6em;cursor:pointer}
-.bl-form button:disabled{opacity:.5;cursor:default}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px}
 .bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
 .bl-form .st.ok{color:var(--lamp)}
-.tg-msg{margin:2.6em 0 0;padding:1.6em 1.2em 1.4em;border:1px solid var(--line);border-radius:14px;position:relative}
-.tg-msg::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:3px;background:var(--pw-luke,#2E7484);border-radius:2px}
+.hold{--p:0;position:relative;flex:0 0 auto;width:86px;height:86px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--pw-clevia);font:inherit;font-size:13px;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 22%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 39px,#000 40px);mask:radial-gradient(circle,transparent 39px,#000 40px)}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;border:1px dashed color-mix(in srgb,var(--pw-clevia) 55%,transparent);transition:transform .2s}
+.hold.on .in{transform:scale(.92) rotate(20deg)}
+.hold:disabled{opacity:.5;cursor:default}
+.hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.hold.burst i{animation:hb .9s cubic-bezier(.2,.7,.3,1) forwards}
+.hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
+.hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
+@keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+.tg-msg{margin:2.6em 0 0}
 
 </style>
 <style>

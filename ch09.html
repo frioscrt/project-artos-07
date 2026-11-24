@@ -343,28 +343,49 @@ em .nm{font-style:italic}
 .cmt{margin:3.4em auto 0;max-width:34em;text-align:left}
 .cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
 .cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
-.cmt-list{list-style:none;margin:0 0 1.8em;padding:0}
-.cmt-list li{padding:1em 0;border-bottom:1px solid var(--line)}
-.cmt-list li:first-child{border-top:1px solid var(--line)}
-.cmt-list .who{display:flex;justify-content:space-between;gap:1em;margin:0 0 .35em;font-size:14px}
-.cmt-list .who b{color:var(--lamp);font-weight:600}
-.cmt-list .who time{color:var(--soft)}
-.cmt-list .tx{margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
-.cmt-list .me{animation:cmtin .8s ease both}
-@keyframes cmtin{from{opacity:0;transform:translateY(10px)}}
+.cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
+.cc{perspective:1200px}
+.cc .ci{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,1.25,.5,1)}
+.cc.back .ci{transform:rotateY(180deg)}
+.cc .cf,.cc .cb{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px}
+.cc .cf{position:relative;overflow:hidden;padding:14px 16px 16px;border:1px solid color-mix(in srgb,var(--seal) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--seal) 10%,transparent),transparent 65%)}
+.cc .cf::before{content:"";position:absolute;left:16px;right:16px;top:0;height:2px;background:var(--seal);opacity:.8;border-radius:0 0 2px 2px}
+.cc .cf>svg{position:absolute;right:-18px;bottom:-18px;width:96px;height:96px;fill:none;stroke:var(--seal);stroke-width:1;opacity:.13}
+.cc .cf>svg .d{fill:var(--seal);stroke:none}
+.cc .cb{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(circle at 50% 45%,#1d3550,#0b1520 75%);border:1px solid #2a4a66;color:#9fd0de}
+.cc .cb svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2;opacity:.85}
+.cc .cb svg .d{fill:#D4697E;stroke:none}
+.cc .cb span{font-size:10px;letter-spacing:.32em;opacity:.7}
+.cc .who{display:flex;align-items:center;gap:10px;margin:4px 0 8px;font-size:14px}
+.cc .seal{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--seal);color:var(--seal);font-size:14px;font-weight:600;position:relative}
+.cc .seal::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px dashed var(--seal);opacity:.45}
+.cc .who b{color:var(--ink);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc .who time{color:var(--soft);font-size:13px;font-variant-numeric:tabular-nums}
+.cc .tx{position:relative;margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
+.cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
+@media (prefers-reduced-motion: reduce){.cc .ci{transition:none}.cc.back .ci{transform:none}.cc .cb{display:none}}
 .cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
-.bl-form{display:flex;flex-direction:column;gap:10px}
-.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px;padding:.7em .8em;width:100%;box-sizing:border-box}
-.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.5}
-.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--lamp)}
+.bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
+.bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:.6em .1em;width:100%;box-sizing:border-box}
+.bl-form textarea{min-height:5.5em;resize:vertical;line-height:1.5}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-bottom-color:var(--lamp)}
 .bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.bl-form button{font:inherit;font-size:16px;color:var(--lamp);background:transparent;border:1px solid var(--lamp);border-radius:999px;padding:.55em 1.6em;cursor:pointer}
-.bl-form button:disabled{opacity:.5;cursor:default}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px}
 .bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
 .bl-form .st.ok{color:var(--lamp)}
-.tg-msg{margin:2.6em 0 0;padding:1.6em 1.2em 1.4em;border:1px solid var(--line);border-radius:14px;position:relative}
-.tg-msg::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:3px;background:var(--pw-luke,#2E7484);border-radius:2px}
+.hold{--p:0;position:relative;flex:0 0 auto;width:86px;height:86px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--pw-clevia);font:inherit;font-size:13px;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 22%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 39px,#000 40px);mask:radial-gradient(circle,transparent 39px,#000 40px)}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;border:1px dashed color-mix(in srgb,var(--pw-clevia) 55%,transparent);transition:transform .2s}
+.hold.on .in{transform:scale(.92) rotate(20deg)}
+.hold:disabled{opacity:.5;cursor:default}
+.hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.hold.burst i{animation:hb .9s cubic-bezier(.2,.7,.3,1) forwards}
+.hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
+.hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
+@keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+.tg-msg{margin:2.6em 0 0}
 
 </style>
 <style>
@@ -870,15 +891,16 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
       <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
     </a>
     <section class="cmt" id="binh-luan" data-ch="9" aria-label="Bình luận">
-    <h2>Bình luận</h2>
+    <h2>Bình luận<span class="cnt" hidden></span></h2>
     <p class="sub">Cậu nghĩ gì về chương này? Lưu ý: bình luận có thể tiết lộ nội dung chương.</p>
     <p class="cmt-empty">Đang tải bình luận…</p><ol class="cmt-list"></ol>
     <form class="bl-form" data-kind="bl" novalidate>
+  <p class="k">Thẻ của cậu</p>
   <input name="name" maxlength="40" autocomplete="nickname" placeholder="Tên của cậu (bỏ trống = ẩn danh)">
   
   <textarea name="text" maxlength="1500" placeholder="Viết bình luận của cậu…"></textarea>
   <input name="web" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <div class="row"><p class="st" role="status"></p><button type="submit">Gửi</button></div>
+  <div class="row"><p class="st" role="status">Chạm và giữ vòng đỏ để gửi.</p><button type="button" class="hold" aria-label="Chạm và giữ để gửi"><span class="in">Giữ để<br>gửi</span><i></i><i></i><i></i></button></div>
 </form>
   </section>
   </footer>
@@ -911,27 +933,57 @@ function close(){d.classList.remove('on');document.body.style.overflow='';setTim
 b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();
 
 (function(){
+  var U="https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec", RING="<svg viewBox=\"0 0 60 60\" aria-hidden=\"true\"><circle cx=\"30\" cy=\"30\" r=\"27\" stroke-dasharray=\"1 4\"/><circle cx=\"30\" cy=\"30\" r=\"21\"/><circle cx=\"30\" cy=\"30\" r=\"14\" stroke-dasharray=\"10 3 2 3\"/><circle class=\"d\" cx=\"30\" cy=\"30\" r=\"2.6\"/></svg>";
+  var SEALS=['var(--pw-clevia)','var(--pw-luke)','var(--pw-leon)','var(--lamp)'];
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function E(f,k){return f.elements.namedItem(k)}
-  var U="https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec";
+  function sfx(n){if(window.a07sfx)window.a07sfx(n)}
+  var lastFlip=0;function flipSnd(){var t=Date.now();if(t-lastFlip>140){lastFlip=t;sfx('flip')}}
   function st(f,t,ok){var s=f.querySelector('.st');s.textContent=t;s.className='st'+(ok?' ok':'')}
   function when(t){var d=new Date(t),p=function(x){return('0'+x).slice(-2)};return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()}
-  function item(c,me){var li=document.createElement('li');if(me)li.className='me';var w=document.createElement('p');w.className='who';var b=document.createElement('b');b.textContent=c.n;var tm=document.createElement('time');tm.textContent=when(c.t);w.appendChild(b);w.appendChild(tm);var x=document.createElement('p');x.className='tx';x.textContent=c.x;li.appendChild(w);li.appendChild(x);return li}
+  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+  function card(c,me){
+    var li=el('li','cc'+(reduce?'':' back')+(me?' me':''));li.style.setProperty('--seal',SEALS[hash(c.n)%SEALS.length]);
+    var ci=el('div','ci'),cf=el('div','cf'),cb=el('div','cb');
+    cf.innerHTML=RING;var w=el('p','who');var seal=el('span','seal',(c.n.trim()[0]||'?').toUpperCase());w.appendChild(seal);w.appendChild(el('b','',c.n));w.appendChild(el('time','',when(c.t)));
+    cf.appendChild(w);cf.appendChild(el('p','tx',c.x));
+    cb.innerHTML=RING;cb.appendChild(el('span','','PROJECT ARTOS 07'));cb.setAttribute('aria-hidden','true');
+    ci.appendChild(cf);ci.appendChild(cb);li.appendChild(ci);return li}
+  var flipQ=[],flipT=0;
+  function queueFlip(li){flipQ.push(li);if(!flipT)run()}
+  function run(){var li=flipQ.shift();if(!li){flipT=0;return}li.classList.remove('back');flipSnd();flipT=setTimeout(run,160)}
+  var fio='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fio.unobserve(e.target);queueFlip(e.target)}})},{threshold:.35}):null;
+  function watch(li){if(reduce)return;if(fio)fio.observe(li);else li.classList.remove('back')}
   var sec=document.querySelector('.cmt');
+  function count(n){var c=sec.querySelector('.cnt');c.textContent=n+' tấm thẻ';c.hidden=!n}
+  var total=0;
   function load(){var ol=sec.querySelector('.cmt-list'),em=sec.querySelector('.cmt-empty');
-    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){ol.appendChild(item(c))});em.textContent='Chưa có bình luận nào. Cậu là người đầu tiên nha.';em.hidden=d.list.length>0})
+    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){var li=card(c);ol.appendChild(li);watch(li)});total=d.list.length;count(total);em.textContent='Chưa có tấm thẻ nào. Cậu là người đầu tiên nha.';em.hidden=total>0})
     .catch(function(){em.textContent='Chưa tải được bình luận. Cậu thử tải lại trang sau nha.';em.hidden=false})}
   if(sec){if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();load()}},{rootMargin:'600px'});io.observe(sec)}else load()}
   [].forEach.call(document.querySelectorAll('.bl-form'),function(f){
     try{var nm=localStorage.getItem('a07-name');if(nm)E(f,'name').value=nm}catch(e){}
-    f.addEventListener('submit',function(e){e.preventDefault();var text=E(f,'text').value.trim();if(text.length<2){st(f,'Cậu viết thêm chút nữa nha.');E(f,'text').focus();return}
-      var kind=f.getAttribute('data-kind'),d={type:kind,name:E(f,'name').value.trim(),text:text,web:E(f,'web').value};if(kind==='ln')d.contact=E(f,'contact').value.trim();else d.ch=sec.getAttribute('data-ch');
+    var btn=f.querySelector('.hold'),busy=false,raf=0,t0=0,NEED=900;
+    function setP(p){btn.style.setProperty('--p',p)}
+    function ready(){var text=E(f,'text').value.trim();if(text.length<2){st(f,'Cậu viết vài chữ trước đã nha.');E(f,'text').focus();return false}return true}
+    function send(){
+      var kind=f.getAttribute('data-kind'),d={type:kind,name:E(f,'name').value.trim(),text:E(f,'text').value.trim(),web:E(f,'web').value};if(kind==='ln')d.contact=E(f,'contact').value.trim();else d.ch=sec.getAttribute('data-ch');
       try{localStorage.setItem('a07-name',d.name)}catch(e){}
-      var btn=f.querySelector('button');btn.disabled=true;st(f,'Đang gửi…');
+      busy=true;btn.disabled=true;st(f,'Đang gửi…');
       fetch(U,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(r){
         if(!r.ok){st(f,r.why==='nhieu'?'Đang có nhiều người gửi quá, cậu đợi vài phút rồi gửi lại nha.':'Chưa gửi được, cậu thử lại nha.');return}
         E(f,'text').value='';if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
-        else{st(f,'Đã đăng bình luận.',1);if(r.item){var ol=sec.querySelector('.cmt-list');ol.appendChild(item(r.item,1));sec.querySelector('.cmt-empty').hidden=true}}
-      }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){btn.disabled=false})})})
+        else{st(f,'Thẻ của cậu đã nằm trên bàn.',1);if(r.item){var ol=sec.querySelector('.cmt-list'),li=card(r.item,1);ol.appendChild(li);sec.querySelector('.cmt-empty').hidden=true;count(++total);sfx('deal');setTimeout(function(){li.classList.remove('back');flipSnd()},450)}}
+      }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){busy=false;btn.disabled=false;setP(0);btn.classList.remove('burst')})}
+    function done(){cancelAnimationFrame(raf);btn.classList.remove('on');setP(1);btn.classList.add('burst');sfx('keyburst');setTimeout(send,reduce?0:450)}
+    function tick(){var p=Math.min(1,(performance.now()-t0)/NEED);setP(p);if(p>=1)done();else raf=requestAnimationFrame(tick)}
+    function down(e){if(busy||(e.button&&e.button>0))return;if(!ready())return;e.preventDefault();try{btn.setPointerCapture(e.pointerId)}catch(x){}t0=performance.now();btn.classList.add('on');st(f,'Giữ nữa…');sfx('nudge');raf=requestAnimationFrame(tick)}
+    function up(){if(!btn.classList.contains('on'))return;cancelAnimationFrame(raf);btn.classList.remove('on');setP(0);st(f,'Giữ lâu hơn chút nữa nha.')}
+    btn.addEventListener('pointerdown',down);btn.addEventListener('pointerup',up);btn.addEventListener('pointercancel',up);
+    btn.addEventListener('contextmenu',function(e){e.preventDefault()});
+    btn.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!busy){e.preventDefault();if(ready())done()}});
+  })
 })();
 </script>
 <script>
