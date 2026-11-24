@@ -67,8 +67,8 @@ header.bar.hide{transform:translateY(-110%);opacity:0}
 .dr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .dr-h{font-style:italic;color:var(--soft);font-size:16px}
 .dr-x{font:inherit;background:none;border:0;color:var(--soft);width:40px;height:40px;font-size:18px;cursor:pointer}
-.dr-go{display:flex;gap:10px;margin-bottom:16px}
-.dr-go a{flex:1;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
+.dr-go{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.dr-go a{flex:1 1 40%;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
 .dr-list{list-style:none;margin:0;padding:0;overflow:auto;flex:1;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
 .dr-list li{border-bottom:1px solid var(--line)}
 .dr-list a{display:flex;gap:.9em;align-items:baseline;padding:.75em .2em;color:var(--ink);text-decoration:none;line-height:1.35;font-size:16px}
@@ -400,6 +400,24 @@ em .nm{font-style:italic}
 @keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
 .tg-msg{margin:2.6em 0 0}
 
+
+/* Bộ sưu tập thẻ: thẻ nhỏ bay vào biểu tượng album ở góc dưới phải */
+.bst-fly{position:fixed;z-index:60;width:58px;aspect-ratio:856/540;border-radius:5px;pointer-events:none;
+  background:linear-gradient(135deg,#2c3436,#101518);border:1px solid #56636a;box-shadow:0 0 18px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:transform .85s cubic-bezier(.5,0,.2,1),opacity .85s ease}
+.bst-fly::after{content:"";position:absolute;left:50%;top:44%;width:42%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid #6b787d}
+.bst-pill{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:59;display:flex;align-items:center;gap:.6em;
+  padding:.55em .95em .55em .6em;border-radius:999px;background:rgba(14,22,25,.94);color:#d5d0c3;border:1px solid color-mix(in srgb,var(--ice) 55%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6),0 0 16px color-mix(in srgb,var(--ice) 25%,transparent);font-size:14px;line-height:1.25;text-decoration:none;
+  opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s;max-width:calc(100vw - 32px)}
+.bst-pill.on{opacity:1;transform:none}
+.bst-pill svg{flex:0 0 30px;width:30px;height:30px;color:#8FD3E0}
+.bst-pill b{font-weight:600;color:#8FD3E0}
+.bst-pill small{display:block;font-size:12px;color:#87918d}
+.bst-pill.hit svg{animation:bsthit .6s ease-out}
+@keyframes bsthit{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 8px #8FD3E0)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.bst-fly{transition:none}.bst-pill{transition:none}.bst-pill.hit svg{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -618,7 +636,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   <div class="dr-shade" data-close></div>
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
-    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="tacgia.html">Tác giả</a></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="tacgia.html">Tác giả</a></div>
     <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
   </nav>
 </div>
