@@ -377,7 +377,7 @@ em .nm{font-style:italic}
 <p>Bà bán thuốc há miệng. Màu trầu đỏ quạch nhuộm khắp kẽ răng.</p>
 <p>Rồi bà nhảy qua mặt sạp.</p>
 <p><span class="nm nm-person">Clevia</span> không kịp lùi. Cô không kịp làm gì cả. Cô chỉ thấy hai bàn tay nhăn nheo ấy vươn tới, những móng tay dài, vàng khè, cong như móng chim, nhắm thẳng vào mặt cô. Và cô nghe thấy <span class="nm nm-person">Luke</span> hét lên tên cô, một tiếng thôi, khàn, đứt, như sợi dây đàn bị kéo căng quá mức.</p>
-<p data-fx="dome">Không khí quanh người cô bừng sáng.</p>
+<p data-fx="dome" data-cast="1">Không khí quanh người cô bừng sáng.</p>
 <p>Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng cô đã thấy sáng nay bao quanh <span class="nm nm-person">Ruby</span>. Hai bàn tay của bà bán thuốc cào vào đó, và <span class="nm nm-person">Clevia</span> nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên. Rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
 <p><span class="nm nm-person">Clevia</span> quay sang <span class="nm nm-person">Luke</span>. Anh đang đứng cách cô hai bước, một tay đặt trên túi áo, chỗ tấm thẻ <span class="nm nm-card">Protect</span> của anh từng nằm. Cái túi áo giờ đã lép kẹp.</p>
 <p>Anh chỉ có một tấm.</p>
@@ -426,7 +426,7 @@ em .nm{font-style:italic}
 <p><span class="nm nm-person">Clevia</span> nhắm mắt lại.</p>
 <p>Cô nghĩ tới dải đất xám, khô, lổn nhổn những tảng đá và những ngọn đồi trọc. Con đường mòn chạy ngoằn ngoèo lên chân núi. Một mái nhà lá. Một làn khói mỏng bốc lên từ ống khói xây gạch. Cô cố không nghĩ tới ba người áo nâu đứng rải rác trên con đường ấy, cái đầu nghiêng về một phía. Cô cố không nghĩ tới cái bóng nhỏ chạy vụt qua như một đứa trẻ chơi đuổi bắt.</p>
 <p>Sau lưng cô, có tiếng chân lệt sệt bước lên bậc thềm.</p>
-<p>Rồi cái khung cửa mở ra.</p>
+<p data-fx="teleport">Rồi cái khung cửa mở ra.</p>
 </section>
   </article>
   <footer class="end">
@@ -2008,7 +2008,12 @@ em .nm{font-style:italic}
       fxPs.forEach(function (p) {
         if (p.dataset.fx === 'flicker') return;
         var top = p.getBoundingClientRect().top;
-        if (p._armed && top < mid && top > -innerHeight) { p._armed = false; shots.push({ kind: p.dataset.fx, t0: performance.now(), R: seeds() }); kick(); }
+        if (p._armed && top < mid && top > -innerHeight) {
+          p._armed = false; var now0 = performance.now();
+          // dùng năng lực / dùng thẻ: vòng tròn rối loé lên trước, rồi mới tới hiệu ứng riêng
+          if (p.dataset.cast) { cast(); now0 += 850; }
+          shots.push({ kind: p.dataset.fx, t0: now0, R: seeds() }); kick();
+        }
         else if (!p._armed && top > innerHeight * 0.9) p._armed = true; // cuộn ngược lên: cho bật lại
       });
       if (flickFrom) kick();
@@ -2047,7 +2052,8 @@ em .nm{font-style:italic}
       shade.style.opacity = dark.toFixed(3);
       // xích, khói
       for (var i = shots.length - 1; i >= 0; i--) {
-        var sh = shots[i], t = Math.max(0, (now - sh.t0) / 1000);
+        var sh = shots[i]; if (now < sh.t0) { busy = true; continue; }
+        var t = (now - sh.t0) / 1000;
         var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : MORE[sh.kind] ? MORE[sh.kind](t, sh.R) : true;
         if (done) shots.splice(i, 1); else busy = true;
       }
@@ -2309,6 +2315,63 @@ em .nm{font-style:italic}
       var gr = g.createRadialGradient(W * 0.55, H * 0.45, Math.min(W, H) * 0.05, W * 0.55, H * 0.45, Math.max(W, H) * 0.7); gr.addColorStop(0, rgba('#000000', 0.9 * d)); gr.addColorStop(0.5, rgba('#000000', 0.5 * d)); gr.addColorStop(1, rgba('#000000', 0.85 * d)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
       return false;
     };
+
+    /* vòng tròn rối của mặt sau thẻ (cùng nét với cards.js): dấu chung mỗi lần dùng năng lực hay dùng thẻ */
+    var SIG = (function () {
+      var seed = 7; function R() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+      var out = [];
+      for (var k = 0; k < 7; k++) {
+        var n = 5 + Math.floor(R() * 4), path = [];
+        for (var i = 0; i <= n; i++) {
+          var a = (i / n) * Math.PI * 2 + k, rr = 0.25 + R() * 0.62, pt = [Math.cos(a) * rr, Math.sin(a) * rr];
+          if (!i) path.push(pt); else { var c1a = a - 0.9 + R() * 0.6, c2a = a + R() * 0.8, c1r = 0.1 + R() * 0.85, c2r = 0.1 + R() * 0.85; path.push([Math.cos(c1a) * c1r, Math.sin(c1a) * c1r, Math.cos(c2a) * c2r, Math.sin(c2a) * c2r, pt[0], pt[1]]); }
+        }
+        out.push(path);
+      }
+      return out;
+    })();
+    MORE.sigil = function (t) {
+      if (t > 1.9) return true;
+      var a = t < 0.35 ? t / 0.35 : t < 1 ? 1 : Math.max(0, 1 - (t - 1) / 0.9), sc = t < 1 ? 0.86 + 0.14 * Math.min(1, t / 0.6) : 1 + (t - 1) * 0.5;
+      var r = Math.min(W, H) * 0.24 * sc, cx = W / 2, cy = H * 0.5, col = C.dark ? '#bfeaf2' : '#2e7484';
+      var gl = g.createRadialGradient(cx, cy, 0, cx, cy, r * 1.6); gl.addColorStop(0, rgba(col, 0.18 * a)); gl.addColorStop(1, rgba(col, 0)); g.fillStyle = gl; g.fillRect(cx - r * 2, cy - r * 2, r * 4, r * 4);
+      g.save(); g.translate(cx, cy); g.rotate(t * 0.35); g.strokeStyle = rgba(col, 0.85 * a); g.lineCap = 'round'; g.shadowColor = col; g.shadowBlur = 14;
+      g.lineWidth = 2; g.beginPath(); g.arc(0, 0, r * 1.13, 0, 7); g.stroke();
+      g.lineWidth = 1; g.beginPath(); g.arc(0, 0, r * 1.04, 0, 7); g.stroke();
+      var draw = Math.min(1, t / 0.7); g.lineWidth = 1.4;
+      SIG.forEach(function (path, k) {
+        var upto = Math.floor(draw * (path.length - 1)) + 1; g.beginPath(); g.moveTo(path[0][0] * r, path[0][1] * r);
+        for (var i = 1; i < Math.min(upto + 1, path.length); i++) { var q = path[i]; g.bezierCurveTo(q[0] * r, q[1] * r, q[2] * r, q[3] * r, q[4] * r, q[5] * r); }
+        g.stroke();
+      });
+      g.restore();
+      return false;
+    };
+    // khung cửa mở ra rồi ánh trắng nuốt hết (Teleport)
+    MORE.teleport = function (t, R) {
+      if (t > 3.6) return true;
+      var dw = Math.min(W * 0.34, H * 0.22), dh = dw * 2, x = W / 2 - dw / 2, y = H * 0.5 - dh / 2, ink = C.dark ? '#f3c27a' : '#a8641f', pr = Math.min(1, t / 0.6);
+      if (t < 1.6) {
+        g.save(); g.globalAlpha = t < 1.2 ? 1 : 1 - (t - 1.2) / 0.4; g.strokeStyle = ink; g.lineWidth = Math.max(2, W / 200); g.shadowColor = ink; g.shadowBlur = 18;
+        g.beginPath(); g.moveTo(x, y + dh); g.lineTo(x, y + dh - dh * Math.min(1, pr * 3)); if (pr > 1 / 3) g.lineTo(x + dw * Math.min(1, (pr - 1 / 3) * 3), y); if (pr > 2 / 3) g.lineTo(x + dw, y + dh * Math.min(1, (pr - 2 / 3) * 3)); g.stroke(); g.restore();
+      }
+      if (t > 0.6) {
+        var u = Math.min(1, (t - 0.6) / 0.7), f = t < 1.6 ? 1 : Math.max(0, 1 - (t - 1.6) / 2);
+        var rr = Math.max(W, H) * 1.2 * u, gl = g.createRadialGradient(W / 2, H * 0.5, 0, W / 2, H * 0.5, Math.max(1, rr));
+        gl.addColorStop(0, rgba('#fffaf0', 0.95 * f)); gl.addColorStop(0.7, rgba('#fffaf0', 0.8 * f)); gl.addColorStop(1, rgba('#fffaf0', 0)); g.fillStyle = gl; g.fillRect(0, 0, W, H);
+      }
+      return false;
+    };
+    function cast() {
+      shots.push({ kind: 'sigil', t0: performance.now(), R: seeds() }); kick();
+      try {
+        if (playing && ac && ac.state === 'running') {
+          var n = ac.currentTime, o = gain(1); o.connect(master);
+          [1318.5, 1975.5, 2637].forEach(function (f, i) { var x = ac.createOscillator(), gg = gain(0); x.frequency.value = f; gg.gain.setValueAtTime(0, n + i * 0.06); gg.gain.linearRampToValueAtTime(0.035, n + i * 0.06 + 0.05); gg.gain.exponentialRampToValueAtTime(0.0001, n + i * 0.06 + 1.4); x.connect(gg); gg.connect(o); x.start(n + i * 0.06); x.stop(n + 1.6); });
+        }
+      } catch (e) {}
+    }
+    window.a07cast = cast; // ổ khoá trong acts.js gọi khi bật mở
 
     check(); if (openT0 != null) kick();
   })();
@@ -2669,7 +2732,7 @@ em .nm{font-style:italic}
         if (bronze) pins.forEach(function (r) { r.classList.add('on'); });
         box.classList.remove('holding'); box.classList.add('done'); if (!sound) box.classList.add('quiet');
         btn.setAttribute('aria-label', 'Ổ khoá đã mở');
-        if (sound) clack(bronze);
+        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(); }
       }
       function down(e) {
         if (done || (e.button && e.button > 0)) return;
