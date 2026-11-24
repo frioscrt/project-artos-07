@@ -187,7 +187,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <p>Căn nhà đầu tiên nằm lùi sau một khoảnh sân đất, mái lá thấp, vách đất trát rơm, một ngọn đèn dầu treo dưới hiên lắc lư dù chẳng có gió. Cửa mở sẵn. Bên trong, một bà cụ lưng còng đang ngồi xổm bên bếp, cời than bằng một que tre dài, và khi hai người dừng lại trước bậc cửa, bà ngẩng lên nhìn, mắt đục như nước vo gạo, rồi lại cúi xuống bếp mà không nói gì. Luke đứng yên một lúc lâu ở ngưỡng cửa, mắt quét qua căn nhà một lượt, từ cái chõng tre kê sát vách đến cái chum nước ở góc, đến ô cửa sau khép hờ dẫn ra một mảnh vườn tối om.</p>
 <p>“Cháu vào nhờ một lát được không bà?” anh hỏi.</p>
 <p>Bà cụ không đáp, chỉ khẽ gật đầu một cái rất nhỏ.</p>
-<p>Họ bước vào, và ngay khoảnh khắc chân Clevia chạm xuống nền đất nện trong nhà, ngọn lửa trong bếp bỗng bùng lên, cao vọt, sáng rực, như thể có ai vừa đổ thêm một nắm rơm khô vào. Ánh lửa hắt lên vách đất, lên gương mặt nhăn nheo của bà cụ, lên bóng hai người đổ dài ra tận cửa. Rồi nó dịu xuống, cháy đều, tí tách, ấm áp đến lạ. Clevia đứng chết trân. Cô chưa từng thấy một bếp lửa nào chào người lạ như thế.</p>
+<p data-fx="flare">Họ bước vào, và ngay khoảnh khắc chân Clevia chạm xuống nền đất nện trong nhà, ngọn lửa trong bếp bỗng bùng lên, cao vọt, sáng rực, như thể có ai vừa đổ thêm một nắm rơm khô vào. Ánh lửa hắt lên vách đất, lên gương mặt nhăn nheo của bà cụ, lên bóng hai người đổ dài ra tận cửa. Rồi nó dịu xuống, cháy đều, tí tách, ấm áp đến lạ. Clevia đứng chết trân. Cô chưa từng thấy một bếp lửa nào chào người lạ như thế.</p>
 <p>Luke cũng nhìn ngọn lửa ấy, lâu hơn cô một chút.</p>
 <p>“Em ngồi đây đã,” anh nói, chỉ vào cái chõng tre. “Anh ra sau xem cái vườn thế nào. Nhà mà chỉ có một lối ra thì có chuyện gì cũng khó chạy.”</p>
 <p>Cô gật đầu, ngồi xuống mép chõng, nghe tiếng anh đẩy cánh cửa sau, tiếng lá khô lạo xạo dưới chân anh ngoài vườn, rồi im. Bà cụ vẫn cời than. Clevia ngồi ôm hai đầu gối, nhìn ngọn lửa, và trong một thoáng ngắn ngủi, cái hơi ấm từ bếp toả ra khiến cô suýt quên mình đang ở đâu.</p>
@@ -1716,6 +1716,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
        water  = mặt nước gợn tràn qua trang (nhìn từ dưới nước lên)
        door   = khung cửa sáng lên từng nét giữa trang
        dome   = vòm sáng mờ bung ra bọc lấy trang
+       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat
        flicker = từ đoạn này tới hết chương, trang tối theo nhịp lửa chao
      - body[data-open="dark"]: mở chương trong bóng tối, sáng lại dần. */
   (function () {
@@ -1762,7 +1763,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
     var shade = document.createElement('div'); shade.className = 'fx-shade'; shade.setAttribute('aria-hidden', 'true');
     var cv = document.createElement('canvas'); cv.className = 'fx-layer'; cv.setAttribute('aria-hidden', 'true');
     document.body.appendChild(shade); document.body.appendChild(cv);
-    var g = cv.getContext('2d'), W = 0, H = 0;
+    var g = cv.getContext('2d'), W = 0, H = 0, main = document.querySelector('main') || document.body;
     function fit() { var d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = Math.round(W * d); cv.height = Math.round(H * d); g.setTransform(d, 0, 0, d, 0, 0); }
     fit(); addEventListener('resize', fit);
 
@@ -1820,7 +1821,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
       // xích, khói
       for (var i = shots.length - 1; i >= 0; i--) {
         var sh = shots[i], t = Math.max(0, (now - sh.t0) / 1000);
-        var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : true;
+        var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : MORE[sh.kind] ? MORE[sh.kind](t, sh.R) : true;
         if (done) shots.splice(i, 1); else busy = true;
       }
       if (busy) requestAnimationFrame(frame); else { running = false; g.clearRect(0, 0, W, H); shade.style.opacity = 0; }
@@ -1931,6 +1932,128 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
       g.restore();
       return false;
     }
+
+
+    /* ---- các kiểu thêm (24/11): mỗi hàm trả true khi xong ---- */
+    function env(t, a, b, c) { return t < a ? t / a : t < a + b ? 1 : Math.max(0, 1 - (t - a - b) / c); }
+    function wash(col, a) { g.fillStyle = rgba(col, a); g.fillRect(0, 0, W, H); }
+    function edge(col, a, inner) { var gr = g.createRadialGradient(W / 2, H / 2, Math.min(W, H) * (inner || 0.3), W / 2, H / 2, Math.max(W, H) * 0.75); gr.addColorStop(0, rgba(col, 0)); gr.addColorStop(1, rgba(col, a)); g.fillStyle = gr; g.fillRect(0, 0, W, H); }
+    var MORE = {};
+    // nắng lọt qua tán lá, đốm sáng lay động
+    MORE.dapple = function (t, R) {
+      if (t > 8) return true; var k = env(t, 1.5, 3.5, 3);
+      for (var i = 0; i < 18; i++) { var x = R[i] * W + Math.sin(t * 0.8 + i) * 14, y = R[i + 18] * H + Math.cos(t * 0.6 + i) * 10, r = 20 + R[i + 36] * 50; var gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, rgba('#fff1c4', (C.dark ? 0.16 : 0.32) * k * (0.6 + 0.4 * Math.sin(t * 2 + i)))); gr.addColorStop(1, rgba('#fff1c4', 0)); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+      return false;
+    };
+    // cầu rung dữ dội, hụt chân rơi: trang rung rồi chìm vào bóng tối
+    MORE.shake = function (t) {
+      if (t > 3.2) { main.style.transform = ''; return true; }
+      var a = t < 1.1 ? Math.min(1, t * 4) * (1 - t / 1.1 * 0.3) : 0;
+      main.style.transform = a ? 'translate(' + (Math.sin(t * 60) * 5 * a).toFixed(1) + 'px,' + (Math.cos(t * 47) * 3 * a).toFixed(1) + 'px)' : '';
+      var d = t < 1 ? 0 : t < 1.6 ? (t - 1) / 0.6 : Math.max(0, 1 - (t - 1.6) / 1.6);
+      var gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, rgba('#05080a', 0.9 * d)); gr.addColorStop(1, rgba('#05080a', 0.3 * d)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // bóng tối cuối cây cầu đặc lại, dâng lên từ mép dưới
+    MORE.darkend = function (t) {
+      if (t > 6) return true; var k = env(t, 2, 1.5, 2.5);
+      var gr = g.createLinearGradient(0, H, 0, H * (1 - 0.8 * k)); gr.addColorStop(0, rgba('#020405', 0.85 * k)); gr.addColorStop(1, rgba('#020405', 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // ổ khoá bật: một tiếng "cạch" lan thành vòng sáng
+    MORE.unlock = function (t) {
+      if (t > 2.4) return true; var cx = W / 2, cy = H * 0.5, col = C.dark ? '#f3c27a' : '#a8641f';
+      for (var i = 0; i < 3; i++) { var u = (t - i * 0.18) / 1.6; if (u <= 0 || u > 1) continue; g.strokeStyle = rgba(col, 0.6 * (1 - u)); g.lineWidth = 2.5 * (1 - u) + 0.5; g.beginPath(); g.arc(cx, cy, 12 + u * Math.min(W, H) * 0.45, 0, 7); g.stroke(); }
+      if (t < 0.5) { var gl = g.createRadialGradient(cx, cy, 0, cx, cy, 40); gl.addColorStop(0, rgba('#fff2c8', 0.8 * (1 - t / 0.5))); gl.addColorStop(1, rgba('#fff2c8', 0)); g.fillStyle = gl; g.fillRect(cx - 40, cy - 40, 80, 80); }
+      return false;
+    };
+    // mưa sắp tới: trời sầm lại, vài hạt mưa xiên rơi qua trang
+    MORE.rain = function (t, R) {
+      if (t > 9) return true; var k = env(t, 2, 4.5, 2.5);
+      wash(C.dark ? '#0a0f12' : '#5d666a', (C.dark ? 0.25 : 0.18) * k);
+      g.strokeStyle = rgba(C.dark ? '#b8c7cc' : '#5a6a70', 0.45 * k); g.lineWidth = 1;
+      for (var i = 0; i < 70; i++) { var sp = 0.9 + (i % 7) * 0.08, x = ((i * 37.3) % W + t * 60) % W, y = ((i * 91.7) % H + t * H * sp) % (H + 40) - 20; g.beginPath(); g.moveTo(x, y); g.lineTo(x - 4, y + 14); g.stroke(); }
+      return false;
+    };
+    // dấu ba chấm của tin nhắn đang gõ
+    MORE.typing = function (t) {
+      if (t > 5) return true; var k = env(t, 0.4, 3.8, 0.8), cx = W / 2, cy = H * 0.78, bw = 74, bh = 34;
+      g.fillStyle = rgba(C.dark ? '#2a3538' : '#ffffff', 0.92 * k); g.beginPath(); g.ellipse(cx, cy, bw / 2, bh / 2, 0, 0, 7); g.fill();
+      for (var d = 0; d < 3; d++) { var on = (t * 2.2 - d * 0.35) % 2.2, a = on > 0 && on < 0.9 ? Math.sin(on / 0.9 * Math.PI) : 0; g.fillStyle = rgba(C.dark ? '#cfd8d6' : '#5e6965', (0.3 + 0.7 * a) * k); g.beginPath(); g.arc(cx - 16 + d * 16, cy - a * 3, 4, 0, 7); g.fill(); }
+      return false;
+    };
+    // giấc mơ trắng: trang trắng xoá, vài con số mờ đếm ngược
+    MORE.whiteout = function (t) {
+      if (t > 8) return true; var k = env(t, 2, 3, 3);
+      wash(C.dark ? '#dfe4e2' : '#ffffff', 0.78 * k);
+      var n = 7 - Math.floor(t / 0.9); if (n > 0 && t < 6.3) { var ph = (t % 0.9) / 0.9; g.fillStyle = rgba('#8b9692', 0.35 * Math.sin(ph * Math.PI) * k); g.font = '300 ' + Math.round(H * 0.12) + 'px Literata, Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(n), W / 2, H / 2); }
+      return false;
+    };
+    // không khí gợn như mặt hồ bị thả sỏi (màu xanh băng), hoặc mặt nước gợn
+    MORE.ripple = function (t) {
+      if (t > 4.5) return true; var cx = W / 2, cy = H * 0.5, col = C.dark ? '#8fd3e0' : '#2e7484';
+      for (var i = 0; i < 6; i++) { var u = (t - i * 0.35) / 2.6; if (u <= 0 || u > 1) continue; var r = u * Math.max(W, H) * 0.7; g.strokeStyle = rgba(col, 0.5 * (1 - u)); g.lineWidth = 1.5; g.beginPath(); g.ellipse(cx, cy, r, r * 0.42, 0, 0, 7); g.stroke(); }
+      return false;
+    };
+    // bức tường trong suốt: một lớp kính lạnh, vệt sáng trượt ngang, sương giá bám mép
+    MORE.frost = function (t) {
+      if (t > 6) return true; var k = env(t, 1, 2.5, 2.5);
+      wash(C.dark ? '#9fc1e6' : '#cfe0ea', (C.dark ? 0.07 : 0.22) * k);
+      edge(C.dark ? '#cfe6ff' : '#ffffff', 0.55 * k, 0.35);
+      var x = -W * 0.3 + ((t / 2.2) % 1.6) * W; var gr = g.createLinearGradient(x, 0, x + W * 0.25, H * 0.4); gr.addColorStop(0, rgba('#ffffff', 0)); gr.addColorStop(0.5, rgba('#ffffff', 0.35 * k)); gr.addColorStop(1, rgba('#ffffff', 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // cả cánh đồng cùng ngẩng lên: mép trang sập tối, đứng im, rồi buông
+    MORE.hush = function (t) {
+      if (t > 5) return true; var k = t < 0.25 ? t / 0.25 : t < 2.6 ? 1 : Math.max(0, 1 - (t - 2.6) / 2.4);
+      edge('#000000', (C.dark ? 0.9 : 0.78) * k, 0.15);
+      return false;
+    };
+    // ngọn lửa bùng lên cao vọt rồi dịu xuống
+    MORE.flare = function (t) {
+      if (t > 4) return true; var k = t < 0.3 ? t / 0.3 : Math.max(0, 1 - (t - 0.3) / 3.7);
+      var gr = g.createRadialGradient(W / 2, H * 1.05, 0, W / 2, H * 1.05, H * (0.6 + 0.5 * k)); gr.addColorStop(0, rgba('#ffb35c', 0.55 * k)); gr.addColorStop(0.5, rgba('#e8892f', 0.22 * k)); gr.addColorStop(1, rgba('#e8892f', 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // trời hửng dần: đen sang xám sang trắng nhợt từ phía trên
+    MORE.dawn = function (t) {
+      if (t > 8) return true; var u = t / 8, d = 0.75 * Math.max(0, 1 - u * 1.8), l = Math.sin(Math.min(1, u * 1.3) * Math.PI) * 0.35;
+      wash('#05080a', d);
+      var gr = g.createLinearGradient(0, 0, 0, H * 0.7); gr.addColorStop(0, rgba(C.dark ? '#8a948f' : '#f4f1e6', l)); gr.addColorStop(1, rgba('#8a948f', 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // gió lạnh rạp ngọn mạ thành từng đợt sóng xanh
+    MORE.wind = function (t, R) {
+      if (t > 5) return true; var k = env(t, 0.6, 2.8, 1.6), col = C.dark ? '#7fa36c' : '#6d8f55';
+      for (var i = 0; i < 26; i++) { var y = R[i] * H, sp = 0.35 + R[i + 26] * 0.3, x = ((t * sp + R[(i + 13) % 60]) % 1.3 - 0.15) * W, len = W * (0.08 + R[(i + 40) % 60] * 0.12); g.strokeStyle = rgba(col, 0.6 * k); g.lineWidth = 1.8; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + len / 2, y - 6 + Math.sin(t * 3 + i) * 4, x + len, y); g.stroke(); }
+      return false;
+    };
+    // vết cào: bốn vệt dài song song xé ngang trang rồi mờ đi
+    MORE.scratch = function (t) {
+      if (t > 4) return true; var col = C.dark ? '#c9cfc9' : '#3a2a26', fade = t > 1.6 ? Math.max(0, 1 - (t - 1.6) / 2.4) : 1;
+      for (var i = 0; i < 4; i++) { var u = Math.min(1, Math.max(0, (t - i * 0.05) / 0.22)); if (u <= 0) continue; var x0 = W * (0.3 + i * 0.09), y0 = H * 0.22, x1 = x0 + W * 0.12, y1 = H * 0.78; g.strokeStyle = rgba(col, 0.75 * fade); g.lineWidth = 3.5 - i * 0.4; g.lineCap = 'round'; g.beginPath(); g.moveTo(x0, y0); g.quadraticCurveTo(x0 + W * 0.04, (y0 + y1) / 2, x0 + (x1 - x0) * u, y0 + (y1 - y0) * u); g.stroke(); }
+      return false;
+    };
+    // nước trong gàu gợn lên từng vòng đều đặn, như có bước chân nặng đang tới
+    MORE.thud = function (t) {
+      if (t > 6.5) return true; var col = C.dark ? '#a9c0bc' : '#3c5a58', fade = t > 4.8 ? Math.max(0, 1 - (t - 4.8) / 1.7) : 1;
+      for (var i = 0; i < 6; i++) { var u = (t - i * 0.85) / 1.4; if (u <= 0 || u > 1) continue; var r = 8 + u * Math.min(W, H) * 0.3; g.strokeStyle = rgba(col, 0.55 * (1 - u) * fade); g.lineWidth = 1.4; g.beginPath(); g.ellipse(W / 2, H * 0.55, r, r * 0.38, 0, 0, 7); g.stroke(); }
+      var beat = (t % 0.85) / 0.85; edge('#000000', 0.25 * Math.max(0, 1 - beat * 4) * fade, 0.35);
+      return false;
+    };
+    // vết bầm tan dần: một quầng ấm toả ra, dịu đi
+    MORE.heal = function (t) {
+      if (t > 6) return true; var k = env(t, 1.5, 2, 2.5), p = 0.85 + 0.15 * Math.sin(t * 3);
+      var gr = g.createRadialGradient(W / 2, H * 0.5, 0, W / 2, H * 0.5, Math.max(W, H) * 0.55 * p); gr.addColorStop(0, rgba('#f6e2a8', (C.dark ? 0.22 : 0.4) * k)); gr.addColorStop(1, rgba('#f6e2a8', 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      return false;
+    };
+    // nắng trưa gắt và trắng: chói loá, không khí run run
+    MORE.heat = function (t) {
+      if (t > 7) return true; var k = env(t, 1.5, 3, 2.5);
+      wash('#fff8e4', (C.dark ? 0.16 : 0.42) * k);
+      for (var i = 0; i < 6; i++) { var y = H * (0.15 + i * 0.15) + Math.sin(t * 2 + i) * 6; var gr = g.createLinearGradient(0, y - 10, 0, y + 10); gr.addColorStop(0, rgba('#ffffff', 0)); gr.addColorStop(0.5, rgba('#ffffff', 0.12 * k * (0.5 + 0.5 * Math.sin(t * 5 + i)))); gr.addColorStop(1, rgba('#ffffff', 0)); g.fillStyle = gr; g.fillRect(0, y - 10, W, 20); }
+      return false;
+    };
 
     check(); if (openT0 != null) kick();
   })();
