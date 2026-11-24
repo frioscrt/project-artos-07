@@ -2499,6 +2499,80 @@ els.forEach(function(el){io.observe(el)});})();
     var ht = g.createLinearGradient(0, 0, 0, h); ht.addColorStop(0, rgba('#fff8e4', dk ? 0.05 : 0.25)); ht.addColorStop(1, rgba('#fff8e4', 0)); g.fillStyle = ht; g.fillRect(0, 0, w, h);
   };
 
+  /* ---------- tranh cho Góc nhìn khác (chèn sau art4.js). Không vẽ người, chỉ dấu vết. ---------- */
+  function gGlow(g, x, y, r, col, a) { var gl = g.createRadialGradient(x, y, 0, x, y, r); gl.addColorStop(0, rgba(col, a)); gl.addColorStop(1, rgba(col, 0)); g.fillStyle = gl; g.fillRect(x - r, y - r, r * 2, r * 2); }
+
+  // Ban công tầng hai nhà câu lạc bộ nhìn xuống sân: cột hành lang, lan can, hàng cây, nắng xuân.
+  // Một sợi chỉ đỏ rất mảnh căng từ lan can xuống khoảng sân, khẽ rung (Góc nhìn khác ch01, Luke).
+  ART.balcony = function (g, w, h, t, R) {
+    var dk = C.dark;
+    var gr = g.createLinearGradient(0, 0, 0, h);
+    if (dk) { gr.addColorStop(0, '#2f3a36'); gr.addColorStop(1, '#3d3b31'); } else { gr.addColorStop(0, '#dfe6da'); gr.addColorStop(1, '#efe3c6'); }
+    g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    // sân gạch nhìn từ trên xuống
+    g.strokeStyle = rgba(dk ? '#000000' : '#8a7a5c', 0.18); g.lineWidth = 1;
+    for (var y = h * 0.5; y < h; y += h * 0.06) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    // hàng cây: tán tròn, bóng đổ, lay nhẹ
+    for (var i = 0; i < 5; i++) {
+      var tx = w * (0.14 + i * 0.2), ty = h * (0.34 + (i % 2) * 0.04), tr = h * (0.13 + R[i] * 0.04), sw = Math.sin(t * 0.7 + i) * w * 0.004;
+      g.fillStyle = rgba('#000000', dk ? 0.3 : 0.12); g.beginPath(); g.ellipse(tx + tr * 0.5, ty + tr * 1.1, tr * 1.1, tr * 0.35, 0, 0, 7); g.fill();
+      g.fillStyle = dk ? '#26352b' : '#8fa47f';
+      for (var k = 0; k < 5; k++) { g.beginPath(); g.arc(tx + sw + Math.cos(k * 1.3) * tr * 0.5, ty + Math.sin(k * 1.3) * tr * 0.35, tr * (0.55 + R[i * 5 + k + 10] * 0.2), 0, 7); g.fill(); }
+      g.fillStyle = dk ? '#3a2e22' : '#6e5a42'; g.fillRect(tx - 2, ty + tr * 0.4, 4, tr * 0.7);
+    }
+    // nắng lọt qua lá
+    for (var d = 0; d < 9; d++) {
+      var dx = R[d + 40] * w, dy = h * (0.5 + R[d + 50] * 0.45), a = 0.5 + 0.5 * Math.sin(t * 0.9 + d * 1.7);
+      g.fillStyle = rgba('#fff2cc', (dk ? 0.07 : 0.22) * a); g.beginPath(); g.ellipse(dx, dy, w * 0.03, h * 0.012, 0, 0, 7); g.fill();
+    }
+    // sợi chỉ đỏ: từ lan can (trái, gần) xuống một điểm giữa sân (gốc cây thứ ba), võng và rung khẽ
+    var ax = w * 0.2, ay = h * 0.86, bx = w * 0.56, by = h * 0.62, amp = h * 0.006 * (0.6 + 0.4 * Math.sin(t * 0.5));
+    g.strokeStyle = dk ? '#E2566C' : '#B3263A'; g.lineWidth = Math.max(1, w / 700); g.shadowColor = rgba('#E2566C', 0.7); g.shadowBlur = 6;
+    g.beginPath();
+    for (var s = 0; s <= 40; s++) { var u = s / 40, x = ax + (bx - ax) * u, yy = ay + (by - ay) * u + Math.sin(u * Math.PI) * h * 0.05 + Math.sin(u * Math.PI) * Math.sin(t * 9) * amp; s ? g.lineTo(x, yy) : g.moveTo(x, yy); }
+    g.stroke(); g.shadowBlur = 0;
+    gGlow(g, bx, by, w * 0.02, '#E2566C', dk ? 0.35 : 0.25);
+    // lan can tầng hai (gần, tối) + cột hành lang bên trái
+    var rail = dk ? '#151816' : '#5c5446';
+    g.fillStyle = rail; g.fillRect(0, h * 0.84, w, h * 0.025); g.fillRect(0, h * 0.97, w, h * 0.03);
+    for (var b = 0; b < 16; b++) g.fillRect(w * (0.02 + b * 0.065), h * 0.84, w * 0.008, h * 0.16);
+    g.fillStyle = dk ? '#1b1f1c' : '#a89c84'; g.fillRect(0, 0, w * 0.09, h);
+    g.fillStyle = rgba('#000000', dk ? 0.35 : 0.15); g.fillRect(w * 0.09, 0, w * 0.012, h);
+  };
+
+  // Cuối hành lang sau nhà thể chất: máy bán nước sáng đèn, lon nước nằm trong khay. Đèn máy chập chờn lệch nhịp.
+  ART.vending = function (g, w, h, t, R) {
+    var dk = C.dark;
+    var gr = g.createLinearGradient(0, 0, 0, h);
+    if (dk) { gr.addColorStop(0, '#1d2120'); gr.addColorStop(1, '#2a2925'); } else { gr.addColorStop(0, '#d9d6cc'); gr.addColorStop(1, '#c8bfa8'); }
+    g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    // hành lang: sàn, đường kẻ dẫn vào sâu, ô cửa sáng cuối hành lang bên trái
+    var vx = w * 0.3, vy = h * 0.46;
+    g.strokeStyle = rgba(dk ? '#000000' : '#6d6352', 0.25); g.lineWidth = 1;
+    [[0, h], [w * 0.6, h], [0, h * 0.75]].forEach(function (p) { g.beginPath(); g.moveTo(vx, vy); g.lineTo(p[0], p[1]); g.stroke(); });
+    g.fillStyle = rgba('#fff2cc', dk ? 0.18 : 0.5); g.fillRect(vx - w * 0.03, vy - h * 0.12, w * 0.06, h * 0.16);
+    // máy bán nước
+    var mx = w * 0.56, my = h * 0.12, mw = w * 0.3, mh = h * 0.8;
+    // nhịp đèn: phần lớn đều, thỉnh thoảng một nhịp đến muộn
+    var cyc = t % 4.2, fl = cyc > 3.6 && cyc < 3.75 ? 0.55 : 1;
+    gGlow(g, mx + mw * 0.5, my + mh * 0.5, w * 0.45, dk ? '#bfe3ea' : '#ffffff', (dk ? 0.16 : 0.3) * fl);
+    g.fillStyle = dk ? '#3b4548' : '#8b9597'; g.fillRect(mx, my, mw, mh);
+    g.fillStyle = rgba(dk ? '#cfeef2' : '#f4fbfb', (dk ? 0.55 : 0.85) * fl); g.fillRect(mx + mw * 0.08, my + mh * 0.06, mw * 0.84, mh * 0.5);
+    // hàng lon
+    var cols = ['#9b2f3a', '#3c6f86', '#c9c4b6', '#4f6b4a'];
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 5; c++) {
+      g.fillStyle = cols[(r + c) % 4]; var cx = mx + mw * (0.14 + c * 0.155), cy = my + mh * (0.1 + r * 0.11);
+      g.fillRect(cx, cy, mw * 0.09, mh * 0.075);
+    }
+    // nút bấm + khay lấy nước, lon nằm trong khay
+    g.fillStyle = dk ? '#20272a' : '#5e676a'; g.fillRect(mx + mw * 0.1, my + mh * 0.62, mw * 0.8, mh * 0.04);
+    for (var bt = 0; bt < 5; bt++) { g.fillStyle = rgba('#E2566C', 0.5 + 0.5 * (bt === 2 ? fl : 1)); g.beginPath(); g.arc(mx + mw * (0.18 + bt * 0.16), my + mh * 0.64, Math.max(1.5, mw * 0.018), 0, 7); g.fill(); }
+    g.fillStyle = dk ? '#101314' : '#3f4648'; g.fillRect(mx + mw * 0.15, my + mh * 0.8, mw * 0.7, mh * 0.1);
+    g.fillStyle = '#9b2f3a'; g.save(); g.translate(mx + mw * 0.46, my + mh * 0.86); g.rotate(Math.PI / 2 - 0.12); g.fillRect(-mh * 0.035, -mw * 0.05, mh * 0.07, mw * 0.1); g.restore();
+    // ánh đèn hắt xuống sàn
+    g.fillStyle = rgba(dk ? '#bfe3ea' : '#ffffff', (dk ? 0.08 : 0.18) * fl); g.beginPath(); g.moveTo(mx, my + mh); g.lineTo(mx + mw, my + mh); g.lineTo(mx + mw * 1.3, h); g.lineTo(mx - mw * 0.4, h); g.fill();
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
@@ -2645,6 +2719,7 @@ els.forEach(function(el){io.observe(el)});})();
         if (p.dataset.fx === 'flicker') return;
         var top = p.getBoundingClientRect().top;
         if (p.dataset.fired) return; // người đọc đã tự kích hoạt bằng tay (khối press)
+        if (p.offsetParent === null) return; // đoạn đang ẩn (bài Góc nhìn khác chưa mở)
         if (p._armed && top < mid && top > -innerHeight) {
           p._armed = false; var now0 = performance.now();
           // dùng năng lực / dùng thẻ: vòng tròn rối loé lên trước, rồi mới tới hiệu ứng riêng
@@ -3596,8 +3671,8 @@ els.forEach(function(el){io.observe(el)});})();
 
   var scenes = [].slice.call(document.querySelectorAll('.scene'));
   function sceneNow() {
-    var mid = innerHeight * 0.5, key = scenes.length ? scenes[0].dataset.sound : null;
-    scenes.forEach(function (s) { if (s.getBoundingClientRect().top < mid) key = s.dataset.sound; });
+    var mid = innerHeight * 0.5, vis = scenes.filter(function (s) { return s.offsetParent !== null; }), key = vis.length ? vis[0].dataset.sound : null; // cảnh đang ẩn (Góc nhìn khác) thì bỏ qua
+    vis.forEach(function (s) { if (s.getBoundingClientRect().top < mid) key = s.dataset.sound; });
     return key;
   }
   addEventListener('scroll', function () { if (playing) switchTo(sceneNow()); }, { passive: true });
