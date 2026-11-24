@@ -4879,6 +4879,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
           markFired(S, 'stoneopen'); markFired(S, 'heat');
           if (window.a07cast) window.a07cast();
           setTimeout(function () { if (window.a07shot) window.a07shot('stoneopen'); }, 850);
+          if (!tp) { tp = S.box.nextElementSibling; while (tp && tp.tagName !== 'P') tp = tp.nextElementSibling; }
           if (tp && window.a07power) window.a07power(tp, 'clevia', 850);
         },
         down: function (S, p) { if (open) return; holding = true; palm = p; if (!grind) grind = hum('bandpass', 260, 1.2); },
