@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
 <script>
+  (function(){try{var q=location.search.match(/thoai=([abc])/);if(q)document.documentElement.setAttribute('data-say',q[1]);}catch(e){}})();
   (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
 </script>
 <style>
@@ -190,6 +191,8 @@ em .nm{font-style:italic}
 .scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
 .scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
 .scene p.msg.show{opacity:1;transform:none}
+.scene p.msg-note{text-indent:0;margin:.5em auto;max-width:85%;text-align:center;font-size:.82em;font-style:italic;color:var(--soft);line-height:1.45}
+.scene p.msg-note::first-letter{text-transform:uppercase}
 .scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
 .scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
 .scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
@@ -295,6 +298,19 @@ em .nm{font-style:italic}
 .scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
 .scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+
+/* xem thử kiểu thoại khác: ?thoai=a|b|c (chưa chốt, mặc định là kiểu vạch màu) */
+html[data-say="a"] .scene p.say{border-left:0;margin-left:0;padding-left:0;text-indent:1.6em}
+html[data-say="a"] .say .q{color:color-mix(in srgb,var(--sp) 70%,var(--ink))}
+html[data-say="a"] .say-x .q{color:var(--ink)}
+html[data-say="b"] .scene p.say{border-left:0;margin:.4em 0;padding-left:0}
+html[data-say="b"] .say .q{display:block;width:fit-content;max-width:86%;margin:.45em 0;padding:.45em .9em;border-radius:1.1em 1.1em 1.1em .35em;background:color-mix(in srgb,var(--sp) 16%,var(--bg));color:var(--ink)}
+html[data-say="b"] .say-clevia .q{margin-left:auto;border-radius:1.1em 1.1em .35em 1.1em}
+html[data-say="b"] .say-x .q{background:var(--veil)}
+html[data-say="c"] .scene p.say{border-left:0;margin:1em 0 .9em;padding-left:0}
+html[data-say="c"] .scene p.say[data-name]::before{content:attr(data-name);display:block;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--sp);margin-bottom:.15em;font-style:normal}
+html[data-say="c"] .say .q{font-size:1.06em;color:var(--ink)}
+html[data-say] .scene p.say[data-act~="line"]{margin-left:-4px}
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
 :root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
 :root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}

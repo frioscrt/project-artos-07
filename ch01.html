@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
 <script>
+  (function(){try{var q=location.search.match(/thoai=([abc])/);if(q)document.documentElement.setAttribute('data-say',q[1]);}catch(e){}})();
   (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
 </script>
 <style>
@@ -190,6 +191,8 @@ em .nm{font-style:italic}
 .scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
 .scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
 .scene p.msg.show{opacity:1;transform:none}
+.scene p.msg-note{text-indent:0;margin:.5em auto;max-width:85%;text-align:center;font-size:.82em;font-style:italic;color:var(--soft);line-height:1.45}
+.scene p.msg-note::first-letter{text-transform:uppercase}
 .scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
 .scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
 .scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
@@ -295,6 +298,19 @@ em .nm{font-style:italic}
 .scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
 .scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+
+/* xem thử kiểu thoại khác: ?thoai=a|b|c (chưa chốt, mặc định là kiểu vạch màu) */
+html[data-say="a"] .scene p.say{border-left:0;margin-left:0;padding-left:0;text-indent:1.6em}
+html[data-say="a"] .say .q{color:color-mix(in srgb,var(--sp) 70%,var(--ink))}
+html[data-say="a"] .say-x .q{color:var(--ink)}
+html[data-say="b"] .scene p.say{border-left:0;margin:.4em 0;padding-left:0}
+html[data-say="b"] .say .q{display:block;width:fit-content;max-width:86%;margin:.45em 0;padding:.45em .9em;border-radius:1.1em 1.1em 1.1em .35em;background:color-mix(in srgb,var(--sp) 16%,var(--bg));color:var(--ink)}
+html[data-say="b"] .say-clevia .q{margin-left:auto;border-radius:1.1em 1.1em .35em 1.1em}
+html[data-say="b"] .say-x .q{background:var(--veil)}
+html[data-say="c"] .scene p.say{border-left:0;margin:1em 0 .9em;padding-left:0}
+html[data-say="c"] .scene p.say[data-name]::before{content:attr(data-name);display:block;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--sp);margin-bottom:.15em;font-style:normal}
+html[data-say="c"] .say .q{font-size:1.06em;color:var(--ink)}
+html[data-say] .scene p.say[data-act~="line"]{margin-left:-4px}
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
 :root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
 :root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
@@ -437,9 +453,9 @@ em .nm{font-style:italic}
 <p>Cô dừng lại trước máy bán nước cuối hành lang, không phải vì khát, mà vì cần một cái cớ để đứng yên một chỗ và lấy lại nhịp thở. Cô vừa giơ tay lên định bấm nút, ngón tay còn cách mặt máy cả một gang, thì lon nước đã rơi xuống khay đánh “cạch” một tiếng, to hơn hẳn mức cần thiết. <span class="nm nm-person">Clevia</span> tái mặt, nhìn trân trân vào cái máy như đang chờ nó tự giải thích.</p>
 <p class="say say-x"><span class="q">“Máy này dạo này hay dở chứng lắm.”</span></p>
 <p>Giọng nói vang lên ngay sau lưng, gần đến mức cô giật bắn mình. Cô quay lại, và nhận ra ngay người đứng trên tầng hai hôm qua, dù hôm nay anh ta mặc áo tập của câu lạc bộ kiếm đạo với cái logo trước ngực đã bạc màu vì giặt nhiều lần, mái tóc nâu hơi rối vì mồ hôi. Nhìn gần thì anh ta chẳng có gì đặc biệt, cao, vai rộng, nụ cười dễ dãi của người quen bắt chuyện với người lạ, chỉ riêng đôi mắt là không khớp với phần còn lại. Nó tĩnh quá, chăm chú quá, như thể đang đọc cô chứ không phải đang nhìn cô.</p>
-<p class="say say-clevia"><span class="q">“Vâng,”</span> <span class="nm nm-person">Clevia</span> đáp, ngắn gọn.</p>
+<p class="say say-clevia" data-name="Clevia"><span class="q">“Vâng,”</span> <span class="nm nm-person">Clevia</span> đáp, ngắn gọn.</p>
 <p>Anh ta cúi xuống nhặt lon nước trong khay, đưa cho cô. Cô đón lấy, cẩn thận để ngón tay mình không chạm vào tay anh.</p>
-<p class="say say-luke"><span class="q">“Em có hay gặp mấy chuyện kiểu này không?”</span> anh hỏi, giọng bình thản, không giống hỏi thăm cho có.</p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Em có hay gặp mấy chuyện kiểu này không?”</span> anh hỏi, giọng bình thản, không giống hỏi thăm cho có.</p>
 <p class="say say-x"><span class="q">“Chuyện kiểu này là chuyện gì ạ?”</span></p>
 <p class="say say-x"><span class="q">“Mọi thứ xảy ra trước khi em kịp làm gì.”</span></p>
 <p><span class="nm nm-person">Clevia</span> im lặng. Hình ảnh ổ khoá tự bật mở tối qua loé lên trong đầu, và cô đẩy nó đi như người ta xua một con côn trùng ra khỏi tầm mắt. “Không ạ.”</p>
@@ -454,12 +470,12 @@ em .nm{font-style:italic}
 <p>Lần này cô không giật mình. Có lẽ cô đã đoán trước anh ta sẽ quay lại, hoặc đến khi điều đó thật sự xảy ra, cô cũng không thấy ngạc nhiên lắm. <span class="nm nm-person">Luke</span> ngồi xuống đầu kia băng ghế, giữ một khoảng cách vừa đủ để không ai thấy là sỗ sàng, không nhìn cô mà nhìn ra sân trường, nơi mấy đứa năm nhất đang í ới kéo nhau đi căng tin.</p>
 <p class="say say-x"><span class="q">“Em không khát.”</span></p>
 <p>Một lúc lâu không ai nói gì. <span class="nm nm-person">Luke</span> nhặt một viên sỏi dưới chân ghế, thả xuống đất, và tiếng lách cách vang lên đúng lúc, không sớm, cũng không muộn. <span class="nm nm-person">Clevia</span> nhận ra điều đó, nhận ra cả việc mình đang để ý đến nó, và không hiểu tại sao một viên sỏi rơi đúng nhịp lại khiến lòng cô nhẹ đi một chút.</p>
-<p class="say say-luke"><span class="q">“Em có bao giờ thấy đồ đạc quanh mình dễ dùng hơn với người khác không?”</span> <span class="nm nm-person">Luke</span> hỏi. <span class="q">“Kiểu khoá kẹt, máy hay hỏng, nhưng đến lượt em thì lại chạy ngon lành.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Em có bao giờ thấy đồ đạc quanh mình dễ dùng hơn với người khác không?”</span> <span class="nm nm-person">Luke</span> hỏi. <span class="q">“Kiểu khoá kẹt, máy hay hỏng, nhưng đến lượt em thì lại chạy ngon lành.”</span></p>
 <p><span class="nm nm-person">Clevia</span> khựng lại một nhịp rồi mới đáp. “Chắc trùng hợp thôi anh.”</p>
-<p class="say say-luke"><span class="q">“Có thể.”</span> Anh không ép. <span class="q">“Anh hỏi vì hồi trước anh cũng nói y như vậy.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Có thể.”</span> Anh không ép. <span class="q">“Anh hỏi vì hồi trước anh cũng nói y như vậy.”</span></p>
 <p>Cô quay sang nhìn anh. Anh vẫn nhìn ra sân, vẫn cái vẻ thản nhiên như đang bàn chuyện hôm nay trời mưa hay nắng, nhưng câu vừa rồi chẳng phải chuyện thời tiết, và cả hai người đều biết thế.</p>
-<p class="say say-clevia" data-act="line"><span class="q">“Anh biết em đang bị sao không?”</span> cô hỏi thẳng.</p>
-<p class="say say-luke"><span class="q">“Cụ thể thì không.”</span> Anh ngừng một chút. <span class="q">“Nhưng anh biết em không tưởng tượng ra đâu.”</span></p>
+<p class="say say-clevia" data-name="Clevia" data-act="line"><span class="q">“Anh biết em đang bị sao không?”</span> cô hỏi thẳng.</p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Cụ thể thì không.”</span> Anh ngừng một chút. <span class="q">“Nhưng anh biết em không tưởng tượng ra đâu.”</span></p>
 <p>Anh đứng dậy, phủi tay vào ống quần. “Khi nào em thấy chuyện này vượt quá sức mình thì cứ lên phòng câu lạc bộ tìm anh. Anh sẽ nói cho em những gì anh biết.” Anh đứng lại thêm một giây, như đang cân nhắc có nên nói thêm gì nữa không, rồi lại thôi, thong thả bước về phía sân tập với dáng đi của người vừa xong một cuộc trò chuyện bình thường. Chỉ vài giây sau, anh đã lẫn vào đám sinh viên đang tập, lại trở thành một anh trưởng câu lạc bộ kiếm đạo chẳng có gì đáng để ý, và <span class="nm nm-person">Clevia</span> cứ nhìn theo mãi cho đến khi không còn phân biệt được anh với những người khác nữa.</p>
 <p>Cô không về ngay mà ngồi thêm một lúc trên băng ghế, bên lon nước chưa mở và vệt nắng đang trườn dần khỏi mặt sân. Không phải yên tâm, cũng chẳng phải sợ hãi, mà là cái cảm giác của một người vừa thấy một cánh cửa mở ra ở nơi mình không ngờ tới nhất, và đang đứng lặng trước nó, chưa biết nên bước vào hay quay đi.</p>
 <p>Ở đâu đó rất sâu bên trong, khoảng trống quen thuộc vẫn nằm yên, không đau, không rõ hình thù, nhưng hôm nay nó nặng hơn một chút, như thể chính nó cũng đang chờ đợi một điều gì đó.</p>
@@ -2114,6 +2130,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       for (var i = shots.length - 1; i >= 0; i--) {
         var sh = shots[i]; if (now < sh.t0) { busy = true; continue; }
         var t = (now - sh.t0) / 1000;
+        if (CVAR && (sh.kind === 'keysense' || sh.kind === 'keyburst')) { sh.kind = 'clevia_' + CVAR; }
         var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : MORE[sh.kind] ? MORE[sh.kind](t, sh.R) : true;
         if (done) shots.splice(i, 1); else busy = true;
       }
@@ -2537,6 +2554,78 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     // bản ngắn khi người đọc tự giữ tay mở khoá: bánh răng đã khớp sẵn, chỉ còn cú bật tung
     MORE.keyburst = function (t, R) { return t > 1.85 ? (main.style.transform = '', true) : MORE.keysense(t + 2.45, R); };
 
+    /* ---- ba kiểu hình mới cho năng lực Clevia (xem thử bằng ?clevia=a|b|c), không tô tối trang, không bánh răng ---- */
+    var CVAR = (location.search.match(/clevia=([abc])/) || [])[1];
+    var CW = { core: '#8E2238', mid: '#C0465F', light: '#F6C9D1', hot: '#FFE8EC' };
+    function ring(cx, cy, r, w, a, gapA, gapW) { g.strokeStyle = rgba(CW.mid, a); g.lineWidth = w; g.beginPath(); g.arc(cx, cy, r, gapA + gapW / 2, gapA - gapW / 2 + 6.283); g.stroke(); }
+    function glow(x, y, r, col, a) { var f = g.createRadialGradient(x, y, 0, x, y, r); f.addColorStop(0, rgba(col, a)); f.addColorStop(1, rgba(col, 0)); g.fillStyle = f; g.fillRect(x - r, y - r, r * 2, r * 2); }
+    // A. Vòng khoá: bốn vòng sáng mảnh có khe, quay lệch nhau; từng vòng "cạch" khớp khe lên đỉnh; khớp đủ thì một tia sáng hình lỗ khoá xuyên qua, các vòng nở tung
+    MORE.clevia_a = function (t, R) {
+      if (t > 3.9) return true;
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), fade = t < 0.3 ? t / 0.3 : t > 3.3 ? Math.max(0, 1 - (t - 3.3) / 0.6) : 1;
+      var burst = t > 2.5 ? t - 2.5 : 0;
+      for (var i = 0; i < 4; i++) {
+        var lock = 1.0 + i * 0.4, r = m * (0.14 + i * 0.075) * (1 + burst * burst * 1.8), spd = (i % 2 ? -1 : 1) * (2.2 - i * 0.3);
+        var ang = t < lock ? R[i] * 6.283 + t * spd : -1.5708, snap = t >= lock && t - lock < 0.25 ? 1 - (t - lock) / 0.25 : 0;
+        ring(cx, cy, r, 2 + snap * 3, (0.85 - i * 0.12) * fade * (burst ? Math.max(0, 1 - burst / 1.2) : 1), ang, 0.32);
+        for (var k = 0; k < 24; k++) { var ka = ang + k / 24 * 6.283; if (k % 3) continue; g.strokeStyle = rgba(CW.light, 0.5 * fade * (burst ? Math.max(0, 1 - burst) : 1)); g.lineWidth = 1; g.beginPath(); g.moveTo(cx + Math.cos(ka) * (r - 5), cy + Math.sin(ka) * (r - 5)); g.lineTo(cx + Math.cos(ka) * (r + 5), cy + Math.sin(ka) * (r + 5)); g.stroke(); }
+        if (snap) glow(cx, cy - r, 40 + snap * 30, CW.hot, 0.8 * snap);
+      }
+      if (burst) {
+        var bw = Math.min(1, burst / 0.15), ba = Math.max(0, 1 - burst / 1.2);
+        g.fillStyle = rgba(CW.hot, 0.85 * ba); g.beginPath(); g.arc(cx, cy - m * 0.05, m * 0.05 * bw, 0, 7); g.fill();
+        g.beginPath(); g.moveTo(cx - m * 0.03 * bw, cy - m * 0.04); g.lineTo(cx + m * 0.03 * bw, cy - m * 0.04); g.lineTo(cx + m * 0.012 * bw, H); g.lineTo(cx - m * 0.012 * bw, H); g.closePath(); g.fill();
+        g.fillRect(cx - 2 * bw, 0, 4 * bw, H);
+        glow(cx, cy, m * 0.9, CW.mid, 0.35 * ba);
+      }
+      return false;
+    };
+    // B. Chìa ánh sáng: bụi đỏ tụ lại thành một chiếc chìa lớn, cắm vào lỗ khoá vẽ bằng nét sáng, xoay một cái; trang nứt một đường sáng dọc rồi khép lại
+    function keyShape(x, y, s, sq, a) {
+      g.save(); g.translate(x, y); g.scale(1, sq); g.strokeStyle = rgba(CW.mid, a); g.lineWidth = 4.5; g.shadowColor = rgba(CW.mid, a); g.shadowBlur = 18;
+      g.beginPath(); g.arc(-s * 0.55, 0, s * 0.22, 0, 7); g.stroke(); g.beginPath(); g.arc(-s * 0.55, 0, s * 0.1, 0, 7); g.stroke();
+      g.beginPath(); g.moveTo(-s * 0.33, 0); g.lineTo(s * 0.5, 0); g.lineTo(s * 0.5, s * 0.16); g.lineTo(s * 0.4, s * 0.16); g.lineTo(s * 0.4, s * 0.08); g.lineTo(s * 0.3, s * 0.08); g.lineTo(s * 0.3, s * 0.18); g.lineTo(s * 0.2, s * 0.18); g.lineTo(s * 0.2, 0); g.stroke();
+      g.restore();
+    }
+    MORE.clevia_b = function (t, R) {
+      if (t > 3.8) return true;
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), s = m * 0.55, fade = t > 3.2 ? Math.max(0, 1 - (t - 3.2) / 0.6) : 1;
+      var form = Math.min(1, t / 1.0), slide = t < 1.0 ? 0 : Math.min(1, (t - 1.0) / 0.5), turn = t < 1.7 ? 0 : Math.min(1, (t - 1.7) / 0.25), open = t > 1.95 ? t - 1.95 : 0;
+      // lỗ khoá nét sáng
+      var ka = Math.min(1, t / 0.6) * fade; g.strokeStyle = rgba(CW.mid, 0.9 * ka); g.lineWidth = 2.5; g.beginPath(); g.arc(cx + s * 0.55, cy - s * 0.06, s * 0.09, 0, 7); g.stroke();
+      g.beginPath(); g.moveTo(cx + s * 0.5, cy); g.lineTo(cx + s * 0.47, cy + s * 0.22); g.lineTo(cx + s * 0.63, cy + s * 0.22); g.lineTo(cx + s * 0.6, cy); g.stroke();
+      // bụi tụ thành chìa
+      for (var p = 0; p < 60; p++) { var px = cx - s * 0.6 + (R[p] - 0.2) * s * 1.2, py = cy + (R[(p * 7) % 60] - 0.5) * s * 0.4, sx = R[(p * 3) % 60] * W, sy = R[(p * 11) % 60] < 0.5 ? -20 : H + 20; var e = 1 - Math.pow(1 - form, 3); if (form < 1) { g.fillStyle = rgba(CW.light, 0.8 * (1 - form * 0.6)); g.fillRect(sx + (px - sx) * e, sy + (py - sy) * e, 2.5, 2.5); } }
+      if (form > 0.6) keyShape(cx - s * 0.25 + slide * s * 0.3, cy, s, 1 - turn * 0.85, Math.min(1, (form - 0.6) / 0.4) * fade);
+      if (turn > 0 && turn < 1) glow(cx + s * 0.55, cy, 60, CW.hot, 0.9 * turn);
+      if (open) {
+        var w = open < 0.3 ? open / 0.3 : Math.max(0, 1 - (open - 0.3) / 1.2), a = Math.max(0, 1 - open / 1.5);
+        var gr = g.createLinearGradient(cx - 60 * w, 0, cx + 60 * w, 0); gr.addColorStop(0, rgba(CW.mid, 0)); gr.addColorStop(0.5, rgba(CW.hot, 0.95 * a)); gr.addColorStop(1, rgba(CW.mid, 0)); g.fillStyle = gr; g.fillRect(cx - 60 * w, 0, 120 * w, H);
+        main.style.clipPath = w > 0.02 ? 'polygon(0 0,' + (50 - w * 2) + '% 0,' + (50 - w * 2) + '% 100%,0 100%,0 0,' + (50 + w * 2) + '% 0,100% 0,100% 100%,' + (50 + w * 2) + '% 100%,' + (50 + w * 2) + '% 0)' : '';
+        sparks(cx, cy, open, 30, R, 3, 6.2, CW.light);
+      }
+      if (t > 3.3) main.style.clipPath = '';
+      return false;
+    };
+    // C. Cả trang là ổ khoá: các đoạn chữ trên màn hình bị đẩy lên lệch nhau như lẫy khoá, từng đoạn "cạch" về đúng hàng với vạch đỏ ngang; khớp hết thì một đường sáng quét ngang trang
+    MORE.clevia_c = function (t, R) {
+      var ps = MORE._cps;
+      if (t < 0.05 || !ps) { ps = MORE._cps = [].slice.call(document.querySelectorAll('.scene p')).filter(function (p) { var r = p.getBoundingClientRect(); return r.bottom > 0 && r.top < H; }).slice(0, 7); }
+      if (t > 3.4) { ps.forEach(function (p) { p.style.transform = ''; p.style.textShadow = ''; }); MORE._cps = null; return true; }
+      var y0 = H * 0.5, fade = t > 2.9 ? Math.max(0, 1 - (t - 2.9) / 0.5) : Math.min(1, t / 0.3);
+      g.strokeStyle = rgba(CW.mid, 0.8 * fade); g.lineWidth = 1.5; g.setLineDash([10, 8]); g.beginPath(); g.moveTo(0, y0); g.lineTo(W, y0); g.stroke(); g.setLineDash([]);
+      ps.forEach(function (p, i) {
+        var up = 0.15 + i * 0.05, drop = 0.9 + i * 0.22, lift = t < up ? 0 : t < drop ? Math.min(1, (t - up) / 0.12) : Math.max(0, 1 - (t - drop) / 0.06);
+        var off = lift * (6 + R[i] * 12) * (i % 2 ? 1 : -1) + (lift > 0.98 ? Math.sin(t * 60 + i) * 1.5 : 0);
+        p.style.transform = off ? 'translateY(' + off.toFixed(1) + 'px)' : '';
+        var just = t >= drop && t - drop < 0.3;
+        p.style.textShadow = just ? '0 0 12px ' + rgba(CW.mid, 0.9 * (1 - (t - drop) / 0.3)) : '';
+        if (just) { var r = p.getBoundingClientRect(); glow(r.left - 4, r.top + r.height / 2, 34, CW.hot, 0.7 * (1 - (t - drop) / 0.3)); }
+      });
+      var sw = t > 2.45 ? (t - 2.45) / 0.6 : -1;
+      if (sw >= 0 && sw <= 1) { var x = sw * (W + 200) - 100, gr = g.createLinearGradient(x - 120, 0, x + 20, 0); gr.addColorStop(0, rgba(CW.mid, 0)); gr.addColorStop(1, rgba(CW.hot, 0.7)); g.fillStyle = gr; g.fillRect(x - 120, 0, 140, H); }
+      return false;
+    };
     // Luke, Anomaly Sense: thời gian như ngừng lại, cả trang mất màu và đập theo nhịp tim, sóng dò quét qua làm chữ gợn,
     // rồi tới chỗ lệch nhịp thì cả trang giật tách màu và một vết đỏ nhoè hiện ra ở đó.
     MORE.anomaly = function (t, R) {

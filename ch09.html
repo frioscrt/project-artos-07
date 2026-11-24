@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
 <script>
+  (function(){try{var q=location.search.match(/thoai=([abc])/);if(q)document.documentElement.setAttribute('data-say',q[1]);}catch(e){}})();
   (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
 </script>
 <style>
@@ -190,6 +191,8 @@ em .nm{font-style:italic}
 .scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
 .scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
 .scene p.msg.show{opacity:1;transform:none}
+.scene p.msg-note{text-indent:0;margin:.5em auto;max-width:85%;text-align:center;font-size:.82em;font-style:italic;color:var(--soft);line-height:1.45}
+.scene p.msg-note::first-letter{text-transform:uppercase}
 .scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
 .scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
 .scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
@@ -295,6 +298,19 @@ em .nm{font-style:italic}
 .scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
 .scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+
+/* xem thử kiểu thoại khác: ?thoai=a|b|c (chưa chốt, mặc định là kiểu vạch màu) */
+html[data-say="a"] .scene p.say{border-left:0;margin-left:0;padding-left:0;text-indent:1.6em}
+html[data-say="a"] .say .q{color:color-mix(in srgb,var(--sp) 70%,var(--ink))}
+html[data-say="a"] .say-x .q{color:var(--ink)}
+html[data-say="b"] .scene p.say{border-left:0;margin:.4em 0;padding-left:0}
+html[data-say="b"] .say .q{display:block;width:fit-content;max-width:86%;margin:.45em 0;padding:.45em .9em;border-radius:1.1em 1.1em 1.1em .35em;background:color-mix(in srgb,var(--sp) 16%,var(--bg));color:var(--ink)}
+html[data-say="b"] .say-clevia .q{margin-left:auto;border-radius:1.1em 1.1em .35em 1.1em}
+html[data-say="b"] .say-x .q{background:var(--veil)}
+html[data-say="c"] .scene p.say{border-left:0;margin:1em 0 .9em;padding-left:0}
+html[data-say="c"] .scene p.say[data-name]::before{content:attr(data-name);display:block;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--sp);margin-bottom:.15em;font-style:normal}
+html[data-say="c"] .say .q{font-size:1.06em;color:var(--ink)}
+html[data-say] .scene p.say[data-act~="line"]{margin-left:-4px}
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
 :root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
 :root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
@@ -384,7 +400,7 @@ em .nm{font-style:italic}
     </span>
   </button><span class="act-hint">đặt ngón tay lên thẻ và giữ</span></div>
 <p>Lúc đầu chỉ là một hơi ấm mỏng, như tấm thẻ vừa nằm lâu trong túi áo ai, rồi nó nóng dần, nóng dần, và cái khung cửa vẽ bằng mấy nét đơn giản trên mặt thẻ bắt đầu sáng lên, từng nét một, như có ai cầm que diêm đi dọc theo đường mực. <span class="nm nm-person first">Clevia</span> muốn rụt tay lại. Cô không rụt. Cạnh ngón tay cô, ngón tay của <span class="nm nm-person first">Luke</span> vẫn đặt yên trên mép thẻ, và bên kia, ngón tay to bè của <span class="nm nm-person first">Oscar</span> run lên khe khẽ.</p>
-<p class="say say-luke"><span class="q">“Anh đang nghĩ tới Trạm xá,”</span> <span class="nm nm-person">Luke</span> nói nhỏ, mắt vẫn nhìn xuống tấm thẻ. <span class="q">“Không biết nó có nghe không nữa…”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Anh đang nghĩ tới Trạm xá,”</span> <span class="nm nm-person">Luke</span> nói nhỏ, mắt vẫn nhìn xuống tấm thẻ. <span class="q">“Không biết nó có nghe không nữa…”</span></p>
 <p data-fx="teleport" data-cast="1">Cô chưa kịp hỏi <em>nó</em> là ai thì cái khung cửa đã mở ra.</p>
 <p>Không phải mở trên mặt thẻ. Mà mở ra ở khắp nơi. Con sông, cây cầu gỗ, mái chòi lá, cánh đồng xanh mạ, tất cả bỗng như được vẽ lên một tấm vải mỏng, và có ai đó ở phía sau tấm vải đang kéo nó căng ra, căng ra, cho đến khi nó rách toạc ở giữa, đúng chỗ cái khung cửa. <span class="nm nm-person">Clevia</span> thấy mình bị hút về phía chỗ rách ấy. Không đau. Chỉ là một cảm giác hẫng hụt đến buồn nôn, như hồi bé cô ngồi đu quay, lúc cái ghế lên tới đỉnh rồi rơi xuống, và cả bụng cô bị bỏ lại phía trên, lơ lửng giữa trời.</p>
 <p>Rồi chân cô chạm đất.</p>
@@ -392,7 +408,7 @@ em .nm{font-style:italic}
 <p>Sau lưng cô, <span class="nm nm-person">Oscar</span> đang quỳ một gối trên đất, một tay ôm bụng, mặt xanh như tàu lá.</p>
 <p class="say say-other"><span class="q">“Mẹ ơi…”</span> ông lẩm bẩm. <span class="q">“Còn tệ hơn say sóng.”</span></p>
 <p><span class="nm nm-person">Luke</span> đứng vững nhất trong ba người, nhưng <span class="nm nm-person">Clevia</span> thấy anh phải chống tay phải lên đầu gối một lúc mới thẳng lưng lên được. Anh nhìn quanh, nhìn dãy nhà ngói, nhìn tấm biển, rồi nhìn xuống bàn tay phải của mình. Tấm thẻ <span class="nm nm-card first">Teleport</span> đã biến mất, không để lại cả một mẩu giấy vụn.</p>
-<p class="say say-luke"><span class="q">“Có vẻ nó nghe thật,”</span> anh nói.</p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Có vẻ nó nghe thật,”</span> anh nói.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="clinic">
@@ -418,11 +434,11 @@ em .nm{font-style:italic}
 <p class="say say-other"><span class="q">“Được rồi,”</span> ông nói.</p>
 <p>Ông cầm lấy cái bát thuốc trong tay <span class="nm nm-person">Clevia</span>, đưa cho <span class="nm nm-person">Luke</span>. <span class="nm nm-person">Luke</span> uống một hơi, nhăn mặt đến mức cả khuôn mặt anh như nhăn nhúm lại thành một cục, rồi trả lại cái bát. Ông thầy thuốc lấy lại cuộn vải trong tay <span class="nm nm-person">Oscar</span>, cất lên kệ, rồi quay về chiếc ghế con bên bếp, cầm con dao lên, cộc, cộc, cộc, như chưa từng có ai bước vào.</p>
 <p><span class="nm nm-person">Luke</span> nắm bàn tay trái lại. Mở ra. Nắm lại. Anh giơ cánh tay lên quá đầu, xoay một vòng ở vai, rồi đứng dậy, đưa tay trái ra sau lưng, chạm vào cán thanh kiếm tre.</p>
-<p class="say say-luke"><span class="q">“Hết đau thật,”</span> anh nói. Giọng anh nghe như chính anh cũng không tin lắm. <span class="q">“Không phải đỡ đau. Mà là hết luôn.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Hết đau thật,”</span> anh nói. Giọng anh nghe như chính anh cũng không tin lắm. <span class="q">“Không phải đỡ đau. Mà là hết luôn.”</span></p>
 <p><span class="nm nm-person">Clevia</span> nhìn hai bàn tay mình. Chỗ phồng rộp vẫn còn đó, đỏ rát, nóng hổi vì cái bát thuốc. Chẳng ai chữa cho cô cả. Nhưng cô không thấy tủi. Cô chỉ thấy cổ họng mình hơi nghẹn lại khi nhìn anh co duỗi những ngón tay ấy, những ngón tay đêm qua đã nắm chặt lấy tay cô kéo đi giữa bóng tối.</p>
-<p class="say say-other"><span class="q">“Ông ấy đâu có chữa cho chú,”</span> <span class="nm nm-person">Oscar</span> nói, vừa xoa hai bắp tay mỏi nhừ. <span class="q">“Chú đứng muốn rụng cả vai.”</span></p>
-<p class="say say-clevia"><span class="q">“Chú đâu có bị gì đâu ạ,”</span> <span class="nm nm-person">Clevia</span> nói.</p>
-<p class="say say-other"><span class="q">“Thì đứng lâu vậy cũng phải bị gì chứ.”</span></p>
+<p class="say say-other" data-name="Oscar"><span class="q">“Ông ấy đâu có chữa cho chú,”</span> <span class="nm nm-person">Oscar</span> nói, vừa xoa hai bắp tay mỏi nhừ. <span class="q">“Chú đứng muốn rụng cả vai.”</span></p>
+<p class="say say-clevia" data-name="Clevia"><span class="q">“Chú đâu có bị gì đâu ạ,”</span> <span class="nm nm-person">Clevia</span> nói.</p>
+<p class="say say-other" data-name="Oscar"><span class="q">“Thì đứng lâu vậy cũng phải bị gì chứ.”</span></p>
 <p>Lần đầu tiên từ lúc ở bờ sông, <span class="nm nm-person">Clevia</span> bật cười.</p>
 <p><span class="nm nm-person">Luke</span> rút tấm bản đồ ra. Ba người chụm đầu lại. Ở khu giữa, cái hình vẽ nhỏ xíu như một mái nhà có dấu cộng, cái hình mà sáng nay vẫn còn nhạt như sắp tan vào giấy, giờ đã đậm lên.</p>
 </section>
@@ -442,9 +458,9 @@ em .nm{font-style:italic}
 <p><span class="nm nm-person">Clevia</span> thấy hai bàn chân mình lạnh toát.</p>
 <p>Một trong ba người ấy, người đứng gần bức tường nhất, chậm rãi quay đầu lại. Từ chỗ này, qua lớp kính vô hình, cô không nhìn rõ mặt người đó. Cô chỉ thấy hai đốm đỏ, nhỏ như hai đầu nhang trong bóng tối, đang hướng về phía cô.</p>
 <p>Rồi một bóng nhỏ hơn chạy vụt qua con đường, thấp, nhanh, như một đứa trẻ đang chơi đuổi bắt, và biến mất sau mái nhà lá.</p>
-<p class="say say-luke"><span class="q">“Là bên đó,”</span> <span class="nm nm-person">Luke</span> nói. Giọng anh rất khẽ. <span class="q">“Đợt này ở bên khu Mỏ.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Là bên đó,”</span> <span class="nm nm-person">Luke</span> nói. Giọng anh rất khẽ. <span class="q">“Đợt này ở bên khu Mỏ.”</span></p>
 <p class="say say-x"><span class="q">“Nó… nó có sang được đây không anh?”</span></p>
-<p class="say say-luke"><span class="q">“Anh không nghĩ thế. Bức tường chặn được chúng ta thì chắc cũng chặn được chúng.”</span> Anh dừng một chút. <span class="q">“Nhưng anh không chắc. Đi thôi em.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Anh không nghĩ thế. Bức tường chặn được chúng ta thì chắc cũng chặn được chúng.”</span> Anh dừng một chút. <span class="q">“Nhưng anh không chắc. Đi thôi em.”</span></p>
 <p>Anh đặt tay lên lưng cô, đẩy nhẹ. Cô đi, nhưng cô vẫn ngoái lại nhìn. Cái người đứng gần bức tường nhất vẫn đứng đó, vẫn nghiêng đầu, hai đốm đỏ vẫn hướng về phía cô, cho đến khi dãy sạp cuối cùng che khuất đi.</p>
 <p><span class="nm nm-person">Oscar</span> đi sau cùng. Lúc vòng qua dãy sạp, <span class="nm nm-person">Clevia</span> nghe ông lẩm bẩm một mình, giọng nghèn nghẹn:</p>
 <p class="say say-x"><span class="q">“Hên mà hồi nãy cái thẻ nó không đưa mình qua bên đó…”</span></p>
@@ -463,43 +479,43 @@ em .nm{font-style:italic}
 <p class="say say-other"><span class="q">“Bình tĩnh, bình tĩnh nào hai em,”</span> gã nói. <span class="q">“Có gì từ từ nói. <span class="nm nm-person first">Priya</span>, em buông con bé ra trước đã…”</span></p>
 <p class="say say-x"><span class="q">“Anh <span class="nm nm-person first">Jasper</span>, anh không hiểu đâu.”</span> Cô gái đeo kính, <span class="nm nm-person">Priya</span>, không rời mắt khỏi cô gái tóc đỏ. Giọng cô ta đều, lạnh, rõ từng chữ, cái giọng của người đã quen nói chuyện với người đang kích động. <span class="q">“Lúc nó đi sát sau lưng tôi, tôi chạm phải tay nó. Tôi thấy nó đang nghĩ gì. Nó đang nhắm vào túi áo tôi.”</span></p>
 <p class="say say-x"><span class="q">“Chị bị hoang tưởng à?”</span> Cô gái tóc đỏ bật cười, cái cười chua và gắt. <span class="q">“Chạm tay một cái mà đòi biết người ta nghĩ gì. Chị là thầy bói hả?”</span></p>
-<p class="say say-other"><span class="q">“<span class="nm nm-person first">Ruby</span>.”</span> <span class="nm nm-person">Priya</span> siết tay chặt hơn, và <span class="nm nm-person">Clevia</span> thấy cô gái tóc đỏ nhăn mặt. <span class="q">“Tôi không cần biết em nghĩ tôi là gì. Tôi chỉ cần biết em là gì thôi.”</span></p>
+<p class="say say-other" data-name="Priya"><span class="q">“<span class="nm nm-person first">Ruby</span>.”</span> <span class="nm nm-person">Priya</span> siết tay chặt hơn, và <span class="nm nm-person">Clevia</span> thấy cô gái tóc đỏ nhăn mặt. <span class="q">“Tôi không cần biết em nghĩ tôi là gì. Tôi chỉ cần biết em là gì thôi.”</span></p>
 <p>Không ai trong ba người họ để ý tới ba cái bóng đứng ở chân thềm. Hoặc có để ý mà chẳng buồn quay lại.</p>
-<p class="say say-luke"><span class="q">“Đứng yên ở đây, em,”</span> <span class="nm nm-person">Luke</span> nói rất khẽ, môi gần như không động.</p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Đứng yên ở đây, em,”</span> <span class="nm nm-person">Luke</span> nói rất khẽ, môi gần như không động.</p>
 <p class="say say-x"><span class="q">“Mình không vào can à anh?”</span></p>
 <p class="say say-x"><span class="q">“Chưa đâu em.”</span> Mắt anh không rời khỏi gian nhà. <span class="q">“Chúng ta còn không biết ai đúng ai sai. Mà người có năng lực đánh nhau thì không như người thường đánh nhau đâu em.”</span></p>
 <p><span class="nm nm-person">Oscar</span> đứng sau lưng hai người, thở nặng nề. <span class="nm nm-person">Clevia</span> nghe thấy tiếng ông nuốt nước bọt.</p>
 <p>Trong gian nhà, <span class="nm nm-person">Priya</span> đã quay sang gã đàn ông. Tay cô ta vẫn không buông cổ tay <span class="nm nm-person">Ruby</span>.</p>
 <p class="say say-x"><span class="q">“Anh <span class="nm nm-person">Jasper</span>. Anh nghe tôi nói này.”</span> Giọng cô ta vẫn đều, nhưng chậm hơn, nặng hơn, từng chữ như đặt xuống một bàn cân. <span class="q">“Nếu anh còn để nó đi cùng chúng ta, sớm muộn gì nó cũng hại tôi. Rồi tới anh. Tôi không đoán. Tôi thấy.”</span></p>
 <p><span class="nm nm-person">Jasper</span> nhìn <span class="nm nm-person">Priya</span>. Rồi gã nhìn <span class="nm nm-person">Ruby</span>. <span class="nm nm-person">Ruby</span> nhìn lại gã, đôi mắt kẻ viền đen mở to, và trong một thoáng <span class="nm nm-person">Clevia</span> thấy trên gương mặt đánh son sẫm ấy một thứ gì đó rất giống với nỗi sợ.</p>
-<p class="say say-other"><span class="q">“Anh <span class="nm nm-person">Jasper</span>,”</span> <span class="nm nm-person">Ruby</span> nói, giọng bỗng nhỏ hẳn đi. <span class="q">“Anh tin chị ta thật à…?”</span></p>
+<p class="say say-other" data-name="Ruby"><span class="q">“Anh <span class="nm nm-person">Jasper</span>,”</span> <span class="nm nm-person">Ruby</span> nói, giọng bỗng nhỏ hẳn đi. <span class="q">“Anh tin chị ta thật à…?”</span></p>
 <p><span class="nm nm-person">Jasper</span> không trả lời ngay. Gã đưa một tay lên vuốt tóc, vuốt từ trán ra sau gáy, chậm rãi, như người đang cân nhắc có nên ký một bản hợp đồng hay không. Rồi gã thở dài.</p>
 <p class="say say-other"><span class="q">“Xin lỗi em nhé,”</span> gã nói. <span class="q">“Giữa em với <span class="nm nm-person">Priya</span> thì anh chọn tin <span class="nm nm-person">Priya</span>.”</span></p>
 <p>Và gã thay đổi.</p>
 <p><span class="nm nm-person">Clevia</span> không biết phải gọi cái đó là gì. Không có ánh sáng, không có khói, không có tiếng động. Chỉ là trong một cái chớp mắt, gã đàn ông chải tóc gọn gàng mặc sơ mi xanh nhạt không còn đứng đó nữa. Đứng đó là một người khác hẳn. Cao hơn gần một cái đầu, vai u thịt bắp căng rách cả lớp áo sơ mi, hai cánh tay to như hai khúc gỗ, cổ bạnh ra, tóc cạo sát hai bên. Sống mũi gãy lệch hẳn sang một bên, một bên chân mày có vết sẹo cắt ngang, khuôn mặt của một người đã quen ăn đấm. Cái áo sơ mi xanh nhạt vẫn còn đó, căng cứng trên tấm thân to lớn ấy, cúc áo bung mất hai cái, và cái cảnh ấy kỳ quặc đến mức, trong một giây, <span class="nm nm-person">Clevia</span> suýt nữa bật cười.</p>
 <p>Rồi người đó nhìn <span class="nm nm-person">Ruby</span>, và <span class="nm nm-person">Clevia</span> không cười nổi nữa.</p>
-<p class="say say-luke"><span class="q">“<span class="nm nm-card first">Chuyển hoá</span>…”</span> <span class="nm nm-person">Luke</span> lẩm bẩm, gần như với chính mình. <span class="q">“Đổi được cả dáng người…?”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“<span class="nm nm-card first">Chuyển hoá</span>…”</span> <span class="nm nm-person">Luke</span> lẩm bẩm, gần như với chính mình. <span class="q">“Đổi được cả dáng người…?”</span></p>
 <p><span class="nm nm-person">Ruby</span> giật mạnh cổ tay. Lần này <span class="nm nm-person">Priya</span> buông ra, không phải vì không giữ nổi, mà vì cô ta lùi lại một bước, nhường chỗ.</p>
 <p>Gã khổng lồ lao tới.</p>
 <p>Gã lao nhanh hơn <span class="nm nm-person">Clevia</span> tưởng một người to lớn như thế có thể lao. Cú đấm đầu tiên vung ra, to như cái búa, nhắm thẳng vào mặt <span class="nm nm-person">Ruby</span>. <span class="nm nm-person">Priya</span> cũng lao vào theo từ phía bên kia, tay nắm thành nắm đấm, không giỏi, không đẹp, nhưng quyết liệt, như người đã quyết rồi thì không nghĩ lại nữa.</p>
 <p><span class="nm nm-person">Ruby</span> hét lên một tiếng, hai tay đưa lên che mặt. Và giữa hai bàn tay cô ta, một thứ gì đó bừng sáng.</p>
 <p>Một tấm khiên. Không phải khiên gỗ hay khiên sắt, mà là một vòm sáng mờ mờ, hình tròn, ôm trọn lấy người cô ta từ đầu đến chân như một cái vỏ trứng trong suốt. Cú đấm của gã khổng lồ nện vào đó, và <span class="nm nm-person">Clevia</span> nghe thấy một tiếng <em>bùng</em> trầm đục, như ai đập tay lên mặt trống da. Vòm sáng lõm vào một chút, gợn lên như mặt nước, rồi bật trở lại. Gã khổng lồ loạng choạng lùi lại một bước. Nắm đấm của <span class="nm nm-person">Priya</span> đập vào phía bên kia, nghe chẳng to hơn tiếng gõ cửa.</p>
-<p class="say say-luke"><span class="q">“<span class="nm nm-card first">Protect</span>…”</span> <span class="nm nm-person">Luke</span> nói. Bàn tay anh khẽ chạm vào túi áo, chỗ tấm thẻ của anh nằm.</p>
+<p class="say say-luke" data-name="Luke"><span class="q">“<span class="nm nm-card first">Protect</span>…”</span> <span class="nm nm-person">Luke</span> nói. Bàn tay anh khẽ chạm vào túi áo, chỗ tấm thẻ của anh nằm.</p>
 <p>Gã khổng lồ không dừng lại. Gã đấm tiếp. Một cú. Hai cú. Ba cú. Mỗi cú lại một tiếng <em>bùng</em>, mỗi cú vòm sáng lại lõm sâu hơn một chút, gợn mạnh hơn một chút. Bên trong vòm sáng, <span class="nm nm-person">Ruby</span> co rúm người lại, hai tay ôm đầu, mặt trắng bệch, son môi sẫm như một vết máu trên tờ giấy. <span class="nm nm-person">Priya</span> vòng ra sau lưng <span class="nm nm-person">Ruby</span>, đập lên vòm sáng bằng cả hai nắm tay, hét lên câu gì đó mà <span class="nm nm-person">Clevia</span> không nghe rõ.</p>
 <p><span class="nm nm-person">Clevia</span> nhận ra mình đang bước lên. Chỉ một bước. Cô không biết mình định làm gì, cô không có nanh vuốt gì cả, cô chỉ biết là cô không đứng yên được nữa khi nhìn cái cảnh hai người, một gã to như con gấu, xúm vào đánh một con bé co rúm trong một cái vỏ trứng.</p>
 <p>Bàn tay <span class="nm nm-person">Luke</span> nắm lấy cổ tay cô. Anh không kéo mạnh. Anh chỉ nắm, chắc, không buông.</p>
-<p class="say say-luke" data-act="line"><span class="q">“Đừng, em.”</span> Anh vẫn không nhìn cô. <span class="q">“Em vào đấy thì em cũng chỉ là thêm một người nữa phải che thôi.”</span></p>
+<p class="say say-luke" data-name="Luke" data-act="line"><span class="q">“Đừng, em.”</span> Anh vẫn không nhìn cô. <span class="q">“Em vào đấy thì em cũng chỉ là thêm một người nữa phải che thôi.”</span></p>
 <p>Cô biết anh nói đúng. Cô ghét việc anh nói đúng.</p>
 <p>Nhưng có một người khác thì không đứng yên được.</p>
 <p><span class="nm nm-person">Clevia</span> chỉ kịp thấy một cái bóng to bè lướt qua bên cạnh mình. Cái áo thun bạc màu. Đôi dép tổ ong. <span class="nm nm-person">Oscar</span> chạy lên bậc thềm, chạy qua khung cửa, chạy thẳng vào giữa gian nhà, cái dáng chạy nặng nề của một người đàn ông năm mươi tuổi đã lâu lắm rồi không chạy.</p>
-<p class="say say-clevia"><span class="q">“Chú!”</span> <span class="nm nm-person">Clevia</span> gọi.</p>
+<p class="say say-clevia" data-name="Clevia"><span class="q">“Chú!”</span> <span class="nm nm-person">Clevia</span> gọi.</p>
 <p>Ông không quay lại.</p>
 <p class="say say-other"><span class="q">“Thôi!”</span> ông gầm lên. Giọng ông khàn đặc, to như tiếng người gọi nhau trên biển giữa cơn giông. <span class="q">“Thôi đi! Có ba đứa mà xúm vô đánh một đứa con gái, bây không biết nhục hả?”</span></p>
 <p>Gã khổng lồ vung tay lên định đấm cú thứ tư. <span class="nm nm-person">Oscar</span> nhào tới từ phía sau, vòng hai cánh tay qua người gã, ôm chặt lấy, khoá chặt hai cánh tay gã vào thân. Hai cánh tay của một người cả đời kéo lưới.</p>
 <p><span class="nm nm-person">Clevia</span> đã nghĩ ông sẽ bị hất văng ra. Gã kia to hơn ông, trẻ hơn ông, trông như thể chỉ cần rùng vai một cái là đủ. Nhưng gã chưa hất ra được ngay. Gã vùng vẫy, gầm gừ, giậm chân, hai cánh tay to như khúc gỗ cố giằng ra, vậy mà <span class="nm nm-person">Oscar</span> vẫn ôm chặt, mặt đỏ tía, gân cổ nổi lên, chân bám lấy nền gạch như bám vào sàn ghe giữa sóng.</p>
 <p class="say say-other"><span class="q">“Ông già! Buông ra!”</span> gã khổng lồ hét lên. Và <span class="nm nm-person">Clevia</span> khựng lại, vì cái giọng ấy không khớp với cái thân hình ấy. Nó vẫn là giọng của một người đàn ông bình thường, giọng của một người vừa nãy còn nói <em>bình tĩnh nào hai em</em>, giờ chỉ khàn hơn, gắt hơn, như bị ép ra từ một cái cổ họng quá to.</p>
 <p><span class="nm nm-person">Luke</span> cũng đã nghe thấy. Mắt anh nheo lại.</p>
-<p class="say say-luke"><span class="q">“Có lẽ hắn chỉ mượn được cái vỏ của ai đó thôi,”</span> anh nói khẽ. <span class="q">“Chứ sức thì vẫn là sức của hắn. Nếu không thì chú <span class="nm nm-person">Oscar</span> không giữ nổi đâu.”</span> Anh ngừng một chút. <span class="q">“Anh đoán thế.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Có lẽ hắn chỉ mượn được cái vỏ của ai đó thôi,”</span> anh nói khẽ. <span class="q">“Chứ sức thì vẫn là sức của hắn. Nếu không thì chú <span class="nm nm-person">Oscar</span> không giữ nổi đâu.”</span> Anh ngừng một chút. <span class="q">“Anh đoán thế.”</span></p>
 <p>Đúng lúc ấy, gã khổng lồ giằng mạnh người sang một bên. <span class="nm nm-person">Oscar</span> bị kéo theo, đôi dép tổ ong trượt dài trên nền gạch đỏ, và dưới gót chân gã, một viên gạch nứt toác ra với một tiếng <em>rắc</em> khô khốc. <span class="nm nm-person">Oscar</span> vẫn không buông, nhưng <span class="nm nm-person">Clevia</span> thấy hai cánh tay ông đang run bần bật.</p>
 <p><span class="nm nm-person">Luke</span> nhìn viên gạch nứt ấy. Rồi anh lại nói, “Không, có vẻ hắn mượn được sức mạnh khi biến thành người nào đó, chỉ là không sử dụng được năng lực mà thôi.”</p>
 <p>Bên trong cái vỏ trứng sáng mờ, <span class="nm nm-person">Ruby</span> đã ngừng run. Cô ta ngẩng đầu lên, nhìn gã khổng lồ đang bị <span class="nm nm-person">Oscar</span> ôm chặt, nhìn <span class="nm nm-person">Priya</span> đang khựng lại vì bất ngờ, và <span class="nm nm-person">Clevia</span> thấy đôi mắt kẻ viền đen ấy đảo qua đảo lại thật nhanh, nhanh như mắt một con mèo vừa thấy cửa bếp hé mở.</p>
@@ -560,11 +576,11 @@ em .nm{font-style:italic}
 <p class="say say-other"><span class="q">“<span class="nm nm-card">Teleport</span> của tôi,”</span> gã nói. <span class="q">“Tôi vừa mới mua…”</span></p>
 <p>Gã quay phắt lại nhìn <span class="nm nm-person">Oscar</span>.</p>
 <p class="say say-other"><span class="q">“Ông bị điên à?”</span> Gã gần như hét lên. <span class="q">“Ông nhảy vào làm cái gì? Ông có biết vì ông mà nó chạy thoát không? Vì ông mà tôi mất cái thẻ đấy!”</span></p>
-<p class="say say-other"><span class="q">“Ông là ai mà chen vào chuyện của bọn tôi?”</span> <span class="nm nm-person">Priya</span> cũng quay sang. Cô ta chỉnh lại cặp kính, và đôi mắt sau cặp kính ấy lạnh tanh. <span class="q">“Hay ông cũng cùng một giuộc với nó?”</span></p>
+<p class="say say-other" data-name="Priya"><span class="q">“Ông là ai mà chen vào chuyện của bọn tôi?”</span> <span class="nm nm-person">Priya</span> cũng quay sang. Cô ta chỉnh lại cặp kính, và đôi mắt sau cặp kính ấy lạnh tanh. <span class="q">“Hay ông cũng cùng một giuộc với nó?”</span></p>
 <p><span class="nm nm-person">Oscar</span> ngẩng lên nhìn hai người. Ông không cãi. Ông chỉ nhìn họ một lúc lâu, thở dốc, rồi lắc đầu.</p>
 <p class="say say-other"><span class="q">“Chú không biết con nhỏ đó,”</span> ông nói. <span class="q">“Chú chỉ thấy hai đứa bây xúm vô đánh nó.”</span></p>
 <p class="say say-x"><span class="q">“Ông không thấy là nó định ăn cắp của tôi à…!”</span></p>
-<p class="say say-other"><span class="q">“Thì giờ nó ăn cắp rồi đó.”</span> <span class="nm nm-person">Oscar</span> chống tay đứng dậy, chậm chạp, khó nhọc, như một người vừa kéo xong một mẻ lưới nặng. <span class="q">“Bây có đánh nó tới chết thì cái thẻ cũng chưa chắc gì về.”</span></p>
+<p class="say say-other" data-name="Oscar"><span class="q">“Thì giờ nó ăn cắp rồi đó.”</span> <span class="nm nm-person">Oscar</span> chống tay đứng dậy, chậm chạp, khó nhọc, như một người vừa kéo xong một mẻ lưới nặng. <span class="q">“Bây có đánh nó tới chết thì cái thẻ cũng chưa chắc gì về.”</span></p>
 <p>Gian nhà im lặng.</p>
 <p><span class="nm nm-person">Clevia</span> đứng ở khung cửa, nắm chặt tấm thẻ <span class="nm nm-card first">Smoke Veil</span> trong túi quần. Cô nhìn <span class="nm nm-person">Priya</span>, nhìn <span class="nm nm-person">Jasper</span>, nhìn <span class="nm nm-person">Oscar</span>, và cô chờ một trong ba người họ lao vào nhau lần nữa. Cô chờ gã đàn ông sơ mi xanh nhạt lại hoá thành gã khổng lồ, chờ <span class="nm nm-person">Priya</span> lại nắm tay thành nắm đấm. Nhưng không có gì xảy ra cả.</p>
 <p><span class="nm nm-person">Jasper</span> đá văng một chiếc ghế đổ dưới chân, rồi ngồi phịch xuống một chiếc ghế khác, hai khuỷu tay chống lên đầu gối, hai bàn tay ôm lấy mặt. <span class="nm nm-person">Priya</span> đứng thêm một lúc, rồi cũng ngồi xuống, ở dãy ghế bên kia, cách gã một quãng, tay vẫn đặt hờ lên túi áo trống rỗng. <span class="nm nm-person">Oscar</span> đứng giữa hai người, lưng còng xuống, hai cánh tay buông thõng, run run.</p>
@@ -575,15 +591,15 @@ em .nm{font-style:italic}
 <section class="scene" data-sound="hall">
 <figure class="plate"><canvas class="art" data-art="pews" role="img" aria-label="Dãy ghế gỗ đổ nghiêng trong gian nhà, bụi lắng trong nắng"></canvas></figure>
 <p>Hai người bước vào gian nhà. <span class="nm nm-person">Priya</span> ngẩng phắt lên, và <span class="nm nm-person">Clevia</span> thấy cô ta lùi người về phía sau một chút, một tay đặt lên thành ghế, như sẵn sàng đứng dậy.</p>
-<p class="say say-luke"><span class="q">“Bọn tôi mới tới thôi,”</span> <span class="nm nm-person">Luke</span> nói. Anh đứng lại ở đầu dãy ghế, giữ một khoảng cách, hai tay để yên bên người, cho cô ta thấy. <span class="q">“Đi cùng với chú này. Bọn tôi không quen cô gái lúc nãy.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Bọn tôi mới tới thôi,”</span> <span class="nm nm-person">Luke</span> nói. Anh đứng lại ở đầu dãy ghế, giữ một khoảng cách, hai tay để yên bên người, cho cô ta thấy. <span class="q">“Đi cùng với chú này. Bọn tôi không quen cô gái lúc nãy.”</span></p>
 <p><span class="nm nm-person">Priya</span> nhìn anh. Rồi nhìn <span class="nm nm-person">Clevia</span>. Ánh mắt cô ta dừng lại trên <span class="nm nm-person">Clevia</span> lâu hơn một chút, từ mái tóc rối bết bụi đến hai bàn tay phồng rộp, rồi tới bàn tay đang thọc trong túi quần. <span class="nm nm-person">Clevia</span> rút tay ra. Cô không biết vì sao mình lại làm thế, như một đứa học trò bị cô giáo bắt gặp đang giấu thứ gì đó trong ngăn bàn.</p>
-<p class="say say-other"><span class="q">“Lần sau thì mấy người đứng ngoài luôn đi,”</span> <span class="nm nm-person">Priya</span> nói. Cô ta quay đi. <span class="q">“Còn đỡ hơn là vào làm vướng tay người khác.”</span></p>
+<p class="say say-other" data-name="Priya"><span class="q">“Lần sau thì mấy người đứng ngoài luôn đi,”</span> <span class="nm nm-person">Priya</span> nói. Cô ta quay đi. <span class="q">“Còn đỡ hơn là vào làm vướng tay người khác.”</span></p>
 <p><span class="nm nm-person">Jasper</span> đã bỏ tay khỏi mặt. Gã ngồi thẳng lên, vuốt lại mái tóc, cài lại mấy cái cúc áo còn sót, và chỉ trong một lúc, gương mặt gã đã lại là gương mặt của một người vừa bước ra khỏi cuộc họp. Gã đứng dậy, đi về phía <span class="nm nm-person">Luke</span>, nở một nụ cười mệt mỏi nhưng lịch sự.</p>
 <p class="say say-other"><span class="q">“Xin lỗi cậu nhé, cho cậu xem một màn chẳng hay ho gì.”</span> Gã chìa tay ra. <span class="q">“Tôi là <span class="nm nm-person">Jasper</span>. Ông chú đây là người quen của cậu à?”</span></p>
 <p><span class="nm nm-person">Luke</span> nhìn bàn tay đang chìa ra trước mặt mình.</p>
 <p>Chỉ một thoáng. Một thoáng ngắn đến mức có lẽ chỉ mình <span class="nm nm-person">Clevia</span> nhận ra, vì cô đang đứng ngay cạnh anh. Mắt anh dừng lại trên bàn tay ấy, rồi trên cái áo sơ mi nhàu nát với hai cái cúc đã bung, và hàng lông mày anh khẽ động, cái động rất nhỏ cô đã thấy một lần ở ngã ba giếng đêm qua, ngay trước khi gã đàn ông to con kia vung tay lên.</p>
 <p><span class="nm nm-person">Luke</span> không bắt tay. Anh gật đầu, lịch sự, như người ta gật đầu chào một người lạ ngoài đường.</p>
-<p class="say say-luke"><span class="q">“Tôi là <span class="nm nm-person">Luke</span>,”</span> anh nói. Hai bàn tay anh vẫn để yên bên người. <span class="q">“Bọn tôi mới đi cùng chú ấy từ sáng nay thôi.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Tôi là <span class="nm nm-person">Luke</span>,”</span> anh nói. Hai bàn tay anh vẫn để yên bên người. <span class="q">“Bọn tôi mới đi cùng chú ấy từ sáng nay thôi.”</span></p>
 <p>Bàn tay <span class="nm nm-person">Jasper</span> treo lơ lửng giữa không trung một nhịp. Rồi gã rút về, cười xoà, đưa lên gãi gáy như thể gã vốn chỉ định gãi gáy.</p>
 <p class="say say-other"><span class="q">“Người cẩn thận,”</span> gã nói. <span class="q">“Ở đây thế là tốt.”</span></p>
 <p><span class="nm nm-person">Clevia</span> nhìn <span class="nm nm-person">Luke</span>. Anh không nhìn lại cô. Nhưng cô biết, như cô vẫn biết những lúc anh nhìn vào vết chân trên bùn, rằng anh vừa thấy một thứ gì đó mà cô không thấy. Cô không biết đó là gì. Có lẽ chính anh cũng chưa biết đó là gì.</p>
@@ -598,9 +614,9 @@ em .nm{font-style:italic}
 <p>Hai mươi người. Cô nhớ cái danh sách tên hiện lên trước mắt mình lúc mới vào làng, dài dằng dặc, cô đọc chẳng nhớ nổi một nửa. Hai mươi trừ đi mười tám. Hai người. Một là bà <span class="nm nm-person first">Mabel</span>, nằm dưới một nấm đất nâu ở gốc tre, đội chiếc nón lá. Còn một người nữa.</p>
 <p>Cô không muốn nghĩ tiếp, nhưng đầu cô cứ thế nghĩ tiếp. <span class="nm nm-person first">Felix</span>, với vệt máu thưa dần rồi mất hút giữa những thân tre. Cô gái ngồi giữa ruộng mạ sáng nay, người mà mạ nghiêng về phía tay cô ấy. Một ai đó ở khu Mỏ, nơi những người áo nâu đang nghiêng đầu trên con đường mòn. Hay một ai đó mà cô chưa từng gặp, chưa từng biết mặt, chỉ là một cái tên cô đã đọc lướt qua rồi quên.</p>
 <p>Tờ giấy không ghi tên. Nó chỉ ghi một con số.</p>
-<p class="say say-clevia"><span class="q">“Anh ơi,”</span> cô nói, giọng nhỏ đến mức chính cô cũng gần như không nghe thấy. <span class="q">“Liệu có phải là anh <span class="nm nm-person">Felix</span> không…?”</span></p>
+<p class="say say-clevia" data-name="Clevia"><span class="q">“Anh ơi,”</span> cô nói, giọng nhỏ đến mức chính cô cũng gần như không nghe thấy. <span class="q">“Liệu có phải là anh <span class="nm nm-person">Felix</span> không…?”</span></p>
 <p><span class="nm nm-person">Luke</span> đứng cạnh cô, cũng đang nhìn tấm bảng.</p>
-<p class="say say-luke"><span class="q">“Anh không biết,”</span> anh nói. Anh im lặng một lúc. <span class="q">“Cái này thì chúng ta chịu thôi, em ạ. Nhưng ít ra thì nó cũng chưa ghi tên ai cả.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Anh không biết,”</span> anh nói. Anh im lặng một lúc. <span class="q">“Cái này thì chúng ta chịu thôi, em ạ. Nhưng ít ra thì nó cũng chưa ghi tên ai cả.”</span></p>
 <p>Cô biết anh chỉ đang cố tìm một câu cho cô bám vào. Cô vẫn bám vào nó.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
@@ -608,7 +624,7 @@ em .nm{font-style:italic}
 <figure class="plate"><canvas class="art" data-art="courtyard" role="img" aria-label="Sân gạch trước nhà họp, bóng cột gỗ kéo dài, cái giếng phủ rêu"></canvas></figure>
 <p data-act="count-off">Nắng đã lên cao lúc <span class="nm nm-person">Luke</span> gấp tấm bản đồ lại.</p>
 <p>Ngoài kia, nắng sáng nhợt nhạt chiếu xiên qua sân gạch, kéo bóng mấy cây cột gỗ lim thành những vệt dài. <span class="nm nm-person">Luke</span> đã chỉ cho <span class="nm nm-person">Clevia</span> xem những chỗ còn nhạt trên tấm bản đồ, những chỗ ở khu giữa này mà họ chưa đặt chân tới. Cái chợ vắng hoe. Một ngôi nhà lớn có mái cong mà anh đoán là nhà trưởng làng. Còn khu Mỏ thì thôi, chưa tính, chưa thể tính lúc này.</p>
-<p class="say say-luke"><span class="q">“Chúng ta đi thôi, chú,”</span> <span class="nm nm-person">Luke</span> nói. <span class="q">“Tới đêm nay là hết giờ rồi, mà chúng ta còn phải đi hết chỗ này lẫn khu Mỏ nữa.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Chúng ta đi thôi, chú,”</span> <span class="nm nm-person">Luke</span> nói. <span class="q">“Tới đêm nay là hết giờ rồi, mà chúng ta còn phải đi hết chỗ này lẫn khu Mỏ nữa.”</span></p>
 <p><span class="nm nm-person">Oscar</span> vẫn ngồi trên chiếc ghế gỗ ở dãy cuối, chỗ ông đã ngồi xuống từ lúc trận đánh tan. Ông không đứng dậy. Hai bàn tay ông đặt trên đầu gối, bàn tay to bè, chai sạn, giờ có thêm mấy vết xước đỏ hằn ở mu tay, chỗ móng tay của gã kia cào vào lúc vùng vẫy.</p>
 <p class="say say-other"><span class="q">“Thôi,”</span> ông nói. <span class="q">“Hai đứa đi đi.”</span></p>
 <p><span class="nm nm-person">Clevia</span> khựng lại.</p>
@@ -616,11 +632,11 @@ em .nm{font-style:italic}
 <p class="say say-other"><span class="q">“Chú mệt rồi.”</span> Ông không nhìn cô. Ông nhìn ra cái giếng phủ rêu giữa sân. <span class="q">“Hồi sáng ngồi câu, rồi lùa cá, rồi cái vụ đi qua cái cửa gì gì đó, rồi giờ lại ôm thằng cha kia muốn gãy lưng. Chú già rồi con ơi, chú không theo hai đứa bây chạy ngược chạy xuôi được nữa đâu.”</span> Ông cười một tiếng ngắn, mệt mỏi. <span class="q">“Ở đây có giếng. Có mái. Chú ngồi đây là được rồi.”</span></p>
 <p class="say say-x"><span class="q">“Nhưng mà chú ở đây một mình…”</span></p>
 <p class="say say-other"><span class="q">“Một mình đâu.”</span> Ông hất cằm về phía hai người ngồi ở hai đầu gian nhà, <span class="nm nm-person">Priya</span> ở dãy ghế bên trái, đang nhìn ra cửa sổ, và <span class="nm nm-person">Jasper</span> ở dãy ghế bên phải, đang ngả lưng ra sau, nhắm mắt. <span class="q">“Có hai đứa này nữa mà.”</span></p>
-<p class="say say-clevia"><span class="q">“Chính vì có hai người đó nên cháu mới lo đấy chú ạ,”</span> <span class="nm nm-person">Clevia</span> nói, rồi vội liếc sang <span class="nm nm-person">Priya</span>, sợ cô ta nghe thấy.</p>
+<p class="say say-clevia" data-name="Clevia"><span class="q">“Chính vì có hai người đó nên cháu mới lo đấy chú ạ,”</span> <span class="nm nm-person">Clevia</span> nói, rồi vội liếc sang <span class="nm nm-person">Priya</span>, sợ cô ta nghe thấy.</p>
 <p><span class="nm nm-person">Oscar</span> bật cười, cái cười khàn khàn như tiếng ván thuyền cọ vào nhau.</p>
 <p class="say say-other"><span class="q">“Tụi nó đâu có đánh chú,”</span> ông nói. <span class="q">“Tụi nó chỉ chửi chú thôi. Mà chú bị chửi cả đời rồi.”</span></p>
 <p><span class="nm nm-person">Luke</span> đứng nhìn ông một lúc lâu. <span class="nm nm-person">Clevia</span> đợi anh nói gì đó. Đợi anh thuyết phục ông, như sáng nay anh đã nói <em>chúng ta đi ba người thì vẫn hơn đi hai</em>. Nhưng anh chỉ bước lại gần, cúi người xuống, đặt bàn tay trái, cái bàn tay vừa mới lành, lên vai ông.</p>
-<p class="say say-luke"><span class="q">“Cảm ơn chú,”</span> anh nói. <span class="q">“Vì lúc ở sông. Với lúc nãy nữa.”</span></p>
+<p class="say say-luke" data-name="Luke"><span class="q">“Cảm ơn chú,”</span> anh nói. <span class="q">“Vì lúc ở sông. Với lúc nãy nữa.”</span></p>
 <p><span class="nm nm-person">Oscar</span> vỗ vỗ lên mu bàn tay anh, hai cái, như vỗ vai một thằng cháu trước khi nó ra khơi.</p>
 <p class="say say-other"><span class="q">“Bây nhớ coi chừng con nhỏ,”</span> ông nói, hất đầu về phía <span class="nm nm-person">Clevia</span>. <span class="q">“Nó là cái đứa bắt chú đi theo đó.”</span></p>
 <p><span class="nm nm-person">Clevia</span> muốn nói thêm điều gì. Muốn nói rằng cô xin lỗi vì đã bắt ông đi theo, rằng nếu ông ở lại chòi câu cá thì ông đã không phải đi qua cái khung cửa làm ông say sóng, không phải nhìn thấy những người áo nâu nghiêng đầu bên kia bức tường, không phải ôm chặt một gã đàn ông đội lốt người khác cho tới khi hai cánh tay run lên. Nhưng cô biết nếu cô nói ra, ông sẽ lại xua tay.</p>
@@ -2292,6 +2308,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       for (var i = shots.length - 1; i >= 0; i--) {
         var sh = shots[i]; if (now < sh.t0) { busy = true; continue; }
         var t = (now - sh.t0) / 1000;
+        if (CVAR && (sh.kind === 'keysense' || sh.kind === 'keyburst')) { sh.kind = 'clevia_' + CVAR; }
         var done = sh.kind === 'chains' ? drawChains(t, sh.R) : sh.kind === 'smoke' ? drawSmoke(t, sh.R) : sh.kind === 'water' ? drawWater(t, sh.R) : sh.kind === 'door' ? drawDoor(t, sh.R) : sh.kind === 'dome' ? drawDome(t, sh.R) : MORE[sh.kind] ? MORE[sh.kind](t, sh.R) : true;
         if (done) shots.splice(i, 1); else busy = true;
       }
@@ -2715,6 +2732,78 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     // bản ngắn khi người đọc tự giữ tay mở khoá: bánh răng đã khớp sẵn, chỉ còn cú bật tung
     MORE.keyburst = function (t, R) { return t > 1.85 ? (main.style.transform = '', true) : MORE.keysense(t + 2.45, R); };
 
+    /* ---- ba kiểu hình mới cho năng lực Clevia (xem thử bằng ?clevia=a|b|c), không tô tối trang, không bánh răng ---- */
+    var CVAR = (location.search.match(/clevia=([abc])/) || [])[1];
+    var CW = { core: '#8E2238', mid: '#C0465F', light: '#F6C9D1', hot: '#FFE8EC' };
+    function ring(cx, cy, r, w, a, gapA, gapW) { g.strokeStyle = rgba(CW.mid, a); g.lineWidth = w; g.beginPath(); g.arc(cx, cy, r, gapA + gapW / 2, gapA - gapW / 2 + 6.283); g.stroke(); }
+    function glow(x, y, r, col, a) { var f = g.createRadialGradient(x, y, 0, x, y, r); f.addColorStop(0, rgba(col, a)); f.addColorStop(1, rgba(col, 0)); g.fillStyle = f; g.fillRect(x - r, y - r, r * 2, r * 2); }
+    // A. Vòng khoá: bốn vòng sáng mảnh có khe, quay lệch nhau; từng vòng "cạch" khớp khe lên đỉnh; khớp đủ thì một tia sáng hình lỗ khoá xuyên qua, các vòng nở tung
+    MORE.clevia_a = function (t, R) {
+      if (t > 3.9) return true;
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), fade = t < 0.3 ? t / 0.3 : t > 3.3 ? Math.max(0, 1 - (t - 3.3) / 0.6) : 1;
+      var burst = t > 2.5 ? t - 2.5 : 0;
+      for (var i = 0; i < 4; i++) {
+        var lock = 1.0 + i * 0.4, r = m * (0.14 + i * 0.075) * (1 + burst * burst * 1.8), spd = (i % 2 ? -1 : 1) * (2.2 - i * 0.3);
+        var ang = t < lock ? R[i] * 6.283 + t * spd : -1.5708, snap = t >= lock && t - lock < 0.25 ? 1 - (t - lock) / 0.25 : 0;
+        ring(cx, cy, r, 2 + snap * 3, (0.85 - i * 0.12) * fade * (burst ? Math.max(0, 1 - burst / 1.2) : 1), ang, 0.32);
+        for (var k = 0; k < 24; k++) { var ka = ang + k / 24 * 6.283; if (k % 3) continue; g.strokeStyle = rgba(CW.light, 0.5 * fade * (burst ? Math.max(0, 1 - burst) : 1)); g.lineWidth = 1; g.beginPath(); g.moveTo(cx + Math.cos(ka) * (r - 5), cy + Math.sin(ka) * (r - 5)); g.lineTo(cx + Math.cos(ka) * (r + 5), cy + Math.sin(ka) * (r + 5)); g.stroke(); }
+        if (snap) glow(cx, cy - r, 40 + snap * 30, CW.hot, 0.8 * snap);
+      }
+      if (burst) {
+        var bw = Math.min(1, burst / 0.15), ba = Math.max(0, 1 - burst / 1.2);
+        g.fillStyle = rgba(CW.hot, 0.85 * ba); g.beginPath(); g.arc(cx, cy - m * 0.05, m * 0.05 * bw, 0, 7); g.fill();
+        g.beginPath(); g.moveTo(cx - m * 0.03 * bw, cy - m * 0.04); g.lineTo(cx + m * 0.03 * bw, cy - m * 0.04); g.lineTo(cx + m * 0.012 * bw, H); g.lineTo(cx - m * 0.012 * bw, H); g.closePath(); g.fill();
+        g.fillRect(cx - 2 * bw, 0, 4 * bw, H);
+        glow(cx, cy, m * 0.9, CW.mid, 0.35 * ba);
+      }
+      return false;
+    };
+    // B. Chìa ánh sáng: bụi đỏ tụ lại thành một chiếc chìa lớn, cắm vào lỗ khoá vẽ bằng nét sáng, xoay một cái; trang nứt một đường sáng dọc rồi khép lại
+    function keyShape(x, y, s, sq, a) {
+      g.save(); g.translate(x, y); g.scale(1, sq); g.strokeStyle = rgba(CW.mid, a); g.lineWidth = 4.5; g.shadowColor = rgba(CW.mid, a); g.shadowBlur = 18;
+      g.beginPath(); g.arc(-s * 0.55, 0, s * 0.22, 0, 7); g.stroke(); g.beginPath(); g.arc(-s * 0.55, 0, s * 0.1, 0, 7); g.stroke();
+      g.beginPath(); g.moveTo(-s * 0.33, 0); g.lineTo(s * 0.5, 0); g.lineTo(s * 0.5, s * 0.16); g.lineTo(s * 0.4, s * 0.16); g.lineTo(s * 0.4, s * 0.08); g.lineTo(s * 0.3, s * 0.08); g.lineTo(s * 0.3, s * 0.18); g.lineTo(s * 0.2, s * 0.18); g.lineTo(s * 0.2, 0); g.stroke();
+      g.restore();
+    }
+    MORE.clevia_b = function (t, R) {
+      if (t > 3.8) return true;
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), s = m * 0.55, fade = t > 3.2 ? Math.max(0, 1 - (t - 3.2) / 0.6) : 1;
+      var form = Math.min(1, t / 1.0), slide = t < 1.0 ? 0 : Math.min(1, (t - 1.0) / 0.5), turn = t < 1.7 ? 0 : Math.min(1, (t - 1.7) / 0.25), open = t > 1.95 ? t - 1.95 : 0;
+      // lỗ khoá nét sáng
+      var ka = Math.min(1, t / 0.6) * fade; g.strokeStyle = rgba(CW.mid, 0.9 * ka); g.lineWidth = 2.5; g.beginPath(); g.arc(cx + s * 0.55, cy - s * 0.06, s * 0.09, 0, 7); g.stroke();
+      g.beginPath(); g.moveTo(cx + s * 0.5, cy); g.lineTo(cx + s * 0.47, cy + s * 0.22); g.lineTo(cx + s * 0.63, cy + s * 0.22); g.lineTo(cx + s * 0.6, cy); g.stroke();
+      // bụi tụ thành chìa
+      for (var p = 0; p < 60; p++) { var px = cx - s * 0.6 + (R[p] - 0.2) * s * 1.2, py = cy + (R[(p * 7) % 60] - 0.5) * s * 0.4, sx = R[(p * 3) % 60] * W, sy = R[(p * 11) % 60] < 0.5 ? -20 : H + 20; var e = 1 - Math.pow(1 - form, 3); if (form < 1) { g.fillStyle = rgba(CW.light, 0.8 * (1 - form * 0.6)); g.fillRect(sx + (px - sx) * e, sy + (py - sy) * e, 2.5, 2.5); } }
+      if (form > 0.6) keyShape(cx - s * 0.25 + slide * s * 0.3, cy, s, 1 - turn * 0.85, Math.min(1, (form - 0.6) / 0.4) * fade);
+      if (turn > 0 && turn < 1) glow(cx + s * 0.55, cy, 60, CW.hot, 0.9 * turn);
+      if (open) {
+        var w = open < 0.3 ? open / 0.3 : Math.max(0, 1 - (open - 0.3) / 1.2), a = Math.max(0, 1 - open / 1.5);
+        var gr = g.createLinearGradient(cx - 60 * w, 0, cx + 60 * w, 0); gr.addColorStop(0, rgba(CW.mid, 0)); gr.addColorStop(0.5, rgba(CW.hot, 0.95 * a)); gr.addColorStop(1, rgba(CW.mid, 0)); g.fillStyle = gr; g.fillRect(cx - 60 * w, 0, 120 * w, H);
+        main.style.clipPath = w > 0.02 ? 'polygon(0 0,' + (50 - w * 2) + '% 0,' + (50 - w * 2) + '% 100%,0 100%,0 0,' + (50 + w * 2) + '% 0,100% 0,100% 100%,' + (50 + w * 2) + '% 100%,' + (50 + w * 2) + '% 0)' : '';
+        sparks(cx, cy, open, 30, R, 3, 6.2, CW.light);
+      }
+      if (t > 3.3) main.style.clipPath = '';
+      return false;
+    };
+    // C. Cả trang là ổ khoá: các đoạn chữ trên màn hình bị đẩy lên lệch nhau như lẫy khoá, từng đoạn "cạch" về đúng hàng với vạch đỏ ngang; khớp hết thì một đường sáng quét ngang trang
+    MORE.clevia_c = function (t, R) {
+      var ps = MORE._cps;
+      if (t < 0.05 || !ps) { ps = MORE._cps = [].slice.call(document.querySelectorAll('.scene p')).filter(function (p) { var r = p.getBoundingClientRect(); return r.bottom > 0 && r.top < H; }).slice(0, 7); }
+      if (t > 3.4) { ps.forEach(function (p) { p.style.transform = ''; p.style.textShadow = ''; }); MORE._cps = null; return true; }
+      var y0 = H * 0.5, fade = t > 2.9 ? Math.max(0, 1 - (t - 2.9) / 0.5) : Math.min(1, t / 0.3);
+      g.strokeStyle = rgba(CW.mid, 0.8 * fade); g.lineWidth = 1.5; g.setLineDash([10, 8]); g.beginPath(); g.moveTo(0, y0); g.lineTo(W, y0); g.stroke(); g.setLineDash([]);
+      ps.forEach(function (p, i) {
+        var up = 0.15 + i * 0.05, drop = 0.9 + i * 0.22, lift = t < up ? 0 : t < drop ? Math.min(1, (t - up) / 0.12) : Math.max(0, 1 - (t - drop) / 0.06);
+        var off = lift * (6 + R[i] * 12) * (i % 2 ? 1 : -1) + (lift > 0.98 ? Math.sin(t * 60 + i) * 1.5 : 0);
+        p.style.transform = off ? 'translateY(' + off.toFixed(1) + 'px)' : '';
+        var just = t >= drop && t - drop < 0.3;
+        p.style.textShadow = just ? '0 0 12px ' + rgba(CW.mid, 0.9 * (1 - (t - drop) / 0.3)) : '';
+        if (just) { var r = p.getBoundingClientRect(); glow(r.left - 4, r.top + r.height / 2, 34, CW.hot, 0.7 * (1 - (t - drop) / 0.3)); }
+      });
+      var sw = t > 2.45 ? (t - 2.45) / 0.6 : -1;
+      if (sw >= 0 && sw <= 1) { var x = sw * (W + 200) - 100, gr = g.createLinearGradient(x - 120, 0, x + 20, 0); gr.addColorStop(0, rgba(CW.mid, 0)); gr.addColorStop(1, rgba(CW.hot, 0.7)); g.fillStyle = gr; g.fillRect(x - 120, 0, 140, H); }
+      return false;
+    };
     // Luke, Anomaly Sense: thời gian như ngừng lại, cả trang mất màu và đập theo nhịp tim, sóng dò quét qua làm chữ gợn,
     // rồi tới chỗ lệch nhịp thì cả trang giật tách màu và một vết đỏ nhoè hiện ra ở đó.
     MORE.anomaly = function (t, R) {
