@@ -531,10 +531,16 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .feat b{color:var(--ink);font-weight:600;font-size:15px}
 .feat .fi svg{width:30px;height:30px;fill:none;stroke:var(--lamp);stroke-width:1.6;stroke-linecap:round}
 .intro-b .act{margin:1.4em auto 1em}
-.intro-b .reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height 1.2s ease,opacity 1.2s ease .3s}
-.intro-b .act.done + .reveal{max-height:24em;opacity:1}
-.intro-b .rv{color:var(--soft);line-height:1.6;margin:0}
-.intro-b .rv b{color:var(--ink);font-weight:600}
+.warp{position:fixed;inset:0;z-index:200;pointer-events:none}
+.warp i{position:absolute;left:var(--x);top:var(--y);width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;transform:scale(.2)}
+.warp.go i{animation:wr 1.3s cubic-bezier(.55,0,.25,1) forwards}
+.warp.go i:nth-child(2){animation-delay:.14s;border-width:1px}
+.warp.go i:nth-child(3){animation-delay:.28s;border-style:dashed}
+.warp b{position:absolute;inset:0;background:var(--bg);clip-path:circle(0 at var(--x) var(--y))}
+.warp.go b{animation:wb 1s cubic-bezier(.6,0,.3,1) .55s forwards}
+@keyframes wr{0%{opacity:0;transform:scale(.2)}15%{opacity:1}100%{opacity:0;transform:scale(30)}}
+@keyframes wb{to{clip-path:circle(150vmax at var(--x) var(--y))}}
+body.warping main{transition:transform 1.4s cubic-bezier(.6,0,.3,1),filter 1.4s;transform:scale(1.06);filter:blur(2px)}
 
 </style>
 </head>
@@ -547,14 +553,9 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     <section class="intro intro-b" aria-label="Giới thiệu">
     <p class="tease">Clevia nhặt được một tấm thẻ úp mặt trong con hẻm. Từ hôm ấy, những ổ khoá bắt đầu mở ra dưới tay cô.</p>
     <div class="act act-lock steel" data-hold="1.2"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 120 150" aria-hidden="true"><path class="shackle" d="M36 70 V44 a24 24 0 0 1 48 0 V70" /><rect class="body" x="18" y="66" width="84" height="70" rx="9"/><path class="hole" d="M60 92 a7 7 0 1 1 0.1 0 M57 97 h6 l2 16 h-10z"/></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">thử chạm và giữ ổ khoá</span></div>
-    <div class="reveal">
-      <p class="kind"><span>Truyện này không chỉ để đọc</span></p>
-      <p class="rv">Vừa rồi là một chỗ chạm. Trong truyện còn nhiều chỗ như thế: <b>giữ</b> để mở khoá hay giơ đèn, <b>lật</b> những tấm thẻ úp, <b>nghe</b> tiếng từng cảnh (nên đeo tai nghe), và <b>Sổ tay của Luke</b> ghi lại suy đoán về năng lực từng người.</p>
-    </div>
   </section>
     <a class="resume" id="resume" href="ch01.html">Bắt đầu đọc</a>
     <a class="resume st-link" href="sotay.html">Sổ tay của Luke</a>
-    <a class="resume st-link" href="tacgia.html">Lời chào từ tác giả</a>
   </div>
   <ol class="toc">
 <li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li>
@@ -577,6 +578,15 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     </a>
   </div>
 </main>
+<script>
+// Mở ổ khoá ở trang chủ xong thì bay sang trang Tác giả (Clair 24/11)
+(function(){var a=document.querySelector('.intro-b .act');if(!a)return;var red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+new MutationObserver(function(){if(a._w||!a.classList.contains('done'))return;a._w=1;var r=a.querySelector('.lockbtn').getBoundingClientRect(),w=document.createElement('div');
+w.className='warp';w.style.setProperty('--x',(r.left+r.width/2)+'px');w.style.setProperty('--y',(r.top+r.height/2)+'px');w.innerHTML='<i></i><i></i><i></i><b></b>';
+setTimeout(function(){document.body.appendChild(w);document.body.classList.add('warping');requestAnimationFrame(function(){requestAnimationFrame(function(){w.classList.add('go')})})},red?150:850);
+setTimeout(function(){try{sessionStorage.setItem('a07-warp','1')}catch(e){}location.href='tacgia.html'},red?500:2350)}).observe(a,{attributes:true,attributeFilter:['class']});
+addEventListener('pageshow',function(e){if(e.persisted){[].forEach.call(document.querySelectorAll('.warp'),function(x){x.remove()});document.body.classList.remove('warping')}})})();
+</script>
 <script>
 (function(){try{var l=localStorage.getItem('a07-last');if(l&&/^ch\d+\.html$/.test(l)){var a=document.getElementById('resume');a.href=l;a.textContent='Đọc tiếp chương '+(+l.match(/\d+/)[0]);}}catch(e){}})();
 </script>

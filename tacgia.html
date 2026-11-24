@@ -526,12 +526,29 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .tg-credit div{display:flex;justify-content:space-between;gap:1em;padding:.35em 0;line-height:1.4}
 .tg-credit span{opacity:.75}
 .tg-credit b{font-weight:400;font-style:italic;color:var(--lamp);text-align:right}
+.tg-how{margin:2.4em 0 0;padding:1.2em 1.1em;border:1px solid var(--line);border-radius:14px}
+.tg-how .k{margin:0 0 .7em;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
+.tg-how p{margin:0;color:var(--soft);line-height:1.65}
+.tg-how b{color:var(--ink);font-weight:600}
+.tg-how .from{display:none}
+.tg-arrive .tg-how .from{display:inline}
+.tg-arrive .tg-ring{animation:tgin 1.4s cubic-bezier(.2,.8,.2,1) both}
+.tg-arrive .tg-ring .dot{fill:var(--pw-clevia)}
+.tg-arrive main>*:not(.tg-ring),.tg-arrive .tg-letter>*{animation:tgup .9s cubic-bezier(.2,.8,.2,1) both}
+.tg-arrive .tg-kick{animation-delay:.35s}.tg-arrive main h1{animation-delay:.5s}
+.tg-arrive .tg-letter{animation-delay:.6s}
+.tg-arrive .tg-letter>:nth-child(1){animation-delay:.75s}.tg-arrive .tg-letter>:nth-child(2){animation-delay:.95s}.tg-arrive .tg-letter>:nth-child(3){animation-delay:1.15s}.tg-arrive .tg-letter>:nth-child(4){animation-delay:1.35s}
+.tg-arrive .tg-how{animation-delay:1.55s}.tg-arrive .tg-credit{animation-delay:1.7s}.tg-arrive .tg-go{animation-delay:1.85s}
+@keyframes tgin{0%{transform:scale(5) rotate(-60deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes tgup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.tg-arrive *{animation:none!important}}
 .tg-go{display:flex;flex-wrap:wrap;gap:10px;margin-top:2.6em}
 .tg-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
 .tg-go a.tg-main{border-color:var(--lamp)}
 </style>
 </head>
 <body>
+<script>try{if(sessionStorage.getItem('a07-warp')){sessionStorage.removeItem('a07-warp');document.documentElement.classList.add('tg-arrive')}}catch(e){}</script>
 <header class="bar">
   <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương, trang chủ và sổ tay"><span class="ic"></span>Mục lục</button>
   <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
@@ -554,6 +571,10 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     <p>Truyện vẫn đang được viết tiếp từng chương. Nếu có đoạn nào làm các cậu nín thở, hay một tấm thẻ nào khiến các cậu tò mò, tui sẽ vui lắm nếu được nghe kể lại.</p>
     <p>Cảm ơn các cậu đã ghé qua. Chúc các cậu có một trải nghiệm thật tuyệt vời với PROJECT ARTOS 07 và nhớ đeo tai nghe để trải nghiệm thật hấp dẫn nha!</p>
   </div>
+  <section class="tg-how" aria-label="Cách đọc">
+    <p class="k">Truyện này không chỉ để đọc</p>
+    <p><span class="from">Ổ khoá vừa rồi là một chỗ chạm. </span>Trong truyện còn nhiều chỗ như thế: <b>giữ</b> để mở khoá hay giơ đèn, <b>lật</b> những tấm thẻ úp, <b>nghe</b> tiếng từng cảnh (nên đeo tai nghe), và <b>Sổ tay của Luke</b> ghi lại suy đoán về năng lực từng người.</p>
+  </section>
   <dl class="tg-credit"><dt>Credit</dt><div><span>Tác giả</span><b>Clair</b></div><div><span>Phụ tá &amp; chuốt lời văn</span><b>June</b></div></dl>
   <nav class="tg-go" aria-label="Đi tiếp">
     <a class="tg-main" id="go" href="ch01.html">Bắt đầu đọc</a>
