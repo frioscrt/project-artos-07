@@ -344,6 +344,221 @@ html[data-say="c"] .say .q{font-size:1.06em;color:var(--ink)}
 }
 </style>
 <style>
+/* XEM THỬ (chưa chốt): giao diện ?giao=a|b|c, kiểu thoại ?thoai=d|e|f. Mặc định trang không đổi.
+   Chốt kiểu nào thì chuyển phần đó vào CSS chính trong build.js và gỡ file này. */
+
+/* ================= GIAO DIỆN A: SỔ GHI CHÉP ================= */
+html[data-ui="a"]{--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--grid:color-mix(in srgb,var(--ink) 6%,transparent)}
+html[data-ui="a"] body{
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;background-attachment:fixed}
+html[data-ui="a"] main{position:relative}
+@media (min-width:720px){html[data-ui="a"] main::before{content:"";position:absolute;top:0;bottom:0;left:-2.2em;border-left:1px solid color-mix(in srgb,var(--sp-clevia) 40%,transparent)}}
+html[data-ui="a"] .opening{justify-content:flex-end;padding-bottom:16vh}
+html[data-ui="a"] .chapno{font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);
+  display:flex;align-items:center;gap:12px;margin-bottom:1.2em}
+html[data-ui="a"] .chapno::after{content:"";flex:1;border-top:1px solid var(--line)}
+html[data-ui="a"] .opening h1{font-weight:400;letter-spacing:-.03em}
+html[data-ui="a"] .ui-meta{display:flex;gap:18px;margin-top:1.6em;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--soft)}
+html[data-ui="a"] .ui-meta b{font-weight:500;color:var(--ink)}
+html[data-ui="a"] .opening .hint{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding-top:6vh}
+html[data-ui="a"] article{counter-reset:sc}
+html[data-ui="a"] .scene{counter-increment:sc}
+html[data-ui="a"] .scene::before{content:var(--chn) " · " counter(sc,decimal-leading-zero);display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--soft);margin:0 0 1.4em}
+html[data-ui="a"] .scene .plate{position:relative}
+html[data-ui="a"] .scene .plate::after{content:"";position:absolute;inset:8% 16px;border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);pointer-events:none}
+html[data-ui="a"] .break .ripple{display:none}
+html[data-ui="a"] .break::before{content:"";width:100%;border-top:1px dashed var(--line)}
+html[data-ui="a"] .end .mark{font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.22em;text-transform:uppercase}
+html[data-ui="a"] .toc-title{font-weight:400;letter-spacing:-.03em}
+html[data-ui="a"] .toc-sub{font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+html[data-ui="a"] .toc .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;flex-basis:3.4em}
+html[data-ui="a"] .toc .n::before{content:"CH "}
+html[data-ui="a"] .toc a{padding:1em 0}
+html[data-ui="a"] .toc li.read .t::after{content:"đã đọc";margin-left:.8em;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);vertical-align:.15em}
+
+/* ================= GIAO DIỆN B: ĐÊM ARTOS ================= */
+@property --tint{syntax:"<color>";inherits:true;initial-value:transparent}
+html[data-ui="b"]{--tint:transparent;transition:--tint 2.4s ease}
+html[data-ui="b"] .ui-amb{position:fixed;inset:-10vh 0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 55% at 50% 0%,var(--tint),transparent 70%),radial-gradient(ellipse 100% 45% at 50% 105%,var(--tint),transparent 70%)}
+html[data-ui="b"] main{position:relative;z-index:1}
+html[data-ui="b"] .opening{position:relative;align-items:center;text-align:center;justify-content:center;padding:14vh 0 8vh}
+html[data-ui="b"] .ui-rings{position:absolute;left:50%;top:44%;width:min(118vw,620px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.55}
+html[data-ui="b"] .ui-rings svg{width:100%;height:100%;overflow:visible}
+html[data-ui="b"] .ui-rings g{transform-origin:50% 50%;transform-box:view-box;animation:uiSpin 90s linear infinite}
+html[data-ui="b"] .ui-rings g.r2{animation-duration:140s;animation-direction:reverse}
+html[data-ui="b"] .ui-rings g.r3{animation-duration:60s}
+html[data-ui="b"] .ui-rings circle,html[data-ui="b"] .ui-rings path{fill:none;stroke:var(--ice);stroke-width:.6}
+@keyframes uiSpin{to{transform:rotate(360deg)}}
+html[data-ui="b"] .chapno{position:relative;font-style:normal;font-size:clamp(64px,22vw,120px);font-weight:300;line-height:1;margin:0 0 .3em;letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--ice) 70%,transparent);font-variant-numeric:lining-nums}
+html[data-ui="b"] .chapno .lb{display:block;-webkit-text-stroke:0;color:var(--ice);font-size:12px;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1.4em;opacity:.8}
+html[data-ui="b"] .opening h1{position:relative;text-shadow:0 0 .6em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui="b"] .opening .hint{position:relative;letter-spacing:.3em;text-transform:uppercase;font-size:11px}
+html[data-ui="b"] .break .ripple{display:none}
+html[data-ui="b"] .break::before{content:"";width:22px;height:22px;border-radius:50%;border:1px solid var(--ice);opacity:.6;
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--ice) 8%,transparent),0 0 18px color-mix(in srgb,var(--ice) 40%,transparent);animation:uiBeat 4s ease-in-out infinite}
+@keyframes uiBeat{50%{opacity:.25;transform:scale(.85)}}
+html[data-ui="b"] .scene .plate canvas{-webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent);mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent)}
+html[data-ui="b"] .end{border-top:0;position:relative}
+html[data-ui="b"] .end::before{content:"";position:absolute;top:0;left:15%;right:15%;border-top:1px solid var(--ice);opacity:.4;box-shadow:0 0 12px var(--ice)}
+html[data-ui="b"] .end .mark{font-style:normal;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--ice)}
+html[data-ui="b"] .gate{background:transparent;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px}
+/* trang chủ */
+html[data-ui="b"] .toc-hero{position:relative;text-align:center;padding-top:calc(90px + env(safe-area-inset-top))}
+html[data-ui="b"] .toc-hero .plate{display:none}
+html[data-ui="b"] .toc-hero .ui-rings{top:120px}
+html[data-ui="b"] .toc-title{position:relative;text-shadow:0 0 .5em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui="b"] .toc-sub,html[data-ui="b"] .resume{position:relative}
+html[data-ui="b"] .toc{border-top:0;display:grid;gap:10px}
+html[data-ui="b"] .toc li{border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--veil) 60%,transparent);transition:border-color .3s,box-shadow .3s}
+html[data-ui="b"] .toc li:hover{border-color:var(--ice);box-shadow:0 0 18px -6px var(--ice)}
+html[data-ui="b"] .toc a{padding:.9em 1em}
+html[data-ui="b"] .toc .n{color:var(--ice);font-size:1.25em;font-weight:300;flex-basis:1.8em}
+html[data-ui="b"] .toc li.read{opacity:.7}
+@media (prefers-reduced-motion: reduce){html[data-ui="b"] .ui-rings g,html[data-ui="b"] .break::before{animation:none}}
+
+/* ================= GIAO DIỆN C: TRANG SÁCH ================= */
+html[data-ui="c"]{--disp:"Cormorant Garamond","Literata",serif}
+html[data-ui="c"]:not([data-theme="dark"]){--bg:#EFE9DD;--veil:#E5DDCD;--ink:#2A2622;--soft:#7A7065;--line:#CFC5B3}
+@media (prefers-color-scheme: dark){html[data-ui="c"]:not([data-theme="light"]){--bg:#17140F;--veil:#211C16;--ink:#DDD3C1;--soft:#93897A;--line:#3A3328}}
+html[data-ui="c"][data-theme="dark"]{--bg:#17140F;--veil:#211C16;--ink:#DDD3C1;--soft:#93897A;--line:#3A3328}
+html[data-ui="c"] .opening{align-items:center;text-align:center}
+html[data-ui="c"] .chapno{font-style:normal;font-variant:small-caps;letter-spacing:.32em;font-size:15px;text-transform:lowercase;color:var(--lamp)}
+html[data-ui="c"] .chapno::before,html[data-ui="c"] .chapno::after{content:"—";margin:0 .8em;color:var(--line)}
+html[data-ui="c"] .opening h1{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(46px,13vw,84px);letter-spacing:0}
+html[data-ui="c"] .opening h1::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin-top:.6em;opacity:.8}
+html[data-ui="c"] .scene > p:first-of-type{text-indent:0}
+html[data-ui="c"] .scene > p:first-of-type::first-letter{font-family:var(--disp);float:left;font-size:4.1em;line-height:.82;padding:.06em .1em 0 0;color:var(--lamp);font-weight:500}
+html[data-ui="c"] .scene > p:first-of-type::first-line{font-variant:small-caps;letter-spacing:.06em}
+html[data-ui="c"] .break .ripple{display:none}
+html[data-ui="c"] .break::before{content:"⁂";font-size:20px;color:var(--soft);letter-spacing:.2em}
+html[data-ui="c"] .scene .plate canvas{filter:sepia(.25) saturate(.85)}
+html[data-ui="c"] .end{border-top:0}
+html[data-ui="c"] .end .mark{font-family:var(--disp);font-size:24px}
+html[data-ui="c"] .end .mark::before{content:"◆";display:block;font-style:normal;color:var(--lamp);margin-bottom:.4em}
+html[data-ui="c"] .toc-hero{text-align:center}
+html[data-ui="c"] .toc-title{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(48px,14vw,90px)}
+html[data-ui="c"] .toc-title::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin:.3em 0 .1em}
+html[data-ui="c"] .toc{border-top:0}
+html[data-ui="c"] .toc li{border:0}
+html[data-ui="c"] .toc a{gap:.6em;padding:.55em 0}
+html[data-ui="c"] .toc .n{order:3;flex:0 0 auto;font-family:var(--disp);font-size:1.15em}
+html[data-ui="c"] .toc .t{order:1}
+html[data-ui="c"] .toc a::after{content:"";order:2;flex:1;border-bottom:1px dotted var(--soft);transform:translateY(-.35em);opacity:.6}
+
+/* ================= THOẠI D: NGOẶC TREO ================= */
+html[data-say="d"] .scene p.say{border-left:0;margin:.55em 0;padding-left:0;text-indent:0}
+html[data-say="d"] .say .qm{color:var(--sp);font-weight:600}
+html[data-say="d"] p.say > .q:first-child .qm{font-size:1.9em;line-height:0;position:relative;top:.3em;margin-left:-.48em;margin-right:.02em;font-weight:300}
+html[data-say="d"] .say .qe{color:var(--sp);font-weight:600}
+html[data-say="d"] .say-x .qm,html[data-say="d"] .say-x .qe{color:var(--soft)}
+
+/* ================= THOẠI E: DẤU NĂNG LỰC ================= */
+html[data-say="e"] .scene p.say{position:relative;border-left:0;margin:.6em 0;padding-left:1.55em;text-indent:0}
+html[data-say="e"] .scene p.say::before{content:"";position:absolute;left:0;top:.42em;width:1em;height:1em;background:var(--sp);
+  -webkit-mask:var(--glyph) center/contain no-repeat;mask:var(--glyph) center/contain no-repeat;opacity:.9}
+html[data-say="e"] .scene p.say.cont::before{opacity:.28}
+html[data-say="e"] .say-clevia{--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='8.3' r='2.2'/%3E%3Cpath d='M8.9 9.5h2.2l.7 4.6H8.2z'/%3E%3C/svg%3E")}
+html[data-say="e"] .say-luke{--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='4' cy='10' r='1.6' fill='%23000' stroke='none'/%3E%3Cpath d='M8 6.5a5 5 0 0 1 0 7'/%3E%3Cpath d='M11.5 4a8.5 8.5 0 0 1 0 12'/%3E%3Cpath d='M15 2a11.5 11.5 0 0 1 0 16' opacity='.55'/%3E%3C/svg%3E")}
+html[data-say="e"] .say-leon{--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.7'%3E%3Crect x='1.5' y='6.5' width='10' height='7' rx='3.5'/%3E%3Crect x='8.5' y='6.5' width='10' height='7' rx='3.5'/%3E%3C/svg%3E")}
+html[data-say="e"] .say-other{--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 5l5 5-5 5-5-5z'/%3E%3C/svg%3E")}
+html[data-say="e"] .say-x{--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='2.2'/%3E%3C/svg%3E")}
+html[data-say="e"] .say .q{color:var(--ink)}
+
+/* ================= THOẠI F: LỜI NÓI SÁNG LÊN ================= */
+html[data-say="f"] .scene p.say{border-left:0;margin:.6em 0;padding-left:0;text-indent:0;color:var(--soft)}
+html[data-say="f"] .say .q{color:var(--ink);opacity:.32;filter:blur(.5px);transition:opacity 1.1s ease,filter 1.1s ease,text-shadow 2.4s ease,color 1.6s ease}
+html[data-say="f"] .say.heard .q{opacity:1;filter:none;color:color-mix(in srgb,var(--sp) 38%,var(--ink));animation:uiHeard 2.4s ease-out}
+html[data-say="f"] .say-x.heard .q{color:var(--ink)}
+@keyframes uiHeard{0%{text-shadow:0 0 0 transparent}30%{text-shadow:0 0 .55em color-mix(in srgb,var(--sp) 70%,transparent)}100%{text-shadow:0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){html[data-say="f"] .say .q{opacity:1;filter:none;transition:none;animation:none}}
+
+/* nhãn nhỏ cho biết đang xem bản thử */
+.ui-tag{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9;font:12px/1.2 system-ui,sans-serif;letter-spacing:.04em;
+  padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--bg);opacity:.85;pointer-events:none;white-space:nowrap}
+
+</style>
+<script>
+/* XEM THỬ (chưa chốt): ?giao=a|b|c, ?thoai=d|e|f; ?giao=0 hoặc ?thoai=0 để tắt. Nhớ trong phiên duyệt (sang chương khác vẫn giữ). */
+(function () {
+  var root = document.documentElement, ss;
+  try { ss = sessionStorage; } catch (e) { ss = null; }
+  function pick(param, key, ok) {
+    var m = location.search.match(new RegExp(param + '=([a-z0-9])')), v = null;
+    try { v = ss && ss.getItem(key); } catch (e) {}
+    if (m) { v = ok.test(m[1]) ? m[1] : null; try { v ? ss.setItem(key, v) : ss.removeItem(key); } catch (e) {} }
+    return v;
+  }
+  var ui = pick('giao', 'a07-giao', /^[abc]$/), sy = pick('thoai', 'a07-thoai2', /^[def]$/);
+  if (!ui && !sy) return;
+  if (ui) root.setAttribute('data-ui', ui);
+  if (sy) root.setAttribute('data-say', sy);
+  var fonts = { a: 'IBM+Plex+Mono:wght@400;500', c: 'Cormorant+Garamond:ital,wght@0,500;1,500' };
+  if (fonts[ui]) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=' + fonts[ui] + '&display=swap&subset=vietnamese'; document.head.appendChild(l); }
+
+  var NAMES = { a: 'Sổ ghi chép', b: 'Đêm Artos', c: 'Trang sách', d: 'Ngoặc treo', e: 'Dấu năng lực', f: 'Lời nói sáng lên' };
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#2a2a24',
+    hearth: '#6a3a14', hearthlow: '#4a2a12', hut: '#4a3018', whet: '#3a3020', dusk: '#4a2c44', dawn: '#5a4436',
+    day: '#2f4a3a', noon: '#4f4a2e', farm: '#344a2e', paddy: '#2e4a34', market: '#4a3a2a', street: '#33393f', run: '#3f2a2a',
+    river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#3d3528', store: '#3a3328', room: '#33363a', clock: '#2f3540' };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var tag = document.createElement('div'); tag.className = 'ui-tag';
+    tag.textContent = 'Bản thử: ' + [ui && NAMES[ui], sy && NAMES[sy]].filter(Boolean).join(' + ');
+    document.body.appendChild(tag);
+    setTimeout(function () { tag.style.transition = 'opacity 1s'; tag.style.opacity = '0'; }, 4500);
+
+    // ghi dấu chương đã đọc ở trang chủ
+    try { var mx = +(localStorage.getItem('a07-max') || 0); document.querySelectorAll('.toc li').forEach(function (li) { var n = +(li.querySelector('.n') || {}).textContent; if (n && n < mx) li.classList.add('read'); }); } catch (e) {}
+
+    var chn = (location.pathname.match(/ch(\d+)\.html$/) || [])[1];
+    var op = document.querySelector('.opening'), cp = op && op.querySelector('.chapno');
+    if (ui === 'a' && op) {
+      root.style.setProperty('--chn', '"' + chn + '"');
+      var words = (document.querySelector('article') || {}).textContent.trim().split(/\s+/).length;
+      var meta = document.createElement('div'); meta.className = 'ui-meta';
+      meta.innerHTML = '<span><b>' + document.querySelectorAll('.scene').length + '</b> cảnh</span><span>khoảng <b>' + Math.max(1, Math.round(words / 230)) + '</b> phút đọc</span>';
+      op.querySelector('h1').after(meta);
+      cp.textContent = 'Chương ' + chn;
+    }
+    if (ui === 'b') {
+      var amb = document.createElement('div'); amb.className = 'ui-amb'; document.body.prepend(amb);
+      var rings = '<div class="ui-rings" aria-hidden="true"><svg viewBox="0 0 200 200">' +
+        '<g><circle cx="100" cy="100" r="96" stroke-dasharray="1 5"/><circle cx="100" cy="100" r="88"/></g>' +
+        '<g class="r2"><circle cx="100" cy="100" r="74" stroke-dasharray="30 8 4 8"/><path d="M100 22v10M100 168v10M22 100h10M168 100h10"/></g>' +
+        '<g class="r3"><circle cx="100" cy="100" r="56" stroke-dasharray="2 3"/><circle cx="100" cy="100" r="40" opacity=".6"/></g></svg></div>';
+      var hero = op || document.querySelector('.toc-hero');
+      if (hero) hero.insertAdjacentHTML('afterbegin', rings);
+      if (cp) cp.innerHTML = '<span class="lb">Chương</span>' + chn;
+      var scenes = document.querySelectorAll('.scene[data-sound]');
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) {
+        var c = TINT[e.target.getAttribute('data-sound')] || 'transparent';
+        var dark = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        root.style.setProperty('--tint', c === 'transparent' ? c : (dark ? c : 'color-mix(in srgb,' + c + ' 22%,transparent)'));
+      } }); }, { rootMargin: '-45% 0px -45% 0px' });
+      scenes.forEach(function (s) { io.observe(s); });
+    }
+
+    if (sy === 'd') document.querySelectorAll('.say .q').forEach(function (q) {
+      var h = q.innerHTML; if (h.charAt(0) === '“') h = '<span class="qm">“</span>' + h.slice(1);
+      if (h.slice(-1) === '”') h = h.slice(0, -1) + '<span class="qe">”</span>';
+      q.innerHTML = h;
+    });
+    if (sy === 'e') { var prev = null; document.querySelectorAll('.scene p').forEach(function (p) {
+      if (!p.classList.contains('say')) { prev = null; return; }
+      var w = (p.className.match(/say-(\w+)/) || [])[1]; if (w && w === prev && w !== 'x') p.classList.add('cont'); prev = w; }); }
+    if (sy === 'f') {
+      var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('heard'); io2.unobserve(e.target); } }); }, { rootMargin: '0px 0px -38% 0px' });
+      document.querySelectorAll('.scene p.say').forEach(function (p) { io2.observe(p); });
+    }
+  });
+})();
+
+</script>
+<style>
 .st{max-width:40rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(14vh + env(safe-area-inset-bottom))}
 .st-title{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(38px,10vw,64px);line-height:1.05;letter-spacing:-.02em;margin:.1em 0 .3em}
 .st-note{font-style:italic;color:var(--ink);margin:0 0 .4em;font-size:1.05em}
