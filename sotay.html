@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sổ tay của Luke</title>
+<meta name="description" content="Project Artos 07: Luke đoán năng lực của những người đã gặp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
+<script>
+  (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
+</script>
+<style>
+:root{
+  --bg:#E4E7E2; --veil:#D7DCD6; --ink:#22292A; --soft:#5E6965; --line:#B9C1BC; --lamp:#8A5A2B; --ice:#2E7484;
+  --size:19px; --measure:33em;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Literata",Georgia,serif; font-size:var(--size); line-height:1.8;
+  font-optical-sizing:auto; font-kerning:normal;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .4s, color .4s;
+}
+/* sương mờ phía trên và dưới màn hình */
+body::before,body::after{content:"";position:fixed;left:0;right:0;height:9vh;pointer-events:none;z-index:2}
+body::before{top:0;background:linear-gradient(var(--bg) 20%,transparent)}
+body::after{bottom:0;background:linear-gradient(transparent,var(--bg) 80%)}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--lamp);transform-origin:0 50%;transform:scaleX(0);z-index:5;opacity:.75}
+
+header.bar{
+  position:fixed;top:0;left:0;right:0;z-index:4;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  font-size:15px;line-height:1.2;color:var(--soft);
+  transition:transform .35s ease, opacity .35s;
+  background:linear-gradient(var(--bg) 70%,transparent);padding-bottom:22px;
+}
+header.bar.hide{transform:translateY(-110%);opacity:0}
+.book{color:inherit;text-decoration:none;font-style:italic;font-size:16px}
+.tools{display:flex;gap:0}
+.tools button{
+  font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid transparent;
+  border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
+}
+.tools button:hover{color:var(--ink);border-color:var(--line)}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:3px;border-radius:4px}
+
+main{max-width:var(--measure);margin:0 auto;padding:0 16px}
+
+.opening{min-height:88vh;min-height:88svh;display:flex;flex-direction:column;justify-content:center;padding:18vh 0 10vh}
+.chapno{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 .6em}
+h1{
+  font-family:"Literata",serif;font-weight:300;font-style:normal;font-variation-settings:"opsz" 72;
+  font-size:clamp(40px,10.5vw,72px);line-height:1.14;letter-spacing:-.02em;margin:0;
+  text-wrap:balance;
+}
+h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
+@keyframes surface{
+  0%{opacity:0;filter:blur(10px);transform:translateY(.28em) scaleY(1.08)}
+  60%{opacity:.85;filter:blur(1.5px)}
+  100%{opacity:1;filter:blur(0);transform:none}
+}
+.opening .hint{margin-top:auto;padding-top:14vh;font-size:14px;color:var(--soft);letter-spacing:.02em;animation:fadein 2s 2.4s both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+.scene p{margin:0;hyphens:none;text-wrap:pretty}
+.scene p + p{text-indent:1.6em}
+
+.plate{margin:0 -16px 2.2em}
+.plate canvas{display:block;width:100%;aspect-ratio:16/9;
+  -webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
+@media (min-width:720px){.plate{margin-left:-4em;margin-right:-4em}}
+.tools #sound[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
+.card-fig{margin:2.4em auto;max-width:300px;text-align:center}
+.card{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.card-inner{display:block;position:relative;aspect-ratio:856/540;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform:rotateX(8deg) rotateZ(-3deg)}
+.card.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg)}
+.face{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:4%;box-shadow:0 14px 30px -14px rgba(0,0,0,.55)}
+.face.back{transform:rotateY(180deg)}
+.card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
+.card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
+.face .emb{opacity:0}
+.type-row{display:flex;justify-content:center;gap:18px;margin:2em 0 2.2em;padding:0}
+.tslot{display:flex;flex-direction:column;align-items:center;gap:.6em;width:min(38vw,150px)}
+.tcard{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent}
+.tcard .card-inner{aspect-ratio:540/856;transform:none}
+.tcard.flipped .card-inner{transform:rotateY(180deg)}
+.tcard .face{border-radius:6%}
+.tname{font-size:14px;color:var(--soft);font-style:italic}
+.type-row .tslot{opacity:0;transform:translateY(18px) rotate(-6deg)}
+.type-row.dealt .tslot{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.type-row.dealt .tslot + .tslot{transition-delay:.25s}
+.tcard .pulse{transform-origin:270px 420px;animation:pulse 3.6s ease-in-out infinite}
+.tcard .p2{animation-delay:.4s}.tcard .p3{animation-delay:.8s}
+@keyframes pulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+.tcard .ghost{animation:ghost 4s ease-in-out infinite}
+@keyframes ghost{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-18px,8px);opacity:.7}}
+.tcard.rule .glitch{animation:glitch 2.8s steps(1) infinite}
+@keyframes glitch{0%{opacity:.5}8%{opacity:0}11%{opacity:.6;transform:translateX(14px)}14%{opacity:0}60%{opacity:.3;transform:none}63%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.type-row .tslot{opacity:1;transform:none}.tcard .pulse,.tcard .ghost,.tcard.rule .glitch{animation:none}}
+.card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
+.card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
+@keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
+@keyframes sheen{from{translate:0 0}to{translate:1400px 0}}
+@media (prefers-reduced-motion: reduce){.card.flipped .back .emb{animation:none;opacity:.2}.card.flipped .back .sheen{animation:none}}
+.card-fig.gone .card{opacity:0;filter:blur(8px)}
+.card-fig.gone figcaption{opacity:0}
+.scene p.sys{text-indent:0;margin:1.6em 0;color:var(--ice);text-align:center;font-size:.95em;letter-spacing:.01em}
+.scene p.sys + p{text-indent:0}
+.scene p.sys .ch{opacity:0;transition:opacity .35s ease,text-shadow 1.2s ease}
+.scene p.sys .ch.on{opacity:1}
+.scene p.sys .ch.cur{text-shadow:0 0 .5em var(--ice)}
+.fx-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;
+  background:radial-gradient(ellipse 75% 65% at 50% 55%,rgba(5,7,8,.55),rgba(5,7,8,.97))}
+.fx-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+/* tên riêng: người màu ấm, thẻ và hệ xanh băng, vật phẩm màu đồng; lần đầu trong chương loé sáng một nhịp */
+:root{--nm-person:#94503F;--nm-item:#7D6528}
+:root[data-theme="dark"]{--nm-person:#E2A894;--nm-item:#D2B470}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--nm-person:#E2A894;--nm-item:#D2B470}}
+.nm{font-style:normal}
+em .nm{font-style:italic}
+.nm-person{color:var(--nm-person)}
+.nm-card{color:var(--ice);letter-spacing:.015em}
+.nm-item{color:var(--nm-item);font-weight:600}
+.nm.first.lit{animation:nmlit 2.2s ease-out both}
+.nm-card.first.lit{animation-name:nmlitice}
+@keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
+@keyframes nmlitice{0%{text-shadow:0 0 0 transparent;filter:brightness(1)}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor;filter:brightness(1.35)}100%{text-shadow:0 0 0 transparent;filter:brightness(1)}}
+@media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
+/* chỗ chạm được: nhịp tròn màu đèn đập liên tục tới khi người đọc chạm, chữ gợi ý màu đèn; tranh động không có dấu này */
+.tap-host{position:relative}
+.tapdot{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;pointer-events:none;z-index:2}
+.tapdot::before,.tapdot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--lamp);opacity:0;animation:tapring 2.4s ease-out infinite}
+.tapdot::after{animation-delay:.6s}
+.tapdot i{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--lamp);box-shadow:0 0 14px var(--lamp);opacity:.85;animation:tapcore 2.4s ease-in-out infinite}
+@keyframes tapring{0%{transform:scale(.3);opacity:.95}100%{transform:scale(2.4);opacity:0}}
+@keyframes tapcore{0%,100%{transform:scale(.8)}50%{transform:scale(1.2)}}
+.act-lock .tapdot{top:62%}
+.touched .tapdot{display:none}
+.act .act-hint,.card-fig figcaption,.row-hint{color:var(--lamp);font-style:normal;font-size:13px;letter-spacing:.08em}
+.act-hint::before,.card-fig figcaption::before,.row-hint::before{content:"";display:inline-block;width:7px;height:7px;margin-right:.6em;border-radius:50%;background:var(--lamp);box-shadow:0 0 8px var(--lamp);vertical-align:.1em;animation:tapcore 2.4s ease-in-out infinite}
+.touched .act-hint::before,.touched figcaption::before,.touched .row-hint::before{animation:none;opacity:.4}
+.row-hint{display:block;text-align:center;margin:-1.2em 0 2.2em}
+.nudge{animation:nudge 1.3s ease-out}
+@keyframes nudge{0%{filter:none;transform:none}25%{filter:drop-shadow(0 0 16px var(--lamp));transform:scale(1.035)}100%{filter:none;transform:none}}
+@media (prefers-reduced-motion: reduce){.tapdot::before,.tapdot::after,.tapdot i,.act-hint::before,.card-fig figcaption::before,.row-hint::before{animation:none}.nudge{animation:none}}
+/* tương tác người đọc */
+.act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
+.act.done .act-hint,.act.holding .act-hint{opacity:0}
+.lockbtn{position:relative;display:inline-block;width:150px;height:160px;padding:12px;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lockbtn svg{display:block;width:100%;height:100%;overflow:visible;transform:translate(var(--jx,0),var(--jy,0))}
+.act-lock .shackle{fill:none;stroke-width:11;stroke-linecap:round;transform-box:view-box;transition:transform .55s cubic-bezier(.3,1.7,.4,1)}
+.act-lock.steel .shackle{transform-origin:36px 70px}
+.act-lock.bronze .shackle{transform-origin:44px 72px;stroke-width:9}
+.act-lock.done .shackle{transform:translateY(-16px) rotate(-18deg)}
+.act-lock.quiet .shackle{transition:none}
+.steel .shackle{stroke:#8a9491}.steel .body{fill:#66706d}.steel .hole{fill:#1d2324}
+.bronze .shackle{stroke:#6f6243}.bronze .body{fill:#8b7546;transition:fill-opacity .6s}.bronze .rust circle{fill:#5d8a73;opacity:.6}
+.bronze .pins rect{fill:var(--lamp);opacity:0;transform-box:fill-box;transition:opacity .35s,transform .3s}
+.bronze.sense .body{fill-opacity:.45}
+.bronze.sense .pins rect{opacity:.28}
+.bronze .pins rect.on{opacity:1;transform:translateY(-5px);filter:drop-shadow(0 0 3px var(--lamp))}
+.act-lock.done .pins rect{transform:translateY(-8px)}
+.act-lock .ring{position:absolute;left:50%;top:62%;width:44px;height:44px;margin:-22px;border-radius:50%;border:2px solid var(--lamp);opacity:0;pointer-events:none}
+.act-lock.holding .ring{opacity:calc(var(--p,0)*.7);transform:scale(calc(3.2 - var(--p,0)*2.2));transition:none}
+.act-lock.done .ring{animation:ringout 1.5s ease-out both}
+.act-lock.done .r2{animation-delay:.2s}
+.act-lock.quiet .ring{animation:none}
+@keyframes ringout{0%{opacity:.85;transform:scale(.4)}100%{opacity:0;transform:scale(7)}}
+.act-glass{position:relative;margin:2.4em -16px}
+.act-glass canvas{display:block;width:100%;height:min(46vh,340px);cursor:pointer;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
+@media (min-width:720px){.act-glass{margin-left:-4em;margin-right:-4em}}
+.act-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.act-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(3,5,6,0),rgba(3,5,6,.85) 70%,rgba(3,5,6,.98))}
+.act-still-hint{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;text-align:center;font-size:13px;font-style:italic;letter-spacing:.06em;color:var(--soft);opacity:0;transition:opacity 1.6s;pointer-events:none}
+.act-still-hint.on{opacity:.9}
+.act-notify{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top));z-index:7;width:min(calc(100vw - 24px),360px);display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:18px;
+  background:rgba(236,239,236,.78);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 12px 32px -14px rgba(0,0,0,.45);
+  transform:translate(-50%,-150%);opacity:0;transition:transform .6s cubic-bezier(.2,.85,.2,1),opacity .5s;pointer-events:none}
+.act-notify.on{transform:translate(-50%,0);opacity:1}
+.act-notify .ic{flex:0 0 36px;height:36px;border-radius:9px;background:#8d9894}
+.act-notify .tx{flex:1;min-width:0}
+.act-notify .ln{display:block;height:8px;margin:6px 0;border-radius:5px;background:rgba(40,46,46,.5);filter:blur(2.4px)}
+:root[data-theme="dark"] .act-notify{background:rgba(44,52,54,.8)}
+:root[data-theme="dark"] .act-notify .ln{background:rgba(225,230,226,.5)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .act-notify{background:rgba(44,52,54,.8)}:root:not([data-theme="light"]) .act-notify .ln{background:rgba(225,230,226,.5)}}
+.act-count{position:fixed;right:calc(18px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));z-index:6;font-weight:300;font-size:26px;line-height:1;color:var(--ice);font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  text-shadow:0 0 .5em var(--ice);opacity:0;transform:translateY(-4px);transition:opacity 1.4s,transform 1.4s,filter .45s;pointer-events:none}
+.act-count.on{opacity:.85;transform:none}
+.act-count.swap{filter:blur(6px);opacity:.2}
+.break{display:flex;justify-content:center;margin:2.6em 0}
+.ripple{width:120px;height:24px;fill:none;stroke:var(--soft);stroke-width:1}
+.ripple .far{opacity:.45}
+
+.end{margin:6em 0 0;padding:3em 0 calc(18vh + env(safe-area-inset-bottom));border-top:1px solid var(--line);text-align:center}
+.end .mark{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 2.2em}
+.nav{display:flex;justify-content:space-between;gap:16px;margin:0 0 3.2em;font-size:16px;text-align:left}
+.nav a,.nav span{flex:1;color:var(--ink);text-decoration:none;line-height:1.4}
+.nav small{display:block;color:var(--soft);font-size:13px;margin-bottom:.2em}
+.nav .next{text-align:right}
+.nav span{color:var(--soft)}
+.notebook{display:block;margin:0 auto 2.4em;color:var(--lamp);text-decoration:none;font-size:17px;line-height:1.4}
+.notebook small{display:block;color:var(--soft);font-size:13px;font-style:italic;margin-top:.2em}
+.gate{
+  display:block;max-width:24em;margin:0 auto;padding:1.4em 1.4em 1.5em;text-decoration:none;color:var(--ink);
+  background:var(--veil);border-radius:2px;line-height:1.5;
+}
+.gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
+.gate .s{font-size:15px;color:var(--soft)}
+.gate:hover .t{color:var(--lamp)}
+
+@media (min-width:720px){
+  :root{--size:20px}
+  header.bar{padding-left:28px;padding-right:28px}
+}
+@media (prefers-reduced-motion: reduce){
+  h1 .w,.opening .hint{animation:none}
+  header.bar,body{transition:none}
+}
+</style>
+<style>
+.st{max-width:40rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(14vh + env(safe-area-inset-bottom))}
+.st-title{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(38px,10vw,64px);line-height:1.05;letter-spacing:-.02em;margin:.1em 0 .3em}
+.st-note{font-style:italic;color:var(--ink);margin:0 0 .4em;font-size:1.05em}
+.st-sub{color:var(--soft);font-size:15px;line-height:1.5;margin:0 0 1.6em}
+.st-pick{display:flex;align-items:center;gap:.6em;font-size:15px;color:var(--soft);margin:0 0 2.4em}
+.st-pick select{font:inherit;color:var(--ink);background:var(--veil);border:1px solid var(--line);border-radius:2px;padding:.3em .5em}
+.st h2{font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin:2.8em 0 1em;padding-bottom:.6em;border-bottom:1px solid var(--line)}
+.st-empty{color:var(--soft);font-style:italic}
+/* bảng tier */
+.tiers{display:grid;gap:8px}
+.trow{display:grid;grid-template-columns:3.2rem 1fr;gap:10px;align-items:stretch}
+.tl{display:flex;align-items:center;justify-content:center;font-style:italic;font-size:30px;font-weight:300;color:var(--lamp);background:var(--veil);border-radius:2px}
+.tl.q{color:var(--soft)}
+.tcells{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;align-items:center;padding:6px 0}
+.chip{display:flex;align-items:center;gap:.5em;padding:6px 10px 6px 6px;background:#1a2023;color:#c9cfc6;border:1px solid #3c4649;border-radius:8px;font-size:15px;line-height:1.2;text-decoration:none}
+.chip svg{width:36px;height:36px;flex:0 0 36px}
+.chip.gone{opacity:.42;filter:grayscale(1)}
+.trow .none{color:var(--soft);font-size:14px;font-style:italic;opacity:.6}
+/* ghi chép từng người */
+.notes{display:grid;gap:14px}
+.note{background:#1a2023;color:#c9cfc6;border:1px solid #3c4649;border-radius:14px;padding:14px 16px 16px;line-height:1.55;font-size:16px;scroll-margin-top:80px}
+.note.gone{opacity:.5;filter:grayscale(1)}
+.note-h{display:flex;align-items:center;gap:12px;margin-bottom:.6em}
+.note-h svg{width:46px;height:46px;flex:0 0 46px}
+.note-h .nm{font-size:19px;flex:1}
+.note-h .gr{font-style:italic;font-size:30px;font-weight:300;color:#d9b47c;line-height:1}
+.note-h .gr s{color:#6b787d;font-size:20px;margin-right:.3em}
+.note .he{font-size:14px;color:#9aa5a3;margin:0 0 .5em}
+.note .he s{opacity:.7}
+.note blockquote{margin:.5em 0 0;padding:0 0 0 .8em;border-left:2px solid #3c4649;font-style:italic}
+.note blockquote.old{opacity:.5;text-decoration:line-through;text-decoration-color:rgba(201,207,198,.5)}
+.note .who{display:block;font-style:normal;font-size:13px;color:#7c8786;margin-top:.2em}
+.note .aside{margin:.5em 0 0;font-size:14px;color:#9aa5a3}
+.note .gone-t{margin:.6em 0 0;font-size:13px;color:#7c8786;font-style:italic}
+/* bảy hệ */
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.ty{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45}
+.ty svg{width:46px;flex:0 0 46px;border-radius:6px}
+.ty b{display:block;font-weight:600}
+.ty i{display:block;color:var(--soft);font-size:13px}
+.ty p{margin:.3em 0 0}
+/* màu theo hạng (Clair chọn 24/11: ghép kiểu "mỗi hạng một màu" với "phát sáng kiểu Artos") */
+[data-tier="S"]{--tc:#c4473c}[data-tier="A"]{--tc:#d68f3c}[data-tier="B"]{--tc:#cdb44c}[data-tier="C"]{--tc:#72a165}[data-tier="D"]{--tc:#5296ae}[data-tier="?"]{--tc:#857e99}
+.tl{background:var(--tc)!important;color:#11171a!important;font-weight:600!important;font-style:normal!important;box-shadow:0 0 18px color-mix(in srgb,var(--tc) 55%,transparent)}
+.trow{background:color-mix(in srgb,var(--tc) 10%,transparent);border:1px solid color-mix(in srgb,var(--tc) 28%,transparent);border-radius:4px;padding-right:8px}
+.tl{border-radius:3px 0 0 3px}
+.chip{background:rgba(14,22,25,.9);border-color:color-mix(in srgb,var(--tc) 70%,transparent);box-shadow:0 0 14px color-mix(in srgb,var(--tc) 30%,transparent)}
+.chip svg{color:var(--tc);filter:drop-shadow(0 0 4px var(--tc))}
+.chip.gone svg{filter:none}
+.note{background:rgba(14,22,25,.92);border-color:color-mix(in srgb,var(--tc) 50%,transparent);border-top:3px solid var(--tc);box-shadow:0 0 22px color-mix(in srgb,var(--tc) 16%,transparent)}
+.note-h .gr{color:var(--tc);text-shadow:0 0 14px var(--tc)}
+.note-h svg{color:var(--tc);filter:drop-shadow(0 0 4px var(--tc))}
+.note blockquote{border-left-color:var(--tc)}
+.st h2{color:var(--ice);border-color:color-mix(in srgb,var(--ice) 35%,transparent)}
+.st-note{color:var(--ice)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:radial-gradient(120% 50% at 50% 0%,#17303a 0%,#0e1517 55%) fixed #0e1517}
+:root:not([data-theme="light"]) .st-title{text-shadow:0 0 18px rgba(143,211,224,.4)}}
+:root[data-theme="dark"] body{background:radial-gradient(120% 50% at 50% 0%,#17303a 0%,#0e1517 55%) fixed #0e1517}
+:root[data-theme="dark"] .st-title{text-shadow:0 0 18px rgba(143,211,224,.4)}
+.st-back{display:inline-block;margin-top:3em;color:var(--lamp);text-decoration:none;border-bottom:1px solid currentColor;line-height:1.3}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="book" href="index.html">Project Artos 07</a>
+  <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
+</header>
+<main class="st">
+  <h1 class="st-title">Sổ tay của Luke</h1>
+  <p class="st-note">“Anh chỉ đoán thôi. Có khi sai, có khi mai lại nghĩ khác.”</p>
+  <p class="st-sub">Đây là những gì Luke nghĩ về năng lực của người đã gặp, không phải sự thật của Artos. Đọc tới chương nào, sổ mở tới chương đó.</p>
+  <label class="st-pick">Đã đọc tới <select id="upto" aria-label="Đã đọc tới chương"></select></label>
+  <div id="out"></div>
+  <a class="st-back" id="back" href="index.html">Về mục lục</a>
+</main>
+<script>
+(function(){
+  var D={"typesFrom":7,"types":[{"id":"arms","en":"Arms","vi":"Vũ trang","line":"Một món vũ khí nào đó đi theo chủ nhân vĩnh viễn, có lẽ chỉ cần chờ chủ nhân của nó gọi ra và sử dụng.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M270 170 V560\" stroke-width=\"10\"/>\u003cpath d=\"M200 560 H340\" stroke-width=\"12\"/>\u003cpath d=\"M270 560 V660\" stroke-width=\"16\"/>\u003cpath d=\"M270 150 l-20 46 h40 z\" fill=\"#c9cfc6\" stroke-width=\"4\"/>\u003c/g>\u003c/svg>"},{"id":"element","en":"Element","vi":"Nguyên tố","line":"Điều khiển được nước, đất, gió… nhưng có lẽ phải là thứ có sẵn quanh mình.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"8\">\u003cpath d=\"M140 360 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 450 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 540 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003c/g>\u003cpath d=\"M270 200 c44 44 44 80 0 92 c-44 -12 -44 -48 0 -92z\" stroke-width=\"6\"/>\u003c/g>\u003c/svg>"},{"id":"enhance","en":"Enhance","vi":"Tăng cường","line":"Khoẻ hơn, nhanh hơn, mắt tinh tai thính hơn. Nhưng rơi vào người yếu thì cũng chỉ hơn người thường được một chút.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M110 420 Q270 270 430 420 Q270 570 110 420 Z\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"46\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"13\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"5\" opacity=\".6\">\u003cpath d=\"M270 230 V280 M160 270 l24 34 M380 270 l-24 34 M270 610 V560\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"psyche","en":"Psyche","vi":"Linh cảm","line":"Đọc được người ta đang nghĩ gì, đang thấy gì trong lòng, có khi làm người ta thấy thế này thế kia. Nhưng không bắt ai làm gì được đâu.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003ccircle cx=\"270\" cy=\"420\" r=\"16\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"6\">\u003ccircle class=\"pulse p1\" cx=\"270\" cy=\"420\" r=\"60\" opacity=\".85\"/>\u003ccircle class=\"pulse p2\" cx=\"270\" cy=\"420\" r=\"110\" opacity=\".55\"/>\u003ccircle class=\"pulse p3\" cx=\"270\" cy=\"420\" r=\"160\" opacity=\".3\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"shift","en":"Shift","vi":"Chuyển hoá","line":"Đổi hình dạng, ẩn đi, hoặc dịch chuyển như cậu Felix.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"225\" cy=\"320\" r=\"40\"/>\u003cpath d=\"M150 570 C150 420 300 420 300 570\"/>\u003c/g>\u003cg class=\"ghost\" stroke-width=\"5\" stroke-dasharray=\"14 12\" opacity=\".6\">\u003ccircle cx=\"320\" cy=\"300\" r=\"40\"/>\u003cpath d=\"M245 550 C245 400 395 400 395 550\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"bond","en":"Bond","vi":"Khế ước","line":"Có lẽ là năng lực trói buộc với linh vật nào đó, hoặc người nào đó. Anh chưa thật sự thấy năng lực này nhiều để có thể hiểu rõ.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"220\" cy=\"420\" r=\"82\"/>\u003ccircle cx=\"320\" cy=\"420\" r=\"82\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"rule","en":"Rule","vi":"Quy tắc","line":"Chưa rõ. Anh chưa gặp ai cả.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath class=\"glitch\" d=\"M190 420 H350\" stroke-width=\"3\"/>\u003c/g>\u003c/svg>"}],"people":[{"name":"Leon","mark":"chain","steps":[{"ch":6,"tier":"S","he":"?","who":"Ông ở giếng","quote":"Tệ thật. Lại một tên vuốt nhọn."},{"ch":7,"tier":"S","he":"Vũ trang","who":"Luke","quote":"Anh từng gặp qua vài kẻ sở hữu năng lực hệ Vũ trang rồi, nhưng cái xích kiểu đấy thì chưa thấy ai có. Có lẽ Leon đã thuần thục nó đến mức tối đa rồi nên mới mạnh đến vậy."}]},{"name":"Gã da cứng như đá","mark":"crack","steps":[{"ch":10,"tier":"S","he":"Tăng cường","who":"Luke","quote":"Anh từng nghĩ Tăng cường chỉ mạnh khi rơi vào người vốn khoẻ sẵn. Hôm nay anh mới thấy, nếu nó rơi vào một người như hắn thì nó còn đáng sợ hơn cả Vũ trang."}]},{"name":"Ông ở giếng","mark":"well","steps":[{"ch":5,"tier":"?","he":"?","who":"Luke","quote":"Đi một mình giữa lúc này mà không bị gì, thì hoặc là ông ta biết điều gì đó mình chưa biết, hoặc năng lực của ông ta hợp với việc đi một mình."},{"ch":7,"tier":"A","he":"Tăng cường?","who":"Luke","quote":"Khoẻ như trâu, ừ. Mà đêm qua ông ta đi giữa cả đám quỷ, chẳng con nào đụng tới. Liệu đó là năng lực đặc biệt gì sao, hay nó thuộc hệ khác? Thú thật anh không đoán ra."}]},{"name":"Jasper","mark":"mask","steps":[{"ch":9,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Có lẽ hắn chỉ mượn được cái vỏ của ai đó thôi. Chứ sức thì vẫn là sức của hắn."},{"ch":9,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Không, có vẻ hắn mượn được sức mạnh khi biến thành người nào đó, chỉ là không sử dụng được năng lực mà thôi."},{"ch":10,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Anh đoán là phải gặp tận mặt, hay phải có điều kiện gì đó, thì mới mượn được dáng người ta. Anh không chắc nữa."}]},{"name":"Felix","mark":"dash","steps":[{"ch":7,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Dịch chuyển, chắc thế. Mỗi lần được một quãng."}]},{"name":"Luke","mark":"eye","steps":[{"ch":7,"tier":"C","he":"Tăng cường","who":"Luke","quote":"Tăng cường, đối với anh không phải một hệ mạnh về chiến đấu.","aside":"Clevia cãi: “Đánh với anh xong, chắc ông ta cũng chẳng dám bảo anh mềm đâu.”"}]},{"name":"Clevia","mark":"lock","steps":[{"ch":2,"tier":"?","he":"?","who":"Luke","quote":"Theo những gì anh thấy thì chắc là mở khoá. Anh đoán người ta sẽ gọi nó là Unlock, hoặc cái gì đó na ná vậy."},{"ch":7,"tier":"D","he":"Tăng cường?","who":"Luke","quote":"Có lẽ nó nằm ở việc em cường hoá khả năng cảm nhận cơ chế thông qua đầu ngón tay chăng? Anh chỉ đoán vậy thôi.","aside":"Clevia tự nói: “Chả có nanh vuốt gì.”"}]},{"name":"Bà Mabel","mark":"hat","dead":7,"steps":[{"ch":7,"tier":"D","he":"Linh cảm?","who":"Luke","quote":"Thế thì có khi là Linh cảm. Loại năng lực đấy trông có vẻ khá vô hại."}]},{"name":"Chú Oscar","mark":"water","steps":[{"ch":8,"tier":"?","he":"?","who":"Luke","quote":"Cháu thấy nước trong thùng của chú cứ gợn lên mãi. Cháu đoán là chú làm được gì đó với nước, phải không chú?"}]},{"name":"Ruby","mark":"paw","dead":10,"steps":[{"ch":9,"tier":"?","he":"?","who":"Luke","quote":"Protect…","aside":"Vòm sáng và làn khói là từ thẻ, không phải năng lực của cô ta."},{"ch":10,"tier":"?","he":"?","who":"","quote":"","aside":"Một con mèo đen móc túi, cắn không thủng da gã kia, rồi tan thành khói. Luke chưa nói gì về nó."}]},{"name":"Gã đeo kính","mark":"glasses","steps":[{"ch":11,"tier":"?","he":"?","who":"Leon","quote":"Đứng nhìn cái ổ khoá của cô cả buổi, nhìn chăm chăm như muốn nhìn xuyên qua nó, xong rồi bỏ đi."}]}],"max":11,"marks":{"chain":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"38\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 29 48)\"/>\u003crect x=\"36\" y=\"42\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(20 51 52)\"/>\u003crect x=\"58\" y=\"34\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 73 44)\"/>\u003c/g>","crack":"\u003crect x=\"18\" y=\"22\" width=\"64\" height=\"56\" rx=\"4\" stroke-width=\"4\" opacity=\".55\"/>\u003cpath d=\"M50 22 L44 40 L56 50 L46 64 L52 78\" stroke-width=\"5\"/>\u003cpath d=\"M56 50 L70 56\" stroke-width=\"3\"/>","well":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"50\" cy=\"40\" rx=\"30\" ry=\"9\"/>\u003cpath d=\"M20 40 V70 Q50 82 80 70 V40\"/>\u003cpath d=\"M50 12 V36\" stroke-width=\"3\"/>\u003c/g>","mask":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 26 Q50 18 70 26 Q74 56 50 78 Q26 56 30 26 Z\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"7 6\" opacity=\".6\">\u003cpath d=\"M42 20 Q62 12 82 20 Q86 50 62 72\"/>\u003c/g>","dash":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"26\" cy=\"64\" rx=\"7\" ry=\"12\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"5 6\" opacity=\".45\">\u003cpath d=\"M36 62 Q52 40 66 40\"/>\u003c/g>\u003cg stroke-width=\"5\">\u003cellipse cx=\"74\" cy=\"36\" rx=\"7\" ry=\"12\"/>\u003c/g>","eye":"\u003cpath d=\"M14 50 Q50 18 86 50 Q50 82 14 50 Z\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"12\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"3.5\" fill=\"currentColor\"/>","lock":"\u003cpath d=\"M36 46 V34 a14 14 0 0 1 28 0\" stroke-width=\"5\"/>\u003crect x=\"26\" y=\"46\" width=\"48\" height=\"36\" rx=\"5\" stroke-width=\"5\"/>","hat":"\u003cpath d=\"M12 64 L50 24 L88 64 Z\" stroke-width=\"5\"/>\u003cpath d=\"M30 64 Q50 74 70 64\" stroke-width=\"3\" opacity=\".6\"/>","water":"\u003cg stroke-width=\"4\">\u003cellipse cx=\"50\" cy=\"56\" rx=\"10\" ry=\"3\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"24\" ry=\"8\" opacity=\".7\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"38\" ry=\"13\" opacity=\".4\"/>\u003c/g>","paw":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 20 L46 80\"/>\u003cpath d=\"M44 18 L58 78\"/>\u003cpath d=\"M58 20 L70 76\"/>\u003c/g>","glasses":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003crect x=\"58\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003cpath d=\"M42 48 Q50 42 58 48\"/>\u003c/g>\u003cpath d=\"M20 44 L28 52\" stroke-width=\"3\" opacity=\".7\"/>"}};
+  var root=document.documentElement, tb=document.getElementById('theme');
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){tb.textContent=isDark()?'Sáng':'Tối'}
+  label(); tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label()};
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function mark(id,cls){return '<svg viewBox="0 0 100 100" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+(D.marks[id]||'')+'</g></svg>'}
+  // chương đã đọc: lấy số lớn nhất từng mở (a07-max), hoặc chương mở gần nhất
+  var seen=+(get('a07-max')||0), last=(get('a07-last')||'').match(/^ch(\d+)\.html$/);
+  if(last) seen=Math.max(seen,+last[1]);
+  var q=location.hash.match(/^#ch(\d+)$/); if(q) seen=+q[1];
+  seen=Math.min(seen,D.max);
+  var sel=document.getElementById('upto'), opts='<option value="0">chưa đọc</option>';
+  for(var i=1;i<=D.max;i++) opts+='<option value="'+i+'">chương '+i+'</option>';
+  sel.innerHTML=opts; sel.value=String(seen);
+  sel.onchange=function(){render(+sel.value)};
+  if(seen) document.getElementById('back').href='ch'+(seen<10?'0':'')+seen+'.html', document.getElementById('back').textContent='Đọc tiếp chương '+seen;
+  function render(n){
+    var out='', ppl=D.people.map(function(p){var st=p.steps.filter(function(s){return s.ch<=n});return st.length?{p:p,st:st,cur:st[st.length-1],gone:p.dead&&p.dead<=n}:null}).filter(Boolean);
+    if(!ppl.length){document.getElementById('out').innerHTML='<p class="st-empty">Sổ còn trống. Luke chưa kịp đoán gì về ai.</p>';return}
+    out+='<h2>Luke xếp</h2><div class="tiers">';
+    ['S','A','B','C','D','?'].forEach(function(t){
+      var row=ppl.filter(function(x){return x.cur.tier===t});
+      out+='<div class="trow" data-tier="'+t+'"><div class="tl'+(t==='?'?' q':'')+'">'+t+'</div><div class="tcells">'+(row.length?row.map(function(x){return '<a data-tier="'+t+'" class="chip'+(x.gone?' gone':'')+'" href="#p-'+D.people.indexOf(x.p)+'">'+mark(x.p.mark)+esc(x.p.name)+'</a>'}).join(''):'<span class="none">chưa có ai</span>')+'</div></div>';
+    });
+    out+='</div><h2>Ghi chép</h2><div class="notes">';
+    ppl.forEach(function(x){
+      var p=x.p, st=x.st, tiers=[], hes=[];
+      st.forEach(function(s){if(tiers[tiers.length-1]!==s.tier)tiers.push(s.tier); if(hes[hes.length-1]!==s.he)hes.push(s.he)});
+      var gr=tiers.slice(0,-1).filter(function(t){return t!=='?'}).map(function(t){return '<s>'+t+'</s>'}).join('')+tiers[tiers.length-1];
+      var he=hes.slice(0,-1).filter(function(h){return h!=='?'}).map(function(h){return '<s>'+esc(h)+'</s> '}).join('')+esc(hes[hes.length-1]);
+      out+='<article data-tier="'+x.cur.tier+'" class="note'+(x.gone?' gone':'')+'" id="p-'+D.people.indexOf(p)+'"><div class="note-h">'+mark(p.mark)+'<span class="nm">'+esc(p.name)+'</span><span class="gr">'+gr+'</span></div>';
+      out+='<p class="he">Hệ: '+he+'</p>';
+      st.forEach(function(s,i){
+        var old=i<st.length-1 && s.tier!=='?' && s.tier!==st[i+1].tier;
+        if(s.quote) out+='<blockquote'+(old?' class="old"':'')+'>“'+esc(s.quote)+'”<span class="who">'+esc(s.who)+', chương '+s.ch+'</span></blockquote>';
+        if(s.aside) out+='<p class="aside">'+esc(s.aside)+(s.quote?'':' <span class="who">Chương '+s.ch+'</span>')+'</p>';
+      });
+      if(x.gone) out+='<p class="gone-t">Mất ở chương '+p.dead+'.</p>';
+      out+='</article>';
+    });
+    out+='</div>';
+    if(n>=D.typesFrom){
+      out+='<h2>Bảy hệ, theo lời Luke</h2><div class="types">'+D.types.map(function(t){return '<div class="ty">'+t.svg+'<div><b>'+esc(t.vi)+'</b><i>'+esc(t.en)+'</i><p>'+esc(t.line)+'</p></div></div>'}).join('')+'</div>';
+    }
+    document.getElementById('out').innerHTML=out;
+  }
+  render(seen);
+})();
+</script>
+</body>
+</html>
