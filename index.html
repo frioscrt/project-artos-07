@@ -295,22 +295,20 @@ em .nm{font-style:italic}
 .scene p.say[data-act~="line"]{position:relative;margin:1.6em -4px 1.6em -14px;padding:1em 1.1em 1em 1.2em;border:1px solid color-mix(in srgb,var(--sp) 45%,transparent);border-left:3px solid var(--sp);
   border-radius:3px 14px 14px 14px;background:color-mix(in srgb,var(--sp) 9%,var(--bg));box-shadow:0 10px 26px -18px color-mix(in srgb,var(--sp) 80%,#000)}
 .scene p.say[data-act~="line"] .q{font-size:1.18em;line-height:1.45;font-style:italic;color:color-mix(in srgb,var(--sp) 55%,var(--ink))}
-.scene p.say[data-act~="line"]::after{content:"";position:absolute;left:-3px;top:100%;width:14px;height:10px;background:var(--sp);clip-path:polygon(0 0,100% 0,0 100%)}
 .scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 
 /* xem thử kiểu thoại khác: ?thoai=a|b|c (chưa chốt, mặc định là kiểu vạch màu) */
-html[data-say="a"] .scene p.say{border-left:0;margin-left:0;padding-left:0;text-indent:1.6em}
+html[data-say="a"] .scene p.say:not([data-act~="line"]){border-left:0;margin-left:0;padding-left:0;text-indent:1.6em}
 html[data-say="a"] .say .q{color:color-mix(in srgb,var(--sp) 70%,var(--ink))}
 html[data-say="a"] .say-x .q{color:var(--ink)}
-html[data-say="b"] .scene p.say{border-left:0;margin:.4em 0;padding-left:0}
-html[data-say="b"] .say .q{display:block;width:fit-content;max-width:86%;margin:.45em 0;padding:.45em .9em;border-radius:1.1em 1.1em 1.1em .35em;background:color-mix(in srgb,var(--sp) 16%,var(--bg));color:var(--ink)}
-html[data-say="b"] .say-clevia .q{margin-left:auto;border-radius:1.1em 1.1em .35em 1.1em}
-html[data-say="b"] .say-x .q{background:var(--veil)}
-html[data-say="c"] .scene p.say{border-left:0;margin:1em 0 .9em;padding-left:0}
+html[data-say="b"] .scene p.say:not([data-act~="line"]){border-left:0;margin:.4em 0;padding-left:0}
+html[data-say="b"] .say:not([data-act~="line"]) .q{display:block;width:fit-content;max-width:86%;margin:.45em 0;padding:.45em .9em;border-radius:1.1em 1.1em 1.1em .35em;background:color-mix(in srgb,var(--sp) 16%,var(--bg));color:var(--ink)}
+html[data-say="b"] .say-clevia:not([data-act~="line"]) .q{margin-left:auto;border-radius:1.1em 1.1em .35em 1.1em}
+html[data-say="b"] .say-x:not([data-act~="line"]) .q{background:var(--veil)}
+html[data-say="c"] .scene p.say:not([data-act~="line"]){border-left:0;margin:1em 0 .9em;padding-left:0}
 html[data-say="c"] .scene p.say[data-name]::before{content:attr(data-name);display:block;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--sp);margin-bottom:.15em;font-style:normal}
 html[data-say="c"] .say .q{font-size:1.06em;color:var(--ink)}
-html[data-say] .scene p.say[data-act~="line"]{margin-left:-4px}
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
 :root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
 :root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
