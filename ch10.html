@@ -2459,7 +2459,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
        water  = mặt nước gợn tràn qua trang (nhìn từ dưới nước lên)
        door   = khung cửa sáng lên từng nét giữa trang
        dome   = vòm sáng mờ bung ra bọc lấy trang
-       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop (xích cứu người của Leon: dải xích dẹt đỡ lấy trang, êm, ấm; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
+       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop (xích cứu người của Leon: thép như xích tấn công, vòng lỏng ôm lấy giữa trang, nhấc lên rồi đặt xuống; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
        flicker = từ đoạn này tới hết chương, trang tối theo nhịp lửa chao
      - body[data-open="dark"]: mở chương trong bóng tối, sáng lại dần. */
   (function () {
@@ -2866,74 +2866,78 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       var d = t < 1.4 ? 0 : t < 2 ? (t - 1.4) / 0.6 : Math.max(0, 1 - (t - 2.6) / 2.4); wash('#020202', 0.92 * d);
       return false;
     };
-    // xích cứu người của Leon (Clair chốt 24/11, hướng 1+2): phải khác hẳn xích tấn công (chains).
-    // Không tối sập, không toé lửa, không rung trang, không ánh lạnh, không tiếng mắt xích nghiến.
-    // Sợi xích lướt vào êm từ mép trái, mắt xích dẹt lại nằm khít vào nhau thành một dải bản rộng võng xuống đỡ ngang trang như một cánh tay. Thép ấm, quầng ấm nhẹ.
-    //   rescue     = cứu được: trang được nhấc lên một nhịp, giữ, rồi hạ xuống thật chậm (đặt xuống cẩn thận); dải nới ra, mắt xích tròn lại rồi rút về
-    //   rescuehold = cứu không nổi (ch12 Talia): dải đỡ lấy nhưng kéo không lên, căng rung, trang nhích lên từng chút rồi tụt lại, cứ thế giữ
-    //   rescuedrop = người được cứu tự gỡ ra (ch12 Talia): dải tuột từ đầu bên phải, mắt xích tròn lại và rơi xuống, trang hạ xuống, im
+    // xích cứu người của Leon (Clair chốt 24/11, hướng 1; bản dải dẹt trước đó Clair thấy xấu): cùng thứ thép đẹp của xích tấn công,
+    // khác ở chuyển động. Không tối sập, không toé lửa, không rung trang. Một sợi xích lướt vào êm từ mép trái, vòng một vòng lỏng ôm lấy giữa trang,
+    // ôm vào vừa đủ (không siết), một vệt sáng ấm chạy quanh vòng; trang được nhấc lên rồi đặt xuống chậm; vòng nới ra, xích rút về.
+    //   rescue     = cứu được
+    //   rescuehold = cứu không nổi (ch12 Talia): vòng ôm nhưng kéo không lên, căng rung, trang nhích lên rồi tụt lại
+    //   rescuedrop = người được cứu tự gỡ ra (ch12 Talia): vòng bung từ đầu xích, mắt xích rơi lả tả xuống
     function cl(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
     function es(x) { x = cl(x); return x * x * (3 - 2 * x); }
-    // o: reach (phần xích đang hiện từ mép trái), flat (0 tròn → 1 dẹt khít), dy (dịch dọc), taut (0 võng → 1 căng thẳng), vib (biên độ rung), t, fall(s) → 0..1 mắt xích ở vị trí s đã tuột rơi bao nhiêu, alpha
-    function band(o) {
+    // o: t, reach (0..1 phần xích đang hiện), hug (0 vòng rộng → 1 ôm vừa), dy, vib, glow (0..1 vệt sáng chạy quanh vòng, <0 = không), fall(u) (u: 0 gốc → 1 đầu xích), alpha
+    function hugChain(o) {
       if (o.reach <= 0 || o.alpha <= 0) return;
-      var m = Math.min(W, H), lk = Math.max(11, m * 0.032), cy = H * 0.56, sag = H * 0.09 * (1 - 0.7 * (o.taut || 0)), flat = o.flat;
-      var x0 = -W * 0.04, x1 = W * 0.9;
-      function P(s) { return [x0 + (x1 - x0) * s, cy + Math.sin(Math.PI * s) * (sag * (0.6 + 0.4 * flat) + Math.sin(o.t * 46 + s * 9) * (o.vib || 0)) + o.dy]; }
-      function A(s) { var a = P(Math.max(0, s - 0.01)), b = P(Math.min(1, s + 0.01)); return Math.atan2(b[1] - a[1], b[0] - a[0]); }
-      var steel = C.dark ? ['#a59a92', '#5e5752', '#36312e'] : ['#7b726b', '#4a443f', '#2c2825'], warm = C.dark ? '232,208,192' : '150,118,98';
-      g.save(); g.lineCap = 'round';
-      // quầng ấm dưới dải
-      var mid = P(0.5), gl = g.createRadialGradient(mid[0], mid[1], 0, mid[0], mid[1], W * 0.5);
-      gl.addColorStop(0, 'rgba(' + warm + ',' + ((C.dark ? 0.16 : 0.1) * flat * o.alpha).toFixed(3) + ')'); gl.addColorStop(1, 'rgba(' + warm + ',0)');
-      g.fillStyle = gl; g.fillRect(0, 0, W, H);
-      var n = Math.floor((x1 - x0) * 1.08 / (lk * (0.95 - 0.3 * flat))), shown = Math.floor(n * o.reach);
-      for (var k = 0; k < shown; k++) {
-        var s = k / n, p = P(s), ang = A(s), tip = Math.min(1, (shown - k) / 4) * o.alpha, f = o.fall ? o.fall(s) : 0, fl = flat * (1 - Math.min(1, f * 3));
-        if (f > 0) { p = [p[0] + Math.sin(k * 1.7) * f * lk * 2, p[1] + f * f * H * 0.6]; ang += Math.sin(k * 2.3) * f * 2.5; tip *= 1 - cl((f - 0.5) / 0.5); }
-        if (tip <= 0.01) continue;
-        g.save(); g.translate(p[0], p[1]); g.rotate(ang);
-        // mắt xích tròn (đang lướt vào, lúc rút về, lúc tuột rơi)
-        if (fl < 0.98) {
-          var rx = lk * 0.62, ry = k % 2 ? lk * 0.13 : lk * 0.36;
-          g.globalAlpha = tip * (1 - fl); g.lineWidth = Math.max(2, lk * 0.3); g.strokeStyle = steel[1];
-          g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke();
-        }
-        // mắt xích dẹt, nằm khít như vảy, thành dải bản rộng
-        if (fl > 0.02) {
-          var pw = lk * 0.62, ph = lk * (0.36 + 0.9 * fl);
-          g.globalAlpha = tip * fl;
-          var pg = g.createLinearGradient(0, -ph, 0, ph); pg.addColorStop(0, steel[0]); pg.addColorStop(0.45, steel[1]); pg.addColorStop(1, steel[2]);
-          g.fillStyle = pg; g.beginPath(); if (g.roundRect) g.roundRect(-pw / 2, -ph / 2, pw, ph, pw * 0.35); else g.rect(-pw / 2, -ph / 2, pw, ph); g.fill();
-          g.strokeStyle = 'rgba(' + warm + ',' + (C.dark ? 0.55 : 0.4) + ')'; g.lineWidth = Math.max(0.8, lk * 0.06);
-          g.beginPath(); g.moveTo(-pw * 0.35, -ph * 0.38); g.lineTo(pw * 0.35, -ph * 0.38); g.stroke();
+      var m = Math.min(W, H), link = Math.max(12, m * 0.034), lw = Math.max(2.4, link * 0.28), sp = link * 0.95;
+      var cx = W / 2, cy = H * 0.52 + o.dy, R = m * (0.3 - 0.07 * o.hug), Ry = R * 0.42;
+      var sx = -W * 0.06, sy = cy + H * 0.12, ex = cx - R, ey = cy;      // sợi dẫn: từ mép trái lên tới mép trái của vòng
+      var Ls = Math.hypot(ex - sx, ey - sy), Lr = Math.PI * (3 * (R + Ry) - Math.sqrt((3 * R + Ry) * (R + 3 * Ry))) * 1.04, L = Ls + Lr;
+      function at(d) {
+        if (d < Ls) { var s = d / Ls, bow = Math.sin(Math.PI * s) * link * 1.2; return [sx + (ex - sx) * s, sy + (ey - sy) * s + bow, Math.atan2(ey - sy, ex - sx)]; }
+        var a = Math.PI + (d - Ls) / Lr * 6.283 * 1.04, w = Math.sin(o.t * 46 + a * 3) * (o.vib || 0);   // vòng đi theo chiều kim đồng hồ: lên trên rồi vòng qua phải
+        return [cx + Math.cos(a) * (R + w), cy + Math.sin(a) * (Ry + w * 0.5), a + Math.PI / 2];
+      }
+      function linkAt(x, y, ang, face, a) {
+        g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = a;
+        var rx = link * 0.62, ry = face ? link * 0.36 : link * 0.13;
+        if (C.dark) {
+          g.shadowColor = 'rgba(200,185,175,.22)'; g.shadowBlur = link * 0.5;
+          var sg = g.createLinearGradient(0, -ry - lw, 0, ry + lw); sg.addColorStop(0, '#858a8c'); sg.addColorStop(0.35, '#42464a'); sg.addColorStop(1, '#1e2224');
+          g.lineWidth = lw * 1.25; g.strokeStyle = sg; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke(); g.shadowBlur = 0;
+          g.lineWidth = Math.max(0.8, lw * 0.22); g.strokeStyle = 'rgba(236,228,222,.78)'; g.beginPath(); g.ellipse(0, -lw * 0.35, rx * 0.95, Math.max(1, ry * 0.9), 0, 3.75, 5.55); g.stroke();
+          g.lineWidth = Math.max(0.6, lw * 0.15); g.strokeStyle = 'rgba(170,160,155,.35)'; g.beginPath(); g.ellipse(0, lw * 0.3, rx * 0.9, Math.max(1, ry * 0.85), 0, 0.5, 2.6); g.stroke();
+        } else {
+          g.lineWidth = lw * 1.5; g.strokeStyle = '#1b1f21'; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke();
+          g.lineWidth = lw * 0.45; g.strokeStyle = '#9aa2a4'; g.beginPath(); g.ellipse(0, -lw * 0.2, rx * 0.92, Math.max(1, ry * 0.85), 0, 3.5, 5.9); g.stroke();
         }
         g.restore();
+      }
+      var n = Math.floor(L / sp), shown = Math.floor(n * o.reach);
+      g.save(); g.lineCap = 'round';
+      // quầng ấm rất nhẹ trong lòng vòng (chỗ người được ôm lấy)
+      var hk = es((o.reach * L - Ls) / Lr) * o.alpha, gl = g.createRadialGradient(cx, cy, 0, cx, cy, R * 1.1);
+      gl.addColorStop(0, 'rgba(240,220,205,' + ((C.dark ? 0.12 : 0.18) * hk).toFixed(3) + ')'); gl.addColorStop(1, 'rgba(240,220,205,0)'); g.fillStyle = gl; g.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
+      for (var k = 0; k < shown; k++) {
+        var p = at(k * sp), u = k / n, a = Math.min(1, (shown - k) / 3) * o.alpha, ang = p[2], f = o.fall ? o.fall(u) : 0;
+        if (f > 0) { p = [p[0] + Math.sin(k * 1.7) * f * link * 2.5, p[1] + f * f * H * 0.6]; ang += Math.sin(k * 2.3) * f * 3; a *= 1 - cl((f - 0.55) / 0.45); }
+        if (a > 0.01) linkAt(p[0], p[1], ang, k % 2 === 0, a);
+      }
+      // vệt sáng ấm chạy một lượt quanh vòng
+      if (o.glow > 0 && o.glow < 1) {
+        var q = at(Ls + o.glow * Lr * 0.98), gr = g.createRadialGradient(q[0], q[1], 0, q[0], q[1], link * 1.8), ga = Math.sin(Math.PI * o.glow) * o.alpha;
+        gr.addColorStop(0, 'rgba(255,238,222,' + (0.5 * ga).toFixed(3) + ')'); gr.addColorStop(1, 'rgba(255,238,222,0)'); g.fillStyle = gr; g.fillRect(q[0] - link * 3, q[1] - link * 3, link * 6, link * 6);
       }
       g.restore();
     }
     MORE.rescue = function (t) {
-      if (t > 3.6) { main.style.transform = ''; return true; }
-      var lift = es((t - 0.45) / 0.4) * (1 - es((t - 1.5) / 1.3));    // nhấc lên êm, hạ xuống chậm
+      if (t > 4) { main.style.transform = ''; return true; }
+      var lift = es((t - 0.9) / 0.4) * (1 - es((t - 2) / 1.2));
       main.style.transform = lift > 0.01 ? 'translateY(' + (-lift * 16).toFixed(1) + 'px)' : '';
-      band({ t: t, reach: es(t / 0.5) - es((t - 2.9) / 0.7), flat: es((t - 0.35) / 0.45) * (1 - es((t - 2.4) / 0.5)), dy: -lift * 14, alpha: 1 });
+      hugChain({ t: t, reach: es(t / 0.7) - es((t - 3.1) / 0.8), hug: es((t - 0.6) / 0.5) * (1 - es((t - 2.8) / 0.5)), dy: -lift * 12, glow: (t - 0.8) / 1.1, alpha: 1 });
       return false;
     };
     MORE.rescuehold = function (t) {
       if (t > 6.5) { main.style.transform = ''; return true; }
-      var on = es((t - 0.5) / 0.5), strain = on * (0.5 + 0.5 * Math.sin(t * 2.6)), fade = 1 - es((t - 5.3) / 1.2);
-      // kéo lên được một chút rồi tụt lại, kéo lên rồi tụt lại; dải càng lúc càng căng, rung khẽ
-      var lift = strain * 7 * fade;
+      var on = es((t - 0.8) / 0.5), fade = 1 - es((t - 5.3) / 1.2), lift = on * (0.5 + 0.5 * Math.sin(t * 2.6)) * 7 * fade;
       main.style.transform = lift > 0.3 ? 'translateY(' + (-lift).toFixed(1) + 'px)' : '';
-      band({ t: t, reach: es(t / 0.5), flat: es((t - 0.35) / 0.45), dy: -lift, taut: on * (0.4 + 0.4 * cl(t / 4)), vib: on * (1 + 2.2 * cl(t / 4)), alpha: fade });
+      hugChain({ t: t, reach: es(t / 0.7), hug: es((t - 0.6) / 0.5), dy: -lift, vib: on * (0.5 + 2 * cl(t / 4)), glow: (t - 0.8) / 1.1, alpha: fade });
       return false;
     };
     MORE.rescuedrop = function (t) {
       if (t > 3.8) { main.style.transform = ''; return true; }
-      var drop = es((t - 0.8) / 0.5);  // trang tụt xuống khi xích tuột
+      var drop = es((t - 0.8) / 0.5);
       main.style.transform = t > 0.8 && t < 2.4 ? 'translateY(' + (drop * 6 * (1 - es((t - 1.4) / 1))).toFixed(1) + 'px)' : '';
-      band({ t: t, reach: es(t / 0.25), flat: 1 - es((t - 0.7) / 0.4), dy: 0, taut: 0.8 * (1 - es((t - 0.6) / 0.3)), vib: t < 0.6 ? 3 : 0, alpha: 1,
-        fall: function (s) { return cl((t - 0.8 - (1 - s) * 0.9) / 1.4); } });   // tuột từ đầu bên phải (phía người được cứu) về phía Leon
+      hugChain({ t: t, reach: es(t / 0.3), hug: 1 - es((t - 0.6) / 0.4), dy: 0, vib: t < 0.6 ? 2.5 : 0, glow: -1, alpha: 1,
+        fall: function (u) { return cl((t - 0.7 - (1 - u) * 0.9) / 1.4); } });   // bung từ đầu xích (phía người được cứu) về phía Leon
       return false;
     };
     // ch12: thẻ Remedy vỡ thành ánh sáng xanh non, ấm, dịu; những đốm sáng bay lên
@@ -3872,10 +3876,25 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       nudge: function (o, n) { nz(o, 'highpass', 5000, 8000, 0.7, 0.03, 0.5, n); sine(o, 2637, 0.012, 0.35, n + 0.05); sine(o, 3520, 0.008, 0.4, n + 0.12); },
       // ch12: trần sập (đá vỡ ào ào, gãy giòn; không ầm trầm), xích cứu người, thẻ Remedy vỡ thành ánh sáng
       cavein: function (o, n) { nz(o, 'bandpass', 2600, 1400, 2, 0.5, 0.12, n); bus(); for (var k = 0; k < 26; k++) { var st = n + 0.1 + k * (0.03 + Math.random() * 0.07); nz(wet(0.6), 'bandpass', 600 + Math.random() * 1800, 400, 1.5, 0.25 * (1 - k / 30), 0.09 + Math.random() * 0.1, st); } nz(wet(0.5), 'highpass', 2500, 1200, 0.7, 0.25, 3, n + 0.3); },
-      // xích cứu người: êm, không tiếng mắt xích nghiến, chỉ tiếng lướt mềm và tiếng đặt xuống khẽ (khác hẳn xích tấn công)
-      rescue: function (o, n) { bus(); nz(wet(0.6), 'bandpass', 2200, 700, 0.8, 0.14, 0.6, n); nz(wet(0.4), 'lowpass', 900, 420, 0.7, 0.08, 1.4, n + 0.5); nz(wet(0.3), 'lowpass', 700, 300, 0.7, 0.05, 1.2, n + 1.9); },
-      rescuehold: function (o, n) { bus(); nz(wet(0.6), 'bandpass', 2200, 700, 0.8, 0.14, 0.6, n); nz(wet(0.35), 'bandpass', 900, 1100, 3, 0.06, 4.6, n + 0.6); },   // căng: tiếng kéo căng rè rè khẽ, không nghiến
-      rescuedrop: function (o, n) { bus(); nz(wet(0.5), 'bandpass', 1800, 600, 1, 0.12, 0.5, n + 0.35); for (var k = 0; k < 6; k++) clink(wet(0.4), n + 0.9 + k * (0.09 + Math.random() * 0.08), 0.02); },   // tuột ra, rơi lách cách khẽ xuống nền đá
+      // xích cứu người (Clair chốt hướng 1): cùng bộ tiếng kim loại sáng của xích tấn công nhưng nhẹ, không nhát đập nặng:
+      // tiếng xích lướt, leng keng trong trẻo khi vòng ôm khép lại, một tiếng ngân dài mềm, lúc rút về leng keng thưa dần
+      rescue: function (o, n) {
+        bus(); whoosh(n, 0.6, 0.3, true); nz(wet(0.6), 'bandpass', 1500, 4500, 5, 0.25, 0.6, n + 0.05);
+        for (var k = 0; k < 10; k++) clink(wet(0.8), n + 0.45 + k * 0.06, 0.04 * (1 - k / 14));
+        shing(n + 0.85, 0.07, 0.8); sparkle(n + 0.9, 0.03, [1568, 2093, 2637]);
+        whoosh(n + 3.1, 0.6, 0.25, false); for (var j = 0; j < 8; j++) clink(wet(0.6), n + 3.15 + j * (0.07 + Math.random() * 0.05), 0.03 * (1 - j / 10));
+      },
+      rescuehold: function (o, n) {
+        bus(); whoosh(n, 0.6, 0.3, true); nz(wet(0.6), 'bandpass', 1500, 4500, 5, 0.25, 0.6, n + 0.05);
+        for (var k = 0; k < 10; k++) clink(wet(0.8), n + 0.45 + k * 0.06, 0.04 * (1 - k / 14));
+        shing(n + 0.85, 0.06, 0.7);
+        for (var c = 0; c < 22; c++) clink(wet(0.6), n + 1.4 + c * (0.12 + Math.random() * 0.1), 0.02 + 0.03 * (c / 22));   // căng rung, mỗi lúc một gắt
+        nz(wet(0.3), 'bandpass', 2600, 3400, 6, 0.05, 3.6, n + 1.3);
+      },
+      rescuedrop: function (o, n) {
+        bus(); nz(wet(0.6), 'bandpass', 4000, 1500, 4, 0.2, 0.4, n + 0.6);
+        for (var k = 0; k < 14; k++) clink(wet(0.7), n + 1 + k * (0.06 + Math.random() * 0.09), 0.045 * (1 - k / 18));   // mắt xích rơi lách cách xuống nền đá
+      },
       remedy: function (o, n) { bus(); sparkle(n, 0.05, [1046, 1318, 1568, 2093, 2637]); nz(wet(0.6), 'bandpass', 2000, 5000, 1, 0.12, 1.6, n + 0.2); [523, 659, 784].forEach(function (f, i) { sine(wet(0.5), f, 0.05, 2.4, n + 0.3 + i * 0.12); }); },
       msg: function (o, n) { sine(o, 1320, 0.04, 0.12, n); sine(o, 1760, 0.035, 0.15, n + 0.06); },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
@@ -4912,7 +4931,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
             for (var p = 0; p < 5; p++) { var u = ((p / 5 + dz * 0.33) % 1), sc = Math.pow(u, 2.2), lx = vx - (vx - 10) * sc, rx = vx + (w - vx - 10) * sc, ty = vy - vy * sc * 0.95, by = vy + (h - vy) * sc; g.fillStyle = 'rgba(70,52,36,' + (0.3 + 0.7 * u).toFixed(2) + ')'; var pw = Math.max(1.5, w * 0.03 * sc); g.fillRect(lx, ty, pw, by - ty); g.fillRect(rx - pw, ty, pw, by - ty); g.fillRect(lx, ty, rx - lx, pw * 0.8); }
           }
           if (n >= 2 && !fell) { g.fillStyle = 'rgba(200,190,170,.6)'; for (var d = 0; d < 26; d++) { var x = R[d] * w, y = ((R[d + 26] + t * 0.3) % 1) * h * 0.7; g.fillRect(x, y, 1.5, 1.5); } S.kick(200); }
-          if (yankT && t - yankT < 0.8) { var a = 1 - (t - yankT) / 0.8; g.fillStyle = 'rgba(150,138,128,' + a.toFixed(2) + ')'; for (var k = 0; k < 26; k++) { var u = k / 25, cx = w * (0.02 + u * 0.9), cy = h * 0.62 + Math.sin(Math.PI * u) * h * 0.08; g.save(); g.translate(cx, cy); g.rotate(Math.cos(Math.PI * u) * 0.3); g.fillRect(-4, -6, 8, 12); g.restore(); } S.kick(200); }   // xích cứu: dải mắt xích dẹt, thép ấm (không phải vòng xích lạnh)
+          if (yankT && t - yankT < 0.8) { var a = 1 - (t - yankT) / 0.8; g.lineWidth = 2.4; g.strokeStyle = 'rgba(170,176,178,' + a.toFixed(2) + ')'; for (var k = 0; k < 30; k++) { var an = k / 30 * 6.283, cx = w / 2 + Math.cos(an) * w * 0.32, cy = h * 0.55 + Math.sin(an) * h * 0.14; g.beginPath(); g.ellipse(cx, cy, 7, k % 2 ? 2 : 4.5, an + 1.57, 0, 7); g.stroke(); } S.kick(200); }   // xích cứu: vòng lỏng ôm lấy (thép như xích tấn công)
           if (fell) {
             var u2 = t - fell; for (var r = 0; r < 40; r++) { var st = R[r + 40] * 0.5, q = u2 - st; if (q < 0) continue; var x2 = R[r + 80] * w, y2 = Math.min(h * (0.3 + R[r] * 0.7), -40 + q * q * h * 3), rad = 18 + R[(r * 3) % 120] * 30; g.fillStyle = '#2e2a26'; g.beginPath(); g.ellipse(x2, y2, rad, rad * 0.8, r, 0, 7); g.fill(); }
             var dk = Math.min(1, Math.max(0, (u2 - 0.6) / 1)); g.fillStyle = 'rgba(2,2,2,' + (0.95 * dk).toFixed(2) + ')'; g.fillRect(0, 0, w, h);
