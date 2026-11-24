@@ -387,9 +387,9 @@ html[data-ui~="b"] .toc li.read{opacity:.7}
 
 /* ================= GIAO DIỆN C: TRANG SÁCH ================= */
 html[data-ui~="c"]{--disp:"Literata",Georgia,serif}
-html[data-ui~="c"]:not([data-theme="dark"]){--bg:#EFE9DD;--veil:#E5DDCD;--ink:#2A2622;--soft:#7A7065;--line:#CFC5B3}
-@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--bg:#17140F;--veil:#211C16;--ink:#DDD3C1;--soft:#93897A;--line:#3A3328}}
-html[data-ui~="c"][data-theme="dark"]{--bg:#17140F;--veil:#211C16;--ink:#DDD3C1;--soft:#93897A;--line:#3A3328}
+html[data-ui~="c"]:not([data-theme="dark"]){--bg:#EDEFF0;--veil:#E1E4E7;--ink:#1D2126;--soft:#626A72;--line:#C8CDD2}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}}
+html[data-ui~="c"][data-theme="dark"]{--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}
 html[data-ui~="c"] .opening{align-items:center;text-align:center}
 html[data-ui~="c"] .chapno{font-style:normal;font-variant:small-caps;letter-spacing:.32em;font-size:15px;text-transform:lowercase;color:var(--lamp)}
 html[data-ui~="c"] .chapno::before,html[data-ui~="c"] .chapno::after{content:"—";margin:0 .8em;color:var(--line)}
@@ -400,7 +400,6 @@ html[data-ui~="c"] .scene > p:first-of-type::first-letter{font-family:var(--disp
 html[data-ui~="c"] .scene > p:first-of-type::first-line{font-variant:small-caps;letter-spacing:.06em}
 html[data-ui~="c"] .break .ripple{display:none}
 html[data-ui~="c"] .break::before{content:"⁂";font-size:20px;color:var(--soft);letter-spacing:.2em}
-html[data-ui~="c"] .scene .plate canvas{filter:sepia(.25) saturate(.85)}
 html[data-ui~="c"] .end{border-top:0}
 html[data-ui~="c"] .end .mark{font-family:var(--disp);font-size:24px}
 html[data-ui~="c"] .end .mark::before{content:"◆";display:block;font-style:normal;color:var(--lamp);margin-bottom:.4em}
@@ -430,11 +429,11 @@ html[data-ui~="soft"] .toc a{padding:.85em 0}
 html[data-ui~="soft"] .toc .n{font-size:1em}
 html[data-ui~="soft"] .gate{border-radius:4px}
 /* B + C: chữ và nền của trang sách, vòng tròn và nhuốm màu của đêm Artos, đổi sang màu đồng */
-html[data-ui~="c"][data-ui~="b"] .ui-rings circle,html[data-ui~="c"][data-ui~="b"] .ui-rings path{stroke:var(--lamp)}
+
 html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--lamp);font-variant:normal;text-transform:uppercase;font-size:13px;letter-spacing:.38em}
 html[data-ui~="c"][data-ui~="b"] .chapno::before,html[data-ui~="c"][data-ui~="b"] .chapno::after{content:none}
-html[data-ui~="c"][data-ui~="b"] .break::before{content:"";border-color:var(--lamp)}
-html[data-ui~="c"][data-ui~="b"] .end::before{border-color:var(--lamp);box-shadow:none}
+html[data-ui~="c"][data-ui~="b"] .break::before{content:""}
+html[data-ui~="c"][data-ui~="b"] .end::before{box-shadow:none}
 html[data-ui~="c"][data-ui~="b"] .end .mark{color:var(--soft);letter-spacing:0;text-transform:none;font-size:24px}
 html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--lamp)}
 
@@ -448,6 +447,18 @@ html[data-say="g"] .say.heard .q{animation:uiHeard 2.4s ease-out}
 html[data-say="g"] .say-x .qm,html[data-say="g"] .say-x .qe{color:var(--soft)}
 html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 
+/* ================= BẢNG MÀU (Clair chốt 24/11): đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng =================
+   --lamp đổi ở <body> nên mọi chữ, nút, nhịp chạm, chữ cái đầu cảnh thành đỏ; tranh động vẫn đọc --lamp ở <html> nên ánh đèn trong tranh giữ nguyên. */
+html body{--lamp:#B3263A}
+@media (prefers-color-scheme: dark){html:not([data-theme="light"]) body{--lamp:#E2566C}}
+html[data-theme="dark"] body{--lamp:#E2566C}
+html[data-ui~="c"]{--nm-person:#A3324A;--nm-item:#3A4250;--sp-other:#6C757E}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}}
+html[data-ui~="c"][data-theme="dark"]{--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}
+html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
+
 </style>
 <script>
 /* Giao diện chính (Clair chốt 24/11): Đêm Artos dịu + Trang sách, thoại G. CSS ở theme.css. */
@@ -456,10 +467,10 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   root.setAttribute('data-ui', 'b c soft');
   root.setAttribute('data-say', 'g');
   // màu nhuốm nền theo tiếng nền của cảnh
-  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#2a2a24',
-    hearth: '#6a3a14', hearthlow: '#4a2a12', hut: '#4a3018', whet: '#3a3020', dusk: '#4a2c44', dawn: '#5a4436',
-    day: '#2f4a3a', noon: '#4f4a2e', farm: '#344a2e', paddy: '#2e4a34', market: '#4a3a2a', street: '#33393f', run: '#3f2a2a',
-    river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#3d3528', store: '#3a3328', room: '#33363a', clock: '#2f3540' };
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c',
+    hearth: '#5a1a24', hearthlow: '#40161e', hut: '#3a1e26', whet: '#2e2a30', dusk: '#40243a', dawn: '#40303c',
+    day: '#2a3c48', noon: '#384650', farm: '#2a3c44', paddy: '#26404a', market: '#3a2a34', street: '#33393f', run: '#3f2a2a',
+    river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#33303a', store: '#302e36', room: '#33363a', clock: '#2f3540' };
   function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
 
   document.addEventListener('DOMContentLoaded', function () {
