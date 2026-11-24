@@ -3073,7 +3073,7 @@ em .nm{font-style:italic}
       anomaly: function (o, n) {
         bus(); whoosh(n, 0.6, 0.5, false); nz(wet(1), 'lowpass', 3000, 120, 1, 0.5, 0.7, n);  // âm thanh xung quanh bị hút mất
         sine(wet(1), 5400, 0.02, 4.3, n + 0.1);                                   // ù tai: thời gian ngừng
-        [0.4, 0.66, 1.5, 1.76, 2.6, 2.86, 3.7, 3.96].forEach(function (b, i) { boom(n + b, i % 2 ? 0.35 : 0.55); }); // tim đập rung cả trang
+        // (bỏ tiếng tim đập: Clair nghe như tiếng trống, 24/11; trang vẫn đập theo nhịp tim bằng hình)
         [0.35, 1.35, 2.35].forEach(function (w) { var og = wet(0.2); sine(og, 1320, 0.5, 1.2, n + w); sine(og, 1980, 0.25, 1, n + w); whoosh(n + w, 0.9, 0.2, false); }); // sóng dò "ping"
         var x = ac.createOscillator(), g2 = gain(0), st = n + 1.0, hg = hard(0.6); x.type = 'sawtooth'; x.frequency.value = 85; var lp = filt('bandpass', 1300, 1.5);
         g2.gain.setValueAtTime(0, st); g2.gain.linearRampToValueAtTime(0.3, st + 0.03);
