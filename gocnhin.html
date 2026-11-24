@@ -659,7 +659,41 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .gn-go a.cur{background:var(--veil);border-color:var(--lamp)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gn-title{text-shadow:0 0 18px rgba(143,211,224,.4)}}
 :root[data-theme="dark"] .gn-title{text-shadow:0 0 18px rgba(143,211,224,.4)}
-@media (prefers-reduced-motion: reduce){.pc .in{transition:none!important}.pc.turning .in,.pc.new .ba,.pc.turning .fa::after{animation:none!important}}
+/* nét riêng của Luke: sợi chỉ đỏ dọc mép trái, dài dần theo chỗ đang đọc, rung ở đoạn có sợi chỉ */
+.thread{position:fixed;left:1px;top:0;width:14px;height:100vh;z-index:2;pointer-events:none;opacity:0;transition:opacity .8s}
+.reader.luke ~ .thread.on{opacity:1}
+.thread path{fill:none;stroke:#B3263A;stroke-width:1.3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 3px rgba(226,86,108,.55))}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .thread path{stroke:#E2566C}}
+:root[data-theme="dark"] .thread path{stroke:#E2566C}
+.thread.twang svg{animation:twang 1.6s cubic-bezier(.2,.6,.3,1)}
+@keyframes twang{0%{transform:none}8%{transform:translateX(3px) skewY(.6deg)}18%{transform:translateX(-2.4px)}30%{transform:translateX(1.8px)}44%{transform:translateX(-1.1px)}60%{transform:translateX(.6px)}100%{transform:none}}
+.pv-text p.pluck.lit{text-shadow:0 0 .8em color-mix(in srgb,var(--lamp) 25%,transparent);transition:text-shadow 1.2s}
+.pv-text p.hit.lit{color:var(--pv);transition:color .5s}
+/* khối tương tác: nhẹ, không loé, không rung trang */
+.gact{margin:1.6em auto 2em;max-width:20em;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;user-select:none;-webkit-user-select:none}
+.gact:focus-visible .pb-stage{box-shadow:0 0 0 2px var(--lamp)}
+.gact-hint{font-size:13px!important;letter-spacing:.06em;color:var(--soft);margin:.7em 0 0!important;line-height:1.4!important;font-style:italic}
+.gact-hint::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-right:.5em;vertical-align:middle;animation:gdot 2s ease-in-out infinite}
+.gact.used .gact-hint::before{animation:none;opacity:.4}
+@keyframes gdot{0%,100%{opacity:.35}50%{opacity:1}}
+.pb-stage{position:relative;height:150px;border-radius:12px;background:linear-gradient(180deg,transparent 0 70%,color-mix(in srgb,var(--soft) 10%,transparent))}
+.pb-ground{position:absolute;left:12%;right:12%;bottom:22px;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--soft) 55%,transparent),transparent)}
+.pb-stone{position:absolute;left:50%;top:18px;width:15px;height:11px;margin-left:-7.5px;border-radius:52% 48% 45% 55%/60% 55% 45% 40%;
+  background:radial-gradient(circle at 35% 30%,#c9c6bf,#8a8780 55%,#5d5a55);box-shadow:0 2px 4px rgba(0,0,0,.4);animation:pbhang 3s ease-in-out infinite}
+@keyframes pbhang{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.pebble.drop .pb-stone{animation:pbfall .42s cubic-bezier(.55,0,1,.45) forwards}
+@keyframes pbfall{from{transform:translateY(0)}to{transform:translateY(98px)}}
+.pebble.land .pb-stone{transform:translateY(98px);animation:pbbounce .3s ease-out}
+@keyframes pbbounce{0%{transform:translateY(98px)}40%{transform:translateY(91px) rotate(14deg)}100%{transform:translateY(98px) rotate(20deg)}}
+.pb-ring{position:absolute;left:50%;bottom:16px;width:60px;height:14px;margin-left:-30px;border-radius:50%;border:1px solid var(--pv);opacity:0}
+.pebble.land .pb-ring{animation:pbring .9s ease-out}
+@keyframes pbring{0%{opacity:.8;transform:scale(.2)}100%{opacity:0;transform:scale(1.6)}}
+.pb-dust i{position:absolute;left:50%;bottom:22px;width:2px;height:2px;border-radius:50%;background:var(--soft);opacity:0}
+.pebble.land .pb-dust i{animation:pbdust .7s ease-out}
+.pb-dust i:nth-child(1){--dx:-18px;--dy:-10px}.pb-dust i:nth-child(2){--dx:-9px;--dy:-16px}.pb-dust i:nth-child(3){--dx:2px;--dy:-18px}.pb-dust i:nth-child(4){--dx:11px;--dy:-13px}.pb-dust i:nth-child(5){--dx:19px;--dy:-7px}
+@keyframes pbdust{0%{opacity:.9;transform:none}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+.pebble.back .pb-stone{transition:opacity .5s;opacity:0}
+@media (prefers-reduced-motion: reduce){.pc .in{transition:none!important}.thread.twang svg,.pb-stone{animation:none!important}.pc.turning .in,.pc.new .ba,.pc.turning .fa::after{animation:none!important}}
 
 .nen-artos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:#1d2126}
 body > main{position:relative;z-index:1}
@@ -687,7 +721,7 @@ body > main{position:relative;z-index:1}
 </g></svg><svg class="na-thread" viewBox="0 0 1000 200" preserveAspectRatio="none"><path pathLength="1" d="M-10 140C180 70 330 190 520 120S820 40 1010 110"/></svg></div>
 <header class="bar">
   <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương và trang chủ"><span class="ic"></span>Mục lục</button>
-  <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
+  <div class="tools"><button type="button" id="sound" aria-pressed="false" aria-label="Bật hoặc tắt nhạc nền">Nhạc</button><button type="button" id="sfx" aria-pressed="false" aria-label="Bật hoặc tắt tiếng hiệu ứng">Tiếng</button><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
 </header>
 <div class="drawer" id="drawer" hidden>
   <div class="dr-shade" data-close></div>
@@ -702,7 +736,7 @@ body > main{position:relative;z-index:1}
     <h1 class="gn-title">Góc nhìn khác</h1>
     <p class="gn-sub">Cùng một chuyện, nhưng kể qua mắt người khác. Đọc hết chương nào thì góc nhìn của chương ấy mở ra; thẻ mới nằm úp, chạm để lật.</p>
     <p class="gn-count" id="pcount"></p>
-    <section class="gch"><h2>Chương 1<span>Thứ gì đó đã bị bỏ quên</span></h2><div class="grow"><button type="button" class="pc luke" data-id="ch01-luke" data-ch="1" data-who="luke" aria-label="Luke: Nửa nhịp"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Luke</span><span class="t">Nửa nhịp</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M114.1 128.0 C126.8 153.4 102.2 148.9 104.3 141.2 C97.6 135.5 88.7 130.8 79.1 143.2 C85.0 129.6 88.3 110.9 73.6 108.9 C89.9 111.4 117.6 108.8 104.5 114.3 C111.4 119.6 129.6 148.9 134.6 128.0"/><path d="M112.2 147.1 C100.4 137.2 85.4 143.3 80.1 152.3 C92.9 129.1 59.4 109.9 62.7 113.5 C90.3 91.0 104.2 123.5 102.4 87.0 C105.7 122.0 112.4 125.3 118.5 123.2 C142.6 135.7 98.8 141.4 115.0 151.3"/><path d="M90.5 148.7 C89.5 151.3 85.1 130.1 62.4 142.0 C60.3 144.4 70.7 93.2 87.6 122.3 C78.0 107.5 100.6 122.8 94.2 112.5 C94.9 113.8 122.2 100.4 106.1 114.6 C106.3 117.9 130.2 119.2 127.1 117.9 C141.7 110.6 104.4 132.9 111.4 133.2 C106.7 134.9 82.2 165.8 114.0 165.6 C99.5 164.0 81.5 160.8 89.0 152.1"/><path d="M65.2 133.0 C64.1 120.7 92.7 111.9 89.3 114.4 C91.5 106.8 112.1 117.2 109.6 104.1 C142.3 107.6 121.9 136.6 120.8 125.0 C113.8 137.6 102.6 162.7 110.1 140.9 C106.3 139.8 95.1 131.4 87.0 160.2 C83.9 148.9 59.4 110.8 78.0 131.1"/><path d="M80.9 105.9 C89.8 106.1 104.1 120.4 105.1 113.4 C130.6 111.7 137.5 126.3 115.4 125.1 C112.1 132.3 114.5 167.2 122.8 154.4 C102.7 133.1 70.3 159.9 93.1 147.7 C76.3 147.0 71.9 133.2 66.0 134.5 C53.7 129.5 88.1 108.3 91.1 117.7"/><path d="M110.7 91.9 C107.3 116.0 121.4 121.0 114.1 120.3 C106.9 126.1 107.5 132.2 116.0 132.7 C141.5 143.2 100.3 134.0 116.9 159.1 C117.0 162.9 77.5 149.8 95.7 142.4 C84.6 160.2 77.7 135.6 76.2 140.9 C69.1 149.7 96.2 122.1 79.9 122.1 C69.5 111.5 86.2 100.3 82.1 95.1 C92.0 102.5 121.7 105.5 104.1 114.2"/><path d="M130.9 119.0 C109.7 125.9 129.6 155.1 133.0 146.1 C119.7 146.6 111.0 167.1 106.2 149.3 C98.8 160.7 67.1 158.3 79.7 164.9 C85.1 159.7 73.0 131.3 83.5 132.8 C75.9 124.4 78.3 106.8 69.8 111.4 C88.3 111.9 98.2 118.3 93.6 106.1 C104.4 99.2 124.1 115.1 115.0 100.7 C114.8 94.7 124.1 131.2 115.5 123.5"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"></span></span></span></button></div></section>
+    <section class="gch"><h2>Chương 1<span>Thứ gì đó đã bị bỏ quên</span></h2><div class="grow"><button type="button" class="pc luke" data-id="ch01-luke" data-ch="1" data-who="luke" data-amb="campus" aria-label="Luke: Nửa nhịp"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Luke</span><span class="t">Nửa nhịp</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M114.1 128.0 C126.8 153.4 102.2 148.9 104.3 141.2 C97.6 135.5 88.7 130.8 79.1 143.2 C85.0 129.6 88.3 110.9 73.6 108.9 C89.9 111.4 117.6 108.8 104.5 114.3 C111.4 119.6 129.6 148.9 134.6 128.0"/><path d="M112.2 147.1 C100.4 137.2 85.4 143.3 80.1 152.3 C92.9 129.1 59.4 109.9 62.7 113.5 C90.3 91.0 104.2 123.5 102.4 87.0 C105.7 122.0 112.4 125.3 118.5 123.2 C142.6 135.7 98.8 141.4 115.0 151.3"/><path d="M90.5 148.7 C89.5 151.3 85.1 130.1 62.4 142.0 C60.3 144.4 70.7 93.2 87.6 122.3 C78.0 107.5 100.6 122.8 94.2 112.5 C94.9 113.8 122.2 100.4 106.1 114.6 C106.3 117.9 130.2 119.2 127.1 117.9 C141.7 110.6 104.4 132.9 111.4 133.2 C106.7 134.9 82.2 165.8 114.0 165.6 C99.5 164.0 81.5 160.8 89.0 152.1"/><path d="M65.2 133.0 C64.1 120.7 92.7 111.9 89.3 114.4 C91.5 106.8 112.1 117.2 109.6 104.1 C142.3 107.6 121.9 136.6 120.8 125.0 C113.8 137.6 102.6 162.7 110.1 140.9 C106.3 139.8 95.1 131.4 87.0 160.2 C83.9 148.9 59.4 110.8 78.0 131.1"/><path d="M80.9 105.9 C89.8 106.1 104.1 120.4 105.1 113.4 C130.6 111.7 137.5 126.3 115.4 125.1 C112.1 132.3 114.5 167.2 122.8 154.4 C102.7 133.1 70.3 159.9 93.1 147.7 C76.3 147.0 71.9 133.2 66.0 134.5 C53.7 129.5 88.1 108.3 91.1 117.7"/><path d="M110.7 91.9 C107.3 116.0 121.4 121.0 114.1 120.3 C106.9 126.1 107.5 132.2 116.0 132.7 C141.5 143.2 100.3 134.0 116.9 159.1 C117.0 162.9 77.5 149.8 95.7 142.4 C84.6 160.2 77.7 135.6 76.2 140.9 C69.1 149.7 96.2 122.1 79.9 122.1 C69.5 111.5 86.2 100.3 82.1 95.1 C92.0 102.5 121.7 105.5 104.1 114.2"/><path d="M130.9 119.0 C109.7 125.9 129.6 155.1 133.0 146.1 C119.7 146.6 111.0 167.1 106.2 149.3 C98.8 160.7 67.1 158.3 79.7 164.9 C85.1 159.7 73.0 131.3 83.5 132.8 C75.9 124.4 78.3 106.8 69.8 111.4 C88.3 111.9 98.2 118.3 93.6 106.1 C104.4 99.2 124.1 115.1 115.0 100.7 C114.8 94.7 124.1 131.2 115.5 123.5"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"></span></span></span></button></div></section>
   </div>
   <section class="reader" id="reader" hidden>
     <div class="pv-text" data-id="ch01-luke" hidden><p class="rh">Chương 1 · Góc nhìn của Luke</p><h2>Nửa nhịp</h2><p>Buổi tập sáng hôm ấy tan sớm hơn thường lệ, đám năm nhất kéo nhau xuống căng tin từ lúc chuông giải lao còn chưa dứt, còn Luke thì ở lại, tựa vai vào cây cột hành lang tầng hai, ôm thanh kiếm gỗ trước ngực như ôm một thói quen cũ. Anh vẫn hay đứng ở chỗ này những hôm chẳng muốn nghĩ gì, vì từ đây nhìn xuống, khoảng sân trước toà nhà câu lạc bộ lúc nào cũng y hệt nhau, mấy hàng cây, mấy vệt nắng, mấy người đi qua rồi đi mất, đều đặn đến mức anh nhắm mắt lại vẫn biết chiếc lá nào sắp rơi. Có lẽ chính vì vậy mà anh thích nó. Sau những nơi anh từng đi qua, được đứng trước một thứ chẳng bao giờ thay đổi cũng là một cách để nghỉ ngơi.</p>
@@ -710,15 +744,15 @@ body > main{position:relative;z-index:1}
 <p>Cô ấy chẳng có gì nổi bật. Tóc đen buộc gọn, cặp sách đeo lệch một bên vai, bước chân không vội mà cũng chẳng thong thả, cái dáng đi của người vừa rời khỏi một nơi nhưng chưa nghĩ ra nơi tiếp theo. Giữa giờ học thế này mà lang thang ra tận đây thì chắc là trốn tiết, anh nghĩ, và định thôi không nhìn nữa. Nhưng ngay lúc cô đi ngang gốc cây thứ ba, có thứ gì đó trong anh khẽ cựa mình.</p>
 <p>Luke đứng thẳng người lên. Anh quen cái giác quan ấy, quen hơn anh muốn, nhưng anh chỉ quen gặp nó ở những nơi khác, những nơi mà không khí đặc quánh lại trước khi có chuyện, những nơi mà một bóng cây đổ sai hướng hay một tiếng động đến muộn nửa nhịp có khi là thứ duy nhất đứng giữa anh và một cái chết rất ngu ngốc. Ở đây thì không. Ở đây là sân trường, là nắng xuân, là tiếng đứa nào đó gọi nhau í ới từ dãy nhà bên kia, và cái giác quan đã theo anh qua bao nhiêu lần suýt chết vẫn thường nằm im như một con chó già ngủ gật mỗi khi anh trở về với cuộc sống bình thường.</p>
 <p>Vậy mà bây giờ nó đang ngẩng đầu lên. Có điều lần này nó không gầm gừ.</p>
-<p>Đó mới là điều khiến anh bối rối. Mọi lần, thứ giác quan ấy chỉ thức dậy để báo cho anh biết có gì đó sai, một bậc thang hụt trong bóng tối, một tiếng động đến muộn nửa nhịp, và lúc nào cũng kèm theo cái lạnh gai gai dọc gáy. Còn bây giờ chẳng có gì sai cả. Bóng cô đổ đúng hướng, tiếng giày cô gõ trên nền gạch đến đúng lúc, gió lùa qua tóc cô cũng chẳng khác gì gió lùa qua tán cây bên cạnh. Chỉ là giữa ban công này và khoảng sân dưới kia dường như vừa có một sợi chỉ rất mảnh căng ra, mảnh đến mức anh không nhìn thấy, chỉ cảm được nó khẽ rung lên mỗi lần cô bước thêm một bước, như thể ai đó đã buộc sẵn hai đầu sợi chỉ từ lâu lắm rồi, chỉ chờ tới hôm nay mới kéo căng. Hoặc cũng có thể anh mệt thật rồi, ngủ ít quá, tập nhiều quá, và chẳng có sợi chỉ nào hết.</p>
+<p class="pluck">Đó mới là điều khiến anh bối rối. Mọi lần, thứ giác quan ấy chỉ thức dậy để báo cho anh biết có gì đó sai, một bậc thang hụt trong bóng tối, một tiếng động đến muộn nửa nhịp, và lúc nào cũng kèm theo cái lạnh gai gai dọc gáy. Còn bây giờ chẳng có gì sai cả. Bóng cô đổ đúng hướng, tiếng giày cô gõ trên nền gạch đến đúng lúc, gió lùa qua tóc cô cũng chẳng khác gì gió lùa qua tán cây bên cạnh. Chỉ là giữa ban công này và khoảng sân dưới kia dường như vừa có một sợi chỉ rất mảnh căng ra, mảnh đến mức anh không nhìn thấy, chỉ cảm được nó khẽ rung lên mỗi lần cô bước thêm một bước, như thể ai đó đã buộc sẵn hai đầu sợi chỉ từ lâu lắm rồi, chỉ chờ tới hôm nay mới kéo căng. Hoặc cũng có thể anh mệt thật rồi, ngủ ít quá, tập nhiều quá, và chẳng có sợi chỉ nào hết.</p>
 <p>Rồi cô ngước lên.</p>
 <p>Luke không kịp quay đi, mà cũng chẳng hiểu sao anh không muốn quay đi. Ánh mắt cô chạm vào anh chỉ trong một thoáng, và trong cái thoáng ấy, gương mặt cô chợt dịu lại, như người vừa nghe thấy một câu hát quen mà không nhớ đã nghe ở đâu, và chẳng hiểu sao, anh biết chắc chính mình cũng vừa nghe thấy câu hát ấy. Anh thấy cô hơi nghiêng đầu, rồi lắc nhẹ, cái kiểu lắc đầu của người tự gạt một ý nghĩ ra khỏi tâm trí, và quay lưng bước ngược về phía cổng trường.</p>
-<p>Anh nhìn theo. Nhìn lâu hơn anh định, lâu hơn mức một người lạ có thể giải thích được nếu bị ai hỏi. Dáng cô nhỏ dần giữa hai hàng cây, tóc lay theo từng bước, và sợi chỉ vô hình kia cũng giãn dài ra theo mỗi bước chân cô mà không đứt, tới lúc cô khuất hẳn sau hàng cây anh vẫn còn cảm thấy nó, lỏng ra, nhưng vẫn còn đó.</p>
+<p class="pluck">Anh nhìn theo. Nhìn lâu hơn anh định, lâu hơn mức một người lạ có thể giải thích được nếu bị ai hỏi. Dáng cô nhỏ dần giữa hai hàng cây, tóc lay theo từng bước, và sợi chỉ vô hình kia cũng giãn dài ra theo mỗi bước chân cô mà không đứt, tới lúc cô khuất hẳn sau hàng cây anh vẫn còn cảm thấy nó, lỏng ra, nhưng vẫn còn đó.</p>
 <p>Có lẽ chẳng có gì đâu, anh tự nhủ. Ngoài kia có hàng nghìn người, ai cũng có lúc trông như vừa đánh rơi thứ gì đó. Nhưng tay anh siết thanh kiếm gỗ chặt hơn một chút, và anh nhận ra mình đang nhớ đến một chuyện rất cũ, chuyện về một người đã từng đứng nhìn anh từ xa như thế, từ trước khi anh biết mình đang bị nhìn.</p>
 <div class="break" aria-hidden="true"></div>
 <p>Sáng hôm sau anh tìm cô bằng mắt mấy lần, ở cổng trường, ở dãy giảng đường, ở hàng xe trước căng tin, và không thấy. Anh không cố. Luke chưa bao giờ là người đi tìm, anh chỉ đứng ở chỗ của mình và để mọi thứ tự lộ ra, vì kinh nghiệm dạy anh rằng thứ gì phải đến thì sớm muộn cũng đến, còn thứ gì mình cố đuổi theo thì thường là thứ mình không nên chạm vào.</p>
 <p>Đến chiều thì nó tự đến thật.</p>
-<p>Anh vừa rời sân tập, áo còn ướt mồ hôi, định ra máy bán nước cuối hành lang mua chai nước như mọi hôm, thì thấy cô đứng đó, lưng quay về phía anh, một tay giơ lên trước mặt máy. Luke chậm bước lại. Giác quan trong anh bật dậy, và lần này thì đúng là cái cảm giác anh quen, cái lạnh gai gai dọc gáy, bậc thang hụt trong bóng tối, khác hẳn sợi chỉ hôm qua, như thể chỉ sau một đêm đã có thêm thứ gì đó bám vào người cô. Và rồi anh thấy, rõ ràng như thấy một viên sỏi rơi, ngón tay cô còn cách mặt máy cả một gang mà lon nước đã lăn xuống khay, đánh "cạch" một tiếng khô khốc.</p>
+<p class="pluck">Anh vừa rời sân tập, áo còn ướt mồ hôi, định ra máy bán nước cuối hành lang mua chai nước như mọi hôm, thì thấy cô đứng đó, lưng quay về phía anh, một tay giơ lên trước mặt máy. Luke chậm bước lại. Giác quan trong anh bật dậy, và lần này thì đúng là cái cảm giác anh quen, cái lạnh gai gai dọc gáy, bậc thang hụt trong bóng tối, khác hẳn sợi chỉ hôm qua, như thể chỉ sau một đêm đã có thêm thứ gì đó bám vào người cô. Và rồi anh thấy, rõ ràng như thấy một viên sỏi rơi, ngón tay cô còn cách mặt máy cả một gang mà lon nước đã lăn xuống khay, đánh "cạch" một tiếng khô khốc.</p>
 <p>Cô gái cứng người lại. Anh thấy vai cô co lên, thấy bàn tay đang giơ dở khẽ run rồi rụt về sát người như vừa chạm phải lửa. Không phải cái giật mình của người gặp chuyện lạ, mà là cái giật mình của người gặp lại một chuyện lạ đã từng xảy ra rồi, và đã cố tin rằng nó sẽ không xảy ra thêm lần nào nữa.</p>
 <p>"Máy này dạo này hay dở chứng lắm."</p>
 <p>Anh nói câu ấy nhẹ tênh, như người ta vẫn nói chuyện thời tiết, vì anh đã học được rằng với một người đang sợ, điều tệ nhất là để họ thấy mình cũng đang chăm chú. Cô quay lại, và anh thấy cô nhận ra anh, thấy trong mắt cô loé lên một chút gì đó như muốn hỏi, như ngờ vực, rồi tắt ngay. Lúc anh cúi xuống nhặt lon nước đưa cho cô, cô đón lấy rất khéo, đầu ngón tay né tay anh, gọn gàng như người đã tập cái động tác ấy suốt cả ngày hôm nay.</p>
@@ -730,14 +764,15 @@ body > main{position:relative;z-index:1}
 <p>Nhưng hồi đó, cũng đã có người bước thêm một bước về phía anh với chừng ấy thứ chưa đủ. Và anh vẫn nhớ, nhớ rất rõ, những ngày trước khi người ấy ngồi xuống bên cạnh, anh đã một mình ngồi trong phòng, nhìn chằm chằm vào bàn tay mình, nghĩ rằng mình điên.</p>
 <p>Anh quay lại.</p>
 <p>Cô ngồi ở băng ghế đá trước thư viện, lon nước đặt bên cạnh, vẫn chưa mở, cúi nhìn hai bàn tay mình như đang đọc một thứ chữ không ai dạy. Luke ngồi xuống đầu kia băng ghế, cách một khoảng vừa đủ, và nhìn ra sân thay vì nhìn cô, vì anh đoán lúc này cô không chịu nổi thêm một ánh mắt nào nữa.</p>
-<p>Anh nhặt một viên sỏi dưới chân ghế. Không phải vô tình. Anh cần biết cái lệch nhịp kia nằm ở đâu, quanh người cô, hay ở chính trong đầu anh, và chẳng có cách thử nào nhanh hơn thế. Anh thả viên sỏi xuống, lắng tai nghe.</p>
-<p>Tiếng lách cách vang lên đúng lúc. Không sớm, không muộn.</p>
+<p>Anh nhặt một viên sỏi dưới chân ghế. Không phải vô tình. Anh cần biết cái lệch nhịp kia nằm ở đâu, quanh người cô, hay ở chính trong đầu anh, và chẳng có cách thử nào nhanh hơn thế. Anh thả viên sỏi xuống, lắng tai nghe.</p><div class="gact pebble" role="button" tabindex="0" aria-label="Chạm để thả viên sỏi"><div class="pb-stage"><span class="pb-ring"></span><span class="pb-stone"></span><span class="pb-dust"><i></i><i></i><i></i><i></i><i></i></span><span class="pb-ground"></span></div><p class="gact-hint">chạm để thả viên sỏi</p></div>
+<p class="hit">Tiếng lách cách vang lên đúng lúc. Không sớm, không muộn.</p>
 <p>Vậy là nó không nằm trong đầu anh, anh nghĩ, và bỗng thấy nhẹ người một cách khó hiểu, vì như thế nghĩa là anh không tưởng tượng, mà cô cũng không. Khoé mắt anh bắt được cái liếc rất nhanh của cô xuống viên sỏi, rồi đôi vai cô hạ xuống một chút, chỉ một chút thôi. Có lẽ cô cũng vừa nghe thấy điều anh nghe thấy chăng, anh không biết. Anh chỉ biết lúc ấy mình đã thôi ngập ngừng.</p>
 <p>Lần này anh nói thật với cô một chút, rằng hồi trước anh cũng từng bảo "chắc trùng hợp thôi" y như vậy. Anh không nói tiếp sau câu đó là những gì, không nói về những nơi anh đã đi qua, về cái giác quan đã cứu anh nhiều lần và có một lần không cứu được người khác. Còn quá sớm. Cô hỏi anh có biết cô bị sao không, và anh trả lời đúng điều anh biết, không thêm, không bớt, vì anh không muốn là người đầu tiên nói dối cô về chuyện này.</p>
 <p>Lúc đứng dậy, anh đã định hỏi tên cô. Câu hỏi nằm sẵn trên đầu lưỡi, đơn giản thôi, ai cũng hỏi. Nhưng anh nhìn cô thêm một giây, nhìn cái cách cô ngồi thẳng lưng như người đang gồng mình giữ cho mọi thứ khỏi đổ xuống, và anh thôi. Hỏi tên là bắt đầu một điều gì đó, còn cô thì có quyền tự chọn có bắt đầu hay không.</p>
-<p>Anh bước về phía sân tập, không ngoảnh lại. Nhưng mãi tới khi đã lẫn hẳn vào đám người đang tập, tay đã cầm lại thanh kiếm tre, anh vẫn cảm thấy sợi chỉ mảnh ấy ở sau lưng mình, một đầu buộc ở đâu đó phía băng ghế đá, một đầu buộc vào chính anh, rung lên rất khẽ, như thể nó đã nằm đó từ lâu lắm rồi, chỉ là hôm nay anh mới biết.</p></div>
+<p class="pluck">Anh bước về phía sân tập, không ngoảnh lại. Nhưng mãi tới khi đã lẫn hẳn vào đám người đang tập, tay đã cầm lại thanh kiếm tre, anh vẫn cảm thấy sợi chỉ mảnh ấy ở sau lưng mình, một đầu buộc ở đâu đó phía băng ghế đá, một đầu buộc vào chính anh, rung lên rất khẽ, như thể nó đã nằm đó từ lâu lắm rồi, chỉ là hôm nay anh mới biết.</p></div>
     <nav class="gn-go" aria-label="Đi tiếp"><a class="cur" id="back" href="index.html">Về chương</a><a id="tolist" href="gocnhin.html">Các góc nhìn khác</a></nav>
   </section>
+  <div class="thread" id="thread" aria-hidden="true"><svg width="14" height="100%" viewBox="0 0 14 1000" preserveAspectRatio="none"><path pathLength="1" d="M7 0C9 120 4 240 7 360S10 600 6 760 8 920 7 1000"/></svg></div>
 </main>
 <script>
 (function(){
@@ -755,7 +790,31 @@ body > main{position:relative;z-index:1}
   function noise(t,dur,f,qv,v,f2){var s=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nb;s.loop=true;bp.type='bandpass';bp.frequency.setValueAtTime(f,t);if(f2)bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=qv;
     g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(bp);bp.connect(g);g.connect(out);s.start(t,Math.random()*.5);s.stop(t+dur+.02)}
   function tone(t,f,dur,v,type){var o=ac.createOscillator(),g=ac.createGain();o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02)}
-  var SND={flip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.13,2200,1.2,.16,5600);tone(t+.11,1980,.07,.04,'sine')},
+  /* nút Nhạc / Tiếng: cùng chìa nhớ với trang chương (a07-sound, a07-sfx) */
+  var MU=get('a07-sound')!=='off',sb=document.getElementById('sound'),fb=document.getElementById('sfx');
+  function showBtn(){sb.setAttribute('aria-pressed',MU);fb.setAttribute('aria-pressed',SF)}showBtn();
+  sb.onclick=function(){MU=!MU;store('a07-sound',MU?'on':'off');showBtn();if(MU&&curAmb)amb(curAmb);else ambStop()};
+  fb.onclick=function(){SF=!SF;store('a07-sfx',SF?'on':'off');showBtn()};
+  /* tiếng nền mờ: chỉ bật khi đang đọc một bài, tắt khi về danh sách */
+  var ac2=null,ambG=null,ambStops=[],curAmb='';
+  function actx(){if(!ac2){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;ac2=new AC()}if(ac2.state==='suspended')ac2.resume();return ac2}
+  function nbuf(c){var b=c.createBuffer(1,c.sampleRate*2,c.sampleRate),d=b.getChannelData(0),l=0;for(var i=0;i<d.length;i++){var w=Math.random()*2-1;l=(l+.02*w)/1.02;d[i]=l*3.5}return b}
+  function ambStop(){if(!ambG)return;var g=ambG,c=ac2;g.gain.cancelScheduledValues(c.currentTime);g.gain.setTargetAtTime(0,c.currentTime,.5);var st=ambStops;ambStops=[];ambG=null;setTimeout(function(){st.forEach(function(f){try{f()}catch(e){}})},2500)}
+  var AMB={
+    // sân trường buổi chiều: gió qua tán lá, xa xa tiếng kiếm tre lách cách
+    campus:function(c,out){var s=c.createBufferSource();s.buffer=nbuf(c);s.loop=true;var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=700;var g=c.createGain();g.gain.value=.5;s.connect(lp);lp.connect(g);g.connect(out);s.start();
+      var o=c.createOscillator(),og=c.createGain();o.frequency.value=.09;og.gain.value=.25;o.connect(og);og.connect(g.gain);o.start();
+      var s2=c.createBufferSource();s2.buffer=nbuf(c);s2.loop=true;var bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=3200;bp.Q.value=.8;var g2=c.createGain();g2.gain.value=.05;s2.connect(bp);bp.connect(g2);g2.connect(out);s2.start();
+      var o2=c.createOscillator(),og2=c.createGain();o2.frequency.value=.23;og2.gain.value=.04;o2.connect(og2);og2.connect(g2.gain);o2.start();
+      var alive=true;(function clack(){if(!alive)return;var n=c.currentTime,k=1+Math.floor(Math.random()*3);for(var i=0;i<k;i++){var t=n+i*(.16+Math.random()*.1),os=c.createOscillator(),gg=c.createGain(),f=c.createBiquadFilter();os.type='triangle';os.frequency.value=900+Math.random()*250;f.type='bandpass';f.frequency.value=1100;f.Q.value=3;
+        gg.gain.setValueAtTime(.0001,t);gg.gain.exponentialRampToValueAtTime(.035,t+.004);gg.gain.exponentialRampToValueAtTime(.0001,t+.07);os.connect(f);f.connect(gg);gg.connect(out);os.start(t);os.stop(t+.1)}
+        setTimeout(clack,3000+Math.random()*6000)})();
+      return function(){alive=false;s.stop();s2.stop();o.stop();o2.stop()}}
+  };
+  function amb(k){curAmb=k;if(!MU||!AMB[k])return;var c=actx();if(!c)return;ambStop();ambG=c.createGain();ambG.gain.value=0;ambG.connect(c.destination);ambStops=[AMB[k](c,ambG)];ambG.gain.setTargetAtTime(.32,c.currentTime,1.2)}
+  var SND={pluck:function(){if(!ctx())return;var t=ac.currentTime;tone(t,659.3,1.4,.028,'sine');tone(t+.01,1318.5,.9,.012,'sine')},
+    clink:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.03,4200,4,.22);tone(t,2650,.06,.05,'triangle');noise(t+.075,.025,3600,4,.14);tone(t+.075,2380,.05,.03,'triangle')},
+    flip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.13,2200,1.2,.16,5600);tone(t+.11,1980,.07,.04,'sine')},
     page:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.22,1400,.8,.08,3600)},
     locked:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.05,3200,3,.12);noise(t+.09,.05,2800,3,.1);tone(t,1480,.05,.03,'square')}};
 
@@ -764,10 +823,23 @@ body > main{position:relative;z-index:1}
     if(ch>dn){c.classList.add('locked');c.setAttribute('aria-label','Chưa mở. Đọc hết chương '+ch+' để mở');return}
     open++;if(seen.indexOf(id)>=0)c.classList.add('up');else c.classList.add('new')});
   document.getElementById('pcount').textContent=open+' / '+cards.length+' góc nhìn đã mở';
-  var reader=document.getElementById('reader'),list=document.getElementById('plist');
+  var reader=document.getElementById('reader'),list=document.getElementById('plist'),thr=document.getElementById('thread'),thp=thr.querySelector('path');
+  /* sợi chỉ dài dần theo chỗ đang đọc; tới đoạn có sợi chỉ thì rung khẽ (mỗi đoạn một lần) */
+  function readScroll(){if(reader.hidden)return;var r=reader.getBoundingClientRect(),h=r.height-innerHeight*.5,p=h>0?Math.min(1,Math.max(0,(innerHeight*.5-r.top)/h)):1;thp.style.strokeDashoffset=String(1-p)}
+  addEventListener('scroll',readScroll,{passive:true});addEventListener('resize',readScroll);
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting||e.target._d)return;var el=e.target;el._d=1;el.classList.add('lit');
+      if(el.classList.contains('pluck')&&!reader.hidden&&reader.classList.contains('luke')){thr.classList.remove('twang');void thr.offsetWidth;thr.classList.add('twang');SND.pluck()}})},{rootMargin:'0px 0px -35% 0px'});
+    [].forEach.call(document.querySelectorAll('.pv-text p.pluck'),function(p){io.observe(p)})}
+  /* viên sỏi: thả xuống, tiếng lách cách đúng lúc chạm đất, đoạn "vang lên đúng lúc" sáng lên */
+  [].forEach.call(document.querySelectorAll('.gact.pebble'),function(a){var busy=0;
+    function go(){if(busy)return;busy=1;a.classList.remove('land','back');a.classList.add('drop');
+      setTimeout(function(){a.classList.remove('drop');a.classList.add('land','used');SND.clink();var h=a.parentNode.querySelector('p.hit');if(h)h.classList.add('lit');a.querySelector('.gact-hint').textContent='thả lại'},RED?0:420);
+      setTimeout(function(){a.classList.add('back')},RED?600:1500);setTimeout(function(){a.classList.remove('land','back');busy=0},RED?700:2100)}
+    a.onclick=go;a.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
   function show(id,jump){var c=document.querySelector('.pc[data-id="'+id+'"]');if(!c||c.classList.contains('locked'))return false;
     [].forEach.call(document.querySelectorAll('.pv-text'),function(a){a.hidden=a.getAttribute('data-id')!==id});
     reader.hidden=false;reader.className='reader '+c.getAttribute('data-who');list.hidden=true;
+    thr.classList.add('on');amb(c.getAttribute('data-amb'));setTimeout(readScroll,50);
     document.getElementById('back').href='ch'+String(c.getAttribute('data-ch')).padStart(2,'0')+'.html';
     document.getElementById('back').textContent='Về chương '+c.getAttribute('data-ch');
     if(history.replaceState)history.replaceState(null,'','#'+id);
@@ -777,7 +849,7 @@ body > main{position:relative;z-index:1}
   cards.forEach(function(c){c.onclick=function(){
     if(c.classList.contains('locked')){c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');SND.locked();return}
     var id=c.getAttribute('data-id');if(c.classList.contains('new'))flip(c,function(){show(id)});else show(id)}});
-  document.getElementById('tolist').onclick=function(e){e.preventDefault();reader.hidden=true;list.hidden=false;if(history.replaceState)history.replaceState(null,'',location.pathname);scrollTo(0,0)};
+  document.getElementById('tolist').onclick=function(e){e.preventDefault();reader.hidden=true;list.hidden=false;thr.classList.remove('on');curAmb='';ambStop();if(history.replaceState)history.replaceState(null,'',location.pathname);scrollTo(0,0)};
   /* tới từ thẻ cuối chương: gocnhin.html#ch01-luke -> lật rồi mở luôn */
   var h=decodeURIComponent(location.hash.slice(1));
   if(h){var c=document.querySelector('.pc[data-id="'+h+'"]');if(c&&!c.classList.contains('locked')){mark(h);c.classList.remove('new');c.classList.add('up');show(h,true)}}
