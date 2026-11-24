@@ -655,17 +655,39 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .trail li{padding:.7em 0;border-bottom:1px solid #2f3b3e;font-size:15px;line-height:1.55}
 .trail .c{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8FD3E0;margin-bottom:.15em}
 .lockline{font-size:14px;color:#87918d;font-style:italic;margin:1em 0 0}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:radial-gradient(120% 50% at 50% 0%,#17303a 0%,#0e1517 55%) fixed #0e1517}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:#0c0b0b}
 :root:not([data-theme="light"]) .bs-title{text-shadow:0 0 18px rgba(143,211,224,.4)}}
-:root[data-theme="dark"] body{background:radial-gradient(120% 50% at 50% 0%,#17303a 0%,#0e1517 55%) fixed #0e1517}
+:root[data-theme="dark"] body{background:#0c0b0b}
 :root[data-theme="dark"] .bs-title{text-shadow:0 0 18px rgba(143,211,224,.4)}
 .bs-go{display:flex;flex-wrap:wrap;gap:10px;margin-top:3em}
 .bs-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
 .bs-go a.cur{background:var(--veil);border-color:var(--lamp)}
 @media (prefers-reduced-motion: reduce){.bc-in{transition:none}.bc.turning .bc-in,.bc.new .bb,.locked .q,.shake .bc-in,.glow,.grid .rule,.big.shine .bf{animation:none}.locked .q{opacity:.6}}
+
+.nen-artos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:#1d2126}
+body > main{position:relative;z-index:1}
+.na-ring{position:absolute;width:max(118vmin,560px);aspect-ratio:1;right:calc(-1 * max(34vmin,170px));top:calc(-1 * max(14vmin,70px));opacity:.07}
+.na-a,.na-b,.na-c{transform-origin:300px 300px}
+.na-a{animation:naspin 220s linear infinite}.na-b{animation:naspin 160s linear infinite reverse}.na-c{animation:naspin 300s linear infinite}
+@keyframes naspin{to{transform:rotate(360deg)}}
+.na-thread{position:absolute;left:0;width:100%;height:22vh;top:62vh}
+.na-thread path{fill:none;stroke:#B3263A;stroke-width:1.3;vector-effect:non-scaling-stroke;opacity:.3;stroke-dasharray:1;stroke-dashoffset:1;animation:nadraw 2.8s .3s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes nadraw{to{stroke-dashoffset:0}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:#0c0b0b}
+:root:not([data-theme="light"]) .nen-artos{color:#fff}
+:root:not([data-theme="light"]) .nen-artos .na-ring{opacity:.075}
+:root:not([data-theme="light"]) .nen-artos .na-thread path{stroke:#E2566C;opacity:.42}}
+:root[data-theme="dark"] body{background:#0c0b0b}
+:root[data-theme="dark"] .nen-artos{color:#fff}:root[data-theme="dark"] .nen-artos .na-ring{opacity:.075}:root[data-theme="dark"] .nen-artos .na-thread path{stroke:#E2566C;opacity:.42}
+@media (prefers-reduced-motion: reduce){.na-a,.na-b,.na-c{animation:none}.na-thread path{animation:none;stroke-dashoffset:0}}
 </style>
 </head>
 <body>
+<div class="nen-artos" aria-hidden="true"><svg class="na-ring" viewBox="0 0 600 600"><g fill="none" stroke="currentColor" stroke-linecap="round">
+<g class="na-a"><circle cx="300" cy="300" r="262" stroke-width="2.6"/><circle cx="300" cy="300" r="250" stroke-width=".7" stroke-dasharray="2 9"/></g>
+<g class="na-b"><circle cx="307" cy="294" r="228" stroke-width="1.3"/><path d="M84 262C150 118 452 104 520 298S318 566 156 436" stroke-width="1.5"/></g>
+<g class="na-c"><circle cx="293" cy="306" r="206" stroke-width=".9"/><path d="M118 360C120 210 260 120 400 170" stroke-width="1"/></g>
+</g></svg><svg class="na-thread" viewBox="0 0 1000 200" preserveAspectRatio="none"><path pathLength="1" d="M-10 140C180 70 330 190 520 120S820 40 1010 110"/></svg></div>
 <header class="bar">
   <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương và trang chủ"><span class="ic"></span>Mục lục</button>
   <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
@@ -674,7 +696,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   <div class="dr-shade" data-close></div>
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
-    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="tacgia.html">Tác giả</a></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="tacgia.html">Tác giả</a></div>
     <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
   </nav>
 </div>

@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-title" content="Artos 07">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Bản đồ ảo cảnh</title>
+<meta name="description" content="Project Artos 07: tấm bản đồ gấp tư của ngôi làng, mực hiện dần theo chương đã đọc">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
+<script>
+  (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
+</script>
+<style>
+:root{
+  --bg:#E4E7E2; --veil:#D7DCD6; --ink:#22292A; --soft:#5E6965; --line:#B9C1BC; --lamp:#8A5A2B; --ice:#2E7484;
+  --size:19px; --measure:33em;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Literata",Georgia,serif; font-size:var(--size); line-height:1.8;
+  font-optical-sizing:auto; font-kerning:normal;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .4s, color .4s;
+}
+/* sương mờ phía trên và dưới màn hình */
+body::before,body::after{content:"";position:fixed;left:0;right:0;height:9vh;pointer-events:none;z-index:2}
+body::before{top:0;background:linear-gradient(var(--bg) 20%,transparent)}
+body::after{bottom:0;background:linear-gradient(transparent,var(--bg) 80%)}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--lamp);transform-origin:0 50%;transform:scaleX(0);z-index:5;opacity:.75}
+
+header.bar{
+  position:fixed;top:0;left:0;right:0;z-index:4;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  font-size:15px;line-height:1.2;color:var(--soft);
+  transition:transform .35s ease, opacity .35s;
+  background:linear-gradient(var(--bg) 70%,transparent);padding-bottom:22px;
+}
+header.bar.hide{transform:translateY(-110%);opacity:0}
+.book{color:inherit;text-decoration:none;font-style:italic;font-size:16px}
+.tools{display:flex;gap:0}
+.menu-btn{font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:999px;height:40px;padding:0 14px 0 12px;cursor:pointer;display:flex;align-items:center;gap:.5em;white-space:nowrap}
+.menu-btn:hover{color:var(--ink)}
+.menu-btn .ic{display:inline-block;width:14px;height:10px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
+.menu-btn .ic::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid currentColor;transform:translateY(-50%)}
+.drawer{position:fixed;inset:0;z-index:40}
+.dr-shade{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .28s}
+.dr-panel{position:absolute;top:0;left:0;bottom:0;width:min(86vw,360px);background:var(--bg);border-right:1px solid var(--line);
+  padding:calc(14px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .28s cubic-bezier(.3,.7,.2,1);box-shadow:12px 0 40px -20px rgba(0,0,0,.6)}
+.drawer.on .dr-shade{opacity:1}.drawer.on .dr-panel{transform:none}
+.dr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-h{font-style:italic;color:var(--soft);font-size:16px}
+.dr-x{font:inherit;background:none;border:0;color:var(--soft);width:40px;height:40px;font-size:18px;cursor:pointer}
+.dr-go{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.dr-go a{flex:1 1 40%;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
+.dr-list{list-style:none;margin:0;padding:0;overflow:auto;flex:1;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.dr-list li{border-bottom:1px solid var(--line)}
+.dr-list a{display:flex;gap:.9em;align-items:baseline;padding:.75em .2em;color:var(--ink);text-decoration:none;line-height:1.35;font-size:16px}
+.dr-list .n{flex:0 0 1.6em;color:var(--soft);font-variant-numeric:tabular-nums;font-size:.85em}
+.dr-list a[aria-current]{color:var(--lamp)}
+.dr-list a[aria-current] .n::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-right:6px;vertical-align:middle}
+
+.tools button{
+  font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid transparent;
+  border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
+}
+.tools button:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:440px){header.bar{padding-left:12px;padding-right:12px;gap:8px}.menu-btn{padding:0 10px;font-size:14px}.tools button{font-size:14px;min-width:32px;padding:0 7px}}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:3px;border-radius:4px}
+
+main{max-width:var(--measure);margin:0 auto;padding:0 16px}
+
+.opening{min-height:88vh;min-height:88svh;display:flex;flex-direction:column;justify-content:center;padding:18vh 0 10vh}
+.chapno{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 .6em}
+h1{
+  font-family:"Literata",serif;font-weight:300;font-style:normal;font-variation-settings:"opsz" 72;
+  font-size:clamp(40px,10.5vw,72px);line-height:1.14;letter-spacing:-.02em;margin:0;
+  text-wrap:balance;
+}
+h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
+@keyframes surface{
+  0%{opacity:0;filter:blur(10px);transform:translateY(.28em) scaleY(1.08)}
+  60%{opacity:.85;filter:blur(1.5px)}
+  100%{opacity:1;filter:blur(0);transform:none}
+}
+.opening .hint{margin-top:auto;padding-top:14vh;font-size:14px;color:var(--soft);letter-spacing:.02em;animation:fadein 2s 2.4s both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+.scene p{margin:0;hyphens:none;text-wrap:pretty}
+.scene p + p{text-indent:1.6em}
+
+.plate{margin:0 -16px 2.2em}
+.plate canvas{display:block;width:100%;aspect-ratio:16/9;
+  -webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
+@media (min-width:720px){.plate{margin-left:-4em;margin-right:-4em}}
+.tools #sound[aria-pressed="true"],.tools #sfx[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
+.card-fig{margin:2.4em auto;max-width:300px;text-align:center}
+.card{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.card-inner{display:block;position:relative;aspect-ratio:856/540;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform:rotateX(8deg) rotateZ(-3deg)}
+.card.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg)}
+.face{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:4%;box-shadow:0 14px 30px -14px rgba(0,0,0,.55)}
+.face.back{transform:rotateY(180deg)}
+.card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
+.card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
+.face .emb{opacity:0}
+.type-row{display:flex;justify-content:center;gap:18px;margin:2em 0 2.2em;padding:0}
+.tslot{display:flex;flex-direction:column;align-items:center;gap:.6em;width:min(38vw,150px)}
+.tcard{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent}
+.tcard .card-inner{aspect-ratio:540/856;transform:none}
+.tcard.flipped .card-inner{transform:rotateY(180deg)}
+.tcard .face{border-radius:6%}
+.tname{font-size:14px;color:var(--soft);font-style:italic}
+.type-row .tslot{opacity:0;transform:translateY(18px) rotate(-6deg)}
+.type-row.dealt .tslot{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.type-row.dealt .tslot + .tslot{transition-delay:.25s}
+.tcard .pulse{transform-origin:270px 420px;animation:pulse 3.6s ease-in-out infinite}
+.tcard .p2{animation-delay:.4s}.tcard .p3{animation-delay:.8s}
+@keyframes pulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+.tcard .ghost{animation:ghost 4s ease-in-out infinite}
+@keyframes ghost{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-18px,8px);opacity:.7}}
+.tcard.rule .glitch{animation:glitch 2.8s steps(1) infinite}
+@keyframes glitch{0%{opacity:.5}8%{opacity:0}11%{opacity:.6;transform:translateX(14px)}14%{opacity:0}60%{opacity:.3;transform:none}63%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.type-row .tslot{opacity:1;transform:none}.tcard .pulse,.tcard .ghost,.tcard.rule .glitch{animation:none}}
+.card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
+.card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
+@keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
+@keyframes sheen{from{translate:0 0}to{translate:1400px 0}}
+@media (prefers-reduced-motion: reduce){.card.flipped .back .emb{animation:none;opacity:.2}.card.flipped .back .sheen{animation:none}}
+.card-fig.gone .card{opacity:0;filter:blur(8px)}
+.card-fig.gone figcaption{opacity:0}
+.scene p.sys{text-indent:0;margin:1.6em 0;color:var(--ice);text-align:center;font-size:.95em;letter-spacing:.01em}
+.scene p.sys + p{text-indent:0}
+.scene p.sys .ch{opacity:0;transition:opacity .35s ease,text-shadow 1.2s ease}
+.scene p.sys .ch.on{opacity:1}
+.scene p.sys .ch.cur{text-shadow:0 0 .5em var(--ice)}
+.fx-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;
+  background:radial-gradient(ellipse 75% 65% at 50% 55%,rgba(5,7,8,.55),rgba(5,7,8,.97))}
+.fx-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+/* tên riêng: người màu ấm, thẻ và hệ xanh băng, vật phẩm màu đồng; lần đầu trong chương loé sáng một nhịp */
+:root{--nm-person:#94503F;--nm-item:#7D6528}
+:root[data-theme="dark"]{--nm-person:#E2A894;--nm-item:#D2B470}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--nm-person:#E2A894;--nm-item:#D2B470}}
+.nm{font-style:normal}
+em .nm{font-style:italic}
+.nm-person{color:var(--nm-person)}
+.nm-card{color:var(--ice);letter-spacing:.015em}
+.nm-item{color:var(--nm-item);font-weight:600}
+.nm.first.lit{animation:nmlit 2.2s ease-out both}
+.nm-card.first.lit{animation-name:nmlitice}
+@keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
+@keyframes nmlitice{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor}100%{text-shadow:0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
+/* chỗ chạm được: nhịp tròn màu đèn đập liên tục tới khi người đọc chạm, chữ gợi ý màu đèn; tranh động không có dấu này */
+.tap-host{position:relative}
+.tapdot{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;pointer-events:none;z-index:2}
+.tapdot::before,.tapdot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--lamp);opacity:0;animation:tapring 2.4s ease-out infinite}
+.tapdot::after{animation-delay:.6s}
+.tapdot i{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--lamp);box-shadow:0 0 14px var(--lamp);opacity:.85;animation:tapcore 2.4s ease-in-out infinite}
+@keyframes tapring{0%{transform:scale(.3);opacity:.95}100%{transform:scale(2.4);opacity:0}}
+@keyframes tapcore{0%,100%{transform:scale(.8)}50%{transform:scale(1.2)}}
+.act-lock .tapdot{top:62%}
+.touched .tapdot{display:none}
+.act .act-hint,.card-fig figcaption,.row-hint{color:var(--lamp);font-style:normal;font-size:13px;letter-spacing:.08em}
+.act-hint::before,.card-fig figcaption::before,.row-hint::before{content:"";display:inline-block;width:7px;height:7px;margin-right:.6em;border-radius:50%;background:var(--lamp);box-shadow:0 0 8px var(--lamp);vertical-align:.1em;animation:tapcore 2.4s ease-in-out infinite}
+.touched .act-hint::before,.touched figcaption::before,.touched .row-hint::before{animation:none;opacity:.4}
+.row-hint{display:block;text-align:center;margin:-1.2em 0 2.2em}
+.nudge{animation:nudge 1.3s ease-out}
+@keyframes nudge{0%{filter:none;transform:none}25%{filter:drop-shadow(0 0 16px var(--lamp));transform:scale(1.035)}100%{filter:none;transform:none}}
+@media (prefers-reduced-motion: reduce){.tapdot::before,.tapdot::after,.tapdot i,.act-hint::before,.card-fig figcaption::before,.row-hint::before{animation:none}.nudge{animation:none}}
+.act-rub{position:relative;margin:2.4em -16px}
+.act-rub canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-rub{margin-left:-4em;margin-right:-4em}}
+/* tin nhắn Luke và Clevia ở ch03: bong bóng như trên màn hình điện thoại */
+.scene p.msg{text-indent:0;max-width:78%;margin:.55em 0;padding:.5em .85em;border-radius:1.1em;font-size:.93em;line-height:1.5;opacity:0;transform:translateY(10px) scale(.96);transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
+.scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
+.scene p.msg.show{opacity:1;transform:none}
+.scene p.msg-note{text-indent:0;margin:.5em auto;max-width:85%;text-align:center;font-size:.82em;font-style:italic;color:var(--soft);line-height:1.45}
+.scene p.msg-note::first-letter{text-transform:uppercase}
+.scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
+.scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
+.scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
+.scene .dots i:nth-child(2){animation-delay:.18s}.scene .dots i:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-.2em)}}
+@media (prefers-reduced-motion: reduce){.scene p.msg{opacity:1;transform:none;transition:none}}
+.act-press{max-width:300px}
+.pressbtn{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pressbtn .card-inner{transition:transform .2s,filter .2s,opacity 1.2s;transform:rotateX(8deg) rotateZ(-3deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.pressbtn.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.act-press.holding .card-inner{transition:none}
+.act-press.heat .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*22px) rgba(255,150,60,calc(var(--p,0)*.9))) sepia(calc(var(--p,0)*.6)) saturate(calc(1 + var(--p,0)*2))}
+.act-press.smoke .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*18px) rgba(200,210,205,calc(var(--p,0)*.9)))}
+.act-press.done .card-inner{opacity:0;filter:blur(10px)}
+.act-heat{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 80% 70% at 50% 55%,rgba(255,170,90,.0),rgba(255,120,40,.35) 60%,rgba(170,40,10,.75))}
+.act-missed{position:fixed;z-index:20;opacity:0;pointer-events:none;transition:opacity .8s,transform .8s;border:0;background:none;padding:0;font:inherit;color:var(--lamp);-webkit-tap-highlight-color:transparent}
+.act-missed.on{opacity:1;pointer-events:auto}
+.act-missed.nv-a{left:50%;bottom:calc(26px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,var(--bg) 30%,transparent 70%);transform:translate(-50%,16px)}
+.act-missed.nv-a.on{transform:translate(-50%,0)}
+.act-missed.nv-a::before{content:"";position:absolute;left:50%;top:4px;width:9px;height:9px;margin-left:-6px;border-left:2px solid var(--lamp);border-top:2px solid var(--lamp);transform:rotate(45deg);opacity:1;animation:nvup 1.8s ease-in-out infinite}
+.act-missed.nv-a i{position:absolute;left:50%;top:24px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--lamp);box-shadow:0 0 12px 3px var(--lamp);animation:tapcore 1.8s ease-in-out infinite}
+@keyframes nvup{0%,100%{transform:translateY(3px) rotate(45deg);opacity:.55}50%{transform:translateY(-3px) rotate(45deg);opacity:1}}
+.act-missed.nv-b{left:0;right:0;top:0;height:64px;background:linear-gradient(to bottom,color-mix(in srgb,var(--lamp) 55%,transparent),transparent);transform:none}
+.act-missed.nv-b.on{animation:nvglow 2.2s ease-in-out infinite}
+@keyframes nvglow{0%,100%{opacity:.35}50%{opacity:.9}}
+@media (prefers-reduced-motion: reduce){.act-missed *,.act-missed::before,.act-missed.nv-b.on{animation:none}}
+.act-cv{position:relative;margin:2.4em -16px}
+.act-cv canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent)}
+.act-map canvas{height:min(52vh,380px)}.act-letter canvas{height:min(52vh,400px)}.act-knock canvas{cursor:pointer}.act-hearth canvas{cursor:pointer}
+@media (min-width:720px){.act-cv{margin-left:-4em;margin-right:-4em}}
+.act-warm{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;transition:opacity .25s;background:radial-gradient(ellipse 85% 75% at 50% 50%,rgba(255,170,90,0) 45%,rgba(255,140,60,.28) 75%,rgba(220,90,30,.55))}
+.act-ribbon{position:relative;margin:2.4em -16px}
+.act-ribbon canvas{display:block;width:100%;height:min(40vh,300px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-ribbon{margin-left:-4em;margin-right:-4em}}
+.card-fig[data-dust]{position:relative}
+.dust{position:absolute;left:0;right:0;top:0;width:100%;z-index:3;touch-action:pan-y;cursor:grab;transition:opacity 1s}
+.dust.gone{opacity:0;pointer-events:none}
+.protect-hint{position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:7;text-align:center;font-size:13px;letter-spacing:.08em;color:var(--lamp);opacity:0;transition:opacity .6s;pointer-events:none}
+.protect-hint.on{opacity:1}
+/* tương tác người đọc */
+.act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
+.act.done .act-hint,.act.holding .act-hint{opacity:0}
+.lockbtn{position:relative;display:inline-block;width:150px;height:160px;padding:12px;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lockbtn svg{display:block;width:100%;height:100%;overflow:visible;transform:translate(var(--jx,0),var(--jy,0))}
+.act-lock .shackle{fill:none;stroke-width:11;stroke-linecap:round;transform-box:view-box;transition:transform .55s cubic-bezier(.3,1.7,.4,1)}
+.act-lock.steel .shackle{transform-origin:36px 70px}
+.act-lock.bronze .shackle{transform-origin:44px 72px;stroke-width:9}
+.act-lock.done .shackle{transform:translateY(-16px) rotate(-18deg)}
+.act-lock.quiet .shackle{transition:none}
+.steel .shackle{stroke:#8a9491}.steel .body{fill:#66706d}.steel .hole{fill:#1d2324}
+.bronze .shackle{stroke:#6f6243}.bronze .body{fill:#8b7546;transition:fill-opacity .6s}.bronze .rust circle{fill:#5d8a73;opacity:.6}
+.bronze .pins rect{fill:var(--lamp);opacity:0;transform-box:fill-box;transition:opacity .35s,transform .3s}
+.bronze.sense .body{fill-opacity:.45}
+.bronze.sense .pins rect{opacity:.28}
+.bronze .pins rect.on{opacity:1;transform:translateY(-5px);filter:drop-shadow(0 0 3px var(--lamp))}
+.act-lock.done .pins rect{transform:translateY(-8px)}
+.act-lock .ring{position:absolute;left:50%;top:62%;width:44px;height:44px;margin:-22px;border-radius:50%;border:2px solid var(--lamp);opacity:0;pointer-events:none}
+.act-lock.holding .ring{opacity:calc(var(--p,0)*.7);transform:scale(calc(3.2 - var(--p,0)*2.2));transition:none}
+.act-lock.done .ring{animation:ringout 1.5s ease-out both}
+.act-lock.done .r2{animation-delay:.2s}
+.act-lock.quiet .ring{animation:none}
+@keyframes ringout{0%{opacity:.85;transform:scale(.4)}100%{opacity:0;transform:scale(7)}}
+.act-glass{position:relative;margin:2.4em -16px}
+.act-glass canvas{display:block;width:100%;height:min(46vh,340px);cursor:pointer;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
+@media (min-width:720px){.act-glass{margin-left:-4em;margin-right:-4em}}
+.act-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.act-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(3,5,6,0),rgba(3,5,6,.85) 70%,rgba(3,5,6,.98))}
+.act-still-hint{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;text-align:center;font-size:13px;font-style:italic;letter-spacing:.06em;color:var(--soft);opacity:0;transition:opacity 1.6s;pointer-events:none}
+.act-still-hint.on{opacity:.9}
+.act-notify{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top));z-index:7;width:min(calc(100vw - 24px),360px);display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:18px;
+  background:rgba(236,239,236,.78);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 12px 32px -14px rgba(0,0,0,.45);
+  transform:translate(-50%,-150%);opacity:0;transition:transform .6s cubic-bezier(.2,.85,.2,1),opacity .5s;pointer-events:none}
+.act-notify.on{transform:translate(-50%,0);opacity:1}
+.act-notify .ic{flex:0 0 36px;height:36px;border-radius:9px;background:#8d9894}
+.act-notify .tx{flex:1;min-width:0}
+.act-notify .ln{display:block;height:8px;margin:6px 0;border-radius:5px;background:rgba(40,46,46,.5);filter:blur(2.4px)}
+:root[data-theme="dark"] .act-notify{background:rgba(44,52,54,.8)}
+:root[data-theme="dark"] .act-notify .ln{background:rgba(225,230,226,.5)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .act-notify{background:rgba(44,52,54,.8)}:root:not([data-theme="light"]) .act-notify .ln{background:rgba(225,230,226,.5)}}
+.act-count{position:fixed;right:calc(18px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));z-index:6;font-weight:300;font-size:26px;line-height:1;color:var(--ice);font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  text-shadow:0 0 .5em var(--ice);opacity:0;transform:translateY(-4px);transition:opacity 1.4s,transform 1.4s,filter .45s;pointer-events:none}
+.act-count.on{opacity:.85;transform:none}
+.act-count.swap{filter:blur(6px);opacity:.2}
+.break{display:flex;justify-content:center;margin:2.6em 0}
+.ripple{width:120px;height:24px;fill:none;stroke:var(--soft);stroke-width:1}
+.ripple .far{opacity:.45}
+
+.end{margin:6em 0 0;padding:3em 0 calc(18vh + env(safe-area-inset-bottom));border-top:1px solid var(--line);text-align:center}
+.end .mark{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 2.2em}
+.nav{display:flex;justify-content:space-between;gap:16px;margin:0 0 3.2em;font-size:16px;text-align:left}
+.nav a,.nav span{flex:1;color:var(--ink);text-decoration:none;line-height:1.4}
+.nav small{display:block;color:var(--soft);font-size:13px;margin-bottom:.2em}
+.nav .next{text-align:right}
+.nav span{color:var(--soft)}
+.notebook{display:block;margin:0 auto 2.4em;color:var(--lamp);text-decoration:none;font-size:17px;line-height:1.4}
+.notebook small{display:block;color:var(--soft);font-size:13px;font-style:italic;margin-top:.2em}
+.gate{
+  display:block;max-width:24em;margin:0 auto;padding:1.4em 1.4em 1.5em;text-decoration:none;color:var(--ink);
+  background:var(--veil);border-radius:2px;line-height:1.5;
+}
+.gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
+.gate .s{font-size:15px;color:var(--soft)}
+.gate:hover .t{color:var(--lamp)}
+
+
+/* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
+:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+.scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
+.scene p.say + p:not(.say){margin-top:.55em}
+.say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
+.say .q{color:var(--ink)}
+.say:not(.say-x) .q{text-shadow:0 0 .01px var(--sp)}
+.scene p.say[data-act~="line"]{position:relative;margin:1.6em -4px 1.6em -14px;padding:1em 1.1em 1em 1.2em;border:1px solid color-mix(in srgb,var(--sp) 45%,transparent);border-left:3px solid var(--sp);
+  border-radius:3px 14px 14px 14px;background:color-mix(in srgb,var(--sp) 9%,var(--bg));box-shadow:0 10px 26px -18px color-mix(in srgb,var(--sp) 80%,#000)}
+.scene p.say[data-act~="line"] .q{font-size:1.18em;line-height:1.45;font-style:italic;color:color-mix(in srgb,var(--sp) 55%,var(--ink))}
+.scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+
+/* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}
+.scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
+  background-size:100% 100%;background-repeat:no-repeat}
+.scene p.pw-on.say{border-left-width:3px}
+.scene p.pw-flash{animation:pwSweep 1.4s var(--pwd,0s) cubic-bezier(.2,.7,.2,1) both}
+@keyframes pwSweep{
+  0%{background-size:0% 100%;border-left-color:transparent;text-shadow:none}
+  30%{background-size:100% 100%;border-left-color:var(--pw);text-shadow:0 0 14px color-mix(in srgb,var(--pw) 70%,transparent)}
+  100%{background-size:100% 100%;text-shadow:none}
+}
+.scene p.pw-on b.pw-tag{display:none}
+@media (prefers-reduced-motion: reduce){.scene p.pw-flash,.scene p.say[data-act~="line"].seen{animation:none}}
+@media (min-width:720px){
+  :root{--size:20px}
+  header.bar{padding-left:28px;padding-right:28px}
+}
+@media (prefers-reduced-motion: reduce){
+  h1 .w,.opening .hint{animation:none}
+  header.bar,body{transition:none}
+}
+
+.cmt{margin:3.4em auto 0;max-width:34em;text-align:left}
+.cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
+.cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
+.cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
+.cc{perspective:1200px}
+.cc .ci{position:relative;transform-style:preserve-3d}
+.cc.back .ci{transform:rotateY(180deg)}
+.cc.back{cursor:pointer}
+.cc.flip .ci{animation:ccflip .9s cubic-bezier(.3,1.2,.5,1) both}
+@keyframes ccflip{0%{transform:rotateY(180deg)}45%{transform:rotateY(95deg) translateZ(40px) scale(1.06)}100%{transform:none}}
+.cc .cf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--pw-clevia) 35%,transparent) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.cc.flip .cf::after{animation:ccglint 1s ease .5s both}
+@keyframes ccglint{to{transform:translateX(120%)}}
+.cc.back:hover .cb,.cc.back:focus-visible .cb{box-shadow:0 0 0 1px #7FC4D6,0 0 22px -6px #7FC4D6}
+.cc:focus-visible{outline:none}
+.cc .cb .tap{font-size:12px;letter-spacing:.06em;opacity:.55;margin-top:2px}
+.cc .cf,.cc .cb{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px}
+.cc .cf{position:relative;overflow:hidden;padding:14px 16px 16px;border:1px solid color-mix(in srgb,var(--seal) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--seal) 10%,transparent),transparent 65%)}
+.cc .cf::before{content:"";position:absolute;left:16px;right:16px;top:0;height:2px;background:var(--seal);opacity:.8;border-radius:0 0 2px 2px}
+.cc .cf>svg{position:absolute;right:-18px;bottom:-18px;width:96px;height:96px;fill:none;stroke:var(--seal);stroke-width:1;opacity:.13}
+.cc .cf>svg .d{fill:var(--seal);stroke:none}
+.cc .cb{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(circle at 50% 45%,#1d3550,#0b1520 75%);border:1px solid #2a4a66;color:#9fd0de}
+.cc .cb svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2;opacity:.85}
+.cc .cb svg .d{fill:#D4697E;stroke:none}
+.cc .cb span{font-size:10px;letter-spacing:.32em;opacity:.7}
+.cc .cb{animation:ccbreath 3.2s ease-in-out infinite}
+@keyframes ccbreath{50%{border-color:#4f86a8}}
+.cmt .all{display:block;margin:-.6em auto 1.4em;font:inherit;font-size:14px;color:var(--lamp);background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 2px;cursor:pointer}
+.cmt .all[hidden]{display:none}
+.cc .who{display:flex;align-items:center;gap:10px;margin:4px 0 8px;font-size:14px}
+.cc .seal{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--seal);color:var(--seal);font-size:14px;font-weight:600;position:relative}
+.cc .seal::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px dashed var(--seal);opacity:.45}
+.cc .who b{color:var(--ink);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc .who time{color:var(--soft);font-size:13px;font-variant-numeric:tabular-nums}
+.cc .tx{position:relative;margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
+.cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
+@media (prefers-reduced-motion: reduce){.cc.flip .ci,.cc.flip .cf::after,.cc .cb{animation:none}}
+.cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
+.bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
+.bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:.6em .1em;width:100%;box-sizing:border-box}
+.bl-form textarea{min-height:5.5em;resize:vertical;line-height:1.5}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-bottom-color:var(--lamp)}
+.bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px}
+.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
+.bl-form .st.ok{color:var(--lamp)}
+.hold{--p:0;position:relative;flex:0 0 auto;width:86px;height:86px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--pw-clevia);font:inherit;font-size:13px;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 22%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 39px,#000 40px);mask:radial-gradient(circle,transparent 39px,#000 40px)}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;border:1px dashed color-mix(in srgb,var(--pw-clevia) 55%,transparent);transition:transform .2s}
+.hold.on .in{transform:scale(.92) rotate(20deg)}
+.hold:disabled{opacity:.5;cursor:default}
+.hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.hold.burst i{animation:hb .9s cubic-bezier(.2,.7,.3,1) forwards}
+.hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
+.hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
+@keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+.tg-msg{margin:2.6em 0 0}
+
+
+/* Bộ sưu tập thẻ: thẻ nhỏ bay vào biểu tượng album ở góc dưới phải */
+.bst-fly{position:fixed;z-index:60;width:58px;aspect-ratio:856/540;border-radius:5px;pointer-events:none;
+  background:linear-gradient(135deg,#2c3436,#101518);border:1px solid #56636a;box-shadow:0 0 18px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:transform .85s cubic-bezier(.5,0,.2,1),opacity .85s ease}
+.bst-fly::after{content:"";position:absolute;left:50%;top:44%;width:42%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid #6b787d}
+.bst-pill{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:59;display:flex;align-items:center;gap:.6em;
+  padding:.55em .95em .55em .6em;border-radius:999px;background:rgba(14,22,25,.94);color:#d5d0c3;border:1px solid color-mix(in srgb,var(--ice) 55%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6),0 0 16px color-mix(in srgb,var(--ice) 25%,transparent);font-size:14px;line-height:1.25;text-decoration:none;
+  opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s;max-width:calc(100vw - 32px)}
+.bst-pill.on{opacity:1;transform:none}
+.bst-pill svg{flex:0 0 30px;width:30px;height:30px;color:#8FD3E0}
+.bst-pill b{font-weight:600;color:#8FD3E0}
+.bst-pill small{display:block;font-size:12px;color:#87918d}
+.bst-pill.hit svg{animation:bsthit .6s ease-out}
+@keyframes bsthit{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 8px #8FD3E0)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.bst-fly{transition:none}.bst-pill{transition:none}.bst-pill.hit svg{animation:none}}
+
+</style>
+<style>
+/* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
+   theme.js luôn gắn data-ui="b c soft" và data-say="g" lên <html>. */
+
+/* ================= GIAO DIỆN B: ĐÊM ARTOS ================= */
+@property --tint{syntax:"<color>";inherits:true;initial-value:transparent}
+html[data-ui~="b"]{--tint:transparent;transition:--tint 2.4s ease}
+html[data-ui~="b"] .ui-amb{position:fixed;inset:-10vh 0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 55% at 50% 0%,var(--tint),transparent 70%),radial-gradient(ellipse 100% 45% at 50% 105%,var(--tint),transparent 70%)}
+html[data-ui~="b"] main{position:relative;z-index:1}
+html[data-ui~="b"] .opening{position:relative;align-items:center;text-align:center;justify-content:center;padding:14vh 0 8vh}
+html[data-ui~="b"] .ui-rings{position:absolute;left:50%;top:44%;width:min(118vw,620px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.55}
+html[data-ui~="b"] .ui-rings svg{width:100%;height:100%;overflow:visible}
+html[data-ui~="b"] .ui-rings g{transform-origin:50% 50%;transform-box:view-box;animation:uiSpin 90s linear infinite}
+html[data-ui~="b"] .ui-rings g.r2{animation-duration:140s;animation-direction:reverse}
+html[data-ui~="b"] .ui-rings g.r3{animation-duration:60s}
+html[data-ui~="b"] .ui-rings circle,html[data-ui~="b"] .ui-rings path{fill:none;stroke:var(--ice);stroke-width:.6}
+@keyframes uiSpin{to{transform:rotate(360deg)}}
+html[data-ui~="b"] .chapno{position:relative;font-style:normal;font-size:clamp(64px,22vw,120px);font-weight:300;line-height:1;margin:0 0 .3em;letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--ice) 70%,transparent);font-variant-numeric:lining-nums}
+html[data-ui~="b"] .chapno .lb{display:block;-webkit-text-stroke:0;color:var(--ice);font-size:12px;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1.4em;opacity:.8}
+html[data-ui~="b"] .opening h1{position:relative;text-shadow:0 0 .6em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui~="b"] .opening .hint{position:relative;letter-spacing:.3em;text-transform:uppercase;font-size:11px}
+html[data-ui~="b"] .break .ripple{display:none}
+html[data-ui~="b"] .break::before{content:"";width:22px;height:22px;border-radius:50%;border:1px solid var(--ice);opacity:.6;
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--ice) 8%,transparent),0 0 18px color-mix(in srgb,var(--ice) 40%,transparent);animation:uiBeat 4s ease-in-out infinite}
+@keyframes uiBeat{50%{opacity:.25;transform:scale(.85)}}
+html[data-ui~="b"] .scene .plate canvas{-webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent);mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent)}
+html[data-ui~="b"] .end{border-top:0;position:relative}
+html[data-ui~="b"] .end::before{content:"";position:absolute;top:0;left:15%;right:15%;border-top:1px solid var(--ice);opacity:.4;box-shadow:0 0 12px var(--ice)}
+html[data-ui~="b"] .end .mark{font-style:normal;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--ice)}
+html[data-ui~="b"] .gate{background:transparent;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px}
+/* trang chủ */
+html[data-ui~="b"] .toc-hero{position:relative;text-align:center;padding-top:calc(90px + env(safe-area-inset-top))}
+html[data-ui~="b"] .toc-hero .plate{display:none}
+html[data-ui~="b"] .toc-hero .ui-rings{top:120px}
+html[data-ui~="b"] .toc-title{position:relative;text-shadow:0 0 .5em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui~="b"] .toc-sub,html[data-ui~="b"] .resume{position:relative}
+html[data-ui~="b"] .toc{border-top:0;display:grid;gap:10px}
+html[data-ui~="b"] .toc li{border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--veil) 60%,transparent);transition:border-color .3s,box-shadow .3s}
+html[data-ui~="b"] .toc li:hover{border-color:var(--ice);box-shadow:0 0 18px -6px var(--ice)}
+html[data-ui~="b"] .toc a{padding:.9em 1em}
+html[data-ui~="b"] .toc .n{color:var(--ice);font-size:1.25em;font-weight:300;flex-basis:1.8em}
+html[data-ui~="b"] .toc li.read{opacity:.7}
+@media (prefers-reduced-motion: reduce){html[data-ui~="b"] .ui-rings g,html[data-ui~="b"] .break::before{animation:none}}
+
+/* ================= GIAO DIỆN C: TRANG SÁCH ================= */
+html[data-ui~="c"]{--disp:"Literata",Georgia,serif}
+html[data-ui~="c"]:not([data-theme="dark"]){--bg:#EDEFF0;--veil:#E1E4E7;--ink:#1D2126;--soft:#626A72;--line:#C8CDD2}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}}
+html[data-ui~="c"][data-theme="dark"]{--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}
+html[data-ui~="c"] .opening{align-items:center;text-align:center}
+html[data-ui~="c"] .chapno{font-style:normal;font-variant:small-caps;letter-spacing:.32em;font-size:15px;text-transform:lowercase;color:var(--lamp)}
+html[data-ui~="c"] .chapno::before,html[data-ui~="c"] .chapno::after{content:"—";margin:0 .8em;color:var(--line)}
+html[data-ui~="c"] .opening h1{font-family:var(--disp);font-weight:400;font-style:italic;font-size:clamp(40px,11vw,72px);letter-spacing:-.01em}
+html[data-ui~="c"] .opening h1::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin-top:.6em;opacity:.8}
+html[data-ui~="c"] .scene > p:first-of-type{text-indent:0}
+html[data-ui~="c"] .scene > p:first-of-type::first-letter{font-family:var(--disp);float:left;font-size:4.1em;line-height:.85;padding:.08em .1em 0 0;color:var(--lamp);font-weight:600}
+html[data-ui~="c"] .scene > p:first-of-type::first-line{font-variant:small-caps;letter-spacing:.06em}
+html[data-ui~="c"] .break .ripple{display:none}
+html[data-ui~="c"] .break::before{content:"⁂";font-size:20px;color:var(--soft);letter-spacing:.2em}
+html[data-ui~="c"] .end{border-top:0}
+html[data-ui~="c"] .end .mark{font-family:var(--disp);font-size:24px}
+html[data-ui~="c"] .end .mark::before{content:"◆";display:block;font-style:normal;color:var(--lamp);margin-bottom:.4em}
+html[data-ui~="c"] .toc-hero{text-align:center}
+html[data-ui~="c"] .toc-title{font-family:var(--disp);font-weight:400;font-style:italic;font-size:clamp(42px,12vw,78px);letter-spacing:-.01em}
+html[data-ui~="c"] .toc-title::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin:.3em 0 .1em}
+html[data-ui~="c"] .toc{border-top:0}
+html[data-ui~="c"] .toc li{border:0}
+html[data-ui~="c"] .toc a{gap:.6em;padding:.55em 0}
+html[data-ui~="c"] .toc .n{order:3;flex:0 0 auto;font-family:var(--disp);font-size:1.15em}
+html[data-ui~="c"] .toc .t{order:1}
+html[data-ui~="c"] .toc a::after{content:"";order:2;flex:1;border-bottom:1px dotted var(--soft);transform:translateY(-.35em);opacity:.6}
+
+@keyframes uiHeard{0%{text-shadow:0 0 0 transparent}30%{text-shadow:0 0 .55em color-mix(in srgb,var(--sp) 70%,transparent)}100%{text-shadow:0 0 0 transparent}}
+
+/* ================= B DỊU (?giao=d) và B + C (?giao=e): thêm lớp "soft" ================= */
+html[data-ui~="soft"] .ui-rings{width:min(78vw,380px);opacity:.22}
+html[data-ui~="soft"] .ui-rings g{animation-duration:160s}
+html[data-ui~="soft"] .chapno{font-size:13px;letter-spacing:.38em;text-transform:uppercase;color:var(--ice);-webkit-text-stroke:0;margin:0 0 1em;opacity:.85}
+html[data-ui~="soft"] .chapno .lb{display:inline;font-size:inherit;letter-spacing:inherit;margin:0 .5em 0 0;opacity:1}
+html[data-ui~="soft"] .opening h1,html[data-ui~="soft"] .toc-title{text-shadow:none}
+html[data-ui~="soft"] .break::before{width:14px;height:14px;box-shadow:none;opacity:.45;animation:none}
+html[data-ui~="soft"] .toc{display:block;border-top:1px solid var(--line)}
+html[data-ui~="soft"] .toc li{border:0;border-bottom:1px solid var(--line);border-radius:0;background:none}
+html[data-ui~="soft"] .toc li:hover{box-shadow:none}
+html[data-ui~="soft"] .toc a{padding:.85em 0}
+html[data-ui~="soft"] .toc .n{font-size:1em}
+html[data-ui~="soft"] .gate{border-radius:4px}
+/* B + C: chữ và nền của trang sách, vòng tròn và nhuốm màu của đêm Artos, đổi sang màu đồng */
+
+html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--lamp);font-variant:normal;text-transform:uppercase;font-size:13px;letter-spacing:.38em}
+html[data-ui~="c"][data-ui~="b"] .chapno::before,html[data-ui~="c"][data-ui~="b"] .chapno::after{content:none}
+html[data-ui~="c"][data-ui~="b"] .break::before{content:""}
+html[data-ui~="c"][data-ui~="b"] .end::before{box-shadow:none}
+html[data-ui~="c"][data-ui~="b"] .end .mark{color:var(--soft);letter-spacing:0;text-transform:none;font-size:24px}
+html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--lamp)}
+
+/* ================= THOẠI G: ngoặc màu + sáng lên (D gộp F) ================= */
+html[data-say="g"] .scene p.say{border-left:0;margin:.6em 0;padding-left:0;text-indent:0}
+html[data-say="g"] .say .q{transition:color 1.6s ease,text-shadow 2.4s ease;color:var(--ink)}
+html[data-say="g"] .say .qm,html[data-say="g"] .say .qe{color:var(--sp);opacity:.35;transition:opacity 1.2s}
+html[data-say="g"] p.say > .q:first-child .qm{font-size:1.6em;line-height:0;position:relative;top:.26em;margin-left:-.42em;margin-right:.02em;font-weight:300}
+html[data-say="g"] .say.heard .qm,html[data-say="g"] .say.heard .qe{opacity:1}
+html[data-say="g"] .say.heard .q{animation:uiHeard 2.4s ease-out}
+html[data-say="g"] .say-x .qm,html[data-say="g"] .say-x .qe{color:var(--soft)}
+html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
+
+/* ================= BẢNG MÀU (Clair chốt 24/11): đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng =================
+   --lamp đổi ở <body> nên mọi chữ, nút, nhịp chạm, chữ cái đầu cảnh thành đỏ; tranh động vẫn đọc --lamp ở <html> nên ánh đèn trong tranh giữ nguyên. */
+html body{--lamp:#B3263A}
+@media (prefers-color-scheme: dark){html:not([data-theme="light"]) body{--lamp:#E2566C}}
+html[data-theme="dark"] body{--lamp:#E2566C}
+html[data-ui~="c"]{--nm-person:#A3324A;--nm-item:#3A4250;--sp-other:#6C757E}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}}
+html[data-ui~="c"][data-theme="dark"]{--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}
+html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
+
+</style>
+<script>
+/* Giao diện chính (Clair chốt 24/11): Đêm Artos dịu + Trang sách, thoại G. CSS ở theme.css. */
+(function () {
+  var root = document.documentElement;
+  root.setAttribute('data-ui', 'b c soft');
+  root.setAttribute('data-say', 'g');
+  // màu nhuốm nền theo tiếng nền của cảnh
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c', shaft: '#1e2a2c', anvil: '#262a2e', stillshaft: '#101c26', shuffle: '#2e1a20', dust: '#2a2626',
+    hearth: '#5a1a24', hearthlow: '#40161e', hut: '#3a1e26', whet: '#2e2a30', dusk: '#40243a', dawn: '#40303c',
+    day: '#2a3c48', noon: '#384650', farm: '#2a3c44', paddy: '#26404a', market: '#3a2a34', street: '#33393f', run: '#3f2a2a',
+    river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#33303a', store: '#302e36', room: '#33363a', clock: '#2f3540' };
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    try { var mx = +(localStorage.getItem('a07-max') || 0); document.querySelectorAll('.toc li').forEach(function (li) { var n = +(li.querySelector('.n') || {}).textContent; if (n && n < mx) li.classList.add('read'); }); } catch (e) {}
+
+    var chn = (location.pathname.match(/ch(\d+)\.html$/) || [])[1];
+    var op = document.querySelector('.opening'), cp = op && op.querySelector('.chapno');
+    var amb = document.createElement('div'); amb.className = 'ui-amb'; document.body.prepend(amb);
+    var rings = '<div class="ui-rings" aria-hidden="true"><svg viewBox="0 0 200 200">' +
+      '<g><circle cx="100" cy="100" r="96" stroke-dasharray="1 5"/><circle cx="100" cy="100" r="88"/></g>' +
+      '<g class="r2"><circle cx="100" cy="100" r="74" stroke-dasharray="30 8 4 8"/><path d="M100 22v10M100 168v10M22 100h10M168 100h10"/></g>' +
+      '<g class="r3"><circle cx="100" cy="100" r="56" stroke-dasharray="2 3"/><circle cx="100" cy="100" r="40" opacity=".6"/></g></svg></div>';
+    var hero = op || document.querySelector('.toc-hero');
+    if (hero) hero.insertAdjacentHTML('afterbegin', rings);
+    if (cp && chn) cp.innerHTML = '<span class="lb">Chương</span>' + chn;
+
+    var cur = null;
+    function paint() { var c = cur ? TINT[cur] : null; root.style.setProperty('--tint', c ? 'color-mix(in srgb,' + c + (isDark() ? ' 60%' : ' 16%') + ',transparent)' : 'transparent'); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { cur = e.target.getAttribute('data-sound'); paint(); } }); }, { rootMargin: '-45% 0px -45% 0px' });
+    document.querySelectorAll('.scene[data-sound]').forEach(function (s) { io.observe(s); });
+    addEventListener('a07-theme', paint);
+
+    // thoại: tách dấu ngoặc để tô màu người nói, sáng lên khi đọc tới
+    document.querySelectorAll('.say .q').forEach(function (q) {
+      var h = q.innerHTML; if (h.charAt(0) === '“') h = '<span class="qm">“</span>' + h.slice(1);
+      if (h.slice(-1) === '”') h = h.slice(0, -1) + '<span class="qe">”</span>';
+      q.innerHTML = h;
+    });
+    var says = document.querySelectorAll('.scene p.say');
+    if (!('IntersectionObserver' in window)) { says.forEach(function (p) { p.classList.add('heard'); }); return; }
+    var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('heard'); io2.unobserve(e.target); } }); }, { rootMargin: '0px 0px -38% 0px' });
+    says.forEach(function (p) { io2.observe(p); });
+  });
+})();
+
+</script>
+<style>
+.bd{max-width:52rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(14vh + env(safe-area-inset-bottom))}
+.bd-title{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(38px,10vw,64px);line-height:1.05;letter-spacing:-.02em;margin:.1em 0 .3em}
+.bd-sub{color:var(--soft);font-size:15px;line-height:1.55;margin:0 0 .8em;max-width:36em}
+.bd-count{color:var(--ice);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.6em}
+/* giấy + mực là đồ vật trong truyện: giữ tông giấy cũ, mực nâu; chỉ dấu khoanh là đỏ */
+.mbox{--paper:#eadcbc;--back:#d6c49c;--ink-m:#5a3a1e;--wash:rgba(110,150,165,.30);--circ:#b3263a;
+  position:relative;aspect-ratio:4/3;perspective:1600px;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;
+  transition:transform .55s cubic-bezier(.3,.7,.2,1)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mbox{--paper:#cdbd99;--back:#b4a37f;--ink-m:#4a2e16}}
+:root[data-theme="dark"] .mbox{--paper:#cdbd99;--back:#b4a37f;--ink-m:#4a2e16}
+.mbox:focus-visible{box-shadow:0 0 0 2px var(--lamp)}
+.mw{position:absolute;inset:0;filter:drop-shadow(0 14px 22px rgba(0,0,0,.4));transition:clip-path 0s}
+.mp{display:block;width:100%;height:100%}
+.paper{fill:var(--paper)}.blot{fill:var(--paper)}.grain{fill:#fff}
+.crease .cd{stroke:rgba(70,45,20,.22);stroke-width:2;fill:none}.crease .cl{stroke:rgba(255,250,235,.35);stroke-width:1.5;fill:none}
+.ink path{fill:none;stroke:var(--ink-m);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ink path.thin{stroke-width:1.4}
+.ink path.road{stroke-width:1.6;stroke-dasharray:.012 .01;opacity:.7}
+.ink path.dash{stroke-dasharray:.04 .03}
+.ink path.mt{fill:rgba(90,58,30,.42)}
+.ink path.wash{stroke:var(--wash);stroke-width:30;opacity:1}
+.ink path.bline{stroke-width:1.4}
+.lbl{font-family:Literata,Georgia,serif;font-style:italic;font-size:28px;fill:var(--ink-m);paint-order:stroke;stroke:var(--paper);stroke-width:6px;stroke-linejoin:round}
+.narrow .lbl{display:none}
+.pl .hit{fill:transparent;stroke:none}
+.pl{cursor:pointer}
+.pl .sel{fill:none;stroke:var(--circ);stroke-width:4;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.pl.on .sel{opacity:.9;animation:mpdraw .7s ease-out forwards}
+.pl .dot{fill:var(--circ);opacity:0}
+.pl.upd .dot{opacity:.9;animation:mppulse 1.8s ease-in-out infinite}
+.pl:hover .pic path,.pl:focus .pic path{stroke-width:3}
+.pl.hidden{opacity:0}
+/* mực hiện: nét chạy theo ngòi bút, nhạt rồi đậm */
+.pl.inking .pic path,.zt.inking path:not(.road):not(.dash){stroke-dasharray:1;stroke-dashoffset:1;animation:mpdraw 1.3s ease-out forwards}
+.pl.inking{animation:mpdeep 2.6s ease-out}
+.pl.inking .lbl{animation:mpfade 1.6s .9s ease-out both}
+.zt.inking{animation:mpdeep 3s ease-out}
+@keyframes mpdraw{to{stroke-dashoffset:0}}
+@keyframes mpdeep{0%{opacity:.25}55%{opacity:.45}100%{opacity:1}}
+@keyframes mpfade{from{opacity:0}to{opacity:1}}
+@keyframes mppulse{0%,100%{opacity:.35}50%{opacity:1}}
+/* gấp tư: lúc đầu chỉ thấy một phần tư ở giữa khung; nếp dọc mở trước, nếp ngang mở sau */
+.mbox.f0{transform:translate(25%,25%)}
+.mbox.f0 .mw{clip-path:inset(0 50% 50% 0)}
+.mbox.f1{transform:translate(0,25%)}
+.mbox.c1 .mw{clip-path:inset(0 0 50% 0)}
+.mbox.f2a{transform:none}
+.mbox.c2 .mw,.mbox.f2 .mw{clip-path:none}
+.flap{position:absolute;transform-style:preserve-3d;pointer-events:none}
+.flap i{position:absolute;inset:0;background:var(--back);backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:2px;
+  background-image:radial-gradient(120% 90% at 30% 30%,rgba(255,250,235,.25),rgba(80,50,20,.18));box-shadow:0 10px 20px -8px rgba(0,0,0,.45)}
+.flap.r{left:50%;top:0;width:50%;height:50%;transform-origin:0 50%;transform:rotateY(-180deg)}
+.flap.r i{transform:rotateY(180deg)}
+.flap.b{left:0;top:50%;width:100%;height:50%;transform-origin:50% 0;transform:rotateX(180deg)}
+.flap.b i{transform:rotateX(180deg)}
+.mbox.f0 .flap.b{width:50%}
+.mbox.f1 .flap.r{transform:rotateY(0);transition:transform .7s cubic-bezier(.45,.1,.3,1)}
+.mbox.f1 .flap.b{width:100%}
+.mbox.f2a .flap.b{transform:rotateX(0);transition:transform .7s cubic-bezier(.45,.1,.3,1)}
+.mbox.f2 .flap{display:none}
+.mbox.nope{animation:mpnope .4s ease}
+@keyframes mpnope{0%,100%{translate:0}25%{translate:-7px}50%{translate:6px}75%{translate:-3px}}
+.mhint{text-align:center;font-size:13px;color:var(--soft);letter-spacing:.06em;margin:1.1em 0 0;min-height:1.4em}
+.mbox.f0 + .mhint{margin-top:-18%}
+.bd-empty{color:var(--soft);font-style:italic;text-align:center}
+/* danh sách theo khu */
+.mlist{margin-top:2.6em}
+.mz h2{font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ice);margin:2em 0 .8em;padding-bottom:.6em;border-bottom:1px solid color-mix(in srgb,var(--ice) 35%,transparent)}
+.mz ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(14em,1fr));gap:8px}
+.mi{display:flex;align-items:baseline;gap:.6em;width:100%;text-align:left;font:inherit;color:var(--ink);background:none;border:1px solid var(--line);border-radius:10px;padding:.7em .9em;cursor:pointer;flex-wrap:wrap}
+.mi .n{font-size:16px}.mi .c{font-size:12px;color:var(--soft)}
+.mi .tag{margin-left:auto;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--lamp);border-radius:999px;padding:.15em .6em}
+.mi:hover,.mi:focus-visible{border-color:var(--lamp)}
+/* tấm giấy ghi chuyện */
+.sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sh-shade{position:absolute;inset:0;background:rgba(4,8,10,.7);opacity:0;transition:opacity .3s}
+.sh-panel{position:relative;width:min(100%,34rem);max-height:86vh;overflow:auto;background:#0f1618;color:#d5d0c3;border:1px solid #2f3b3e;border-bottom:0;border-radius:18px 18px 0 0;
+  padding:20px 20px calc(24px + env(safe-area-inset-bottom));transform:translateY(40px);opacity:0;transition:transform .32s cubic-bezier(.2,.7,.2,1),opacity .32s;box-shadow:0 -10px 40px -10px rgba(0,0,0,.7)}
+.sheet.on .sh-shade{opacity:1}.sheet.on .sh-panel{transform:none;opacity:1}
+@media (min-width:640px){.sheet{align-items:center}.sh-panel{border-radius:18px;border-bottom:1px solid #2f3b3e}}
+.shx{position:absolute;top:8px;right:8px;width:40px;height:40px;border:0;background:none;color:#87918d;font-size:18px;cursor:pointer}
+.info .zn{margin:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FD3E0}
+.info h2{font-weight:400;font-size:26px;margin:.15em 0 .7em;color:#e7e2d6}
+.trail{list-style:none;margin:0;padding:0;border-top:1px solid #2f3b3e}
+.trail li{padding:.8em 0;border-bottom:1px solid #2f3b3e;font-size:16px;line-height:1.6}
+.trail .c{display:block;font-size:12px;letter-spacing:.06em;color:#e27a6e;text-decoration:none;margin-bottom:.25em}
+.trail .c:hover{text-decoration:underline}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:#0c0b0b}
+:root:not([data-theme="light"]) .bd-title{text-shadow:0 0 18px rgba(143,211,224,.4)}}
+:root[data-theme="dark"] body{background:#0c0b0b}
+:root[data-theme="dark"] .bd-title{text-shadow:0 0 18px rgba(143,211,224,.4)}
+.bd-go{display:flex;flex-wrap:wrap;gap:10px;margin-top:3em}
+.bd-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
+.bd-go a.cur{background:var(--veil);border-color:var(--lamp)}
+@media (prefers-reduced-motion: reduce){.mbox,.flap{transition:none!important}.pl.inking,.pl.inking .pic path,.zt.inking,.zt.inking path,.pl.upd .dot,.pl.on .sel{animation:none!important}.pl.on .sel{stroke-dashoffset:0}}
+
+.nen-artos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:#1d2126}
+body > main{position:relative;z-index:1}
+.na-ring{position:absolute;width:max(118vmin,560px);aspect-ratio:1;right:calc(-1 * max(34vmin,170px));top:calc(-1 * max(14vmin,70px));opacity:.07}
+.na-a,.na-b,.na-c{transform-origin:300px 300px}
+.na-a{animation:naspin 220s linear infinite}.na-b{animation:naspin 160s linear infinite reverse}.na-c{animation:naspin 300s linear infinite}
+@keyframes naspin{to{transform:rotate(360deg)}}
+.na-thread{position:absolute;left:0;width:100%;height:22vh;top:62vh}
+.na-thread path{fill:none;stroke:#B3263A;stroke-width:1.3;vector-effect:non-scaling-stroke;opacity:.3;stroke-dasharray:1;stroke-dashoffset:1;animation:nadraw 2.8s .3s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes nadraw{to{stroke-dashoffset:0}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:#0c0b0b}
+:root:not([data-theme="light"]) .nen-artos{color:#fff}
+:root:not([data-theme="light"]) .nen-artos .na-ring{opacity:.075}
+:root:not([data-theme="light"]) .nen-artos .na-thread path{stroke:#E2566C;opacity:.42}}
+:root[data-theme="dark"] body{background:#0c0b0b}
+:root[data-theme="dark"] .nen-artos{color:#fff}:root[data-theme="dark"] .nen-artos .na-ring{opacity:.075}:root[data-theme="dark"] .nen-artos .na-thread path{stroke:#E2566C;opacity:.42}
+@media (prefers-reduced-motion: reduce){.na-a,.na-b,.na-c{animation:none}.na-thread path{animation:none;stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<div class="nen-artos" aria-hidden="true"><svg class="na-ring" viewBox="0 0 600 600"><g fill="none" stroke="currentColor" stroke-linecap="round">
+<g class="na-a"><circle cx="300" cy="300" r="262" stroke-width="2.6"/><circle cx="300" cy="300" r="250" stroke-width=".7" stroke-dasharray="2 9"/></g>
+<g class="na-b"><circle cx="307" cy="294" r="228" stroke-width="1.3"/><path d="M84 262C150 118 452 104 520 298S318 566 156 436" stroke-width="1.5"/></g>
+<g class="na-c"><circle cx="293" cy="306" r="206" stroke-width=".9"/><path d="M118 360C120 210 260 120 400 170" stroke-width="1"/></g>
+</g></svg><svg class="na-thread" viewBox="0 0 1000 200" preserveAspectRatio="none"><path pathLength="1" d="M-10 140C180 70 330 190 520 120S820 40 1010 110"/></svg></div>
+<header class="bar">
+  <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương và trang chủ"><span class="ic"></span>Mục lục</button>
+  <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="dr-shade" data-close></div>
+  <nav class="dr-panel" aria-label="Chọn chương">
+    <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="tacgia.html">Tác giả</a></div>
+    <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
+  </nav>
+</div>
+<main class="bd">
+  <h1 class="bd-title">Bản đồ ảo cảnh</h1>
+  <p class="bd-sub">Tấm bản đồ gấp tư nằm sẵn trong túi Clevia từ lúc vào làng. Đọc tới đâu, mực hiện tới đó; chỗ chưa tới vẫn là giấy trắng. Chạm một chỗ để xem chuyện đã xảy ra ở đó.</p>
+  <p class="bd-count" id="mcount"></p>
+  <div class="mbox f0" id="mbox" tabindex="0" role="button" aria-label="Tấm bản đồ đang gấp. Chạm để mở">
+    <div class="mw"><svg class="mp" viewBox="0 0 1200 900" aria-hidden="false" role="group" aria-label="Tấm bản đồ ngôi làng">
+<defs>
+  <filter id="mp-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="7"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .24  0 0 0 0 .12  0 0 0 -2.2 1.25"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  <filter id="mp-blot" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".006 .009" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .38  0 0 0 0 .18  0 0 0 -3 1.55"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  <filter id="mp-wob" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="turbulence" baseFrequency=".035" numOctaves="2" seed="11" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3.2"/></filter>
+  <radialGradient id="mp-edge" cx=".5" cy=".5" r=".72"><stop offset=".55" stop-color="#6e461e" stop-opacity="0"/><stop offset="1" stop-color="#6e461e" stop-opacity=".42"/></radialGradient>
+</defs>
+<rect class="paper" width="1200" height="900"/>
+<rect width="1200" height="900" filter="url(#mp-blot)" class="blot"/>
+<rect width="1200" height="900" filter="url(#mp-grain)" class="grain"/>
+<rect width="1200" height="900" fill="url(#mp-edge)"/>
+<g class="crease"><path d="M600 0V900M0 450H1200" class="cd"/><path d="M602 0V900M0 452H1200" class="cl"/></g>
+<g class="ink" filter="url(#mp-wob)"><path class="wash" d="M400 0L401.8 30L403.5 60L405.1 90L406.5 120L407.6 150L408.4 180L408.9 210L409 240L408.8 270L408.2 300L407.3 330L406.1 360L404.6 390L403 420L401.3 450L399.5 480L397.7 510L396 540L394.5 570L393.2 600L392.2 630L391.4 660L391.1 690L391 720L391.4 750L392 780L393 810L394.3 840L395.8 870L397.5 900"/><path class="bline" pathLength="1" d="M400 0L401.8 30L403.5 60L405.1 90L406.5 120L407.6 150L408.4 180L408.9 210L409 240L408.8 270L408.2 300L407.3 330L406.1 360L404.6 390L403 420L401.3 450L399.5 480L397.7 510L396 540L394.5 570L393.2 600L392.2 630L391.4 660L391.1 690L391 720L391.4 750L392 780L393 810L394.3 840L395.8 870L397.5 900"/><path class="wash" d="M807.6 0L808.4 30L808.9 60L809 90L808.8 120L808.2 150L807.3 180L806.1 210L804.6 240L803 270L801.3 300L799.5 330L797.7 360L796 390L794.5 420L793.2 450L792.2 480L791.4 510L791.1 540L791 570L791.4 600L792 630L793 660L794.3 690L795.8 720L797.5 750L799.3 780L801 810L802.8 840L804.4 870L805.9 900"/><path class="bline" pathLength="1" d="M807.6 0L808.4 30L808.9 60L809 90L808.8 120L808.2 150L807.3 180L806.1 210L804.6 240L803 270L801.3 300L799.5 330L797.7 360L796 390L794.5 420L793.2 450L792.2 480L791.4 510L791.1 540L791 570L791.4 600L792 630L793 660L794.3 690L795.8 720L797.5 750L799.3 780L801 810L802.8 840L804.4 870L805.9 900"/><g class="zt" data-z="nong" data-ch="4"><path pathLength="1" d="M6 851.3L14 852.8L22 853.8L30 854L38 853.4L46 852.2L54 850.6L62 848.8L70 847.3L78 846.3L86 846L94 846.5L102 847.7L110 849.3L118 851.1L126 852.6L134 853.7L142 854L150 853.5L158 852.4L166 850.8L174 849L182 847.5L190 846.4L198 846L206 846.4L214 847.5L222 849.1L230 850.8L238 852.4L246 853.6L254 854L262 853.7L270 852.6L278 851L286 849.3L294 847.7L302 846.5L310 846L318 846.3L326 847.3L334 848.8L342 850.6L350 852.2L358 853.4L366 854L374 853.7L382 852.8" class="thin"/><path pathLength="1" d="M6 867.1L14 868.5L22 869.5L30 870L38 869.9L46 869.3L54 868.2L62 866.8L70 865.2L78 863.8L86 862.7L94 862.1L102 862L110 862.5L118 863.5L126 864.9L134 866.4L142 867.8L150 869L158 869.8L166 870L174 869.6L182 868.8L190 867.5L198 866L206 864.5L214 863.2L222 862.4L230 862L238 862.2L246 863L254 864.2L262 865.6L270 867.1L278 868.5L286 869.5L294 870L302 869.9L310 869.2L318 868.1L326 866.7L334 865.2L342 863.8L350 862.7L358 862.1L366 862L374 862.6L382 863.6" class="thin"/><path pathLength="1" d="M6 883L14 884.2L22 885.2L30 885.8L38 886L46 885.8L54 885.1L62 884.1L70 882.9L78 881.6L86 880.3L94 879.2L102 878.4L110 878L118 878.1L126 878.6L134 879.4L142 880.6L150 881.9L158 883.2L166 884.4L174 885.3L182 885.9L190 886L198 885.7L206 885L214 883.9L222 882.7L230 881.4L238 880.1L246 879.1L254 878.3L262 878L270 878.1L278 878.7L286 879.6L294 880.8L302 882.1L310 883.4L318 884.5L326 885.4L334 885.9L342 886L350 885.6L358 884.8L366 883.8L374 882.5L382 881.2" class="thin"/><path pathLength="1" d="M150 470C180 520 200 540 210 560" class="road"/><path pathLength="1" d="M210 640C190 700 170 720 160 745" class="road"/><path pathLength="1" d="M230 560C260 420 290 360 312 300" class="road"/><path pathLength="1" d="M312 260C310 220 305 190 300 160" class="road"/><path pathLength="1" d="M250 330C200 260 140 220 110 190" class="road"/><path pathLength="1" d="M30 300L22.5 266" class="thin"/><path pathLength="1" d="M36 300L33.5 258" class="thin"/><path pathLength="1" d="M42 300L44.5 266" class="thin"/><path pathLength="1" d="M48 300L55.5 258" class="thin"/><path pathLength="1" d="M370 640L362.5 606" class="thin"/><path pathLength="1" d="M376 640L373.5 598" class="thin"/><path pathLength="1" d="M382 640L384.5 606" class="thin"/><path pathLength="1" d="M388 640L395.5 598" class="thin"/><path pathLength="1" d="M40 470L32.5 436" class="thin"/><path pathLength="1" d="M46 470L43.5 428" class="thin"/><path pathLength="1" d="M52 470L54.5 436" class="thin"/><path pathLength="1" d="M58 470L65.5 428" class="thin"/><path pathLength="1" d="M380 200L372.5 166" class="thin"/><path pathLength="1" d="M386 200L383.5 158" class="thin"/><path pathLength="1" d="M392 200L394.5 166" class="thin"/><path pathLength="1" d="M398 200L405.5 158" class="thin"/></g><g class="zt" data-z="giua" data-ch="9"><path pathLength="1" d="M505 230C530 330 560 400 580 440" class="road"/><path pathLength="1" d="M600 470C640 420 670 380 690 320" class="road"/><path pathLength="1" d="M600 530C620 590 640 630 652 660" class="road"/><path pathLength="1" d="M446 420a14 14 0 1 0 28 0a14 14 0 1 0 -28 0" class="thin"/><path pathLength="1" d="M460 434L460 450" class="thin"/><path pathLength="1" d="M726 560a14 14 0 1 0 28 0a14 14 0 1 0 -28 0" class="thin"/><path pathLength="1" d="M740 574L740 590" class="thin"/><path pathLength="1" d="M486 700a14 14 0 1 0 28 0a14 14 0 1 0 -28 0" class="thin"/><path pathLength="1" d="M500 714L500 730" class="thin"/><path pathLength="1" d="M746 150a14 14 0 1 0 28 0a14 14 0 1 0 -28 0" class="thin"/><path pathLength="1" d="M760 164L760 180" class="thin"/></g><g class="zt" data-z="mo" data-ch="11"><path pathLength="1" class="mt" d="M850 470L930 250L1010 470"/><path pathLength="1" d="M936 294L948 316" class="thin"/><path pathLength="1" d="M945.6 320.4L957.6 342.4" class="thin"/><path pathLength="1" d="M955.2 346.8L967.2 368.8" class="thin"/><path pathLength="1" d="M964.8 373.2L976.8 395.2" class="thin"/><path pathLength="1" d="M974.4 399.6L986.4 421.6" class="thin"/><path pathLength="1" d="M984 426L996 448" class="thin"/><path pathLength="1" class="mt" d="M950 470L1060 140L1170 470"/><path pathLength="1" d="M1066 206L1078 239" class="thin"/><path pathLength="1" d="M1079.2 245.6L1091.2 278.6" class="thin"/><path pathLength="1" d="M1092.4 285.2L1104.4 318.2" class="thin"/><path pathLength="1" d="M1105.6 324.8L1117.6 357.8" class="thin"/><path pathLength="1" d="M1118.8 364.4L1130.8 397.4" class="thin"/><path pathLength="1" d="M1132 404L1144 437" class="thin"/><path pathLength="1" class="mt" d="M1110 470L1170 270L1230 470"/><path pathLength="1" d="M1176 310L1188 330" class="thin"/><path pathLength="1" d="M1183.2 334L1195.2 354" class="thin"/><path pathLength="1" d="M1190.4 358L1202.4 378" class="thin"/><path pathLength="1" d="M1197.6 382L1209.6 402" class="thin"/><path pathLength="1" d="M1204.8 406L1216.8 426" class="thin"/><path pathLength="1" d="M1212 430L1224 450" class="thin"/><path pathLength="1" d="M850 870C880 800 860 760 900 720S960 650 970 560S990 500 1000 490" class="road"/><path pathLength="1" d="M960 640C1010 660 1060 680 1090 700" class="road"/><path pathLength="1" d="M837.5 540a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M910.5 587a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M983.5 634a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1056.5 681a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1129.5 728a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M862.5 775a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M935.5 822a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1008.5 549a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1081.5 596a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1154.5 643a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M887.5 690a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M960.5 737a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1033.5 784a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/><path pathLength="1" d="M1106.5 831a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" class="thin"/></g><g class="pl" data-p="ruong" data-ch="4" role="button" tabindex="-1" aria-label="Ruộng">
+    <g class="pic"><path pathLength="1" d="M45 348L79 348L79 376L45 376L45 348"/><path pathLength="1" d="M79 348L113 348L113 376L79 376L79 348"/><path pathLength="1" d="M88 352L86 372M97 352L95 372M106 352L104 372" class="thin"/><path pathLength="1" d="M113 348L147 348L147 376L113 376L113 348"/><path pathLength="1" d="M147 348L181 348L181 376L147 376L147 348"/><path pathLength="1" d="M156 352L154 372M165 352L163 372M174 352L172 372" class="thin"/><path pathLength="1" d="M181 348L215 348L215 376L181 376L181 348"/><path pathLength="1" d="M45 376L79 376L79 404L45 404L45 376"/><path pathLength="1" d="M54 380L52 400M63 380L61 400M72 380L70 400" class="thin"/><path pathLength="1" d="M79 376L113 376L113 404L79 404L79 376"/><path pathLength="1" d="M113 376L147 376L147 404L113 404L113 376"/><path pathLength="1" d="M122 380L120 400M131 380L129 400M140 380L138 400" class="thin"/><path pathLength="1" d="M147 376L181 376L181 404L147 404L147 376"/><path pathLength="1" d="M181 376L215 376L215 404L181 404L181 376"/><path pathLength="1" d="M190 380L188 400M199 380L197 400M208 380L206 400" class="thin"/><path pathLength="1" d="M45 404L79 404L79 432L45 432L45 404"/><path pathLength="1" d="M79 404L113 404L113 432L79 432L79 404"/><path pathLength="1" d="M88 408L86 428M97 408L95 428M106 408L104 428" class="thin"/><path pathLength="1" d="M113 404L147 404L147 432L113 432L113 404"/><path pathLength="1" d="M147 404L181 404L181 432L147 432L147 404"/><path pathLength="1" d="M156 408L154 428M165 408L163 428M174 408L172 428" class="thin"/><path pathLength="1" d="M181 404L215 404L215 432L181 432L181 404"/><path pathLength="1" d="M229 400L229 326"/><path pathLength="1" d="M207 348L251 348"/><path pathLength="1" d="M221 318a8 8 0 1 0 16 0a8 8 0 1 0 -16 0"/><path pathLength="1" d="M213 314L229 296L245 314"/></g><text class="lbl" x="150" y="478" text-anchor="middle">Ruộng</text>
+    <path class="sel" pathLength="1" d="M76 396C74 330 220 320 226 384S160 464 90 440"/>
+    <circle class="dot" cx="196" cy="344" r="7"/><circle class="hit" cx="150" cy="390" r="66"/></g><g class="pl" data-p="gieng" data-ch="4" role="button" tabindex="-1" aria-label="Ngã ba giếng">
+    <g class="pic"><path pathLength="1" d="M120 635L220 609" class="road"/><path pathLength="1" d="M260 609L370 639" class="road"/><path pathLength="1" d="M240 615L244 705" class="road"/><path pathLength="1" d="M218 585a22 8 0 1 0 44 0a22 8 0 1 0 -44 0"/><path pathLength="1" d="M218 585L218 605"/><path pathLength="1" d="M262 585L262 605"/><path pathLength="1" d="M218 605A22 8 0 0 0 262 605"/><path pathLength="1" d="M124 555c-14-30 20-50 36-36c8-24 46-20 46 6c22 2 22 32 4 38c-6 18-36 18-46 6c-14 12-40 6-40-14z"/><path pathLength="1" d="M166 569L164 611"/><path pathLength="1" d="M176 569L178 611"/><path pathLength="1" d="M140 571L139 589" class="thin"/><path pathLength="1" d="M156 571L155 597" class="thin"/><path pathLength="1" d="M172 571L171 589" class="thin"/><path pathLength="1" d="M188 571L187 597" class="thin"/><path pathLength="1" d="M204 571L203 589" class="thin"/></g><text class="lbl" x="262" y="668" text-anchor="middle">Ngã ba giếng</text>
+    <path class="sel" pathLength="1" d="M166 591C164 525 310 515 316 579S250 659 180 635"/>
+    <circle class="dot" cx="286" cy="539" r="7"/><circle class="hit" cx="240" cy="585" r="66"/></g><g class="pl" data-p="tuong" data-ch="4" role="button" tabindex="-1" aria-label="Bức tường">
+    <g class="pic"><path pathLength="1" d="M390 424L390 510" class="thin"/><path pathLength="1" d="M400 430L400 506" class="thin"/><path pathLength="1" d="M410 436L410 502" class="thin"/><path pathLength="1" d="M384 464L416 464" class="thin"/><path pathLength="1" d="M400 448L400 480"/></g><text class="lbl" x="400" y="405" text-anchor="middle">Bức tường</text>
+    <path class="sel" pathLength="1" d="M326 476C324 410 470 400 476 464S410 544 340 520"/>
+    <circle class="dot" cx="446" cy="424" r="7"/><circle class="hit" cx="400" cy="470" r="66"/></g><g class="pl" data-p="choi" data-ch="4" role="button" tabindex="-1" aria-label="Chòi câu cá">
+    <g class="pic"><path pathLength="1" d="M122 744L168 744L168 770L122 770L122 744"/><path pathLength="1" d="M114 746L145 714L176 746"/><path pathLength="1" d="M139 752L151 752L151 770L139 770L139 752"/><path pathLength="1" d="M169 762L237 790"/><path pathLength="1" d="M169 772L237 800"/><path pathLength="1" d="M181 770L181 788" class="thin"/><path pathLength="1" d="M198 777L198 795" class="thin"/><path pathLength="1" d="M215 784L215 802" class="thin"/><path pathLength="1" d="M232 791L232 809" class="thin"/></g><text class="lbl" x="260" y="790" text-anchor="middle">Chòi câu cá</text>
+    <path class="sel" pathLength="1" d="M71 776C69 710 215 700 221 764S155 844 85 820"/>
+    <circle class="dot" cx="191" cy="724" r="7"/><circle class="hit" cx="145" cy="770" r="66"/></g><g class="pl" data-p="nha1" data-ch="5" role="button" tabindex="-1" aria-label="Căn nhà đầu tiên">
+    <g class="pic"><path pathLength="1" d="M288 259L342 259L342 297L288 297L288 259"/><path pathLength="1" d="M280 261L315 228.6L350 261"/><path pathLength="1" d="M309 279L321 279L321 297L309 297L309 279"/></g><text class="lbl" x="315" y="345" text-anchor="middle">Căn nhà đầu tiên</text>
+    <path class="sel" pathLength="1" d="M241 281C239 215 385 205 391 269S325 349 255 325"/>
+    <circle class="dot" cx="361" cy="229" r="7"/><circle class="hit" cx="315" cy="275" r="66"/></g><g class="pl" data-p="nha2" data-ch="5" role="button" tabindex="-1" aria-label="Căn nhà thứ hai">
+    <g class="pic"><path pathLength="1" d="M48 544L102 544L102 582L48 582L48 544"/><path pathLength="1" d="M40 546L75 513.6L110 546"/><path pathLength="1" d="M69 564L81 564L81 582L69 582L69 564"/></g><text class="lbl" x="30" y="632" text-anchor="start">Căn nhà thứ hai</text>
+    <path class="sel" pathLength="1" d="M1 566C-1 500 145 490 151 554S85 634 15 610"/>
+    <circle class="dot" cx="121" cy="514" r="7"/><circle class="hit" cx="75" cy="560" r="66"/></g><g class="pl" data-p="nha3" data-ch="7" role="button" tabindex="-1" aria-label="Căn nhà thứ ba">
+    <g class="pic"><path pathLength="1" d="M248 90L302 90L302 128L248 128L248 90"/><path pathLength="1" d="M240 92L275 59.6L310 92"/><path pathLength="1" d="M269 110L281 110L281 128L269 128L269 110"/><path pathLength="1" d="M223 158L224 138" class="thin"/><path pathLength="1" d="M236 158L237 138" class="thin"/><path pathLength="1" d="M249 158L250 138" class="thin"/><path pathLength="1" d="M262 158L263 138" class="thin"/><path pathLength="1" d="M275 158L276 138" class="thin"/><path pathLength="1" d="M288 158L289 138" class="thin"/><path pathLength="1" d="M301 158L302 138" class="thin"/><path pathLength="1" d="M314 158L315 138" class="thin"/><path pathLength="1" d="M327 158L328 138" class="thin"/><path pathLength="1" d="M219 146L329 145" class="thin"/></g><text class="lbl" x="275" y="190" text-anchor="middle">Căn nhà thứ ba</text>
+    <path class="sel" pathLength="1" d="M201 126C199 60 345 50 351 114S285 194 215 170"/>
+    <circle class="dot" cx="321" cy="74" r="7"/><circle class="hit" cx="275" cy="120" r="66"/></g><g class="pl" data-p="nongtrai" data-ch="7" role="button" tabindex="-1" aria-label="Nông trại">
+    <g class="pic"><path pathLength="1" d="M99 184Q99 154 78 132"/><path pathLength="1" d="M75 128a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M101 184Q101 154 87 128"/><path pathLength="1" d="M84 124a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M103 184Q103 154 96 124"/><path pathLength="1" d="M93 120a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M105 184Q105 154 105 120"/><path pathLength="1" d="M102 116a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M107 184Q107 154 114 124"/><path pathLength="1" d="M111 120a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M109 184Q109 154 123 128"/><path pathLength="1" d="M120 124a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M111 184Q111 154 132 132"/><path pathLength="1" d="M129 128a3 6 0 1 0 6 0a3 6 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M91 154L119 154"/><path pathLength="1" d="M91 154a14 5 0 1 0 28 0a14 5 0 1 0 -28 0" class="thin"/><path pathLength="1" d="M139 158a22 22 0 1 0 44 0a22 22 0 1 0 -44 0"/><path pathLength="1" d="M161 158L183 158" class="thin"/><path pathLength="1" d="M161 158L172 177.1" class="thin"/><path pathLength="1" d="M161 158L150 177.1" class="thin"/><path pathLength="1" d="M161 158L139 158" class="thin"/><path pathLength="1" d="M161 158L150 138.9" class="thin"/><path pathLength="1" d="M161 158L172 138.9" class="thin"/><path pathLength="1" d="M131 184L195 184" class="thin"/></g><text class="lbl" x="120" y="232" text-anchor="middle">Nông trại</text>
+    <path class="sel" pathLength="1" d="M31 156C29 90 175 80 181 144S115 224 45 200"/>
+    <circle class="dot" cx="151" cy="104" r="7"/><circle class="hit" cx="105" cy="150" r="66"/></g><g class="pl" data-p="tramxa" data-ch="9" role="button" tabindex="-1" aria-label="Trạm xá">
+    <g class="pic"><path pathLength="1" d="M473 171L537 171L537 211L473 211L473 171"/><path pathLength="1" d="M465 173L505 139L545 173"/><path pathLength="1" d="M499 193L511 193L511 211L499 211L499 193"/><path pathLength="1" d="M505 137L505 157"/><path pathLength="1" d="M495 147L515 147"/></g><text class="lbl" x="505" y="262" text-anchor="middle">Trạm xá</text>
+    <path class="sel" pathLength="1" d="M431 191C429 125 575 115 581 179S515 259 445 235"/>
+    <circle class="dot" cx="551" cy="139" r="7"/><circle class="hit" cx="505" cy="185" r="66"/></g><g class="pl" data-p="cho" data-ch="9" role="button" tabindex="-1" aria-label="Chợ">
+    <g class="pic"><path pathLength="1" d="M513 480L547 480L543 462L517 462L513 480"/><path pathLength="1" d="M517 480L517 502" class="thin"/><path pathLength="1" d="M543 480L543 502" class="thin"/><path pathLength="1" d="M553 480L587 480L583 462L557 462L553 480"/><path pathLength="1" d="M557 480L557 502" class="thin"/><path pathLength="1" d="M583 480L583 502" class="thin"/><path pathLength="1" d="M593 480L627 480L623 462L597 462L593 480"/><path pathLength="1" d="M597 480L597 502" class="thin"/><path pathLength="1" d="M623 480L623 502" class="thin"/><path pathLength="1" d="M641 494a14 5 0 1 0 28 0a14 5 0 1 0 -28 0"/><path pathLength="1" d="M641 494L641 506" class="thin"/><path pathLength="1" d="M669 494L669 506" class="thin"/><path pathLength="1" d="M663 468L663 428"/><path pathLength="1" d="M663 440L645 422" class="thin"/><path pathLength="1" d="M663 434L681 418" class="thin"/><path pathLength="1" d="M663 428L665 410" class="thin"/></g><text class="lbl" x="585" y="568" text-anchor="middle">Chợ</text>
+    <path class="sel" pathLength="1" d="M511 486C509 420 655 410 661 474S595 554 525 530"/>
+    <circle class="dot" cx="631" cy="434" r="7"/><circle class="hit" cx="585" cy="480" r="66"/></g><g class="pl" data-p="nhahop" data-ch="9" role="button" tabindex="-1" aria-label="Nhà họp làng">
+    <g class="pic"><path pathLength="1" d="M620 230L760 230L760 276L620 276L620 230"/><path pathLength="1" d="M608 232L640 192L740 192L772 232"/><path pathLength="1" d="M642 254L658 254L658 276L642 276L642 254" class="thin"/><path pathLength="1" d="M682 254L698 254L698 276L682 276L682 254" class="thin"/><path pathLength="1" d="M722 254L738 254L738 276L722 276L722 254" class="thin"/><path pathLength="1" d="M677 300a13 5 0 1 0 26 0a13 5 0 1 0 -26 0"/></g><text class="lbl" x="690" y="330" text-anchor="middle">Nhà họp làng</text>
+    <path class="sel" pathLength="1" d="M616 256C614 190 760 180 766 244S700 324 630 300"/>
+    <circle class="dot" cx="736" cy="204" r="7"/><circle class="hit" cx="690" cy="250" r="66"/></g><g class="pl" data-p="truonglang" data-ch="10" role="button" tabindex="-1" aria-label="Nhà trưởng làng">
+    <g class="pic"><path pathLength="1" d="M615 711L695 711L695 745L615 745L615 711"/><path pathLength="1" d="M648 727L662 727L662 745L648 745L648 727" class="thin"/><path pathLength="1" d="M589 689Q603 713 611 711L627 675L683 675L699 711Q707 713 721 689"/><path pathLength="1" d="M629 759L629 781"/><path pathLength="1" d="M681 759L681 781"/><path pathLength="1" d="M623 759L687 759"/></g><text class="lbl" x="655" y="800" text-anchor="middle">Nhà trưởng làng</text>
+    <path class="sel" pathLength="1" d="M581 721C579 655 725 645 731 709S665 789 595 765"/>
+    <circle class="dot" cx="701" cy="669" r="7"/><circle class="hit" cx="655" cy="715" r="66"/></g><g class="pl" data-p="duongmon" data-ch="11" role="button" tabindex="-1" aria-label="Con đường mòn">
+    <g class="pic"><path pathLength="1" d="M830 850C860 830 830 806 864 794S890 760 880 740"/><path pathLength="1" d="M848 854C876 834 848 810 880 798S906 762 896 742"/><path pathLength="1" d="M901 830a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M816 808a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" class="thin"/><path pathLength="1" d="M911 788a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/></g><text class="lbl" x="905" y="872" text-anchor="middle">Con đường mòn</text>
+    <path class="sel" pathLength="1" d="M796 806C794 740 940 730 946 794S880 874 810 850"/>
+    <circle class="dot" cx="916" cy="754" r="7"/><circle class="hit" cx="870" cy="800" r="66"/></g><g class="pl" data-p="dunda" data-ch="11" role="button" tabindex="-1" aria-label="Đụn đá">
+    <g class="pic"><path pathLength="1" d="M871 645Q905 597 939 645"/><path pathLength="1" d="M919 647Q949 608.6 979 647"/><path pathLength="1" d="M903 625Q929 577 955 625"/><path pathLength="1" d="M892 655a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M907 660a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M922 655a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M937 660a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M952 655a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/><path pathLength="1" d="M967 660a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" class="thin"/></g><text class="lbl" x="935" y="698" text-anchor="middle">Đụn đá</text>
+    <path class="sel" pathLength="1" d="M861 631C859 565 1005 555 1011 619S945 699 875 675"/>
+    <circle class="dot" cx="981" cy="579" r="7"/><circle class="hit" cx="935" cy="625" r="66"/></g><g class="pl" data-p="nhamo" data-ch="11" role="button" tabindex="-1" aria-label="Căn nhà dân">
+    <g class="pic"><path pathLength="1" d="M1077 674L1133 674L1133 708L1077 708L1077 674"/><path pathLength="1" d="M1069 676L1105 646.8L1141 676"/><path pathLength="1" d="M1099 690L1111 690L1111 708L1099 708L1099 690"/><path pathLength="1" d="M1071 714a6 3 0 1 0 12 0a6 3 0 1 0 -12 0" class="thin"/><path pathLength="1" d="M1085 714a6 3 0 1 0 12 0a6 3 0 1 0 -12 0" class="thin"/><path pathLength="1" d="M1099 714a6 3 0 1 0 12 0a6 3 0 1 0 -12 0" class="thin"/><path pathLength="1" d="M1113 714a6 3 0 1 0 12 0a6 3 0 1 0 -12 0" class="thin"/><path pathLength="1" d="M1127 714a6 3 0 1 0 12 0a6 3 0 1 0 -12 0" class="thin"/></g><text class="lbl" x="1105" y="762" text-anchor="middle">Căn nhà dân</text>
+    <path class="sel" pathLength="1" d="M1031 696C1029 630 1175 620 1181 684S1115 764 1045 740"/>
+    <circle class="dot" cx="1151" cy="644" r="7"/><circle class="hit" cx="1105" cy="690" r="66"/></g><g class="pl" data-p="cong" data-ch="11" role="button" tabindex="-1" aria-label="Cổng hầm">
+    <g class="pic"><path pathLength="1" d="M966 485L966 449A34 34 0 0 1 1034 449L1034 485"/><path pathLength="1" d="M976 433L976 485" class="thin"/><path pathLength="1" d="M988 429L988 485" class="thin"/><path pathLength="1" d="M1000 425L1000 485" class="thin"/><path pathLength="1" d="M1012 429L1012 485" class="thin"/><path pathLength="1" d="M1024 433L1024 485" class="thin"/><path pathLength="1" d="M987 459a9 6 0 1 0 18 0a9 6 0 1 0 -18 0"/><path pathLength="1" d="M997 459a9 6 0 1 0 18 0a9 6 0 1 0 -18 0"/><path pathLength="1" d="M994 465L1006 465L1006 477L994 477L994 465"/></g><text class="lbl" x="1000" y="535" text-anchor="middle">Cổng hầm</text>
+    <path class="sel" pathLength="1" d="M926 461C924 395 1070 385 1076 449S1010 529 940 505"/>
+    <circle class="dot" cx="1046" cy="409" r="7"/><circle class="hit" cx="1000" cy="455" r="66"/></g><g class="pl" data-p="ham" data-ch="12" role="button" tabindex="-1" aria-label="Trong hầm">
+    <g class="pic"><path pathLength="1" d="M1005 445C1015 395 1055 375 1065 335S1065 295 1075 285" class="dash"/><path pathLength="1" d="M1063 259L1087 259"/><path pathLength="1" d="M1062 301Q1054 277 1075 261Q1096 277 1088 301Z"/><path pathLength="1" d="M1064 297L1086 297"/><path pathLength="1" d="M1075 289q-4-6 0-10q4 4 0 10" class="thin"/><path pathLength="1" d="M1075 267L1075 257" class="thin"/></g><text class="lbl" x="1075" y="200" text-anchor="middle">Trong hầm</text>
+    <path class="sel" pathLength="1" d="M1001 291C999 225 1145 215 1151 279S1085 359 1015 335"/>
+    <circle class="dot" cx="1121" cy="239" r="7"/><circle class="hit" cx="1075" cy="285" r="66"/></g></g>
+</svg></div>
+    <div class="flap b"><i></i></div><div class="flap r"><i></i></div>
+  </div>
+  <p class="mhint" id="mhint">chạm để mở tấm bản đồ</p>
+  <p class="bd-empty" id="mempty" hidden>Chưa có nơi nào. Tấm bản đồ đến tay Clevia ở chương 4.</p>
+  <div class="mlist" id="mlist"></div>
+  <nav class="bd-go" aria-label="Đi tiếp">
+    <a class="cur" id="back" href="index.html">Bắt đầu đọc</a>
+    <a href="index.html">Trang chủ</a>
+  </nav>
+</main>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Chuyện ở nơi này">
+  <div class="sh-shade" data-close></div>
+  <div class="sh-panel">
+    <button type="button" class="shx" id="shx" data-close aria-label="Đóng">✕</button>
+    <div class="info" id="info"></div>
+  </div>
+</div>
+<script>
+var D={"zones":[{"id":"nong","name":"Khu Nông nghiệp","ch":4},{"id":"giua","name":"Khu Trung tâm","ch":9},{"id":"mo","name":"Khu Mỏ","ch":11}],"places":[{"id":"ruong","zone":"nong","name":"Ruộng","ch":4,"notes":[{"ch":4,"t":"Clevia tỉnh dậy bên vệ đường giữa đồng. Chữ xanh như băng hiện lên giữa trời đêm, rồi hai mươi cái tên trượt qua, chỉ một lần. Trong đó có tên Luke."},{"ch":7,"t":"Sáng ra, một cô gái ngồi giữa đám dân làng đang cấy, mạ nghiêng về phía tay cô. Hai người không lại gần."}]},{"id":"gieng","zone":"nong","name":"Ngã ba giếng","ch":4,"notes":[{"ch":4,"t":"Cái giếng cũ thành rêu dưới một cây đa. Clevia gặp những người chơi đầu tiên: Felix đội mũ bảo hiểm, bà Mabel nắm tay cậu, và một người đàn ông to con nhìn bàn tay cô như người đi chợ ước giá."},{"ch":6,"t":"Gần sáng, gã to con đợi sẵn ở đây. Luke đỡ đòn cho Clevia, bầm cả tay trái. Rồi xích từ tán đa phóng xuống: Leon. Anh ta thả hai người đi, bảo coi như trả Luke món nợ cũ."}]},{"id":"tuong","zone":"nong","name":"Bức tường","ch":4,"notes":[{"ch":4,"t":"Nhìn xa cứ tưởng ở tận chân trời. Clevia áp tay lên: lạnh, trơn, không nhúc nhích. Đến lúc ấy cô mới hiểu hai đường kẻ tô màu nước trên tấm bản đồ. Ba vùng đất, hai bức tường, không có cổng."},{"ch":9,"t":"Từ khu Trung tâm, qua lớp kính ấy, Clevia nhìn sang khu Mỏ: xám, khô, một con đường mòn, một làn khói từ ống khói gạch."}]},{"id":"choi","zone":"nong","name":"Chòi câu cá","ch":4,"notes":[{"ch":4,"t":"Clevia chạy tới đây vì đoán nếu là Luke thì anh sẽ tới. Chòi trống. Rồi có tiếng gọi tên cô sau lưng: anh cũng đang đi tìm cô."},{"ch":8,"t":"Chú Oscar ngồi câu ở đầu cầu. Cái hòm trong chòi đã có người mở trước, ổ khoá bị bẻ cong. Câu đầy giỏ cho bà cụ vá lưới xong, cả khu Nông nghiệp trên tấm bản đồ đã đậm hết."},{"ch":9,"t":"Ba người đặt ngón tay lên tấm thẻ Teleport ở đầu cầu. Tấm thẻ nóng dần, rồi khung cửa mở ra."}]},{"id":"nha1","zone":"nong","name":"Căn nhà đầu tiên","ch":5,"notes":[{"ch":5,"t":"Căn nhà đầu tiên hai người tìm tới để trú. Luke bước ra vườn sau, quay lại thì khung cửa không nhận anh nữa. Clevia bước ra theo anh."},{"ch":8,"t":"Bà cụ bên bếp bảo củi hết. Hai người ôm củi cho bà, đứng ngoài ngưỡng cửa vì không vào lại được. Bà đưa Clevia một tấm thẻ Bandage."}]},{"id":"nha2","zone":"nong","name":"Căn nhà thứ hai","ch":5,"notes":[{"ch":5,"t":"Người đàn ông má hóp cho hai người ngồi bên bếp lửa qua đêm. Clevia đặt tay lên ổ khoá đồng của cái hòm trong góc, lần đầu tự ý mở, được thanh kiếm tre và đưa cho Luke."},{"ch":6,"t":"Lửa bếp tắt dần như người ta tắt thở. Chủ nhà đứng dậy khỏi ghế đẩu, đầu nghiêng sang một bên. Hai người chạy ra ngoài trời tối."},{"ch":8,"t":"Ban ngày, chủ nhà đưa cái đòn gánh. Clevia gánh nước, Luke xách bằng một tay. Ông trả công một tấm thẻ Smoke Veil."}]},{"id":"nha3","zone":"nong","name":"Căn nhà thứ ba","ch":7,"notes":[{"ch":7,"t":"Bà Mabel nằm dưới chân bờ rào tre. Vết chân cho thấy bà đã chạy tới nơi rồi quay lại chắn cho Felix. Clevia úp chiếc nón lá lên mặt bà, đặt mũ bảo hiểm của Felix bên cạnh."},{"ch":8,"t":"Hai người chôn bà Mabel dưới gốc tre. Người đàn bà trong nhà trả một tấm thẻ Protect. Clevia không giơ tay nhận."}]},{"id":"nongtrai","zone":"nong","name":"Nông trại","ch":7,"notes":[{"ch":7,"t":"Sân đất nện, kho lợp rạ, guồng nước kẽo kẹt. Hai người lội ruộng nhặt nón lá rơi đêm qua cho một ông lão; có một chiếc vành nón in dấu răng. Xong việc, hình bó lúa trên tấm bản đồ đậm lên. Ông lão dúi cho một tấm thẻ Teleport."}]},{"id":"tramxa","zone":"giua","name":"Trạm xá","ch":9,"notes":[{"ch":9,"t":"Khung cửa thả ba người xuống đây. Ông thầy thuốc vắt khăn trắng trên vai chữa lành hẳn cánh tay trái của Luke, Clevia và chú Oscar ở bên cạnh."}]},{"id":"cho","zone":"giua","name":"Chợ","ch":9,"notes":[{"ch":9,"t":"Mấy dãy sạp tre vắng hoe, người bán ngồi im, không ai mời chào. Cuối chợ có một cái giếng."},{"ch":10,"t":"Giữa trưa, núp sau một chòi hàng, Clevia thấy cái gã có dáng người Jasper từng mượn giết Ruby ngay giữa chợ. Hai người mang bọc vải của trưởng làng tới sạp thuốc dưới cây gạo. Chưa kịp mua gì thì bà bán thuốc nghiêng đầu; Luke bật vòm Protect che cho Clevia."}]},{"id":"nhahop","zone":"giua","name":"Nhà họp làng","ch":9,"notes":[{"ch":9,"t":"Ngôi nhà lớn nhất làng, giếng rêu giữa sân. Bên trong mấy người chơi đang giằng co, một cô gái tóc đỏ biến mất trong khói. Tấm bảng gỗ ghi số người chơi còn sống: 18. Lúc Clevia quay ra, con số tự đổi thành 17."},{"ch":10,"t":"Hai người chạy về khi cả khu đã đổi khác. Gian nhà trống, ghế dựng lại ngay ngắn, chú Oscar không còn ở đó. Luke kéo Clevia tới cái bàn đá trong góc."},{"ch":11,"t":"Ngay trước khi khung cửa nuốt lấy mình, Clevia liếc thấy con số trên bảng: 15."}]},{"id":"truonglang","zone":"giua","name":"Nhà trưởng làng","ch":10,"notes":[{"ch":10,"t":"Cổng gỗ sơn son, sân sạch không một chiếc lá. Ông trưởng làng mắt trắng đục nhờ mang một bọc vải ra chợ, rồi viết cho một tờ giấy có con dấu đỏ để mua bán."}]},{"id":"duongmon","zone":"mo","name":"Con đường mòn","ch":11,"notes":[{"ch":11,"t":"Khung cửa thả hai người xuống giữa con đường mòn phủ bụi xám. Dân áo nâu lại đang gánh đá, như chưa có chuyện gì."}]},{"id":"dunda","zone":"mo","name":"Đụn đá","ch":11,"notes":[{"ch":11,"t":"Một người phụ nữ tóc vàng búi cao quỳ chết bên đụn đá, tay còn cầm cuộn băng; vết chân cho thấy người chị đang băng cho đã đứng dậy bỏ đi. Clevia phủ áo khoác đỏ của mình lên chị, lấy cuộn băng băng cho Luke. Trên dốc, một người đàn ông đeo kính đứng nhìn rồi đi."}]},{"id":"nhamo","zone":"mo","name":"Căn nhà dân","ch":11,"notes":[{"ch":11,"t":"Bà chủ nhà tóc quấn khăn, tay đen bụi than, chẳng hỏi gì đã cho hai người vào. Luke sốt, ngủ thiếp trên chõng. Clevia mở chiếc rương sau chum sành, được một tấm thẻ Teleport, nhét vào túi áo anh."}]},{"id":"cong","zone":"mo","name":"Cổng hầm","ch":11,"notes":[{"ch":11,"t":"Cổng sắt gỉ, xích quấn, ổ khoá đen to cỡ nắm tay. Ông gác cổng đòi ăn. Leon đã quất xích vào cổng cả buổi mà không cong; anh ta lần đầu hỏi tên Clevia. Ba người giao kèo: Leon đi trước, đồ trong hầm chia ba, ra khỏi hầm thì ai đi đường nấy."},{"ch":12,"t":"Ba người lao ra ngoài nắng. Ông gác cổng vẫn ngồi trên khúc gỗ, nhưng đầu đã nghiêng hẳn sang một bên vai."}]},{"id":"ham","zone":"mo","name":"Trong hầm","ch":12,"notes":[{"ch":12,"t":"Đèn dầu treo trên cột chống, thợ mỏ cuốc đá không nhìn ai. Một người phụ nữ vác búa tạ đập mãi không vỡ một cái hòm; Clevia mở được, trong có thẻ Remedy, Leon nhường cho Luke. Rồi tiếng cuốc ngừng. Trần hầm sập, chị ấy không ra được. Lối ra bị đá lấp kín; Clevia đặt tay lên, và đá tự trượt sang hai bên."}]}]}, CH=[{"n":"01","title":"Thứ gì đó đã bị bỏ quên"},{"n":"02","title":"Bảy ngày"},{"n":"03","title":"Bữa Tiệc Đầu Tiên"},{"n":"04","title":"Hai mươi cái tên"},{"n":"05","title":"Lửa bếp"},{"n":"06","title":"Xích"},{"n":"07","title":"Việc làng"},{"n":"08","title":"Chỗ thứ ba"},{"n":"09","title":"Con số trên bảng"},{"n":"10","title":"Chợ trưa"},{"n":"11","title":"Cổng hầm"},{"n":"12","title":"Bên trong hầm tối"}];
+
+(function(){
+  var root=document.documentElement,tb=document.getElementById('theme');
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function jget(k){try{return JSON.parse(get(k)||'null')}catch(e){return null}}
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){tb.textContent=isDark()?'Sáng':'Tối'}
+  label();tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label()};
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  var RED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* tiến độ: chương đã đọc HẾT (a07-done), như Sổ tay và Bộ sưu tập thẻ */
+  var dn=get('a07-done');if(dn===null)dn=get('a07-max');dn=+dn||0;
+  var seen=jget('a07-map-seen')||{};
+  var places=D.places.filter(function(q){return q.ch<=dn}),zones=D.zones.filter(function(z){return z.ch<=dn});
+  function lastCh(q){var m=0;q.notes.forEach(function(n){if(n.ch<=dn&&n.ch>m)m=n.ch});return m}
+  function isNew(q){return !(q.id in seen)}
+  function isUpd(q){return (q.id in seen)&&seen[q.id]<lastCh(q)}
+  function markSeen(q){seen[q.id]=lastCh(q);store('a07-map-seen',JSON.stringify(seen))}
+
+  /* tiếng (theo nút Tiếng ở trang chương). Giấy sột soạt, nếp gấp bật, ngòi bút sột trên giấy. Không tiếng trầm. */
+  var SF=get('a07-sfx')!=='off',ac=null,out=null,nb=null;
+  function ctx(){if(!SF)return null;if(!ac){var AC=window.AudioContext||window.webkitAudioContext;if(!AC){SF=false;return null}
+    ac=new AC();out=ac.createGain();out.gain.value=.5;out.connect(ac.destination);nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);var d=nb.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    if(ac.state==='suspended')ac.resume();return ac}
+  function noise(t,dur,f,qv,v,f2,type){var s=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nb;s.loop=true;bp.type=type||'bandpass';bp.frequency.setValueAtTime(f,t);if(f2)bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=qv;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(bp);bp.connect(g);g.connect(out);s.start(t,Math.random()*.5);s.stop(t+dur+.02)}
+  function tone(t,f,dur,v,type){var o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02)}
+  var SND={
+    rustle:function(){if(!ctx())return;var t=ac.currentTime;for(var i=0;i<7;i++)noise(t+i*.045+Math.random()*.02,.07+Math.random()*.05,1400+Math.random()*2600,1.4,.06+Math.random()*.05,2600)},
+    snap:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.09,2600,1.6,.32,1500);noise(t+.01,.05,4500,1,.14,6000,'highpass')},
+    pen:function(){if(!ctx())return;var t=ac.currentTime;for(var i=0;i<5;i++)noise(t+i*.07,.06,5200+Math.random()*1800,3,.035,4200,'bandpass')},
+    open:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.18,1800,1,.1,4200);tone(t+.06,1318.5,.22,.03);tone(t+.12,1975.5,.3,.025)},
+    close:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.1,4200,1.2,.08,1800)},
+    nope:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.06,2200,2,.12);noise(t+.1,.06,2000,2,.1)}
+  };
+
+  var box=document.getElementById('mbox'),svg=box.querySelector('svg'),hint=document.getElementById('mhint');
+  var els={};[].forEach.call(svg.querySelectorAll('.pl'),function(g){els[g.getAttribute('data-p')]=g});
+  /* chỗ chưa tới: giấu hẳn (xoá khỏi trang để không lộ tên) */
+  [].forEach.call(svg.querySelectorAll('.pl'),function(g){if(+g.getAttribute('data-ch')>dn)g.remove()});
+  [].forEach.call(svg.querySelectorAll('.zt'),function(g){if(+g.getAttribute('data-ch')>dn)g.remove()});
+  if(dn<D.zones[0].ch)[].forEach.call(svg.querySelectorAll('.wash,.bline'),function(g){g.remove()});
+  var newZones=zones.filter(function(z){return !seen['z:'+z.id]});
+
+  /* nhãn tên chỉ hiện khi bản đồ đủ rộng; màn hẹp xem tên ở danh sách bên dưới */
+  function fit(){box.classList.toggle('narrow',box.getBoundingClientRect().width<560)}
+  fit();addEventListener('resize',fit);
+
+  /* đếm + danh sách theo khu */
+  var cnt=document.getElementById('mcount'),list=document.getElementById('mlist');
+  cnt.textContent=places.length?places.length+' nơi Clevia đã tới':'';
+  list.innerHTML=zones.map(function(z){var ps=places.filter(function(q){return q.zone===z.id});
+    return '<section class="mz"><h2>'+esc(z.name)+'</h2><ul>'+ps.map(function(q){var nw=isNew(q)||isUpd(q);
+      return '<li><button type="button" class="mi" data-p="'+q.id+'"><span class="n">'+esc(q.name)+'</span><span class="c">chương '+q.ch+(lastCh(q)>q.ch?' – '+lastCh(q):'')+'</span>'+(nw?'<span class="tag">'+(isNew(q)?'Mới':'Thêm chuyện')+'</span>':'')+'</button></li>'}).join('')+'</ul></section>'}).join('');
+  if(!places.length)document.getElementById('mempty').hidden=false;
+
+  /* gấp tư: mở bằng một lần chạm (hoặc vuốt ngang); mở rồi thì chạm vào từng chỗ */
+  var state=0,opened=false;
+  function setOpen(now){opened=true;box.className=box.className.replace(/\bf[0-2]\b/g,'')+' f2 open';hint.textContent=places.length?'chạm vào một chỗ để xem chuyện đã xảy ra ở đó':'';
+    try{sessionStorage.setItem('a07-map-open','1')}catch(e){}
+    var q=places.filter(function(q){return isNew(q)}),wait=now?0:RED?0:350;
+    newZones.forEach(function(z){var g=svg.querySelector('.zt[data-z="'+z.id+'"]');if(g&&!RED){g.classList.add('inking')}seen['z:'+z.id]=1});
+    q.forEach(function(x,i){var g=els[x.id];if(!g)return;if(RED){markSeen(x);return}g.classList.add('hidden');
+      setTimeout(function(){g.classList.remove('hidden');g.classList.add('inking');SND.pen();markSeen(x)},wait+i*520)});
+    places.forEach(function(x){if(isUpd(x)&&els[x.id])els[x.id].classList.add('upd')});
+    store('a07-map-seen',JSON.stringify(seen))}
+  function unfold(){if(opened||state)return;
+    if(!places.length){box.classList.remove('nope');void box.offsetWidth;box.classList.add('nope');SND.nope();hint.textContent='Clevia chưa có tấm bản đồ này. Nó nằm trong túi cô từ chương 4.';return}
+    if(RED){setOpen(true);return}
+    state=1;box.classList.add('f1');SND.rustle();
+    setTimeout(function(){box.classList.add('c1');SND.snap()},430);
+    setTimeout(function(){box.classList.add('f2a');SND.rustle()},700);
+    setTimeout(function(){box.classList.add('c2');SND.snap()},1130);
+    setTimeout(function(){setOpen(false)},1250)}
+  var sx=null;
+  box.addEventListener('pointerdown',function(e){sx=e.clientX});
+  box.addEventListener('pointermove',function(e){if(sx!==null&&!opened&&Math.abs(e.clientX-sx)>24){sx=null;unfold()}});
+  box.addEventListener('pointerup',function(){sx=null});
+  box.addEventListener('click',function(e){if(!opened){unfold();return}var g=e.target.closest('.pl');if(g)openSheet(g.getAttribute('data-p'))});
+  box.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!opened){e.preventDefault();unfold()}});
+  list.addEventListener('click',function(e){var b=e.target.closest('.mi');if(!b)return;if(!opened)setOpen(true);openSheet(b.getAttribute('data-p'))});
+  var was=false;try{was=sessionStorage.getItem('a07-map-open')==='1'}catch(e){}
+  if(was&&places.length)setOpen(true);
+
+  /* tấm giấy ghi chuyện của từng chỗ */
+  var sh=document.getElementById('sheet'),info=document.getElementById('info'),lastFocus=null,cur=null;
+  function chHref(n){return 'ch'+(n<10?'0':'')+n+'.html'}
+  function chTitle(n){var c=CH.filter(function(c){return +c.n===n})[0];return c?c.title:''}
+  function zname(id){var z=D.zones.filter(function(z){return z.id===id})[0];return z?z.name:''}
+  function openSheet(id){var q=places.filter(function(x){return x.id===id})[0];if(!q)return;lastFocus=document.activeElement;
+    if(cur&&els[cur])els[cur].classList.remove('on');cur=id;var g=els[id];if(g){g.classList.remove('on');void g.getBoundingClientRect();g.classList.add('on');g.classList.remove('upd')}
+    var notes=q.notes.filter(function(n){return n.ch<=dn});
+    info.innerHTML='<p class="zn">'+esc(zname(q.zone))+'</p><h2>'+esc(q.name)+'</h2>'+
+      '<ol class="trail">'+notes.map(function(n){return '<li><a class="c" href="'+chHref(n.ch)+'">Chương '+n.ch+(chTitle(n.ch)?' · '+esc(chTitle(n.ch)):'')+'</a>'+esc(n.t)+'</li>'}).join('')+'</ol>';
+    markSeen(q);var mi=list.querySelector('.mi[data-p="'+id+'"] .tag');if(mi)mi.remove();
+    sh.hidden=false;requestAnimationFrame(function(){sh.classList.add('on')});document.body.style.overflow='hidden';SND.open();document.getElementById('shx').focus()}
+  function closeSheet(){if(sh.hidden)return;sh.classList.remove('on');document.body.style.overflow='';SND.close();setTimeout(function(){sh.hidden=true;if(lastFocus&&lastFocus.focus)lastFocus.focus()},300)}
+  sh.addEventListener('click',function(e){if(e.target.closest('[data-close]'))closeSheet()});
+  addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+
+  /* nút quay lại chương đang đọc */
+  var last=(get('a07-last')||'').match(/^ch(\d+)\.html$/),bk=document.getElementById('back');
+  if(last&&CH.some(function(c){return +c.n===+last[1]})){bk.href=last[0];bk.textContent='Quay lại chương '+(+last[1])}
+  else if(CH.length){bk.href=chHref(+CH[0].n)}
+})();
+(function(){var d=document.getElementById('drawer'),b=document.getElementById('menu');if(!d||!b)return;
+function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
+function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
+b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();
+</script>
+</body>
+</html>
