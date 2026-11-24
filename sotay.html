@@ -633,6 +633,74 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .st-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
 .st-go a.st-cur{background:var(--veil);border-color:var(--lamp)}
 .st-go a[hidden]{display:none}
+/* Sổ tay: Đoán cùng Luke + Trang mới tự hiện chữ (Clair chọn 24/11). Màu: đỏ, xanh Artos, đen trắng. */
+.gs-help{color:var(--soft);font-size:15px;line-height:1.5;margin:-.2em 0 1em}
+button.chip{font:inherit;font-size:15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chip{position:relative;transition:transform .18s,box-shadow .18s}
+.chip.sel{transform:translateY(-3px) scale(1.04);border-color:#E2566C!important;box-shadow:0 0 0 2px #E2566C,0 0 22px rgba(226,86,108,.55)!important}
+.chip.land{animation:stLand .32s ease-out}
+@keyframes stLand{0%{transform:scale(.7);opacity:.3}70%{transform:scale(1.08)}100%{transform:none;opacity:1}}
+.tiers.gs .trow,.pool{cursor:pointer;transition:box-shadow .25s,border-color .25s}
+.tiers.gs.armed .trow,.armed~.pool{animation:stArm 1.6s ease-in-out infinite}
+.tiers.gs.armed ~ .pool{animation:stArm 1.6s ease-in-out infinite}
+@keyframes stArm{0%,100%{box-shadow:0 0 0 0 rgba(226,86,108,0)}50%{box-shadow:0 0 0 1px rgba(226,86,108,.55),0 0 16px rgba(226,86,108,.25)}}
+.pool{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding:10px 12px;border:1px dashed color-mix(in srgb,var(--ice) 45%,transparent);border-radius:4px}
+.pool .pool-l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ice)}
+.pool .tcells{min-height:48px}
+.gs-act{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:1.4em 0 0}
+.gs-flip{font:inherit;font-size:17px;padding:.7em 1.3em;border-radius:999px;cursor:pointer;color:#fff;background:#B3263A;border:1px solid #E2566C;box-shadow:0 0 22px rgba(226,86,108,.45);animation:stCall 2.4s ease-in-out infinite}
+@keyframes stCall{0%,100%{box-shadow:0 0 14px rgba(226,86,108,.3)}50%{box-shadow:0 0 28px rgba(226,86,108,.7)}}
+.gs-skip,.gs-redo{font:inherit;font-size:14px;background:none;border:0;padding:.4em 0;color:var(--soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.gs-again{margin:.8em 0 0;text-align:right}
+.st-face{color:var(--soft);font-style:italic;padding:1.2em 1em;border:1px dashed var(--line);border-radius:10px;text-align:center}
+/* lật thẻ: mặt sau là vòng Artos */
+.tiers.lk .chip{perspective:400px}
+.chip.back{color:transparent!important}
+.chip.back>*{visibility:hidden}
+.chip.back::after{content:"";position:absolute;inset:-1px;border-radius:8px;border:1px solid #2c5866;background:radial-gradient(circle at 50% 50%,transparent 0 7px,#5fb4c9 7.5px 8.5px,transparent 9px 13px,rgba(95,180,201,.5) 13.5px 14.2px,transparent 14.8px),#0f1c22;box-shadow:0 0 12px rgba(95,180,201,.25)}
+.chip.flip{animation:stFlip .42s cubic-bezier(.3,1.4,.5,1)}
+@keyframes stFlip{0%{transform:rotateY(90deg) scale(.9)}100%{transform:none}}
+.chip .mine{position:absolute;top:-9px;right:-6px;font-style:normal;font-size:11px;line-height:1;padding:3px 6px;border-radius:999px;background:#0e1517;color:var(--tc);border:1px solid var(--tc);box-shadow:0 0 8px color-mix(in srgb,var(--tc) 50%,transparent)}
+.chip.diff{outline:1px dashed rgba(226,86,108,.6);outline-offset:3px}
+/* Luke cà khịa: chữ xanh băng của Luke */
+.diffs{display:grid;gap:10px;margin:1.4em 0 0}
+.diffs.wait{display:none}
+.diffs .hold{opacity:0;transform:translateY(8px)}
+.diffs .in{animation:stIn .45s ease-out both}
+@keyframes stIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:none}}
+.df-sum{margin:0;font-size:15px;color:var(--soft)}
+.df-sum b{color:#E2566C;font-size:1.25em;font-weight:600}
+.df{background:rgba(14,22,25,.92);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent);border-left:3px solid var(--tc);border-radius:10px;padding:10px 14px 12px;color:#c9cfc6}
+.df-h{display:flex;align-items:center;gap:10px}
+.df-h svg{width:30px;height:30px;flex:0 0 30px;color:var(--tc)}
+.df-h .nm{flex:1;font-size:16px}
+.df-h .vs{font-size:13px;color:#9aa5a3}
+.df-h .vs i{font-style:normal;font-weight:600;font-size:16px;color:var(--tc);text-shadow:0 0 10px var(--tc)}
+.lq{margin:.5em 0 0;padding:0 0 0 .8em;border-left:2px solid #8fd3e0;font-style:italic;color:#bfe9f2;text-shadow:0 0 12px rgba(143,211,224,.35);line-height:1.5}
+blockquote.df.lq{background:rgba(14,22,25,.92);border-radius:10px;padding:10px 14px;border:1px solid rgba(143,211,224,.4);border-left:3px solid #8fd3e0}
+/* trang mới tự hiện chữ */
+.note.fresh{position:relative;cursor:pointer;animation:stFresh 2.2s ease-in-out infinite}
+@keyframes stFresh{0%,100%{box-shadow:0 -2px 0 0 #E2566C,0 0 16px rgba(226,86,108,.15)}50%{box-shadow:0 -2px 0 0 #E2566C,0 0 30px rgba(226,86,108,.4)}}
+.note.writing{animation:none;box-shadow:0 -2px 0 0 #8fd3e0,0 0 26px rgba(143,211,224,.3)}
+.note .ink:not(.live):not(.done){display:none}
+.note .ink:not(.done) .who{opacity:0}
+.note .ink .who{transition:opacity .4s}
+.note .ink .ch{opacity:0;transition:opacity .18s,filter .18s;filter:blur(2px)}
+.note .ink .ch.on{opacity:1;filter:none}
+.note .ink.done .ch{opacity:1;filter:none}
+.nib{display:inline-block;width:6px;height:6px;margin:0 1px;border-radius:50%;background:#bfe9f2;box-shadow:0 0 8px #8fd3e0,0 0 16px #8fd3e0;vertical-align:middle}
+.note-h .gr s.tostrike{text-decoration:none;background:linear-gradient(#E2566C,#E2566C) no-repeat 0 55%/0 2px;transition:background-size .38s ease-out,color .38s;color:#c9cfc6}
+.note-h .gr s.tostrike.struck{background-size:100% 2px;color:#6b787d}
+.note .he s.tostrike{text-decoration:none;background:linear-gradient(#E2566C,#E2566C) no-repeat 0 55%/0 1.5px;transition:background-size .38s ease-out}
+.note .he s.tostrike.struck{background-size:100% 1.5px}
+.note blockquote.tostrike{transition:opacity .5s}
+.note blockquote.tostrike.struck{opacity:.5;text-decoration:line-through;text-decoration-color:#E2566C}
+.note-h .gr .ink-t{display:inline-block;opacity:0;transform:scale(1.6)}
+.note-h .gr .ink-t.shown{opacity:1;transform:none;transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1)}
+.pen-go{display:flex;flex-direction:column;align-items:center;gap:2px;margin:.9em auto 0;font:inherit;font-size:15px;color:#fff;background:rgba(179,38,58,.85);border:1px solid #E2566C;border-radius:999px;padding:.5em 1.2em;cursor:pointer;box-shadow:0 0 18px rgba(226,86,108,.45)}
+.pen-go small{font-size:12px;opacity:.8}
+@media (prefers-reduced-motion: reduce){.note.fresh,.gs-flip,.tiers.gs.armed .trow,.tiers.gs.armed ~ .pool{animation:none}}
+
 </style>
 </head>
 <body>
@@ -661,17 +729,25 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   </nav>
 </main>
 <script>
+var D={"typesFrom":7,"types":[{"id":"arms","en":"Arms","vi":"Vũ trang","line":"Một món vũ khí nào đó đi theo chủ nhân vĩnh viễn, có lẽ chỉ cần chờ chủ nhân của nó gọi ra và sử dụng.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M270 170 V560\" stroke-width=\"10\"/>\u003cpath d=\"M200 560 H340\" stroke-width=\"12\"/>\u003cpath d=\"M270 560 V660\" stroke-width=\"16\"/>\u003cpath d=\"M270 150 l-20 46 h40 z\" fill=\"#c9cfc6\" stroke-width=\"4\"/>\u003c/g>\u003c/svg>"},{"id":"element","en":"Element","vi":"Nguyên tố","line":"Điều khiển được nước, đất, gió… nhưng có lẽ phải là thứ có sẵn quanh mình.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"8\">\u003cpath d=\"M140 360 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 450 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 540 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003c/g>\u003cpath d=\"M270 200 c44 44 44 80 0 92 c-44 -12 -44 -48 0 -92z\" stroke-width=\"6\"/>\u003c/g>\u003c/svg>"},{"id":"enhance","en":"Enhance","vi":"Tăng cường","line":"Khoẻ hơn, nhanh hơn, mắt tinh tai thính hơn. Nhưng rơi vào người yếu thì cũng chỉ hơn người thường được một chút.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M110 420 Q270 270 430 420 Q270 570 110 420 Z\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"46\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"13\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"5\" opacity=\".6\">\u003cpath d=\"M270 230 V280 M160 270 l24 34 M380 270 l-24 34 M270 610 V560\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"psyche","en":"Psyche","vi":"Linh cảm","line":"Đọc được người ta đang nghĩ gì, đang thấy gì trong lòng, có khi làm người ta thấy thế này thế kia. Nhưng không bắt ai làm gì được đâu.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003ccircle cx=\"270\" cy=\"420\" r=\"16\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"6\">\u003ccircle class=\"pulse p1\" cx=\"270\" cy=\"420\" r=\"60\" opacity=\".85\"/>\u003ccircle class=\"pulse p2\" cx=\"270\" cy=\"420\" r=\"110\" opacity=\".55\"/>\u003ccircle class=\"pulse p3\" cx=\"270\" cy=\"420\" r=\"160\" opacity=\".3\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"shift","en":"Shift","vi":"Chuyển hoá","line":"Đổi hình dạng, ẩn đi, hoặc dịch chuyển như cậu Felix.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"225\" cy=\"320\" r=\"40\"/>\u003cpath d=\"M150 570 C150 420 300 420 300 570\"/>\u003c/g>\u003cg class=\"ghost\" stroke-width=\"5\" stroke-dasharray=\"14 12\" opacity=\".6\">\u003ccircle cx=\"320\" cy=\"300\" r=\"40\"/>\u003cpath d=\"M245 550 C245 400 395 400 395 550\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"bond","en":"Bond","vi":"Khế ước","line":"Có lẽ là năng lực trói buộc với linh vật nào đó, hoặc người nào đó. Anh chưa thật sự thấy năng lực này nhiều để có thể hiểu rõ.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"220\" cy=\"420\" r=\"82\"/>\u003ccircle cx=\"320\" cy=\"420\" r=\"82\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"rule","en":"Rule","vi":"Quy tắc","line":"Chưa rõ. Anh chưa gặp ai cả.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath class=\"glitch\" d=\"M190 420 H350\" stroke-width=\"3\"/>\u003c/g>\u003c/svg>"}],"people":[{"name":"Leon","mark":"chain","steps":[{"ch":6,"tier":"S","he":"?","who":"Ông ở giếng","quote":"Tệ thật. Lại một tên vuốt nhọn."},{"ch":7,"tier":"S","he":"Vũ trang","who":"Luke","quote":"Anh từng gặp qua vài kẻ sở hữu năng lực hệ Vũ trang rồi, nhưng cái xích kiểu đấy thì chưa thấy ai có. Có lẽ Leon đã thuần thục nó đến mức tối đa rồi nên mới mạnh đến vậy."}]},{"name":"Gã da cứng như đá","mark":"crack","steps":[{"ch":10,"tier":"S","he":"Tăng cường","who":"Luke","quote":"Anh từng nghĩ Tăng cường chỉ mạnh khi rơi vào người vốn khoẻ sẵn. Hôm nay anh mới thấy, nếu nó rơi vào một người như hắn thì nó còn đáng sợ hơn cả Vũ trang."}]},{"name":"Ông ở giếng","mark":"well","steps":[{"ch":5,"tier":"?","he":"?","who":"Luke","quote":"Đi một mình giữa lúc này mà không bị gì, thì hoặc là ông ta biết điều gì đó mình chưa biết, hoặc năng lực của ông ta hợp với việc đi một mình."},{"ch":7,"tier":"A","he":"Tăng cường?","who":"Luke","quote":"Khoẻ như trâu, ừ. Mà đêm qua ông ta đi giữa cả đám quỷ, chẳng con nào đụng tới. Liệu đó là năng lực đặc biệt gì sao, hay nó thuộc hệ khác? Thú thật anh không đoán ra."}]},{"name":"Jasper","mark":"mask","steps":[{"ch":9,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Có lẽ hắn chỉ mượn được cái vỏ của ai đó thôi. Chứ sức thì vẫn là sức của hắn."},{"ch":9,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Không, có vẻ hắn mượn được sức mạnh khi biến thành người nào đó, chỉ là không sử dụng được năng lực mà thôi."},{"ch":10,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Anh đoán là phải gặp tận mặt, hay phải có điều kiện gì đó, thì mới mượn được dáng người ta. Anh không chắc nữa."}]},{"name":"Felix","mark":"dash","steps":[{"ch":7,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Dịch chuyển, chắc thế. Mỗi lần được một quãng."}]},{"name":"Luke","mark":"eye","steps":[{"ch":7,"tier":"C","he":"Tăng cường","who":"Luke","quote":"Tăng cường, đối với anh không phải một hệ mạnh về chiến đấu.","aside":"Clevia cãi: “Đánh với anh xong, chắc ông ta cũng chẳng dám bảo anh mềm đâu.”"}]},{"name":"Clevia","mark":"lock","steps":[{"ch":2,"tier":"?","he":"?","who":"Luke","quote":"Theo những gì anh thấy thì chắc là mở khoá. Anh đoán người ta sẽ gọi nó là Unlock, hoặc cái gì đó na ná vậy."},{"ch":7,"tier":"D","he":"Tăng cường?","who":"Luke","quote":"Có lẽ nó nằm ở việc em cường hoá khả năng cảm nhận cơ chế thông qua đầu ngón tay chăng? Anh chỉ đoán vậy thôi.","aside":"Clevia tự nói: “Chả có nanh vuốt gì.”"},{"ch":12,"tier":"?","he":"Hai hệ?","who":"Luke","quote":"Có lẽ… năng lực của em không chỉ có một hệ chăng? Anh từng nghe nói có người mang hai hệ cùng lúc, nhưng anh chưa tận mắt thấy ai bao giờ. Anh không chắc nữa…"}]},{"name":"Bà Mabel","mark":"hat","dead":7,"steps":[{"ch":7,"tier":"D","he":"Linh cảm?","who":"Luke","quote":"Thế thì có khi là Linh cảm. Loại năng lực đấy trông có vẻ khá vô hại."}]},{"name":"Chú Oscar","mark":"water","steps":[{"ch":8,"tier":"?","he":"?","who":"Luke","quote":"Cháu thấy nước trong thùng của chú cứ gợn lên mãi. Cháu đoán là chú làm được gì đó với nước, phải không chú?"}]},{"name":"Ruby","mark":"paw","dead":10,"steps":[{"ch":9,"tier":"?","he":"?","who":"Luke","quote":"Protect…","aside":"Vòm sáng và làn khói là từ thẻ, không phải năng lực của cô ta."},{"ch":10,"tier":"?","he":"?","who":"","quote":"","aside":"Một con mèo đen móc túi, cắn không thủng da gã kia, rồi tan thành khói. Luke chưa nói gì về nó."}]},{"name":"Gã đeo kính","mark":"glasses","steps":[{"ch":11,"tier":"?","he":"?","who":"Leon","quote":"Đứng nhìn cái ổ khoá của cô cả buổi, nhìn chăm chăm như muốn nhìn xuyên qua nó, xong rồi bỏ đi."}]}],"max":12,"marks":{"chain":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"38\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 29 48)\"/>\u003crect x=\"36\" y=\"42\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(20 51 52)\"/>\u003crect x=\"58\" y=\"34\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 73 44)\"/>\u003c/g>","crack":"\u003crect x=\"18\" y=\"22\" width=\"64\" height=\"56\" rx=\"4\" stroke-width=\"4\" opacity=\".55\"/>\u003cpath d=\"M50 22 L44 40 L56 50 L46 64 L52 78\" stroke-width=\"5\"/>\u003cpath d=\"M56 50 L70 56\" stroke-width=\"3\"/>","well":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"50\" cy=\"40\" rx=\"30\" ry=\"9\"/>\u003cpath d=\"M20 40 V70 Q50 82 80 70 V40\"/>\u003cpath d=\"M50 12 V36\" stroke-width=\"3\"/>\u003c/g>","mask":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 26 Q50 18 70 26 Q74 56 50 78 Q26 56 30 26 Z\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"7 6\" opacity=\".6\">\u003cpath d=\"M42 20 Q62 12 82 20 Q86 50 62 72\"/>\u003c/g>","dash":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"26\" cy=\"64\" rx=\"7\" ry=\"12\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"5 6\" opacity=\".45\">\u003cpath d=\"M36 62 Q52 40 66 40\"/>\u003c/g>\u003cg stroke-width=\"5\">\u003cellipse cx=\"74\" cy=\"36\" rx=\"7\" ry=\"12\"/>\u003c/g>","eye":"\u003cpath d=\"M14 50 Q50 18 86 50 Q50 82 14 50 Z\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"12\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"3.5\" fill=\"currentColor\"/>","lock":"\u003cpath d=\"M36 46 V34 a14 14 0 0 1 28 0\" stroke-width=\"5\"/>\u003crect x=\"26\" y=\"46\" width=\"48\" height=\"36\" rx=\"5\" stroke-width=\"5\"/>","hat":"\u003cpath d=\"M12 64 L50 24 L88 64 Z\" stroke-width=\"5\"/>\u003cpath d=\"M30 64 Q50 74 70 64\" stroke-width=\"3\" opacity=\".6\"/>","water":"\u003cg stroke-width=\"4\">\u003cellipse cx=\"50\" cy=\"56\" rx=\"10\" ry=\"3\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"24\" ry=\"8\" opacity=\".7\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"38\" ry=\"13\" opacity=\".4\"/>\u003c/g>","paw":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 20 L46 80\"/>\u003cpath d=\"M44 18 L58 78\"/>\u003cpath d=\"M58 20 L70 76\"/>\u003c/g>","glasses":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003crect x=\"58\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003cpath d=\"M42 48 Q50 42 58 48\"/>\u003c/g>\u003cpath d=\"M20 44 L28 52\" stroke-width=\"3\" opacity=\".7\"/>"}}, CH=[{"n":"01","title":"Thứ gì đó đã bị bỏ quên"},{"n":"02","title":"Bảy ngày"},{"n":"03","title":"Bữa Tiệc Đầu Tiên"},{"n":"04","title":"Hai mươi cái tên"},{"n":"05","title":"Lửa bếp"},{"n":"06","title":"Xích"},{"n":"07","title":"Việc làng"},{"n":"08","title":"Chỗ thứ ba"},{"n":"09","title":"Con số trên bảng"},{"n":"10","title":"Chợ trưa"},{"n":"11","title":"Cổng hầm"},{"n":"12","title":"Bên trong hầm tối"}];
+// Mã chạy trên trang Sổ tay của Luke (sotay.js chèn vào, kèm biến D và CH).
+// Tương tác (Clair chọn 24/11):
+//  1) Đoán cùng Luke: người đọc tự xếp từng người vào S–D (hoặc "?"), lật xem Luke xếp, chỗ lệch thì Luke cà khịa một câu.
+//  2) Trang mới tự hiện chữ: đọc hết chương, mở sổ thấy Luke đang viết dở; suy đoán cũ bị gạch ngay trước mắt, có tiếng bút.
 (function(){
-  var D={"typesFrom":7,"types":[{"id":"arms","en":"Arms","vi":"Vũ trang","line":"Một món vũ khí nào đó đi theo chủ nhân vĩnh viễn, có lẽ chỉ cần chờ chủ nhân của nó gọi ra và sử dụng.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M270 170 V560\" stroke-width=\"10\"/>\u003cpath d=\"M200 560 H340\" stroke-width=\"12\"/>\u003cpath d=\"M270 560 V660\" stroke-width=\"16\"/>\u003cpath d=\"M270 150 l-20 46 h40 z\" fill=\"#c9cfc6\" stroke-width=\"4\"/>\u003c/g>\u003c/svg>"},{"id":"element","en":"Element","vi":"Nguyên tố","line":"Điều khiển được nước, đất, gió… nhưng có lẽ phải là thứ có sẵn quanh mình.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"8\">\u003cpath d=\"M140 360 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 450 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003cpath d=\"M140 540 q32 -36 65 0 t65 0 t65 0 t65 0\"/>\u003c/g>\u003cpath d=\"M270 200 c44 44 44 80 0 92 c-44 -12 -44 -48 0 -92z\" stroke-width=\"6\"/>\u003c/g>\u003c/svg>"},{"id":"enhance","en":"Enhance","vi":"Tăng cường","line":"Khoẻ hơn, nhanh hơn, mắt tinh tai thính hơn. Nhưng rơi vào người yếu thì cũng chỉ hơn người thường được một chút.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath d=\"M110 420 Q270 270 430 420 Q270 570 110 420 Z\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"46\" stroke-width=\"8\"/>\u003ccircle cx=\"270\" cy=\"420\" r=\"13\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"5\" opacity=\".6\">\u003cpath d=\"M270 230 V280 M160 270 l24 34 M380 270 l-24 34 M270 610 V560\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"psyche","en":"Psyche","vi":"Linh cảm","line":"Đọc được người ta đang nghĩ gì, đang thấy gì trong lòng, có khi làm người ta thấy thế này thế kia. Nhưng không bắt ai làm gì được đâu.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003ccircle cx=\"270\" cy=\"420\" r=\"16\" fill=\"#c9cfc6\"/>\u003cg stroke-width=\"6\">\u003ccircle class=\"pulse p1\" cx=\"270\" cy=\"420\" r=\"60\" opacity=\".85\"/>\u003ccircle class=\"pulse p2\" cx=\"270\" cy=\"420\" r=\"110\" opacity=\".55\"/>\u003ccircle class=\"pulse p3\" cx=\"270\" cy=\"420\" r=\"160\" opacity=\".3\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"shift","en":"Shift","vi":"Chuyển hoá","line":"Đổi hình dạng, ẩn đi, hoặc dịch chuyển như cậu Felix.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"225\" cy=\"320\" r=\"40\"/>\u003cpath d=\"M150 570 C150 420 300 420 300 570\"/>\u003c/g>\u003cg class=\"ghost\" stroke-width=\"5\" stroke-dasharray=\"14 12\" opacity=\".6\">\u003ccircle cx=\"320\" cy=\"300\" r=\"40\"/>\u003cpath d=\"M245 550 C245 400 395 400 395 550\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"bond","en":"Bond","vi":"Khế ước","line":"Có lẽ là năng lực trói buộc với linh vật nào đó, hoặc người nào đó. Anh chưa thật sự thấy năng lực này nhiều để có thể hiểu rõ.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cg stroke-width=\"7\">\u003ccircle cx=\"220\" cy=\"420\" r=\"82\"/>\u003ccircle cx=\"320\" cy=\"420\" r=\"82\"/>\u003c/g>\u003c/g>\u003c/svg>"},{"id":"rule","en":"Rule","vi":"Quy tắc","line":"Chưa rõ. Anh chưa gặp ai cả.","svg":"\u003csvg viewBox=\"0 0 540 856\" aria-hidden=\"true\">\u003crect width=\"540\" height=\"856\" rx=\"34\" fill=\"#1a2023\"/>\u003crect x=\"6\" y=\"6\" width=\"528\" height=\"844\" rx=\"30\" fill=\"none\" stroke=\"#3c4649\" stroke-width=\"2\"/>\u003cg fill=\"none\" stroke=\"#c9cfc6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\u003cpath class=\"glitch\" d=\"M190 420 H350\" stroke-width=\"3\"/>\u003c/g>\u003c/svg>"}],"people":[{"name":"Leon","mark":"chain","steps":[{"ch":6,"tier":"S","he":"?","who":"Ông ở giếng","quote":"Tệ thật. Lại một tên vuốt nhọn."},{"ch":7,"tier":"S","he":"Vũ trang","who":"Luke","quote":"Anh từng gặp qua vài kẻ sở hữu năng lực hệ Vũ trang rồi, nhưng cái xích kiểu đấy thì chưa thấy ai có. Có lẽ Leon đã thuần thục nó đến mức tối đa rồi nên mới mạnh đến vậy."}]},{"name":"Gã da cứng như đá","mark":"crack","steps":[{"ch":10,"tier":"S","he":"Tăng cường","who":"Luke","quote":"Anh từng nghĩ Tăng cường chỉ mạnh khi rơi vào người vốn khoẻ sẵn. Hôm nay anh mới thấy, nếu nó rơi vào một người như hắn thì nó còn đáng sợ hơn cả Vũ trang."}]},{"name":"Ông ở giếng","mark":"well","steps":[{"ch":5,"tier":"?","he":"?","who":"Luke","quote":"Đi một mình giữa lúc này mà không bị gì, thì hoặc là ông ta biết điều gì đó mình chưa biết, hoặc năng lực của ông ta hợp với việc đi một mình."},{"ch":7,"tier":"A","he":"Tăng cường?","who":"Luke","quote":"Khoẻ như trâu, ừ. Mà đêm qua ông ta đi giữa cả đám quỷ, chẳng con nào đụng tới. Liệu đó là năng lực đặc biệt gì sao, hay nó thuộc hệ khác? Thú thật anh không đoán ra."}]},{"name":"Jasper","mark":"mask","steps":[{"ch":9,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Có lẽ hắn chỉ mượn được cái vỏ của ai đó thôi. Chứ sức thì vẫn là sức của hắn."},{"ch":9,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Không, có vẻ hắn mượn được sức mạnh khi biến thành người nào đó, chỉ là không sử dụng được năng lực mà thôi."},{"ch":10,"tier":"A","he":"Chuyển hoá","who":"Luke","quote":"Anh đoán là phải gặp tận mặt, hay phải có điều kiện gì đó, thì mới mượn được dáng người ta. Anh không chắc nữa."}]},{"name":"Felix","mark":"dash","steps":[{"ch":7,"tier":"B","he":"Chuyển hoá","who":"Luke","quote":"Dịch chuyển, chắc thế. Mỗi lần được một quãng."}]},{"name":"Luke","mark":"eye","steps":[{"ch":7,"tier":"C","he":"Tăng cường","who":"Luke","quote":"Tăng cường, đối với anh không phải một hệ mạnh về chiến đấu.","aside":"Clevia cãi: “Đánh với anh xong, chắc ông ta cũng chẳng dám bảo anh mềm đâu.”"}]},{"name":"Clevia","mark":"lock","steps":[{"ch":2,"tier":"?","he":"?","who":"Luke","quote":"Theo những gì anh thấy thì chắc là mở khoá. Anh đoán người ta sẽ gọi nó là Unlock, hoặc cái gì đó na ná vậy."},{"ch":7,"tier":"D","he":"Tăng cường?","who":"Luke","quote":"Có lẽ nó nằm ở việc em cường hoá khả năng cảm nhận cơ chế thông qua đầu ngón tay chăng? Anh chỉ đoán vậy thôi.","aside":"Clevia tự nói: “Chả có nanh vuốt gì.”"},{"ch":12,"tier":"?","he":"Hai hệ?","who":"Luke","quote":"Có lẽ… năng lực của em không chỉ có một hệ chăng? Anh từng nghe nói có người mang hai hệ cùng lúc, nhưng anh chưa tận mắt thấy ai bao giờ. Anh không chắc nữa…"}]},{"name":"Bà Mabel","mark":"hat","dead":7,"steps":[{"ch":7,"tier":"D","he":"Linh cảm?","who":"Luke","quote":"Thế thì có khi là Linh cảm. Loại năng lực đấy trông có vẻ khá vô hại."}]},{"name":"Chú Oscar","mark":"water","steps":[{"ch":8,"tier":"?","he":"?","who":"Luke","quote":"Cháu thấy nước trong thùng của chú cứ gợn lên mãi. Cháu đoán là chú làm được gì đó với nước, phải không chú?"}]},{"name":"Ruby","mark":"paw","dead":10,"steps":[{"ch":9,"tier":"?","he":"?","who":"Luke","quote":"Protect…","aside":"Vòm sáng và làn khói là từ thẻ, không phải năng lực của cô ta."},{"ch":10,"tier":"?","he":"?","who":"","quote":"","aside":"Một con mèo đen móc túi, cắn không thủng da gã kia, rồi tan thành khói. Luke chưa nói gì về nó."}]},{"name":"Gã đeo kính","mark":"glasses","steps":[{"ch":11,"tier":"?","he":"?","who":"Leon","quote":"Đứng nhìn cái ổ khoá của cô cả buổi, nhìn chăm chăm như muốn nhìn xuyên qua nó, xong rồi bỏ đi."}]}],"max":12,"marks":{"chain":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"38\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 29 48)\"/>\u003crect x=\"36\" y=\"42\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(20 51 52)\"/>\u003crect x=\"58\" y=\"34\" width=\"30\" height=\"20\" rx=\"10\" transform=\"rotate(-20 73 44)\"/>\u003c/g>","crack":"\u003crect x=\"18\" y=\"22\" width=\"64\" height=\"56\" rx=\"4\" stroke-width=\"4\" opacity=\".55\"/>\u003cpath d=\"M50 22 L44 40 L56 50 L46 64 L52 78\" stroke-width=\"5\"/>\u003cpath d=\"M56 50 L70 56\" stroke-width=\"3\"/>","well":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"50\" cy=\"40\" rx=\"30\" ry=\"9\"/>\u003cpath d=\"M20 40 V70 Q50 82 80 70 V40\"/>\u003cpath d=\"M50 12 V36\" stroke-width=\"3\"/>\u003c/g>","mask":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 26 Q50 18 70 26 Q74 56 50 78 Q26 56 30 26 Z\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"7 6\" opacity=\".6\">\u003cpath d=\"M42 20 Q62 12 82 20 Q86 50 62 72\"/>\u003c/g>","dash":"\u003cg stroke-width=\"5\">\u003cellipse cx=\"26\" cy=\"64\" rx=\"7\" ry=\"12\"/>\u003c/g>\u003cg stroke-width=\"4\" stroke-dasharray=\"5 6\" opacity=\".45\">\u003cpath d=\"M36 62 Q52 40 66 40\"/>\u003c/g>\u003cg stroke-width=\"5\">\u003cellipse cx=\"74\" cy=\"36\" rx=\"7\" ry=\"12\"/>\u003c/g>","eye":"\u003cpath d=\"M14 50 Q50 18 86 50 Q50 82 14 50 Z\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"12\" stroke-width=\"5\"/>\u003ccircle cx=\"50\" cy=\"50\" r=\"3.5\" fill=\"currentColor\"/>","lock":"\u003cpath d=\"M36 46 V34 a14 14 0 0 1 28 0\" stroke-width=\"5\"/>\u003crect x=\"26\" y=\"46\" width=\"48\" height=\"36\" rx=\"5\" stroke-width=\"5\"/>","hat":"\u003cpath d=\"M12 64 L50 24 L88 64 Z\" stroke-width=\"5\"/>\u003cpath d=\"M30 64 Q50 74 70 64\" stroke-width=\"3\" opacity=\".6\"/>","water":"\u003cg stroke-width=\"4\">\u003cellipse cx=\"50\" cy=\"56\" rx=\"10\" ry=\"3\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"24\" ry=\"8\" opacity=\".7\"/>\u003cellipse cx=\"50\" cy=\"56\" rx=\"38\" ry=\"13\" opacity=\".4\"/>\u003c/g>","paw":"\u003cg stroke-width=\"5\">\u003cpath d=\"M30 20 L46 80\"/>\u003cpath d=\"M44 18 L58 78\"/>\u003cpath d=\"M58 20 L70 76\"/>\u003c/g>","glasses":"\u003cg stroke-width=\"5\">\u003crect x=\"14\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003crect x=\"58\" y=\"40\" width=\"28\" height=\"22\" rx=\"3\"/>\u003cpath d=\"M42 48 Q50 42 58 48\"/>\u003c/g>\u003cpath d=\"M20 44 L28 52\" stroke-width=\"3\" opacity=\".7\"/>"}};
   var root=document.documentElement, tb=document.getElementById('theme');
   function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
   function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function jget(k){try{return JSON.parse(get(k)||'null')}catch(e){return null}}
+  function jset(k,v){store(k,JSON.stringify(v))}
   function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
   function label(){tb.textContent=isDark()?'Sáng':'Tối'}
   label(); tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label()};
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-  function mark(id,cls){return '<svg viewBox="0 0 100 100" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+(D.marks[id]||'')+'</g></svg>'}
-  // tự theo tiến độ: sổ mở tới chương người đọc đã đọc HẾT (a07-done, ghi khi cuộn tới cuối chương)
+  function mark(id){return '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+(D.marks[id]||'')+'</g></svg>'}
+  var RED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- tiến độ: sổ mở tới chương người đọc đã đọc HẾT (a07-done, ghi khi cuộn tới cuối chương) ---------- */
   var opened=+(get('a07-max')||0), last=(get('a07-last')||'').match(/^ch(\d+)\.html$/);
   if(last) opened=Math.max(opened,+last[1]);
   var dn=get('a07-done'); if(dn===null){dn=+(get('a07-max')||0); if(dn) store('a07-done',dn)} dn=+dn||0; // người đọc cũ: giữ như trước
@@ -682,47 +758,210 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     up.innerHTML='Sổ đang mở tới hết <b>chương '+seen+'</b>.'+(reading>seen&&reading<=D.max?' Đọc hết chương '+reading+', sổ sẽ tự mở thêm.':'');
     up.hidden=false;
   }
-  var CH=[{"n":"01","title":"Thứ gì đó đã bị bỏ quên"},{"n":"02","title":"Bảy ngày"},{"n":"03","title":"Bữa Tiệc Đầu Tiên"},{"n":"04","title":"Hai mươi cái tên"},{"n":"05","title":"Lửa bếp"},{"n":"06","title":"Xích"},{"n":"07","title":"Việc làng"},{"n":"08","title":"Chỗ thứ ba"},{"n":"09","title":"Con số trên bảng"},{"n":"10","title":"Chợ trưa"},{"n":"11","title":"Cổng hầm"},{"n":"12","title":"Bên trong hầm tối"}];
   function href(n){return 'ch'+(n<10?'0':'')+n+'.html'}
   function has(n){return CH.some(function(c){return +c.n===n})}
   function title(n){var c=CH.filter(function(c){return +c.n===n})[0];return c?c.title:''}
-  // nút: quay lại chương đang đọc (chương mở gần nhất), sang chương sau
   var curN=last?+last[1]:seen, bk=document.getElementById('back'), nx=document.getElementById('nextch');
   if(curN&&has(curN)){bk.href=href(curN);bk.textContent='Quay lại chương '+curN}
   else if(CH.length){bk.href=href(+CH[0].n)}
   if(curN&&has(curN+1)){nx.hidden=false;nx.href=href(curN+1);nx.textContent='Sang chương '+(curN+1)+': '+title(curN+1)}
-  function render(n){
-    var out='', ppl=D.people.map(function(p){var st=p.steps.filter(function(s){return s.ch<=n});return st.length?{p:p,st:st,cur:st[st.length-1],gone:p.dead&&p.dead<=n}:null}).filter(Boolean);
-    if(!ppl.length){document.getElementById('out').innerHTML='<p class="st-empty">Sổ còn trống. Luke chưa kịp đoán gì về ai.</p>';return}
-    out+='<h2>Luke xếp</h2><div class="tiers">';
-    ['S','A','B','C','D','?'].forEach(function(t){
-      var row=ppl.filter(function(x){return x.cur.tier===t});
-      out+='<div class="trow" data-tier="'+t+'"><div class="tl'+(t==='?'?' q':'')+'">'+t+'</div><div class="tcells">'+(row.length?row.map(function(x){return '<a data-tier="'+t+'" class="chip'+(x.gone?' gone':'')+'" href="#p-'+D.people.indexOf(x.p)+'">'+mark(x.p.mark)+esc(x.p.name)+'</a>'}).join(''):'<span class="none">chưa có ai</span>')+'</div></div>';
-    });
-    out+='</div><h2>Ghi chép</h2><div class="notes">';
-    ppl.forEach(function(x){
-      var p=x.p, st=x.st, tiers=[], hes=[];
-      st.forEach(function(s){if(tiers[tiers.length-1]!==s.tier)tiers.push(s.tier); if(hes[hes.length-1]!==s.he)hes.push(s.he)});
-      var gr=tiers.slice(0,-1).filter(function(t){return t!=='?'}).map(function(t){return '<s>'+t+'</s>'}).join('')+tiers[tiers.length-1];
-      var he=hes.slice(0,-1).filter(function(h){return h!=='?'}).map(function(h){return '<s>'+esc(h)+'</s> '}).join('')+esc(hes[hes.length-1]);
-      out+='<article data-tier="'+x.cur.tier+'" class="note'+(x.gone?' gone':'')+'" id="p-'+D.people.indexOf(p)+'"><div class="note-h">'+mark(p.mark)+'<span class="nm">'+esc(p.name)+'</span><span class="gr">'+gr+'</span></div>';
-      out+='<p class="he">Hệ: '+he+'</p>';
-      st.forEach(function(s,i){
-        var old=i<st.length-1 && s.tier!=='?' && s.tier!==st[i+1].tier;
-        if(s.quote) out+='<blockquote'+(old?' class="old"':'')+'>“'+esc(s.quote)+'”<span class="who">'+esc(s.who)+', chương '+s.ch+'</span></blockquote>';
-        if(s.aside) out+='<p class="aside">'+esc(s.aside)+(s.quote?'':' <span class="who">Chương '+s.ch+'</span>')+'</p>';
-      });
-      if(x.gone) out+='<p class="gone-t">Mất ở chương '+p.dead+'.</p>';
-      out+='</article>';
-    });
-    out+='</div>';
-    if(n>=D.typesFrom){
-      out+='<h2>Bảy hệ, theo lời Luke</h2><div class="types">'+D.types.map(function(t){return '<div class="ty">'+t.svg+'<div><b>'+esc(t.vi)+'</b><i>'+esc(t.en)+'</i><p>'+esc(t.line)+'</p></div></div>'}).join('')+'</div>';
-    }
-    document.getElementById('out').innerHTML=out;
+
+  /* ---------- tiếng (theo nút "tiếng hiệu ứng" ở trang chương: a07-sfx). Không trống, không tiếng trầm. ---------- */
+  var SF=get('a07-sfx')!=='off', ac=null, out=null, nb=null;
+  function ctx(){
+    if(!SF) return null;
+    if(!ac){var AC=window.AudioContext||window.webkitAudioContext; if(!AC){SF=false;return null}
+      ac=new AC(); out=ac.createGain(); out.gain.value=.5; out.connect(ac.destination);
+      nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate); var d=nb.getChannelData(0); for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;}
+    if(ac.state==='suspended') ac.resume();
+    return ac;
   }
-  render(seen);
+  function noise(t,dur,f,qv,v,f2){var s=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nb;s.loop=true;bp.type='bandpass';bp.frequency.setValueAtTime(f,t);if(f2)bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=qv;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(bp);bp.connect(g);g.connect(out);s.start(t,Math.random()*.5);s.stop(t+dur+.02);return g}
+  function tone(t,f,dur,v,type){var o=ac.createOscillator(),g=ac.createGain();o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02)}
+  var SND={
+    tick:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.03,5200,2,.12);tone(t,1760,.06,.05,'sine')},
+    place:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.05,3800,3,.14);tone(t,1320,.08,.06,'sine')},
+    flip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.13,2200,1.2,.16,5600);tone(t+.11,1980,.07,.04,'sine')},
+    pop:function(){if(!ctx())return;var t=ac.currentTime;tone(t,880,.12,.06);tone(t+.07,1318.5,.16,.06)},
+    strike:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.28,2600,1.4,.22,4800);noise(t+.05,.2,5200,4,.06)},
+    pen:function(){ // tiếng ngòi bút sột soạt, chạy tới khi gọi hàm trả về
+      if(!ctx()) return function(){};
+      var alive=true;(function stroke(){if(!alive)return;var t=ac.currentTime,d=.05+Math.random()*.11;noise(t,d,3000+Math.random()*1800,1.6,.05+Math.random()*.06);setTimeout(stroke,(d*1000)+20+Math.random()*60)})();
+      return function(){alive=false};
+    }
+  };
+
+  /* ---------- dữ liệu người đã mở tới chương đã đọc ---------- */
+  var TIERS=['S','A','B','C','D'], ROWS=TIERS.concat(['?']);
+  var ppl=D.people.map(function(p,i){var st=p.steps.filter(function(s){return s.ch<=seen});return st.length?{p:p,i:i,st:st,cur:st[st.length-1],gone:p.dead&&p.dead<=seen}:null}).filter(Boolean);
+  // ván đoán: mỗi mức chương một ván; mở chương mới thì giữ chỗ đã xếp cũ để người đọc chỉnh tiếp
+  var G=jget('a07-st-guess'); if(!G||G.lvl!==seen) G={lvl:seen,g:(G&&G.g)||{},rev:false};
+  ppl.forEach(function(x){if(G.g[x.i]&&ROWS.indexOf(G.g[x.i])<0) delete G.g[x.i]});
+  // chữ mới: bước nào có chương lớn hơn lần cuối người đọc xem Luke viết cho người đó
+  var W=jget('a07-st-w'); if(!W){W={base:seen-1,p:{}};jset('a07-st-w',W)}
+  function fresh(x){var b=(x.i in W.p)?W.p[x.i]:W.base;return x.st.filter(function(s){return s.ch>b})}
+
+  /* ---------- câu cà khịa của Luke khi người đọc xếp khác (Luke không nói cộc) ---------- */
+  var QUIP={
+    up1:['Cao hơn anh xếp một bậc. Cũng phải, anh mới thấy được một phần thôi.','Một bậc cao hơn à? Có khi anh đang dè chừng quá.'],
+    up2:['Cao đến thế cơ à? Nếu đúng vậy thì anh phải viết lại cả trang này.','Xếp cao vậy là tin người ta lắm đấy. Anh thì chưa dám.'],
+    dn1:['Thấp hơn anh nghĩ một chút. Để anh để ý thêm.','Hạ một bậc à? Anh cũng từng nghĩ thế, rồi lại thôi.'],
+    dn2:['Xuống tận đó luôn à? Anh mong là anh nhìn đúng hơn.','Mạnh tay thật. Nhưng ở đây, thứ trông yếu nhất hay làm mình bất ngờ nhất.'],
+    lukeQ:['Anh còn chưa dám xếp người này, vậy mà đã có người chắc tay rồi.','Nhanh thật. Anh thì vẫn đang đợi thêm một lần nhìn nữa.'],
+    readerQ:['Cẩn thận đấy. Anh thì lỡ đặt cược mất rồi.'],
+    selfUp:['Xếp anh cao thế này thì anh ngại lắm.'],
+    selfDn:['Thấp hơn cả chỗ anh tự đặt à? Thôi, anh cũng chẳng cãi được.'],
+    all:'Giống hệt anh. Hay là mình đang đọc chung một cuốn sổ?',
+    allPart:'Chỗ nào đã xếp thì giống hệt anh.'
+  };
+  function quip(x,g){
+    var l=x.cur.tier, pick=function(a){return a[(x.i+seen)%a.length]};
+    if(l==='?') return pick(QUIP.lukeQ);
+    if(g==='?') return pick(QUIP.readerQ);
+    var d=TIERS.indexOf(l)-TIERS.indexOf(g); // dương = người đọc xếp cao hơn
+    if(x.p.name==='Luke') return pick(d>0?QUIP.selfUp:QUIP.selfDn);
+    return pick(d>0?(d>1?QUIP.up2:QUIP.up1):(d<-1?QUIP.dn2:QUIP.dn1));
+  }
+
+  /* ---------- vẽ ---------- */
+  var OUT=document.getElementById('out');
+  function chipBtn(x){return '<button type="button" class="chip pick'+(x.gone?' gone':'')+'" data-i="'+x.i+'">'+mark(x.p.mark)+esc(x.p.name)+'</button>'}
+  function guessHtml(){
+    var h='<h2>Xếp thử trước khi xem</h2><p class="gs-help">Chạm vào một người, rồi chạm vào hạng mình nghĩ là đúng. Xếp xong thì lật xem Luke xếp thế nào.</p><div class="tiers gs">';
+    ROWS.forEach(function(t){
+      var row=ppl.filter(function(x){return G.g[x.i]===t});
+      h+='<div class="trow drop" data-tier="'+t+'" data-row="'+t+'" role="button" tabindex="0" aria-label="Xếp vào hạng '+t+'"><div class="tl'+(t==='?'?' q':'')+'">'+t+'</div><div class="tcells">'+row.map(chipBtn).join('')+'</div></div>';
+    });
+    var pool=ppl.filter(function(x){return !G.g[x.i]});
+    h+='</div><div class="pool drop" data-row="" role="button" tabindex="0" aria-label="Bỏ ra khỏi hạng"><span class="pool-l">Chưa xếp</span><div class="tcells">'+(pool.length?pool.map(chipBtn).join(''):'<span class="none">đã xếp hết</span>')+'</div></div>';
+    h+='<div class="gs-act"><button type="button" class="gs-flip">Lật xem Luke xếp</button><button type="button" class="gs-skip">Bỏ qua, xem luôn</button></div>';
+    return h;
+  }
+  function boardHtml(anim){
+    var h='<h2>Luke xếp</h2><div class="tiers lk">';
+    ROWS.forEach(function(t){
+      var row=ppl.filter(function(x){return x.cur.tier===t});
+      h+='<div class="trow" data-tier="'+t+'"><div class="tl'+(t==='?'?' q':'')+'">'+t+'</div><div class="tcells">'+(row.length?row.map(function(x){
+        var g=G.skip?null:G.g[x.i], diff=g&&g!==t;
+        return '<a data-tier="'+t+'" class="chip'+(x.gone?' gone':'')+(anim?' back':'')+(diff?' diff':'')+'" href="#p-'+x.i+'">'+mark(x.p.mark)+esc(x.p.name)+(diff?'<i class="mine" data-tier="'+g+'">đoán '+g+'</i>':'')+'</a>'}).join(''):'<span class="none">chưa có ai</span>')+'</div></div>';
+    });
+    h+='</div>';
+    if(!G.skip){
+      var placed=ppl.filter(function(x){return G.g[x.i]}), diffs=placed.filter(function(x){return G.g[x.i]!==x.cur.tier});
+      if(placed.length){
+        h+='<div class="diffs'+(anim?' wait':'')+'"><p class="df-sum">Trùng với Luke <b>'+(placed.length-diffs.length)+'</b> trên '+placed.length+' người đã xếp.</p>';
+        if(!diffs.length) h+='<blockquote class="df lq">“'+esc(placed.length===ppl.length?QUIP.all:QUIP.allPart)+'”</blockquote>';
+        diffs.forEach(function(x){h+='<div class="df" data-tier="'+x.cur.tier+'"><div class="df-h">'+mark(x.p.mark)+'<span class="nm">'+esc(x.p.name)+'</span><span class="vs"><i data-tier="'+G.g[x.i]+'">'+G.g[x.i]+'</i> đoán · <i data-tier="'+x.cur.tier+'">'+x.cur.tier+'</i> Luke</span></div><blockquote class="lq">“'+esc(quip(x,G.g[x.i]))+'”</blockquote></div>'});
+        h+='</div>';
+      }
+    }
+    h+='<p class="gs-again"><button type="button" class="gs-redo">Xếp lại thử</button></p>';
+    return h;
+  }
+  function noteHtml(x){
+    var p=x.p, st=x.st, fr=G.rev?fresh(x):[], frSet=fr.map(function(s){return st.indexOf(s)});
+    var isF=fr.length>0;
+    // hạng và hệ: chuỗi đổi ý; lần đổi do bước mới gây ra thì gạch ngay trước mắt
+    var tiers=[], hes=[];
+    st.forEach(function(s,k){var nw=frSet.indexOf(k)>=0;
+      if(!tiers.length||tiers[tiers.length-1].v!==s.tier)tiers.push({v:s.tier,k:k,nw:nw});
+      if(!hes.length||hes[hes.length-1].v!==s.he)hes.push({v:s.he,k:k,nw:nw})});
+    function chain(arr,f){return arr.map(function(o,j){var lastOne=j===arr.length-1, next=arr[j+1];
+      if(lastOne) return '<span class="cur'+(o.nw&&j>0?' ink-t':'')+'">'+f(o.v)+'</span>';
+      if(o.v==='?') return '';
+      return '<s'+(next.nw?' class="tostrike"':'')+'>'+f(o.v)+'</s> '}).join('')}
+    var h='<article data-tier="'+x.cur.tier+'" class="note'+(x.gone?' gone':'')+(isF?' fresh':'')+'" id="p-'+x.i+'" data-i="'+x.i+'"><div class="note-h">'+mark(p.mark)+'<span class="nm">'+esc(p.name)+'</span><span class="gr">'+chain(tiers,function(v){return v})+'</span></div>';
+    h+='<p class="he">Hệ: '+chain(hes,esc)+'</p>';
+    st.forEach(function(s,k){
+      var nw=frSet.indexOf(k)>=0, nextChanges=k<st.length-1 && s.tier!=='?' && s.tier!==st[k+1].tier;
+      var old=nextChanges, strikeNow=old && frSet.indexOf(k+1)>=0;
+      if(s.quote) h+='<blockquote class="'+(old?(strikeNow?'tostrike':'old'):'')+(nw?' ink':'')+'"><span class="tx">“'+esc(s.quote)+'”</span><span class="who">'+esc(s.who)+', chương '+s.ch+'</span></blockquote>';
+      if(s.aside) h+='<p class="aside'+(nw?' ink':'')+'"><span class="tx">'+esc(s.aside)+'</span>'+(s.quote?'':' <span class="who">Chương '+s.ch+'</span>')+'</p>';
+    });
+    if(x.gone) h+='<p class="gone-t'+(isF&&p.dead>((x.i in W.p)?W.p[x.i]:W.base)?' ink':'')+'"><span class="tx">Mất ở chương '+p.dead+'.</span></p>';
+    if(isF) h+='<button type="button" class="pen-go">Luke vừa viết thêm<small>chạm để xem</small></button>';
+    return h+'</article>';
+  }
+  function render(anim){
+    if(!ppl.length){OUT.innerHTML='<p class="st-empty">Sổ còn trống. Luke chưa kịp đoán gì về ai.</p>';return}
+    var h=G.rev?boardHtml(anim):guessHtml();
+    h+='<h2>Ghi chép</h2>';
+    if(!G.rev) h+='<p class="st-face">Ghi chép của Luke đang úp. Lật bảng xếp hạng ở trên trước đã.</p>';
+    else h+='<div class="notes">'+ppl.map(noteHtml).join('')+'</div>';
+    if(seen>=D.typesFrom) h+='<h2>Bảy hệ, theo lời Luke</h2><div class="types">'+D.types.map(function(t){return '<div class="ty">'+t.svg+'<div><b>'+esc(t.vi)+'</b><i>'+esc(t.en)+'</i><p>'+esc(t.line)+'</p></div></div>'}).join('')+'</div>';
+    OUT.innerHTML=h;
+    if(anim) reveal();
+  }
+
+  /* ---------- 1) Đoán cùng Luke ---------- */
+  var sel=null;
+  OUT.addEventListener('click',function(e){
+    var c=e.target.closest('.chip.pick');
+    if(c){e.stopPropagation(); var i=c.getAttribute('data-i');
+      if(sel===i){sel=null;c.classList.remove('sel');return}
+      sel=i; [].forEach.call(OUT.querySelectorAll('.chip.sel'),function(n){n.classList.remove('sel')}); c.classList.add('sel'); OUT.querySelector('.tiers.gs').classList.add('armed'); SND.tick(); return}
+    var r=e.target.closest('.drop');
+    if(r&&sel!==null){var t=r.getAttribute('data-row'); if(t) G.g[sel]=t; else delete G.g[sel]; var i2=sel; sel=null; jset('a07-st-guess',G); render(false); SND.place();
+      var n=OUT.querySelector('.chip.pick[data-i="'+i2+'"]'); if(n&&!RED){n.classList.add('land')} return}
+    if(e.target.closest('.gs-flip')){G.rev=true;G.skip=false;jset('a07-st-guess',G);render(true);OUT.querySelector('h2').scrollIntoView({behavior:RED?'auto':'smooth',block:'start'});return}
+    if(e.target.closest('.gs-skip')){G.rev=true;G.skip=true;jset('a07-st-guess',G);render(true);return}
+    if(e.target.closest('.gs-redo')){G.rev=false;G.skip=false;jset('a07-st-guess',G);render(false);OUT.querySelector('h2').scrollIntoView({behavior:RED?'auto':'smooth',block:'start'});SND.tick();return}
+    var pg=e.target.closest('.note.fresh');
+    if(pg){e.preventDefault(); write(pg); return}
+  });
+  OUT.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('drop')){e.preventDefault();e.target.click()}});
+  function reveal(){
+    var chips=[].slice.call(OUT.querySelectorAll('.tiers.lk .chip.back')), df=OUT.querySelector('.diffs');
+    if(RED){chips.forEach(function(c){c.classList.remove('back')}); if(df) df.classList.remove('wait'); return}
+    chips.forEach(function(c,k){setTimeout(function(){c.classList.remove('back');c.classList.add('flip');SND.flip()},250+k*140)});
+    if(df){var t0=350+chips.length*140; setTimeout(function(){df.classList.remove('wait');
+      [].forEach.call(df.querySelectorAll('.df-sum,.df'),function(n,k){n.classList.add('hold');setTimeout(function(){n.classList.remove('hold');n.classList.add('in');if(k)SND.pop()},k*520)})},t0)}
+  }
+
+  /* ---------- 2) Trang mới tự hiện chữ ---------- */
+  function split(el){ // tách chữ thành từng ký tự để hiện dần như đang viết
+    var tx=el.querySelector('.tx'); if(!tx||tx._s) return []; tx._s=1;
+    var s=tx.textContent, h=''; for(var i=0;i<s.length;i++) h+='<span class="ch">'+(s[i]===' '?' ':esc(s[i]))+'</span>';
+    tx.innerHTML=h; return [].slice.call(tx.querySelectorAll('.ch'));
+  }
+  function write(note){
+    if(note._w) {note._fast=1; return} note._w=1; note.classList.add('writing');
+    var i=+note.getAttribute('data-i'), btn=note.querySelector('.pen-go'); if(btn) btn.remove();
+    var inks=[].slice.call(note.querySelectorAll('.ink')), strikes=[].slice.call(note.querySelectorAll('.tostrike')), tiersNew=[].slice.call(note.querySelectorAll('.ink-t'));
+    var nib=document.createElement('span'); nib.className='nib'; nib.setAttribute('aria-hidden','true');
+    function finish(){
+      strikes.forEach(function(s){s.classList.add('struck')}); tiersNew.forEach(function(s){s.classList.add('shown')});
+      inks.forEach(function(el){el.classList.add('done')}); [].forEach.call(note.querySelectorAll('.ch'),function(c){c.classList.add('on')});
+      if(nib.parentNode) nib.remove(); note.classList.remove('writing'); note.classList.remove('fresh'); note.classList.add('wrote');
+      W.p[i]=seen; jset('a07-st-w',W);
+    }
+    if(RED){finish();return}
+    var q=inks.slice(), stop=null;
+    function nextInk(){
+      if(!q.length){ // viết xong: gạch đoán cũ, rồi ghi hạng mới
+        if(stop){stop();stop=null}
+        if(strikes.length){SND.strike(); strikes.forEach(function(s){s.classList.add('struck')})}
+        setTimeout(function(){if(tiersNew.length){SND.pop();tiersNew.forEach(function(s){s.classList.add('shown')})} setTimeout(finish,300)},strikes.length?420:0);
+        return}
+      var el=q.shift(), chs=split(el); el.classList.add('live');
+      if(!chs.length){el.classList.add('done');return nextInk()}
+      if(!stop) stop=SND.pen();
+      var k=0;(function step(){
+        var n=note._fast?chs.length:Math.min(chs.length,k+(Math.random()<.3?2:1));
+        for(;k<n;k++) chs[k].classList.add('on');
+        if(k<chs.length){chs[k].parentNode.insertBefore(nib,chs[k]); setTimeout(step,24+Math.random()*30)}
+        else {el.classList.add('done'); if(nib.parentNode) nib.remove(); setTimeout(nextInk,note._fast?0:260)}
+      })();
+    }
+    setTimeout(nextInk,120);
+  }
+
+  render(false);
+  // vào sổ đúng lúc đã lật rồi mà có trang mới: cuộn tới chỗ Luke viết thêm, chờ người đọc chạm
+  if(G.rev){var f=OUT.querySelector('.note.fresh'); if(f&&!location.hash.match(/^#p-/)) setTimeout(function(){f.scrollIntoView({behavior:RED?'auto':'smooth',block:'center'})},500)}
 })();
+
 (function(){var d=document.getElementById('drawer'),b=document.getElementById('menu');if(!d||!b)return;
 function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
 function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
