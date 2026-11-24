@@ -2478,7 +2478,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     function drawChains(t, R) {
       if (t > 7.2) { main.style.transform = ''; return true; }
       var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), link = Math.max(12, m * 0.034), lw = Math.max(2.4, link * 0.28);
-      var iron = C.dark ? '#59646a' : '#1b1f21', hi = C.dark ? '#eef6f7' : '#8e9ba0', glint = '#e9f6f8';  // nền tối: thép sáng hơn, có quầng ánh kim để xích nổi lên (Clair 24/11)
+      var iron = '#1b1f21', hi = '#8e9ba0', glint = '#e9f6f8';
       var O = [[-0.08, -0.05], [0.5, -0.1], [1.08, -0.05], [-0.1, 0.62], [1.1, 0.58]];
       var fade = t > 6.4 ? Math.max(0, 1 - (t - 6.4) / 0.8) : 1;
       // bóng tối sập xuống
@@ -2488,10 +2488,16 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       function linkAt(x, y, ang, face, a) {
         g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = a;
         var rx = link * 0.62, ry = face ? link * 0.36 : link * 0.13;
-        if (C.dark) { g.shadowColor = 'rgba(180,205,215,.6)'; g.shadowBlur = link * 0.7; }
+        if (C.dark) {
+          // nền tối: mắt xích bạc thép sáng, viền tối mảnh tách khỏi nền, quầng nhẹ (Clair 24/11: bản đen trên nền tối khó nhìn)
+          g.shadowColor = 'rgba(170,200,215,.55)'; g.shadowBlur = link * 0.8;
+          g.lineWidth = lw * 2.1; g.strokeStyle = '#06080a'; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke(); g.shadowBlur = 0;
+          var sg = g.createLinearGradient(0, -ry - lw, 0, ry + lw); sg.addColorStop(0, '#f2f7f8'); sg.addColorStop(0.45, '#b7c3c8'); sg.addColorStop(1, '#6c787e');
+          g.lineWidth = lw * 1.4; g.strokeStyle = sg; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke();
+          g.lineWidth = lw * 0.35; g.strokeStyle = '#ffffff'; g.beginPath(); g.ellipse(0, -lw * 0.25, rx * 0.9, Math.max(1, ry * 0.8), 0, 3.6, 5.8); g.stroke();
+          g.restore(); return;
+        }
         g.lineWidth = lw * 1.5; g.strokeStyle = iron; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke();
-        g.shadowBlur = 0;
-        if (C.dark) { g.lineWidth = Math.max(1, lw * 0.25); g.strokeStyle = 'rgba(210,228,232,.55)'; g.beginPath(); g.ellipse(0, 0, rx + lw * 0.75, ry + lw * 0.75, 0, 0, 7); g.stroke(); }
         g.lineWidth = lw * 0.45; g.strokeStyle = hi; g.beginPath(); g.ellipse(0, -lw * 0.2, rx * 0.92, Math.max(1, ry * 0.85), 0, 3.5, 5.9); g.stroke();
         g.restore();
       }
@@ -4239,7 +4245,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
               var an = Math.atan2(y - prev[1], x - prev[0]), lx = (x + prev[0]) / 2, ly = (y + prev[1]) / 2, len = Math.hypot(x - prev[0], y - prev[1]);
               g.save(); g.translate(lx, ly); g.rotate(an);
               var hot = fired ? Math.max(0, 1 - (t - fired) / 1.2) : ten * ten;
-              g.strokeStyle = i % 2 ? '#5f6a70' : '#8a959b'; g.lineWidth = i % 2 ? 3.2 : 2.4; g.shadowColor = 'rgba(180,205,215,.5)'; g.shadowBlur = 6;
+              g.strokeStyle = i % 2 ? '#c3ced3' : '#8e9ba1'; g.lineWidth = i % 2 ? 3.2 : 2.4; g.shadowColor = 'rgba(180,205,215,.6)'; g.shadowBlur = 8;
               g.beginPath(); if (i % 2) g.ellipse(0, 0, len * 0.62, 4.2, 0, 0, 7); else { g.moveTo(-len * 0.6, 0); g.lineTo(len * 0.6, 0); } g.stroke();
               if (hot > 0.05) { g.strokeStyle = 'rgba(220,230,240,' + (0.5 * hot).toFixed(3) + ')'; g.lineWidth = 1; g.beginPath(); g.ellipse(0, -1, len * 0.5, 2.6, 0, 3.4, 6); g.stroke(); }
               g.restore();
