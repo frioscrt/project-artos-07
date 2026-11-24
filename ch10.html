@@ -129,6 +129,20 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .fx-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;
   background:radial-gradient(ellipse 75% 65% at 50% 55%,rgba(5,7,8,.55),rgba(5,7,8,.97))}
 .fx-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+/* tên riêng: người màu ấm, thẻ và hệ xanh băng, vật phẩm màu đồng; lần đầu trong chương loé sáng một nhịp */
+:root{--nm-person:#94503F;--nm-item:#7D6528}
+:root[data-theme="dark"]{--nm-person:#E2A894;--nm-item:#D2B470}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--nm-person:#E2A894;--nm-item:#D2B470}}
+.nm{font-style:normal}
+em .nm{font-style:italic}
+.nm-person{color:var(--nm-person)}
+.nm-card{color:var(--ice);letter-spacing:.015em}
+.nm-item{color:var(--nm-item);font-weight:600}
+.nm.first.lit{animation:nmlit 2.2s ease-out both}
+.nm-card.first.lit{animation-name:nmlitice}
+@keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
+@keyframes nmlitice{0%{text-shadow:0 0 0 transparent;filter:brightness(1)}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor;filter:brightness(1.35)}100%{text-shadow:0 0 0 transparent;filter:brightness(1)}}
+@media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
 /* tương tác người đọc */
 .act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
@@ -224,8 +238,8 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <section class="scene" data-sound="noon">
 <figure class="plate"><canvas class="art" data-art="fields:noon" role="img" aria-label="Con đường lát đá ong dưới nắng trưa gắt"></canvas></figure>
 <p>Nắng trưa đổ thẳng xuống con đường lát đá ong, gắt và trắng, gắt đến mức mặt đá như bốc hơi, và bóng của hai người co rút lại thành hai vũng đen nhỏ xíu dưới chân, đi đâu cũng bám theo.</p>
-<p>Luke vẫn nắm tay cô. Anh nắm hờ thôi, mấy ngón tay vòng quanh cổ tay cô, tránh hẳn chỗ phồng rộp ở lòng bàn tay, như người ta dắt một đứa trẻ qua đường. Clevia để yên cho anh dắt. Cô không nghĩ được gì nhiều. Trong đầu cô chỉ có một nét mực, nhạt dần, nhạt dần trên mặt giấy ngả vàng, rồi một nét khác hiện lên ở đúng chỗ ấy. Cô đã thấy chữ người ta viết, thấy chữ người ta xoá, nhưng cô chưa bao giờ thấy một con số tự đổi khi không có ai cầm bút. Mười tám. Mười bảy. Cái làng này đếm người chết như người ta đếm gà trong chuồng lúc chiều về, không hỏi tên, không hỏi vì sao, cứ thiếu một con thì gạch một vạch.</p>
-<p>“Nhà trưởng làng ở hướng này,” Luke nói. Anh hất cằm về phía cuối đường, nơi có một mái ngói cong vút lên ở hai đầu, cao hơn hẳn những mái nhà xung quanh. “Trên bản đồ còn nhạt. Chúng ta đi cho xong chỗ đấy trước rồi tính tiếp.”</p>
+<p><span class="nm nm-person first">Luke</span> vẫn nắm tay cô. Anh nắm hờ thôi, mấy ngón tay vòng quanh cổ tay cô, tránh hẳn chỗ phồng rộp ở lòng bàn tay, như người ta dắt một đứa trẻ qua đường. <span class="nm nm-person first">Clevia</span> để yên cho anh dắt. Cô không nghĩ được gì nhiều. Trong đầu cô chỉ có một nét mực, nhạt dần, nhạt dần trên mặt giấy ngả vàng, rồi một nét khác hiện lên ở đúng chỗ ấy. Cô đã thấy chữ người ta viết, thấy chữ người ta xoá, nhưng cô chưa bao giờ thấy một con số tự đổi khi không có ai cầm bút. Mười tám. Mười bảy. Cái làng này đếm người chết như người ta đếm gà trong chuồng lúc chiều về, không hỏi tên, không hỏi vì sao, cứ thiếu một con thì gạch một vạch.</p>
+<p>“Nhà trưởng làng ở hướng này,” <span class="nm nm-person">Luke</span> nói. Anh hất cằm về phía cuối đường, nơi có một mái ngói cong vút lên ở hai đầu, cao hơn hẳn những mái nhà xung quanh. “Trên bản đồ còn nhạt. Chúng ta đi cho xong chỗ đấy trước rồi tính tiếp.”</p>
 <p>“Vâng.”</p>
 <p>Anh liếc sang cô. Cô biết anh đang đợi cô nói thêm gì đó, hỏi thêm gì đó, như mọi lần. Nhưng cô chỉ nhìn xuống hai cái bóng dưới chân, và anh cũng không hỏi gì nữa.</p>
 </section>
@@ -233,103 +247,103 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <section class="scene" data-sound="hall">
 <figure class="plate"><canvas class="art" data-art="hall" role="img" aria-label="Gian nhà trưởng làng, nắng hắt qua cửa"></canvas></figure>
 <p>Nhà trưởng làng có một cái cổng gỗ hai cánh sơn son đã tróc, trên cổng treo một tấm hoành phi chữ đã mờ, và một khoảng sân lát gạch vuông sạch đến mức không có lấy một chiếc lá rụng. Cửa chính để mở. Bên trong tối, mát, thoang thoảng mùi trầm.</p>
-<p>Trưởng làng ngồi sau một cái án thư bằng gỗ gụ, lưng thẳng, hai tay đặt trên mặt bàn. Ông là người già nhất Clevia gặp từ lúc vào làng, già hơn cả ông thầy thuốc ở Trạm xá, râu dài bạc trắng rủ xuống tận ngực, khuôn mặt nhăn nheo như một trái táo tàu phơi khô. Ông mặc áo the đen chứ không phải áo nâu như những người dân làng khác. Và đôi mắt ông trắng đục, trắng hẳn, không có lòng đen, như hai viên bi ve phủ một lớp sương.</p>
-<p>Clevia khựng lại ở ngưỡng cửa. Cô nghĩ ngay đến những đốm đỏ bên kia bức tường. Nhưng đôi mắt này không đỏ, chỉ trắng, và nó không hướng về phía cô. Nó chẳng hướng về phía nào cả.</p>
+<p>Trưởng làng ngồi sau một cái án thư bằng gỗ gụ, lưng thẳng, hai tay đặt trên mặt bàn. Ông là người già nhất <span class="nm nm-person">Clevia</span> gặp từ lúc vào làng, già hơn cả ông thầy thuốc ở Trạm xá, râu dài bạc trắng rủ xuống tận ngực, khuôn mặt nhăn nheo như một trái táo tàu phơi khô. Ông mặc áo the đen chứ không phải áo nâu như những người dân làng khác. Và đôi mắt ông trắng đục, trắng hẳn, không có lòng đen, như hai viên bi ve phủ một lớp sương.</p>
+<p><span class="nm nm-person">Clevia</span> khựng lại ở ngưỡng cửa. Cô nghĩ ngay đến những đốm đỏ bên kia bức tường. Nhưng đôi mắt này không đỏ, chỉ trắng, và nó không hướng về phía cô. Nó chẳng hướng về phía nào cả.</p>
 <p>“Vào đi,” ông nói. Giọng ông khàn khàn, chậm, như tiếng cánh cửa gỗ lâu ngày không ai mở. “Hai đứa từ ngoài làng tới phải không?”</p>
-<p>Luke bước vào trước. Anh cúi đầu chào. “Dạ. Bọn cháu muốn hỏi ông xem có việc gì bọn cháu giúp được không ạ.”</p>
+<p><span class="nm nm-person">Luke</span> bước vào trước. Anh cúi đầu chào. “Dạ. Bọn cháu muốn hỏi ông xem có việc gì bọn cháu giúp được không ạ.”</p>
 <p>Trưởng làng không trả lời ngay. Ông kéo ngăn kéo của cái án thư ra, chậm chạp, từng chút một, rồi lấy ra một cái bọc vải nâu nhỏ bằng hai bàn tay, buộc dây gai, nút dây được gắn một cục sáp đỏ. Ông đặt nó lên mặt bàn, đẩy về phía hai người.</p>
 <p>“Mang cái này ra chợ cho ta. Đưa cho bà bán thuốc ở cuối chợ.”</p>
-<p>Rồi ông lại kéo một ngăn kéo khác, lấy ra một tờ giấy dó, một cây bút lông, một nghiên mực. Ông viết. Clevia đứng nhìn bàn tay khô quắt ấy đưa cây bút đi trên mặt giấy, đều, chắc, không run lấy một chút, dù đôi mắt ông chẳng nhìn vào đâu. Viết xong, ông cầm một con dấu bằng gỗ, hà hơi vào mặt dấu, rồi nện xuống góc tờ giấy.</p>
+<p>Rồi ông lại kéo một ngăn kéo khác, lấy ra một tờ giấy dó, một cây bút lông, một nghiên mực. Ông viết. <span class="nm nm-person">Clevia</span> đứng nhìn bàn tay khô quắt ấy đưa cây bút đi trên mặt giấy, đều, chắc, không run lấy một chút, dù đôi mắt ông chẳng nhìn vào đâu. Viết xong, ông cầm một con dấu bằng gỗ, hà hơi vào mặt dấu, rồi nện xuống góc tờ giấy.</p>
 <p><em>Cộp.</em></p>
-<p>Tiếng con dấu vang lên trong gian nhà vắng, khô và gọn, làm Clevia giật mình.</p>
-<p>“Cầm lấy cái này mà mua bán,” ông nói, gấp tờ giấy làm tư, đưa cho Luke. “Ngoài chợ có những thứ không bán cho người lạ.”</p>
-<p>Luke đón lấy bằng hai tay. “Cháu cảm ơn ông.”</p>
+<p>Tiếng con dấu vang lên trong gian nhà vắng, khô và gọn, làm <span class="nm nm-person">Clevia</span> giật mình.</p>
+<p>“Cầm lấy cái này mà mua bán,” ông nói, gấp tờ giấy làm tư, đưa cho <span class="nm nm-person">Luke</span>. “Ngoài chợ có những thứ không bán cho người lạ.”</p>
+<p><span class="nm nm-person">Luke</span> đón lấy bằng hai tay. “Cháu cảm ơn ông.”</p>
 <p>Trưởng làng gật đầu một cái, rất nhẹ. Rồi ông lại đặt hai tay lên mặt bàn, lưng thẳng, đôi mắt trắng đục nhìn vào khoảng không trước mặt, như thể hai người đã đi khỏi từ lâu rồi.</p>
-<p>Ra tới sân, Luke mở tờ giấy ra xem. Chữ viết nghiêng nghiêng, nét mực đen nhánh, góc dưới có một con dấu đỏ hình vuông. Cô không đọc được chữ nào. Anh cũng không.</p>
-<p>“Thư giới thiệu, có lẽ vậy,” anh nói, gấp tờ giấy lại, cất vào túi áo trong. “Anh từng thấy kiểu này ở một ảo cảnh khác rồi. Có giấy của người có tiếng nói trong vùng thì người ta mới chịu bán cho mình mấy món tốt. Chắc ở đây cũng thế.” Anh ngừng một chút, rồi nhìn sang cô. “Ra chợ xong rồi chúng ta xem họ bán gì nhé. Biết đâu lại có Teleport.”</p>
-<p>Clevia ôm cái bọc vải vào ngực. Nó nhẹ hơn cô tưởng, và bên trong có thứ gì đó lạo xạo như lá khô.</p>
+<p>Ra tới sân, <span class="nm nm-person">Luke</span> mở tờ giấy ra xem. Chữ viết nghiêng nghiêng, nét mực đen nhánh, góc dưới có một con dấu đỏ hình vuông. Cô không đọc được chữ nào. Anh cũng không.</p>
+<p>“Thư giới thiệu, có lẽ vậy,” anh nói, gấp tờ giấy lại, cất vào túi áo trong. “Anh từng thấy kiểu này ở một ảo cảnh khác rồi. Có giấy của người có tiếng nói trong vùng thì người ta mới chịu bán cho mình mấy món tốt. Chắc ở đây cũng thế.” Anh ngừng một chút, rồi nhìn sang cô. “Ra chợ xong rồi chúng ta xem họ bán gì nhé. Biết đâu lại có <span class="nm nm-card first">Teleport</span>.”</p>
+<p><span class="nm nm-person">Clevia</span> ôm cái bọc vải vào ngực. Nó nhẹ hơn cô tưởng, và bên trong có thứ gì đó lạo xạo như lá khô.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="market">
 <figure class="plate"><canvas class="art" data-art="market:noon" role="img" aria-label="Cái chợ trưa vắng hoe, nắng trắng gắt"></canvas></figure>
 <p>Cái chợ vẫn vắng hoe như lúc sáng.</p>
-<p>Vẫn những dãy sạp tre lợp lá chạy dài, vẫn những rổ rau, những thúng gạo, những xâu cá khô treo lủng lẳng. Vẫn lèo tèo mấy người bán ngồi im trên ghế con, tay đặt trên đầu gối, mắt nhìn ra đường. Chỉ có nắng là khác. Nắng trưa xuyên qua những mái lá thưa, rắc xuống mặt đất những đốm sáng loang lổ, và mùi cá khô bị nắng hun lên nồng nặc đến mức Clevia phải thở bằng miệng.</p>
-<p>Họ đi được nửa chợ thì Luke dừng lại.</p>
-<p>Anh không nói gì. Anh chỉ dừng lại, đứng im, đầu hơi nghiêng đi một chút, như một người đang cố nghe một tiếng nhạc rất xa. Clevia biết cái dáng đứng ấy. Cô đã thấy nó ở ngã ba giếng, ngay trước khi gã đàn ông to con bước ra từ bóng tối.</p>
+<p>Vẫn những dãy sạp tre lợp lá chạy dài, vẫn những rổ rau, những thúng gạo, những xâu cá khô treo lủng lẳng. Vẫn lèo tèo mấy người bán ngồi im trên ghế con, tay đặt trên đầu gối, mắt nhìn ra đường. Chỉ có nắng là khác. Nắng trưa xuyên qua những mái lá thưa, rắc xuống mặt đất những đốm sáng loang lổ, và mùi cá khô bị nắng hun lên nồng nặc đến mức <span class="nm nm-person">Clevia</span> phải thở bằng miệng.</p>
+<p>Họ đi được nửa chợ thì <span class="nm nm-person">Luke</span> dừng lại.</p>
+<p>Anh không nói gì. Anh chỉ dừng lại, đứng im, đầu hơi nghiêng đi một chút, như một người đang cố nghe một tiếng nhạc rất xa. <span class="nm nm-person">Clevia</span> biết cái dáng đứng ấy. Cô đã thấy nó ở ngã ba giếng, ngay trước khi gã đàn ông to con bước ra từ bóng tối.</p>
 <p>Rồi cô cũng nghe thấy.</p>
 <p>Tiếng một con mèo. Không phải tiếng kêu meo meo, mà là tiếng gằn gừ trong cổ họng, khè khè, đứt quãng, cái tiếng một con mèo phát ra khi nó bị dồn vào góc tường. Và lẫn trong đó là tiếng một người con gái, nhỏ, nghẹn, như đang nói qua kẽ răng.</p>
-<p>Luke kéo cô sang một bên. Anh kéo nhanh mà không mạnh, và trước khi cô kịp hiểu chuyện gì, hai người đã ngồi thụp xuống sau một cái chòi hàng nhỏ đứng tách riêng giữa hai dãy sạp, ba mặt che rèm cói, bên trong chất đầy những bao tải căng phồng mùi muối. Anh đặt một ngón tay lên môi. Rồi anh vén mép tấm rèm cói lên, chỉ một khe nhỏ bằng ngón tay.</p>
-<p>Clevia ghé mắt vào khe hở ấy.</p>
+<p><span class="nm nm-person">Luke</span> kéo cô sang một bên. Anh kéo nhanh mà không mạnh, và trước khi cô kịp hiểu chuyện gì, hai người đã ngồi thụp xuống sau một cái chòi hàng nhỏ đứng tách riêng giữa hai dãy sạp, ba mặt che rèm cói, bên trong chất đầy những bao tải căng phồng mùi muối. Anh đặt một ngón tay lên môi. Rồi anh vén mép tấm rèm cói lên, chỉ một khe nhỏ bằng ngón tay.</p>
+<p><span class="nm nm-person">Clevia</span> ghé mắt vào khe hở ấy.</p>
 <p>Cách họ chừng mười bước chân, ở khoảng đất trống trước một sạp vải, có hai người.</p>
-<p>Một người là Ruby. Cô nhận ra mái tóc đỏ rượu vang trước cả gương mặt. Nhưng cái túm tóc buộc cao đã tuột ra, xổ xuống một bên vai, rối bù, và cái áo khoác da đen thì bị kéo lệch đi, một bên vai áo tụt xuống tận khuỷu tay. Ruby đang bị ép lưng vào cột tre của sạp vải. Hai chân cô ta không chạm đất. Mũi giày cô ta cào cào vào khoảng không, cách mặt đất chừng một gang tay, vì có một bàn tay to bè đang nắm lấy cổ áo cô ta và nhấc bổng cô ta lên.</p>
+<p>Một người là <span class="nm nm-person first">Ruby</span>. Cô nhận ra mái tóc đỏ rượu vang trước cả gương mặt. Nhưng cái túm tóc buộc cao đã tuột ra, xổ xuống một bên vai, rối bù, và cái áo khoác da đen thì bị kéo lệch đi, một bên vai áo tụt xuống tận khuỷu tay. <span class="nm nm-person">Ruby</span> đang bị ép lưng vào cột tre của sạp vải. Hai chân cô ta không chạm đất. Mũi giày cô ta cào cào vào khoảng không, cách mặt đất chừng một gang tay, vì có một bàn tay to bè đang nắm lấy cổ áo cô ta và nhấc bổng cô ta lên.</p>
 <p>Và chủ nhân của bàn tay ấy…</p>
-<p>Clevia nín thở.</p>
+<p><span class="nm nm-person">Clevia</span> nín thở.</p>
 <p>Gã cao hơn cái cột tre ấy gần một cái đầu. Vai u thịt bắp, hai cánh tay to như hai khúc gỗ, cổ bạnh ra, tóc cạo sát hai bên. Sống mũi gãy lệch hẳn sang một bên. Một bên chân mày có vết sẹo cắt ngang.</p>
 <p>Cô đã thấy khuôn mặt này rồi. Mới sáng nay. Trong gian nhà họp làng, căng cứng dưới một cái áo sơ mi xanh nhạt bung mất hai cúc.</p>
 <p>Nhưng bây giờ không có cái áo sơ mi xanh nhạt nào cả. Gã mặc một cái áo ba lỗ đen đã bạc, để lộ hai bắp tay chi chít những vết sẹo cũ, chân đi một đôi giày bốt da sờn mũi. Và khi gã mở miệng, cái giọng phát ra khớp hoàn toàn với cái thân hình ấy, trầm, đục, rền rền như tiếng sấm ở xa.</p>
 <p>“Tao hỏi lại lần nữa. Còn cái gì nữa không?”</p>
-<p>“Hết rồi mà…” Ruby nói. Giọng cô ta bị bóp nghẹt lại, vì cổ áo bị siết chặt. “Em trả anh hết rồi… Anh lấy hết rồi còn gì…”</p>
-<p>Dưới chân hai người, trên nền đất nện, có mấy tấm thẻ nằm vương vãi. Clevia nhìn thấy một tấm có hình vòm tròn, giống hệt tấm thẻ Protect cô từng thấy trong tay Luke. Một tấm vẽ khung cửa giữa khoảng trống, nét vẽ còn mới, sắc cạnh. Và hai ba tấm khác cô không nhìn rõ.</p>
-<p>Đó là gã thật, cô nghĩ. Không phải Jasper. Đây mới là người thật. Cái dáng người mà Jasper khoác lên sáng nay là của người này, và cái người này đang đứng đây, giữa chợ, trong cái làng này, nhấc bổng một đứa con gái lên bằng một tay.</p>
+<p>“Hết rồi mà…” <span class="nm nm-person">Ruby</span> nói. Giọng cô ta bị bóp nghẹt lại, vì cổ áo bị siết chặt. “Em trả anh hết rồi… Anh lấy hết rồi còn gì…”</p>
+<p>Dưới chân hai người, trên nền đất nện, có mấy tấm thẻ nằm vương vãi. <span class="nm nm-person">Clevia</span> nhìn thấy một tấm có hình vòm tròn, giống hệt tấm thẻ <span class="nm nm-card first">Protect</span> cô từng thấy trong tay <span class="nm nm-person">Luke</span>. Một tấm vẽ khung cửa giữa khoảng trống, nét vẽ còn mới, sắc cạnh. Và hai ba tấm khác cô không nhìn rõ.</p>
+<p>Đó là gã thật, cô nghĩ. Không phải <span class="nm nm-person first">Jasper</span>. Đây mới là người thật. Cái dáng người mà <span class="nm nm-person">Jasper</span> khoác lên sáng nay là của người này, và cái người này đang đứng đây, giữa chợ, trong cái làng này, nhấc bổng một đứa con gái lên bằng một tay.</p>
 <p>“Con mèo của mày,” gã nói, chậm rãi, “móc túi tao từ đêm qua. Tao đi tìm mày cả buổi sáng.”</p>
 <p>“Em không biết là của anh… Nó tự đi lấy, em không bảo nó…”</p>
 <p>“Mày nghĩ tao tin à?”</p>
 <p>Ở góc sạp vải, con mèo đen đang nép mình sát đất, lông dựng đứng cả lên, đuôi xù to như một cái chổi, đôi mắt vàng rực như hai đồng xu. Nó gằn gừ. Rồi, đột ngột, nó phóng lên.</p>
-<p data-fx="scratch">Nó nhảy thẳng vào cánh tay đang nắm cổ áo Ruby, cắm cả bốn móng vuốt vào đó, há miệng cắn phập xuống.</p>
-<p>Clevia chờ nghe một tiếng chửi thề, chờ thấy máu.</p>
+<p data-fx="scratch">Nó nhảy thẳng vào cánh tay đang nắm cổ áo <span class="nm nm-person">Ruby</span>, cắm cả bốn móng vuốt vào đó, há miệng cắn phập xuống.</p>
+<p><span class="nm nm-person">Clevia</span> chờ nghe một tiếng chửi thề, chờ thấy máu.</p>
 <p>Không có gì cả. Hàm răng con mèo cắm xuống bắp tay gã như cắm vào một tảng đá. Nó cắn, cắn mãi, cái đầu nhỏ lắc qua lắc lại, mà làn da ấy chẳng hằn lên lấy một vết. Gã không thèm nhìn nó. Gã chỉ giơ bàn tay kia lên, gạt một cái, nhẹ như gạt một con ruồi, và con mèo văng ra, đập vào một rổ rau bên cạnh, lăn mấy vòng trên đất rồi nằm im, đôi mắt vàng vẫn mở to.</p>
-<p>“Đừng mà…” Ruby khóc nấc lên. Lần đầu tiên Clevia nghe thấy cô ta khóc. “Anh ơi, em xin anh, em không dám nữa đâu… Em đưa hết cho anh rồi, anh tha cho em đi mà…”</p>
-<p>Bàn tay Clevia bấu chặt vào mép tấm rèm cói. Cô cảm thấy cơ thể mình đang nghiêng về phía trước, rất chậm, như có một sợi dây vô hình đang kéo cô ra khỏi chỗ nấp, kéo về phía tiếng khóc ấy. Cô không biết mình định làm gì. Cô không có nanh vuốt gì. Cô chỉ có một tấm thẻ Smoke Veil trong túi quần và hai bàn tay phồng rộp. Nhưng cô cứ nghiêng dần về phía trước.</p>
-<p>Bàn tay Luke đặt lên vai cô. Rồi siết lại, chặt đến mức cô thấy đau.</p>
+<p>“Đừng mà…” <span class="nm nm-person">Ruby</span> khóc nấc lên. Lần đầu tiên <span class="nm nm-person">Clevia</span> nghe thấy cô ta khóc. “Anh ơi, em xin anh, em không dám nữa đâu… Em đưa hết cho anh rồi, anh tha cho em đi mà…”</p>
+<p>Bàn tay <span class="nm nm-person">Clevia</span> bấu chặt vào mép tấm rèm cói. Cô cảm thấy cơ thể mình đang nghiêng về phía trước, rất chậm, như có một sợi dây vô hình đang kéo cô ra khỏi chỗ nấp, kéo về phía tiếng khóc ấy. Cô không biết mình định làm gì. Cô không có nanh vuốt gì. Cô chỉ có một tấm thẻ <span class="nm nm-card first">Smoke Veil</span> trong túi quần và hai bàn tay phồng rộp. Nhưng cô cứ nghiêng dần về phía trước.</p>
+<p>Bàn tay <span class="nm nm-person">Luke</span> đặt lên vai cô. Rồi siết lại, chặt đến mức cô thấy đau.</p>
 <p>Cô quay sang nhìn anh. Anh không nhìn cô. Anh đang nhìn gã đàn ông qua khe rèm, gương mặt trắng bệch, quai hàm cứng lại, và cô thấy một giọt mồ hôi đang lăn từ thái dương anh xuống. Môi anh mấp máy, không thành tiếng, nhưng cô đọc được.</p>
 <p><em>Đừng.</em></p>
-<p>Ngoài kia, gã đàn ông nhìn Ruby khóc. Gã nhìn một lúc lâu, gương mặt không lộ ra chút gì, không giận, không hả hê, chẳng có gì cả, như một người đang nhìn một cái ổ khoá gỉ không chịu mở.</p>
+<p>Ngoài kia, gã đàn ông nhìn <span class="nm nm-person">Ruby</span> khóc. Gã nhìn một lúc lâu, gương mặt không lộ ra chút gì, không giận, không hả hê, chẳng có gì cả, như một người đang nhìn một cái ổ khoá gỉ không chịu mở.</p>
 <p>“Mày lấy của tao một lần,” gã nói. “Lần sau mày sẽ lại lấy nữa.”</p>
-<p>Ruby ngừng khóc. Có lẽ vì cô ta hiểu. Đôi mắt kẻ viền đen nhoè nhoẹt nước mắt ấy đảo đi, đảo đi, như lúc sáng nay trong cái vỏ trứng sáng mờ, tìm một cái cửa nào đó, một khe hở nào đó. Rồi nó dừng lại.</p>
-<p>Clevia không biết nó dừng lại ở đâu. Có lẽ ở một cái thúng gạo. Có lẽ ở cái rổ rau nơi con mèo nằm. Có lẽ ở cái chòi hàng che rèm cói đứng tách riêng giữa hai dãy sạp, ở một khe hở nhỏ bằng ngón tay nơi có một con mắt đang nhìn ra.</p>
+<p><span class="nm nm-person">Ruby</span> ngừng khóc. Có lẽ vì cô ta hiểu. Đôi mắt kẻ viền đen nhoè nhoẹt nước mắt ấy đảo đi, đảo đi, như lúc sáng nay trong cái vỏ trứng sáng mờ, tìm một cái cửa nào đó, một khe hở nào đó. Rồi nó dừng lại.</p>
+<p><span class="nm nm-person">Clevia</span> không biết nó dừng lại ở đâu. Có lẽ ở một cái thúng gạo. Có lẽ ở cái rổ rau nơi con mèo nằm. Có lẽ ở cái chòi hàng che rèm cói đứng tách riêng giữa hai dãy sạp, ở một khe hở nhỏ bằng ngón tay nơi có một con mắt đang nhìn ra.</p>
 <p>Cô không biết. Cô sẽ không bao giờ biết.</p>
 <p>Gã đàn ông co bàn tay còn lại thành nắm đấm.</p>
-<p>Clevia nhắm mắt lại.</p>
+<p><span class="nm nm-person">Clevia</span> nhắm mắt lại.</p>
 <p>Nhưng cô vẫn nghe thấy. Một tiếng động trầm, nặng, gọn, như tiếng người ta bổ một cái rìu vào thân chuối. Rồi tiếng tre gãy răng rắc, tiếng mái lá sụp xuống rào rào, tiếng những súc vải đổ lăn lóc trên mặt đất. Rồi im.</p>
-<p>Khi cô mở mắt ra, cái sạp vải đã đổ sụp một nửa. Cột tre gãy gập làm đôi. Ruby nằm dưới đống vải màu loang lổ, một bàn tay thò ra ngoài, những ngón tay sơn móng đen hơi co lại, không động đậy. Mái tóc đỏ rượu vang trải ra trên nền đất, như một vệt son bị ai quệt dài.</p>
+<p>Khi cô mở mắt ra, cái sạp vải đã đổ sụp một nửa. Cột tre gãy gập làm đôi. <span class="nm nm-person">Ruby</span> nằm dưới đống vải màu loang lổ, một bàn tay thò ra ngoài, những ngón tay sơn móng đen hơi co lại, không động đậy. Mái tóc đỏ rượu vang trải ra trên nền đất, như một vệt son bị ai quệt dài.</p>
 <p>Ở cái rổ rau bên cạnh, con mèo đen không còn nằm đó nữa. Chỉ còn một làn khói mỏng, đen, đang tan dần vào nắng trưa, như hơi thở của ai trong một buổi sáng mùa đông.</p>
-<p>Clevia không thở được.</p>
-<p>Gã đàn ông ngồi xổm xuống. Gã nhặt từng tấm thẻ trên mặt đất lên, chậm rãi, phủi phủi bụi, xếp chúng lại thành một chồng ngay ngắn. Rồi gã thò tay vào đống vải, lục túi áo khoác da của Ruby, lôi ra thêm một tấm nữa, nhìn qua một cái rồi xếp nốt vào chồng. Gã đứng dậy, nhét cả chồng thẻ vào túi quần sau.</p>
+<p><span class="nm nm-person">Clevia</span> không thở được.</p>
+<p>Gã đàn ông ngồi xổm xuống. Gã nhặt từng tấm thẻ trên mặt đất lên, chậm rãi, phủi phủi bụi, xếp chúng lại thành một chồng ngay ngắn. Rồi gã thò tay vào đống vải, lục túi áo khoác da của <span class="nm nm-person">Ruby</span>, lôi ra thêm một tấm nữa, nhìn qua một cái rồi xếp nốt vào chồng. Gã đứng dậy, nhét cả chồng thẻ vào túi quần sau.</p>
 <p>“Phí cả buổi sáng,” gã lẩm bẩm.</p>
 <p>Rồi gã quay người, bước đi.</p>
 <p>Gã đi về phía cái chòi hàng.</p>
-<p>Luke kéo Clevia sát vào người anh. Hai người ép lưng vào đống bao tải muối, lưng cô áp vào ngực anh, và cô cảm thấy tim anh đập dồn dập sau lưng mình, nhanh, mạnh, như tiếng ai gõ cửa liên hồi. Bàn tay anh vẫn đặt trên vai cô. Bàn tay kia vòng ra phía trước, che lấy miệng cô, rất nhẹ, như sợ cô sẽ bật ra tiếng gì đó mà chính cô cũng không kịp ngăn.</p>
-<p>Tiếng giày bốt nện trên đất. Mỗi lúc một gần. Qua khe hở dưới chân tấm rèm cói, Clevia thấy một mũi giày da sờn đi ngang qua, cách chân cô chưa tới một sải tay. Mũi giày ấy dừng lại.</p>
+<p><span class="nm nm-person">Luke</span> kéo <span class="nm nm-person">Clevia</span> sát vào người anh. Hai người ép lưng vào đống bao tải muối, lưng cô áp vào ngực anh, và cô cảm thấy tim anh đập dồn dập sau lưng mình, nhanh, mạnh, như tiếng ai gõ cửa liên hồi. Bàn tay anh vẫn đặt trên vai cô. Bàn tay kia vòng ra phía trước, che lấy miệng cô, rất nhẹ, như sợ cô sẽ bật ra tiếng gì đó mà chính cô cũng không kịp ngăn.</p>
+<p>Tiếng giày bốt nện trên đất. Mỗi lúc một gần. Qua khe hở dưới chân tấm rèm cói, <span class="nm nm-person">Clevia</span> thấy một mũi giày da sờn đi ngang qua, cách chân cô chưa tới một sải tay. Mũi giày ấy dừng lại.</p>
 <p>Cô nghe thấy tiếng gã hít một hơi dài, rồi khạc nhổ xuống đất.</p>
 <p>Một nhịp. Hai nhịp.</p>
 <p>“Cá với muối,” gã lẩm bẩm. “Cái chợ thối.”</p>
 <p>Mũi giày ấy lại bước đi. Tiếng bước chân nặng nề ấy xa dần, xa dần về phía cuối chợ, rồi rẽ sang con đường đá ong, rồi mất hẳn.</p>
-<p>Luke vẫn không buông cô ra.</p>
+<p><span class="nm nm-person">Luke</span> vẫn không buông cô ra.</p>
 <p>Cô không biết hai người đã ngồi như thế bao lâu. Cô chỉ biết những đốm nắng trên mặt đất trước chòi hàng đã xê dịch đi một chút, và tiếng tim anh sau lưng cô đã chậm lại, chậm dần, cho đến khi nó chỉ còn là một nhịp đập bình thường, đều đều, như tiếng đồng hồ quả lắc trong một căn nhà vắng. Rồi bàn tay anh rời khỏi miệng cô. Rồi bàn tay trên vai cô cũng rời đi.</p>
 <p>“Hắn đi rồi,” anh thì thầm. “Anh không nghe thấy gì nữa.”</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="market">
 <figure class="plate"><canvas class="art" data-art="fallenstall" role="img" aria-label="Sạp vải đổ sụp giữa chợ trưa, mép vải lay trong gió"></canvas></figure>
-<p>Clevia bước ra khỏi chòi hàng.</p>
+<p><span class="nm nm-person">Clevia</span> bước ra khỏi chòi hàng.</p>
 <p data-fx="heat">Chân cô run đến mức cô phải vịn vào cột tre một lúc mới đứng vững. Nắng trưa vẫn đổ xuống như cũ, gắt và trắng. Mùi cá khô vẫn nồng nặc như cũ. Mấy người bán hàng vẫn ngồi im trên ghế con, tay đặt trên đầu gối, mắt nhìn ra đường. Không một ai quay đầu về phía cái sạp vải vừa đổ sụp. Không một ai đứng dậy. Như thể chẳng có chuyện gì vừa xảy ra ở đó. Như thể chuyện vừa xảy ra ở đó cũng chỉ như một cơn gió thổi đổ cái mái lá.</p>
 <p>Cô nhìn về phía đống vải.</p>
-<p>Cô muốn đi tới đó. Cô biết mình phải đi tới đó. Sáng nay ở bờ rào, cô đã quỳ xuống bên cạnh bà Mabel, đã úp chiếc nón lá lên gương mặt bà, đã làm được ít nhất là chừng ấy. Ruby cũng cần ai đó làm cho cô ta chừng ấy. Đứa con gái đã ngoái lại nhìn cô ở cổng nhà họp làng sáng nay. Đứa con gái vừa khóc nấc lên xin tha.</p>
+<p>Cô muốn đi tới đó. Cô biết mình phải đi tới đó. Sáng nay ở bờ rào, cô đã quỳ xuống bên cạnh bà <span class="nm nm-person first">Mabel</span>, đã úp chiếc nón lá lên gương mặt bà, đã làm được ít nhất là chừng ấy. <span class="nm nm-person">Ruby</span> cũng cần ai đó làm cho cô ta chừng ấy. Đứa con gái đã ngoái lại nhìn cô ở cổng nhà họp làng sáng nay. Đứa con gái vừa khóc nấc lên xin tha.</p>
 <p>Nhưng hai bàn chân cô không chịu nhúc nhích. Cô đứng đó, cách đống vải chừng năm sáu bước, nhìn bàn tay sơn móng đen thò ra ngoài, và cô không bước thêm được một bước nào nữa. Cô sợ. Cô sợ nếu bước lại gần, cô sẽ thấy gương mặt dưới đống vải ấy. Cô sợ đôi mắt kẻ viền đen ấy vẫn còn mở. Cô sợ nó sẽ nhìn cô, như lúc nãy có lẽ nó đã nhìn cô qua khe hở bằng ngón tay, và hỏi cô sao lúc ấy cô không bước ra.</p>
 <p>“Lúc nãy cô ấy có nhìn thấy mình không anh…?” Giọng cô khàn đặc, lạ hoắc, như giọng của một người khác. “Ý em là… lúc cuối ấy. Cô ấy nhìn về phía này…”</p>
-<p>Luke đứng sau lưng cô. Anh im lặng một lúc lâu.</p>
+<p><span class="nm nm-person">Luke</span> đứng sau lưng cô. Anh im lặng một lúc lâu.</p>
 <p>“Anh không biết,” anh nói. “Anh không nhìn thấy mắt cô ấy từ chỗ đó.”</p>
 <p>Cô biết anh có thể đang nói dối. Cô cũng biết, nếu anh nói dối, thì anh nói dối vì cô.</p>
 <p>“Nếu lúc đấy em chạy ra…”</p>
-<p>“Thì hắn có thêm một người nữa để nhấc lên.” Anh không để cô nói hết. Giọng anh không gắt, nhưng chắc, và hơi run ở cuối. “Clevia này. Anh biết em đang nghĩ gì. Anh cũng nghĩ thế. Nhưng lúc đấy chúng ta có ra thì cũng không cứu được cô ấy đâu, em ạ. Cả hai chúng ta cộng lại cũng không làm hắn xước nổi một vết. Em thấy con mèo rồi đấy.”</p>
+<p>“Thì hắn có thêm một người nữa để nhấc lên.” Anh không để cô nói hết. Giọng anh không gắt, nhưng chắc, và hơi run ở cuối. “<span class="nm nm-person">Clevia</span> này. Anh biết em đang nghĩ gì. Anh cũng nghĩ thế. Nhưng lúc đấy chúng ta có ra thì cũng không cứu được cô ấy đâu, em ạ. Cả hai chúng ta cộng lại cũng không làm hắn xước nổi một vết. Em thấy con mèo rồi đấy.”</p>
 <p>Cô thấy rồi. Hàm răng cắm xuống bắp tay như cắm vào đá.</p>
-<p>“Gã ấy…” Cô nuốt nước bọt. “Gã ấy là người mà anh Jasper biến thành lúc sáng, đúng không anh?”</p>
-<p>“Ừ. Chắc chắn là vậy.” Luke bước lên đứng cạnh cô, mắt nhìn về phía con đường đá ong nơi gã đàn ông vừa đi khuất. “Có lẽ Jasper đã gặp hắn ở đâu đó rồi, từ trước cả lúc bọn họ gặp nhau ở nhà họp làng. Anh đoán là phải gặp tận mặt, hay phải có điều kiện gì đó, thì mới mượn được dáng người ta. Anh không chắc nữa.” Anh im một chút. “Nhưng có một chuyện thì anh chắc. Sáng nay Jasper mới chỉ mượn được cái vỏ, với sức của hắn thôi. Cái da cứng như đá kia thì Jasper không mượn được. Nếu không thì đến chú Oscar cũng chẳng giữ nổi gã quá một hơi thở.”</p>
-<p>Clevia nghĩ đến Oscar. Đến hai cánh tay run bần bật của ông lúc ôm chặt lấy cái thân hình to lớn ấy. Nếu sáng nay người đứng trong gian nhà họp làng là gã đàn ông thật này, chứ không phải Jasper…</p>
+<p>“Gã ấy…” Cô nuốt nước bọt. “Gã ấy là người mà anh <span class="nm nm-person">Jasper</span> biến thành lúc sáng, đúng không anh?”</p>
+<p>“Ừ. Chắc chắn là vậy.” <span class="nm nm-person">Luke</span> bước lên đứng cạnh cô, mắt nhìn về phía con đường đá ong nơi gã đàn ông vừa đi khuất. “Có lẽ <span class="nm nm-person">Jasper</span> đã gặp hắn ở đâu đó rồi, từ trước cả lúc bọn họ gặp nhau ở nhà họp làng. Anh đoán là phải gặp tận mặt, hay phải có điều kiện gì đó, thì mới mượn được dáng người ta. Anh không chắc nữa.” Anh im một chút. “Nhưng có một chuyện thì anh chắc. Sáng nay <span class="nm nm-person">Jasper</span> mới chỉ mượn được cái vỏ, với sức của hắn thôi. Cái da cứng như đá kia thì <span class="nm nm-person">Jasper</span> không mượn được. Nếu không thì đến chú <span class="nm nm-person first">Oscar</span> cũng chẳng giữ nổi gã quá một hơi thở.”</p>
+<p><span class="nm nm-person">Clevia</span> nghĩ đến <span class="nm nm-person">Oscar</span>. Đến hai cánh tay run bần bật của ông lúc ôm chặt lấy cái thân hình to lớn ấy. Nếu sáng nay người đứng trong gian nhà họp làng là gã đàn ông thật này, chứ không phải <span class="nm nm-person">Jasper</span>…</p>
 <p>Cô không nghĩ tiếp.</p>
-<p>“Có lẽ hắn cũng là Tăng cường,” Luke nói tiếp, chậm rãi, như vừa nói vừa nghĩ. “Giống gã đàn ông ở giếng đêm qua. Nhưng gã ở giếng thì nhanh, còn hắn thì… cứng. Cứng đến mức cả cơ thể hắn như một món vũ khí vậy. Anh từng nghĩ Tăng cường chỉ mạnh khi rơi vào người vốn khoẻ sẵn. Hôm nay anh mới thấy, nếu nó rơi vào một người như hắn thì nó còn đáng sợ hơn cả Vũ trang.” Anh lắc đầu. “Chúng ta tránh xa hắn ra, em nhé. Gặp lại là tránh, đừng có nghĩ gì thêm.”</p>
+<p>“Có lẽ hắn cũng là <span class="nm nm-card first">Tăng cường</span>,” <span class="nm nm-person">Luke</span> nói tiếp, chậm rãi, như vừa nói vừa nghĩ. “Giống gã đàn ông ở giếng đêm qua. Nhưng gã ở giếng thì nhanh, còn hắn thì… cứng. Cứng đến mức cả cơ thể hắn như một món vũ khí vậy. Anh từng nghĩ <span class="nm nm-card">Tăng cường</span> chỉ mạnh khi rơi vào người vốn khoẻ sẵn. Hôm nay anh mới thấy, nếu nó rơi vào một người như hắn thì nó còn đáng sợ hơn cả <span class="nm nm-card first">Vũ trang</span>.” Anh lắc đầu. “Chúng ta tránh xa hắn ra, em nhé. Gặp lại là tránh, đừng có nghĩ gì thêm.”</p>
 <p>Cô gật đầu. Cô vẫn không rời mắt khỏi bàn tay sơn móng đen.</p>
-<p>Luke nhìn theo cô. Rồi anh đi tới. Anh không đi thẳng tới đống vải, mà đi vòng qua, tới cái sạp vải bên cạnh vẫn còn nguyên, rút ra một tấm vải trắng còn gấp nếp, giũ ra. Anh quay lưng lại phía cô, cúi xuống, và cô chỉ thấy tấm vải trắng ấy chầm chậm hạ xuống, phủ lên đống vải màu loang lổ, phủ lên mái tóc đỏ, phủ lên cả bàn tay thò ra ngoài.</p>
+<p><span class="nm nm-person">Luke</span> nhìn theo cô. Rồi anh đi tới. Anh không đi thẳng tới đống vải, mà đi vòng qua, tới cái sạp vải bên cạnh vẫn còn nguyên, rút ra một tấm vải trắng còn gấp nếp, giũ ra. Anh quay lưng lại phía cô, cúi xuống, và cô chỉ thấy tấm vải trắng ấy chầm chậm hạ xuống, phủ lên đống vải màu loang lổ, phủ lên mái tóc đỏ, phủ lên cả bàn tay thò ra ngoài.</p>
 <p>Anh đứng thẳng dậy, đứng yên một lúc, rồi quay lại.</p>
 <p>“Đi thôi em,” anh nói. “Chúng ta còn phải làm việc cho ông trưởng làng.”</p>
 <p>Cô biết anh làm thế để cô có lý do mà bước đi. Một việc gì đó để hai bàn tay cô có chỗ mà bám vào. Một cái bọc vải nâu buộc dây gai gắn sáp đỏ, cần đưa tới cuối chợ.</p>
@@ -339,77 +353,77 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 <section class="scene" data-sound="market">
 <figure class="plate"><canvas class="art" data-art="herbstall" role="img" aria-label="Sạp thuốc dưới gốc gạo, những chùm lá khô treo đung đưa"></canvas></figure>
 <p>Sạp thuốc ở tận cuối chợ, nằm khuất dưới bóng một cây gạo già. Mái lá ở đây dày hơn, tối hơn, và cả cái sạp ngập trong một thứ mùi hăng hắc, ngai ngái, mùi của hàng chục thứ lá khô, rễ khô, vỏ cây khô được treo thành từng chùm dưới mái. Trên mặt sạp bày những cái lọ sành nút lá chuối, những cái túi vải nhỏ buộc túm, một cái cân tiểu ly bằng đồng đã xỉn màu.</p>
-<p>Bà bán thuốc ngồi sau sạp. Bà nhỏ thó, lưng còng, búi tóc bạc trên đỉnh đầu cài một cái trâm gỗ, miệng bỏm bẻm nhai trầu, môi đỏ quạch. Bà ngẩng lên nhìn hai người, nhìn cái bọc vải trong tay Clevia, rồi chìa bàn tay nhăn nheo ra.</p>
-<p>Clevia đặt cái bọc vào lòng bàn tay ấy.</p>
+<p>Bà bán thuốc ngồi sau sạp. Bà nhỏ thó, lưng còng, búi tóc bạc trên đỉnh đầu cài một cái trâm gỗ, miệng bỏm bẻm nhai trầu, môi đỏ quạch. Bà ngẩng lên nhìn hai người, nhìn cái bọc vải trong tay <span class="nm nm-person">Clevia</span>, rồi chìa bàn tay nhăn nheo ra.</p>
+<p><span class="nm nm-person">Clevia</span> đặt cái bọc vào lòng bàn tay ấy.</p>
 <p>Bà bán thuốc lật cái bọc lên, nhìn cục sáp đỏ trên nút dây, gật gù. Rồi bà đặt nó xuống dưới gầm sạp.</p>
 <p>“Được rồi,” bà nói.</p>
-<p>Lại là câu ấy. Clevia không biết đã bao nhiêu lần cô nghe câu ấy từ lúc vào làng. Người đàn bà ôm củi. Người đàn ông gánh nước. Ông thầy thuốc ở Trạm xá. Giờ là bà bán thuốc. Lần nào cũng cùng một giọng ấy, phẳng, đều, như người ta đọc một câu kinh đã thuộc lòng.</p>
-<p>Luke rút tấm bản đồ ra. Cô ghé mắt nhìn theo. Ở khu giữa, cái hình vẽ nhỏ xíu như một mái nhà có hai đầu cong vút lên, giờ đã đậm hẳn. Bên cạnh nó, hình cái chợ vẫn còn nhạt.</p>
+<p>Lại là câu ấy. <span class="nm nm-person">Clevia</span> không biết đã bao nhiêu lần cô nghe câu ấy từ lúc vào làng. Người đàn bà ôm củi. Người đàn ông gánh nước. Ông thầy thuốc ở Trạm xá. Giờ là bà bán thuốc. Lần nào cũng cùng một giọng ấy, phẳng, đều, như người ta đọc một câu kinh đã thuộc lòng.</p>
+<p><span class="nm nm-person">Luke</span> rút tấm bản đồ ra. Cô ghé mắt nhìn theo. Ở khu giữa, cái hình vẽ nhỏ xíu như một mái nhà có hai đầu cong vút lên, giờ đã đậm hẳn. Bên cạnh nó, hình cái chợ vẫn còn nhạt.</p>
 <p>“Còn chợ nữa thì mới xong cả khu này,” anh nói, vừa gấp tấm bản đồ lại. “Có lẽ phải làm việc gì đó cho người ở chợ, hoặc mua bán gì đó. Anh không chắc.”</p>
 <p>Anh rút tờ giấy có con dấu đỏ ra khỏi túi áo, mở ra, đặt lên mặt sạp, trước mặt bà bán thuốc.</p>
 <p>“Bà ơi, cho cháu hỏi. Ở chợ mình có chỗ nào bán thẻ không ạ?”</p>
 <p>Bà bán thuốc nhìn tờ giấy. Nhìn rất lâu, như người không biết chữ cố nhìn cho ra một cái hình. Rồi bà ngẩng lên. Bà hất cằm về phía bên kia lối đi, nơi có một cái sạp dài phủ vải đỏ, trên mặt sạp bày những cái hộp gỗ nhỏ xếp ngay hàng thẳng lối, và một người đàn ông béo tròn ngồi phía sau, đội một cái mũ nồi đen.</p>
 <p>“Bên kia,” bà nói.</p>
-<p>Luke cảm ơn, cầm tờ giấy lên. Clevia quay người lại theo anh.</p>
+<p><span class="nm nm-person">Luke</span> cảm ơn, cầm tờ giấy lên. <span class="nm nm-person">Clevia</span> quay người lại theo anh.</p>
 <p>Và cô nghe thấy tiếng nhai trầu sau lưng mình dừng lại.</p>
 <p>Cô không biết vì sao cái im lặng ấy làm gáy cô lạnh toát. Có lẽ vì cái tiếng bỏm bẻm ấy đều quá, đều từ lúc cô bước tới, nên khi nó dừng lại, cái chỗ trống nó để lại cũng to quá. Cô quay đầu lại.</p>
 <p>Bà bán thuốc vẫn ngồi đó. Hai bàn tay nhăn nheo vẫn đặt trên mặt sạp. Nhưng cái đầu của bà đang nghiêng đi. Chậm, rất chậm, từng chút một, nghiêng về một bên vai, như một bông lúa bị gió đè rạp xuống.</p>
-<p>Trước mắt Clevia, giữa không trung, mấy dòng chữ xanh hiện lên, mờ mờ như in trên một tấm kính.</p>
+<p>Trước mắt <span class="nm nm-person">Clevia</span>, giữa không trung, mấy dòng chữ xanh hiện lên, mờ mờ như in trên một tấm kính.</p>
 <p>Cô không cần đọc. Cô đã đọc nó một lần rồi, ở ngã ba giếng, đêm qua. Chỉ có điều lần này, nó không còn là <em>ở đâu đó trong làng</em> nữa.</p>
 <p>Nó ở đây.</p>
 <p>“Anh…”</p>
 <p>Anh đã quay lại từ trước khi cô gọi. Cô thấy hàng lông mày anh động khẽ, rồi mắt anh mở to.</p>
-<p>Khắp cả cái chợ, những người bán hàng ngồi im trên những chiếc ghế con, tay đặt trên đầu gối, mắt nhìn ra đường, đang cùng nghiêng đầu. Cùng một lúc. Cùng một góc. Người đàn ông béo đội mũ nồi ở sạp thẻ. Người đàn bà bán cá khô. Ông lão ngồi cạnh thúng gạo. Cả dãy, cả dãy, như một hàng lúa ngả rạp theo một cơn gió không ai nhìn thấy. Rồi những đôi mắt ấy mở ra, và trong những đôi mắt ấy, Clevia thấy hai đốm đỏ, nhỏ như hai đầu nhang trong bóng tối, giờ đã ở ngay trước mặt cô, gần đến mức cô đếm được từng nếp nhăn quanh khoé mắt của bà bán thuốc.</p>
+<p>Khắp cả cái chợ, những người bán hàng ngồi im trên những chiếc ghế con, tay đặt trên đầu gối, mắt nhìn ra đường, đang cùng nghiêng đầu. Cùng một lúc. Cùng một góc. Người đàn ông béo đội mũ nồi ở sạp thẻ. Người đàn bà bán cá khô. Ông lão ngồi cạnh thúng gạo. Cả dãy, cả dãy, như một hàng lúa ngả rạp theo một cơn gió không ai nhìn thấy. Rồi những đôi mắt ấy mở ra, và trong những đôi mắt ấy, <span class="nm nm-person">Clevia</span> thấy hai đốm đỏ, nhỏ như hai đầu nhang trong bóng tối, giờ đã ở ngay trước mặt cô, gần đến mức cô đếm được từng nếp nhăn quanh khoé mắt của bà bán thuốc.</p>
 <p>Bà bán thuốc há miệng. Màu trầu đỏ quạch nhuộm khắp kẽ răng.</p>
 <p>Rồi bà nhảy qua mặt sạp.</p>
-<p>Clevia không kịp lùi. Cô không kịp làm gì cả. Cô chỉ thấy hai bàn tay nhăn nheo ấy vươn tới, những móng tay dài, vàng khè, cong như móng chim, nhắm thẳng vào mặt cô. Và cô nghe thấy Luke hét lên tên cô, một tiếng thôi, khàn, đứt, như sợi dây đàn bị kéo căng quá mức.</p>
+<p><span class="nm nm-person">Clevia</span> không kịp lùi. Cô không kịp làm gì cả. Cô chỉ thấy hai bàn tay nhăn nheo ấy vươn tới, những móng tay dài, vàng khè, cong như móng chim, nhắm thẳng vào mặt cô. Và cô nghe thấy <span class="nm nm-person">Luke</span> hét lên tên cô, một tiếng thôi, khàn, đứt, như sợi dây đàn bị kéo căng quá mức.</p>
 <p data-fx="dome">Không khí quanh người cô bừng sáng.</p>
-<p>Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng cô đã thấy sáng nay bao quanh Ruby. Hai bàn tay của bà bán thuốc cào vào đó, và Clevia nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên. Rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
-<p>Clevia quay sang Luke. Anh đang đứng cách cô hai bước, một tay đặt trên túi áo, chỗ tấm thẻ Protect của anh từng nằm. Cái túi áo giờ đã lép kẹp.</p>
+<p>Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng cô đã thấy sáng nay bao quanh <span class="nm nm-person">Ruby</span>. Hai bàn tay của bà bán thuốc cào vào đó, và <span class="nm nm-person">Clevia</span> nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên. Rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
+<p><span class="nm nm-person">Clevia</span> quay sang <span class="nm nm-person">Luke</span>. Anh đang đứng cách cô hai bước, một tay đặt trên túi áo, chỗ tấm thẻ <span class="nm nm-card">Protect</span> của anh từng nằm. Cái túi áo giờ đã lép kẹp.</p>
 <p>Anh chỉ có một tấm.</p>
 <p>“Anh…!”</p>
 <p>“Chạy!” Anh rút thanh kiếm tre ra khỏi lưng. “Về nhà họp làng! Đi trước anh!”</p>
 <p>Cô chạy.</p>
-<p>Cô chạy ngược lại con đường mình vừa đi, qua những dãy sạp tre, qua những người bán hàng đang đứng dậy khỏi những chiếc ghế con, chậm chạp, lắc lư, đầu vẫn nghiêng về một bên vai. Một người đàn bà bán cá khô vươn tay chộp lấy cô, và bàn tay ấy đập vào vòm sáng, trượt đi như trượt trên mặt kính ướt. Cô không dừng lại. Cô nghe thấy tiếng chân Luke ngay sau lưng mình, tiếng thanh kiếm tre vụt trong không khí, một tiếng <em>bốp</em>, rồi một tiếng nữa, khô khốc, như tiếng người ta đập chăn.</p>
-<p>Họ chạy qua cái chòi hàng che rèm cói. Qua cái sạp vải đổ sụp, nơi tấm vải trắng vẫn phủ yên trên một hình người. Clevia không nhìn. Cô không dám nhìn.</p>
-<p>Gần tới đầu chợ, ông lão bán gạo đứng chắn ngay giữa lối đi. Ông giang hai tay ra, cái đầu nghiêng hẳn sang một bên, hai đốm đỏ dán chặt vào Luke, người đang chạy sau cô, người không có vòm sáng nào bao quanh. Và Clevia hiểu ra ngay, hiểu bằng cái phần tối tăm nhất trong bụng mình, rằng ông ta đang đợi cô chạy qua. Ông ta không cần cô. Ông ta cần anh.</p>
+<p>Cô chạy ngược lại con đường mình vừa đi, qua những dãy sạp tre, qua những người bán hàng đang đứng dậy khỏi những chiếc ghế con, chậm chạp, lắc lư, đầu vẫn nghiêng về một bên vai. Một người đàn bà bán cá khô vươn tay chộp lấy cô, và bàn tay ấy đập vào vòm sáng, trượt đi như trượt trên mặt kính ướt. Cô không dừng lại. Cô nghe thấy tiếng chân <span class="nm nm-person">Luke</span> ngay sau lưng mình, tiếng thanh kiếm tre vụt trong không khí, một tiếng <em>bốp</em>, rồi một tiếng nữa, khô khốc, như tiếng người ta đập chăn.</p>
+<p>Họ chạy qua cái chòi hàng che rèm cói. Qua cái sạp vải đổ sụp, nơi tấm vải trắng vẫn phủ yên trên một hình người. <span class="nm nm-person">Clevia</span> không nhìn. Cô không dám nhìn.</p>
+<p>Gần tới đầu chợ, ông lão bán gạo đứng chắn ngay giữa lối đi. Ông giang hai tay ra, cái đầu nghiêng hẳn sang một bên, hai đốm đỏ dán chặt vào <span class="nm nm-person">Luke</span>, người đang chạy sau cô, người không có vòm sáng nào bao quanh. Và <span class="nm nm-person">Clevia</span> hiểu ra ngay, hiểu bằng cái phần tối tăm nhất trong bụng mình, rằng ông ta đang đợi cô chạy qua. Ông ta không cần cô. Ông ta cần anh.</p>
 <p>Cô không chạy vòng qua.</p>
 <p>Cô lao thẳng vào ông ta.</p>
-<p>Vòm sáng quanh người cô đập vào ông lão như một quả bóng đập vào tường, và ông ta bị hất văng sang một bên, ngã ngửa vào thúng gạo, gạo trắng vương vãi tung toé khắp mặt đất. Clevia loạng choạng, suýt ngã, nhưng một bàn tay đã chộp lấy khuỷu tay cô từ phía sau, giữ cô đứng thẳng.</p>
-<p>“Giỏi lắm,” Luke thở hổn hển. “Đi tiếp!”</p>
+<p>Vòm sáng quanh người cô đập vào ông lão như một quả bóng đập vào tường, và ông ta bị hất văng sang một bên, ngã ngửa vào thúng gạo, gạo trắng vương vãi tung toé khắp mặt đất. <span class="nm nm-person">Clevia</span> loạng choạng, suýt ngã, nhưng một bàn tay đã chộp lấy khuỷu tay cô từ phía sau, giữ cô đứng thẳng.</p>
+<p>“Giỏi lắm,” <span class="nm nm-person">Luke</span> thở hổn hển. “Đi tiếp!”</p>
 <p>Áo anh rách một đường dài ở vai trái. Cô không biết anh bị cào từ lúc nào.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="run">
 <figure class="plate"><canvas class="art" data-art="fields:noon" role="img" aria-label="Con đường đá ong dài dưới nắng trưa"></canvas></figure>
 <p>Con đường đá ong dài hơn cô nhớ.</p>
-<p>Nắng trưa vẫn gắt. Hai bên đường, sau những bức tường rào đất, cô thấy những bóng áo nâu đứng lặng trong sân nhà, nghiêng đầu, quay về phía tiếng chân chạy. Có người đã bước ra cổng. Có người đang trèo qua tường rào, chậm chạp, vụng về, như những con rối bị giật dây sai nhịp. Clevia không quay lại nhìn. Cô chỉ chạy, chạy, phổi như có ai nhét vào một nắm than hồng, hai bàn tay phồng rộp vung lên vung xuống, và cái vòm sáng mờ mờ cứ bám theo cô, rung lên khe khẽ theo từng bước chân.</p>
+<p>Nắng trưa vẫn gắt. Hai bên đường, sau những bức tường rào đất, cô thấy những bóng áo nâu đứng lặng trong sân nhà, nghiêng đầu, quay về phía tiếng chân chạy. Có người đã bước ra cổng. Có người đang trèo qua tường rào, chậm chạp, vụng về, như những con rối bị giật dây sai nhịp. <span class="nm nm-person">Clevia</span> không quay lại nhìn. Cô chỉ chạy, chạy, phổi như có ai nhét vào một nắm than hồng, hai bàn tay phồng rộp vung lên vung xuống, và cái vòm sáng mờ mờ cứ bám theo cô, rung lên khe khẽ theo từng bước chân.</p>
 <p>Mái ngói ba gian của nhà họp làng hiện ra ở cuối đường.</p>
 <p>Cô chạy qua cổng, qua sân gạch, qua cái giếng phủ rêu, lên bậc thềm, vào trong gian nhà.</p>
-<p>“Chú Oscar!”</p>
+<p>“Chú <span class="nm nm-person">Oscar</span>!”</p>
 <p>Không ai trả lời.</p>
-<p>Gian nhà trống không. Những dãy ghế gỗ đã được dựng lại ngay ngắn, tất cả, từng chiếc một, ngay hàng thẳng lối như trong một lớp học trước giờ vào tiết. Chiếc ghế ở dãy cuối, chỗ Oscar ngồi lúc sáng, giờ trống trơn. Dãy ghế bên trái không có Priya. Dãy ghế bên phải không có Jasper. Không có ai cả. Chỉ có những vệt nắng vàng nhạt rọi qua ô cửa sổ chấn song, nằm im trên nền gạch đỏ, và một viên gạch nứt toác ở giữa lối đi.</p>
-<p>“Chú Oscar ơi!”</p>
+<p>Gian nhà trống không. Những dãy ghế gỗ đã được dựng lại ngay ngắn, tất cả, từng chiếc một, ngay hàng thẳng lối như trong một lớp học trước giờ vào tiết. Chiếc ghế ở dãy cuối, chỗ <span class="nm nm-person">Oscar</span> ngồi lúc sáng, giờ trống trơn. Dãy ghế bên trái không có <span class="nm nm-person first">Priya</span>. Dãy ghế bên phải không có <span class="nm nm-person">Jasper</span>. Không có ai cả. Chỉ có những vệt nắng vàng nhạt rọi qua ô cửa sổ chấn song, nằm im trên nền gạch đỏ, và một viên gạch nứt toác ở giữa lối đi.</p>
+<p>“Chú <span class="nm nm-person">Oscar</span> ơi!”</p>
 <p>Tiếng cô dội lại từ những cây cột gỗ lim. Rồi tắt.</p>
-<p>Luke chạy vào ngay sau cô, quay người lại, nhìn ra sân. Cô nghe thấy anh thở dốc. Cô nghe thấy cả, xa xa, ngoài cổng, tiếng bước chân lệt sệt trên nền đá ong. Không phải một người. Nhiều người.</p>
+<p><span class="nm nm-person">Luke</span> chạy vào ngay sau cô, quay người lại, nhìn ra sân. Cô nghe thấy anh thở dốc. Cô nghe thấy cả, xa xa, ngoài cổng, tiếng bước chân lệt sệt trên nền đá ong. Không phải một người. Nhiều người.</p>
 <p>“Chú ấy đi rồi,” anh nói. “Cả ba người họ đều đi rồi.”</p>
 <p>“Nhưng mà chú ấy…”</p>
 <p>“Ghế được dựng lại hết rồi, em nhìn xem.” Anh không quay lại, mắt vẫn dán chặt ra cổng. “Người ta không ngồi dựng ghế khi đang bị đuổi. Có lẽ họ đi trước khi chuyện này xảy ra. Anh nghĩ vậy.” Anh ngừng một chút. “Anh mong là vậy.”</p>
 <p>Cô muốn tin anh. Cô cố tin anh. Mắt cô lướt qua tấm bảng gỗ ở cuối gian nhà, lướt qua tờ giấy to nhất ở chính giữa, rồi vội vàng quay đi. Cô không dám nhìn con số trên đó. Không phải lúc này.</p>
-<p>“Ở đây không trú được đâu,” Luke nói. “Không có cửa nào chặn được hết chừng ấy người cả.” Anh quay vào, mắt lướt khắp gian nhà, rồi dừng lại ở góc trong cùng, cạnh tấm bảng gỗ. “Kia rồi.”</p>
+<p>“Ở đây không trú được đâu,” <span class="nm nm-person">Luke</span> nói. “Không có cửa nào chặn được hết chừng ấy người cả.” Anh quay vào, mắt lướt khắp gian nhà, rồi dừng lại ở góc trong cùng, cạnh tấm bảng gỗ. “Kia rồi.”</p>
 <p>Ở góc ấy có một cái bàn đá.</p>
-<p>Sáng nay Clevia không để ý đến nó. Có lẽ vì lúc ấy cả gian nhà đầy khói, rồi đầy những chiếc ghế đổ, rồi đầy những người lớn mệt mỏi ngồi quay lưng vào nhau. Nó là một phiến đá xanh, mặt phẳng nhẵn, kê trên bốn chân đá thấp, và trên mặt đá có khắc một cái khung cửa. Cùng mấy nét đơn giản như trên tấm thẻ Teleport mà ông lão ở Nông trại đã dúi cho Luke. Một khung cửa đứng giữa khoảng trống.</p>
-<p>“Mỗi người được dùng một lần,” Luke nói, kéo cô tới bên cái bàn đá. “Anh đọc thấy ở luật lúc mới vào. Chúng ta chưa dùng lần nào.”</p>
+<p>Sáng nay <span class="nm nm-person">Clevia</span> không để ý đến nó. Có lẽ vì lúc ấy cả gian nhà đầy khói, rồi đầy những chiếc ghế đổ, rồi đầy những người lớn mệt mỏi ngồi quay lưng vào nhau. Nó là một phiến đá xanh, mặt phẳng nhẵn, kê trên bốn chân đá thấp, và trên mặt đá có khắc một cái khung cửa. Cùng mấy nét đơn giản như trên tấm thẻ <span class="nm nm-card">Teleport</span> mà ông lão ở Nông trại đã dúi cho <span class="nm nm-person">Luke</span>. Một khung cửa đứng giữa khoảng trống.</p>
+<p>“Mỗi người được dùng một lần,” <span class="nm nm-person">Luke</span> nói, kéo cô tới bên cái bàn đá. “Anh đọc thấy ở luật lúc mới vào. Chúng ta chưa dùng lần nào.”</p>
 <p>“Mình đi đâu?”</p>
-<p>Luke nhìn cô. Rồi anh nhìn ra cửa, nơi những cái bóng áo nâu đầu tiên đã lừ đừ bước qua cổng, ra tới giữa sân, đi vòng qua cái giếng phủ rêu. Đi đầu là một người đàn bà nhỏ thó, lưng còng, búi tóc bạc cài trâm gỗ, môi đỏ quạch.</p>
+<p><span class="nm nm-person">Luke</span> nhìn cô. Rồi anh nhìn ra cửa, nơi những cái bóng áo nâu đầu tiên đã lừ đừ bước qua cổng, ra tới giữa sân, đi vòng qua cái giếng phủ rêu. Đi đầu là một người đàn bà nhỏ thó, lưng còng, búi tóc bạc cài trâm gỗ, môi đỏ quạch.</p>
 <p>“Khu Mỏ,” anh nói.</p>
 <p>“Nhưng mà sáng nay bên đó…”</p>
 <p>“Anh biết.” Anh nói nhanh, nhưng rõ từng chữ, như người đang cố nghĩ cho thật nhanh mà không được nghĩ sai. “Sáng nay chúng ta thấy đợt ấy ở bên Mỏ. Giờ nó sang đây rồi. Anh đoán nó không ở hai chỗ một lúc, nên có lẽ bên đó vừa yên lại. Có lẽ thôi, anh không chắc. Nhưng ở đây thì chắc chắn là không được nữa rồi.” Anh nhìn cô. “Em tin anh chứ?”</p>
 <p>Cô nhìn anh. Nhìn đường rách trên vai áo anh, nhìn giọt mồ hôi lăn trên thái dương anh, nhìn bàn tay anh vẫn nắm chặt thanh kiếm tre, và cô nghĩ đến cái lúc anh đặt ngón tay lên môi trong chòi hàng, cái lúc anh siết vai cô đến đau, cái lúc anh phủ tấm vải trắng lên người một đứa con gái mà anh chẳng quen biết gì.</p>
 <p>“Em tin,” cô nói.</p>
 <p>Anh đặt bàn tay phải lên mặt đá. Cô đặt bàn tay mình lên cạnh tay anh, bàn tay phồng rộp, đỏ rát, run rẩy. Mặt đá lạnh, nhẵn, và rồi nó ấm dần lên dưới lòng bàn tay cô, ấm dần, nóng dần, giống hệt tấm thẻ sáng nay ở chòi câu cá. Những nét khắc của cái khung cửa bắt đầu sáng lên, từng nét một.</p>
-<p>“Em nghĩ tới khu Mỏ nhé,” Luke nói khẽ. “Con đường mòn, cái lò rèn có ống khói. Chỗ chúng ta nhìn thấy sáng nay ấy.”</p>
-<p>Clevia nhắm mắt lại.</p>
+<p>“Em nghĩ tới khu Mỏ nhé,” <span class="nm nm-person">Luke</span> nói khẽ. “Con đường mòn, cái lò rèn có ống khói. Chỗ chúng ta nhìn thấy sáng nay ấy.”</p>
+<p><span class="nm nm-person">Clevia</span> nhắm mắt lại.</p>
 <p>Cô nghĩ tới dải đất xám, khô, lổn nhổn những tảng đá và những ngọn đồi trọc. Con đường mòn chạy ngoằn ngoèo lên chân núi. Một mái nhà lá. Một làn khói mỏng bốc lên từ ống khói xây gạch. Cô cố không nghĩ tới ba người áo nâu đứng rải rác trên con đường ấy, cái đầu nghiêng về một phía. Cô cố không nghĩ tới cái bóng nhỏ chạy vụt qua như một đứa trẻ chơi đuổi bắt.</p>
 <p>Sau lưng cô, có tiếng chân lệt sệt bước lên bậc thềm.</p>
 <p>Rồi cái khung cửa mở ra.</p>
@@ -2861,6 +2875,14 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
       }
       addEventListener('scroll', check, { passive: true }); check();
     })();
+  })();
+
+  /* tên riêng lần đầu trong chương loé sáng khi cuộn tới */
+  (function () {
+    var fs = [].slice.call(document.querySelectorAll('.nm.first'));
+    if (!fs.length || !window.IntersectionObserver) return;
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -30% 0px' });
+    fs.forEach(function (n) { io.observe(n); });
   })();
 
 })();
