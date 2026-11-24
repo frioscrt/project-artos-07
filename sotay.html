@@ -81,6 +81,7 @@ header.bar.hide{transform:translateY(-110%);opacity:0}
   border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
 }
 .tools button:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:440px){header.bar{padding-left:12px;padding-right:12px;gap:8px}.menu-btn{padding:0 10px;font-size:14px}.tools button{font-size:14px;min-width:32px;padding:0 7px}}
 :focus-visible{outline:2px solid var(--lamp);outline-offset:3px;border-radius:4px}
 
 main{max-width:var(--measure);margin:0 auto;padding:0 16px}
@@ -108,7 +109,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .plate canvas{display:block;width:100%;aspect-ratio:16/9;
   -webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
 @media (min-width:720px){.plate{margin-left:-4em;margin-right:-4em}}
-.tools #sound[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
+.tools #sound[aria-pressed="true"],.tools #sfx[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
 .card-fig{margin:2.4em auto;max-width:300px;text-align:center}
 .card{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
 .card-inner{display:block;position:relative;aspect-ratio:856/540;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform:rotateX(8deg) rotateZ(-3deg)}
@@ -467,7 +468,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   root.setAttribute('data-ui', 'b c soft');
   root.setAttribute('data-say', 'g');
   // màu nhuốm nền theo tiếng nền của cảnh
-  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c',
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c', shaft: '#1e2a2c', anvil: '#262a2e', stillshaft: '#101c26', shuffle: '#2e1a20', dust: '#2a2626',
     hearth: '#5a1a24', hearthlow: '#40161e', hut: '#3a1e26', whet: '#2e2a30', dusk: '#40243a', dawn: '#40303c',
     day: '#2a3c48', noon: '#384650', farm: '#2a3c44', paddy: '#26404a', market: '#3a2a34', street: '#33393f', run: '#3f2a2a',
     river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#33303a', store: '#302e36', room: '#33363a', clock: '#2f3540' };

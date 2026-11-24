@@ -81,6 +81,7 @@ header.bar.hide{transform:translateY(-110%);opacity:0}
   border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
 }
 .tools button:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:440px){header.bar{padding-left:12px;padding-right:12px;gap:8px}.menu-btn{padding:0 10px;font-size:14px}.tools button{font-size:14px;min-width:32px;padding:0 7px}}
 :focus-visible{outline:2px solid var(--lamp);outline-offset:3px;border-radius:4px}
 
 main{max-width:var(--measure);margin:0 auto;padding:0 16px}
@@ -108,7 +109,7 @@ h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
 .plate canvas{display:block;width:100%;aspect-ratio:16/9;
   -webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
 @media (min-width:720px){.plate{margin-left:-4em;margin-right:-4em}}
-.tools #sound[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
+.tools #sound[aria-pressed="true"],.tools #sfx[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
 .card-fig{margin:2.4em auto;max-width:300px;text-align:center}
 .card{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
 .card-inner{display:block;position:relative;aspect-ratio:856/540;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform:rotateX(8deg) rotateZ(-3deg)}
@@ -467,7 +468,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   root.setAttribute('data-ui', 'b c soft');
   root.setAttribute('data-say', 'g');
   // màu nhuốm nền theo tiếng nền của cảnh
-  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c',
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c', shaft: '#1e2a2c', anvil: '#262a2e', stillshaft: '#101c26', shuffle: '#2e1a20', dust: '#2a2626',
     hearth: '#5a1a24', hearthlow: '#40161e', hut: '#3a1e26', whet: '#2e2a30', dusk: '#40243a', dawn: '#40303c',
     day: '#2a3c48', noon: '#384650', farm: '#2a3c44', paddy: '#26404a', market: '#3a2a34', street: '#33393f', run: '#3f2a2a',
     river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#33303a', store: '#302e36', room: '#33363a', clock: '#2f3540' };
@@ -515,7 +516,8 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   <div class="tools">
     <button type="button" id="smaller" aria-label="Chữ nhỏ hơn">A−</button>
     <button type="button" id="bigger" aria-label="Chữ to hơn">A+</button>
-    <button type="button" id="sound" aria-pressed="false" aria-label="Bật hoặc tắt tiếng nền">Tiếng</button>
+    <button type="button" id="sound" aria-pressed="false" aria-label="Bật hoặc tắt nhạc nền">Nhạc</button>
+    <button type="button" id="sfx" aria-pressed="false" aria-label="Bật hoặc tắt tiếng hiệu ứng khi chạm, lật thẻ, dùng năng lực">Tiếng</button>
     <button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button>
   </div>
 </header>
@@ -2405,7 +2407,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     a.cv.width = Math.round(w * d); a.cv.height = Math.round(h * d);
     a.g = a.cv.getContext('2d'); a.g.setTransform(d, 0, 0, d, 0, 0); a.w = w; a.h = h;
   }
-  function draw(a, t) { a.g.clearRect(0, 0, a.w, a.h); a.fn(a.g, a.w, a.h, t, a.R, a.o); }
+  function draw(a, t) { if (!a.w || !a.h) return; a.g.clearRect(0, 0, a.w, a.h); try { a.fn(a.g, a.w, a.h, t, a.R, a.o); } catch (e) {} }
   arts.forEach(function (a) { size(a); draw(a, 4); });
   addEventListener('resize', function () { arts.forEach(function (a) { size(a); draw(a, 4); }); });
   addEventListener('a07-theme', function () { arts.forEach(function (a) { draw(a, 4); }); });
@@ -2520,7 +2522,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       if (p.dataset.fx === 'flicker') flickFrom = p;
     });
     // tô nổi đoạn chữ của lần kích hoạt năng lực nhân vật chính: loé sáng lúc hiệu ứng chạy, rồi giữ lại vạch màu nhẹ
-    var WHO = { chains: 'leon', rescue: 'leon', rescuehold: 'leon', anomaly: 'luke', protect: 'luke', keysense: 'clevia', keyburst: 'clevia' };
+    var WHO = { chains: 'leon', rescue: 'leon', rescuehold: 'leon', anomaly: 'luke', protect: 'luke', keysense: 'clevia', keyburst: 'clevia', stoneopen: 'clevia' };
     function power(p, who, delay) {
       who = who || WHO[p && p.dataset.fx]; if (!p || !who) return;
       var list = [p], q = p.nextElementSibling;
@@ -3095,6 +3097,34 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     MORE.keysense = function (t, R) { var a = MORE.clevia_a(t, R), c = MORE.clevia_c(t, R); return a && c; };
     // bản ngắn khi người đọc tự giữ tay mở khoá: vòng đã gần khớp hết, chỉ còn cú cạch cuối và tia sáng
     MORE.keyburst = function (t, R) { return MORE.keysense(t + 1.6, R); };
+    // Clevia mở lối ra không có khoá: bốn vòng đỏ rượu hiện ra và cùng khẽ xoay đi một lượt (không cú cạch, không lẫy),
+    // các đoạn chữ dạt sang hai bên như những tảng đá trượt đi, một khe nắng trắng mở rộng dần giữa trang
+    MORE.stoneopen = function (t, R) {
+      var ps = MORE._sps;
+      if (!ps) { ps = MORE._sps = [].slice.call(document.querySelectorAll('.scene p, .scene .act')).filter(function (p) { var r = p.getBoundingClientRect(); return r.bottom > 0 && r.top < H; }).slice(0, 9); }
+      if (t > 5.6) { ps.forEach(function (p) { p.style.transform = ''; p.style.transition = ''; }); MORE._sps = null; return true; }
+      var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), dk = C.dark;
+      edge('#000000', (dk ? 0.7 : 0.45) * (t < 0.4 ? t / 0.4 : t < 4.2 ? 1 : Math.max(0, 1 - (t - 4.2) / 1.2)), 0.2);
+      // vòng đỏ rượu: hiện lên, đứng lặng; tới 1,2 giây cùng xoay nửa vòng thật chậm rồi khớp; 2 giây nở tung ra và tan
+      var appear = Math.min(1, t / 0.6), turn = t < 1.2 ? 0 : Math.min(1, (t - 1.2) / 0.8), tu = turn * turn * (3 - 2 * turn), open = t > 2 ? t - 2 : 0, ra = appear * (open ? Math.max(0, 1 - open / 1.4) : 1);
+      for (var i = 0; i < 4; i++) {
+        var r = m * (0.12 + i * 0.07) * (1 + open * open * 1.5), gap = R[i] * 6.283 * (1 - tu) + (-1.5708) * tu + (i % 2 ? -1 : 1) * 3.1416 * tu;
+        ring(cx, cy, r, 2 + (turn > 0 && turn < 1 ? 1.5 : 0), (0.85 - i * 0.12) * ra, gap, 0.32);
+      }
+      if (turn > 0) glow(cx, cy, m * (0.2 + 0.25 * tu), CW.mid, 0.3 * Math.sin(Math.min(1, turn) * Math.PI) + (open ? 0 : 0.05));
+      // đoạn chữ dạt sang hai bên như tảng đá trượt ra, êm, không rơi vụn
+      var part = t < 2 ? 0 : t < 3 ? (t - 2) / 1 : t < 4.4 ? 1 : Math.max(0, 1 - (t - 4.4) / 1);
+      var pe = part * part * (3 - 2 * part);
+      ps.forEach(function (p, i) { p.style.transform = pe > 0.001 ? 'translateX(' + ((i % 2 ? 1 : -1) * (14 + (i % 3) * 8) * pe).toFixed(1) + 'px)' : ''; });
+      // khe nắng trắng giữa trang rộng dần
+      if (t > 2.1) {
+        var sw = Math.min(1, (t - 2.1) / 1.4), slit = W * (0.01 + 0.24 * sw * sw), la = t < 4.2 ? 1 : Math.max(0, 1 - (t - 4.2) / 1.4), white = dk ? '#eef2f0' : '#ffffff';
+        var sg = g.createLinearGradient(cx - slit, 0, cx + slit, 0); sg.addColorStop(0, rgba(white, 0)); sg.addColorStop(0.35, rgba(white, 0.55 * la)); sg.addColorStop(0.5, rgba(white, 0.8 * la)); sg.addColorStop(0.65, rgba(white, 0.55 * la)); sg.addColorStop(1, rgba(white, 0)); g.fillStyle = sg; g.fillRect(cx - slit, 0, slit * 2, H);
+        var bg = g.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.6); bg.addColorStop(0, rgba(white, 0.25 * la * sw)); bg.addColorStop(1, rgba(white, 0)); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+        g.fillStyle = rgba(dk ? '#d8e0de' : '#8a8478', 0.6 * la); for (var d = 0; d < 26; d++) { var dx = cx + (R[d % 60] - 0.5) * slit * 1.6, dy = ((t * 0.06 + R[(d + 30) % 60]) % 1) * H; g.fillRect(dx, dy, 1.6, 1.6); }
+      }
+      return false;
+    };
     // Luke, Anomaly Sense: thời gian như ngừng lại, cả trang mất màu và đập theo nhịp tim, sóng dò quét qua làm chữ gợn,
     // rồi tới chỗ lệch nhịp thì cả trang giật tách màu và một vết đỏ nhoè hiện ra ở đó.
     MORE.anomaly = function (t, R) {
@@ -3202,7 +3232,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   })();
 
   /* ---------- tiếng nền ---------- */
-  var ac = null, master = null, bed = null, bedLevel = 1, current = null, curKey = null, playing = false, noiseBuf = null;
+  var ac = null, master = null, bed = null, musicG = null, bedLevel = 1, current = null, curKey = null, playing = false, noiseBuf = null;
 
   function noise() {
     if (noiseBuf) return noiseBuf;
@@ -3446,7 +3476,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   };
 
   function switchTo(key) {
-    if (!playing || key === curKey) return;
+    if (!playing || !want || key === curKey) return;
     curKey = key;
     var n = ac.currentTime;
     if (current) {
@@ -3470,19 +3500,20 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
 
   // Tiếng mặc định bật và nhớ lựa chọn qua các chương. Trình duyệt chỉ cho phát tiếng sau lần chạm/bấm đầu tiên,
   // nên khi đang "bật" mà chưa phát được thì tiếng tự chạy ở lần chạm đầu tiên vào trang.
-  var btn = document.getElementById('sound'), want = true;
-  try { want = localStorage.getItem('a07-sound') !== 'off'; } catch (e) {}
+  var btn = document.getElementById('sound'), fbtn = document.getElementById('sfx'), want = true, wantFx = true;
+  try { want = localStorage.getItem('a07-sound') !== 'off'; wantFx = localStorage.getItem('a07-sfx') !== 'off'; } catch (e) {}
   function ensureCtx() {
     if (ac) return true;
-    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) { if (btn) btn.disabled = true; return false; }
-    ac = new AC(); master = gain(0.5);
-    var comp = ac.createDynamicsCompressor(); master.connect(comp); comp.connect(ac.destination);
-    bed = gain(bedLevel); bed.connect(master); // tiếng nền đi qua đây để tương tác "giữ im lặng" hạ được nó
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) { if (btn) btn.disabled = true; if (fbtn) fbtn.disabled = true; return false; }
+    // hai nút riêng (Clair 24/11): master = tiếng hiệu ứng (tương tác, năng lực, lật thẻ), musicG = nhạc nền theo cảnh
+    ac = new AC(); master = gain(wantFx ? 0.5 : 0); musicG = gain(want ? 0.5 : 0);
+    var comp = ac.createDynamicsCompressor(); master.connect(comp); musicG.connect(comp); comp.connect(ac.destination);
+    bed = gain(bedLevel); bed.connect(musicG); // tiếng nền đi qua đây để tương tác "giữ im lặng" hạ được nó
     return true;
   }
-  function startSound() { if (playing || !ensureCtx()) return; playing = true; ac.resume(); curKey = null; switchTo(sceneNow()); }
-  function stopSound() {
-    playing = false;
+  function ramp(node, v, secs) { if (!node) return; var n = ac.currentTime; node.gain.cancelScheduledValues(n); node.gain.setValueAtTime(node.gain.value, n); node.gain.linearRampToValueAtTime(v, n + secs); }
+  function startSound() { if ((!want && !wantFx) || !ensureCtx()) return; if (!playing) { playing = true; ac.resume(); curKey = null; } switchTo(sceneNow()); }
+  function stopMusic() {
     if (ac && current) {
       var n = ac.currentTime, old = current; current = null;
       old.g.gain.cancelScheduledValues(n); old.g.gain.setValueAtTime(old.g.gain.value, n); old.g.gain.linearRampToValueAtTime(0, n + 0.6);
@@ -3490,20 +3521,28 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     }
     curKey = null;
   }
-  function show() { if (btn) btn.setAttribute('aria-pressed', want); }
+  function show() { if (btn) btn.setAttribute('aria-pressed', want); if (fbtn) fbtn.setAttribute('aria-pressed', wantFx); }
   show();
   function firstGesture(e) {
-    if (btn && (e.target === btn || btn.contains(e.target))) return; // bấm thẳng vào nút thì để nút xử lý
+    if ((btn && (e.target === btn || btn.contains(e.target))) || (fbtn && (e.target === fbtn || fbtn.contains(e.target)))) return; // bấm thẳng vào nút thì để nút xử lý
     ['pointerdown', 'keydown', 'touchend'].forEach(function (t) { removeEventListener(t, firstGesture, true); });
-    if (want) startSound();
+    if (want || wantFx) startSound();
   }
   ['pointerdown', 'keydown', 'touchend'].forEach(function (t) { addEventListener(t, firstGesture, true); });
+  // Nhạc nền: bật/tắt riêng, nhớ qua các chương
   if (btn) btn.onclick = function () {
     if (want && !playing) { startSound(); return; } // đang bật mà chưa phát: lần bấm này để phát
     want = !want;
     try { localStorage.setItem('a07-sound', want ? 'on' : 'off'); } catch (e) {}
     show();
-    want ? startSound() : stopSound();
+    if (want) { startSound(); ramp(musicG, 0.5, 0.6); } else { ramp(musicG, 0, 0.6); stopMusic(); if (!wantFx) playing = false; }
+  };
+  // Tiếng hiệu ứng (tương tác, năng lực, lật thẻ): bật/tắt riêng, nhớ qua các chương
+  if (fbtn) fbtn.onclick = function () {
+    wantFx = !wantFx;
+    try { localStorage.setItem('a07-sfx', wantFx ? 'on' : 'off'); } catch (e) {}
+    show();
+    if (wantFx) { startSound(); ramp(master, 0.5, 0.2); if (window.a07sfx) setTimeout(function () { window.a07sfx('nudge'); }, 250); } else { ramp(master, 0, 0.2); if (!want) playing = false; }
   };
   document.addEventListener('visibilitychange', function () { if (ac && playing) document.hidden ? ac.suspend() : ac.resume(); });
   /* ---------- tương tác người đọc (chèn vào cuối fx.js khi dựng; dùng chung ac, master, bed, playing) ----------
@@ -3911,6 +3950,13 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       S.keyburst(o, n + 1.75);
     };
     S.keyburst = function (o, n) { bus(); var t = n + 0.15; nz(hard(0.4), 'highpass', 3000, 8000, 0.8, 0.6, 0.06, t); whoosh(t, 0.5, 0.5, true); sparkle(t + 0.02, 0.07, [2637, 3136, 3951, 4699, 5274, 6272]); nz(wet(1), 'highpass', 6000, 10000, 0.7, 0.12, 1.0, t + 0.1); };
+    // đá tự trượt mở (năng lực Clevia, vẫn kiểu A3 nhưng không có cú cạch nào: một lượt xoay ngân dài, rồi đá trượt êm sang hai bên, khe nắng loé ra thành chuỗi lấp lánh)
+    S.stoneopen = function (o, n) {
+      bus(); swell(wet(1), n, 0.6, 0.22); riser(wet(1), n + 0.3, 1.6, 0.18);
+      shing(n + 1.2, 0.09, 0.62); sparkle(n + 1.25, 0.03, [1568, 2093, 2637]); swell(wet(1), n + 1.3, 0.7, 0.3, 3500);
+      [-1, 1].forEach(function (side, i) { var p = ac.createStereoPanner ? ac.createStereoPanner() : null, g2 = gain(1); if (p) { p.pan.value = side * 0.7; g2.connect(p); p.connect(busD); p.connect(busW); } else { g2.connect(busD); } nz(g2, 'bandpass', 700, 1600, 1.2, 0.22, 1.1, n + 2 + i * 0.12); });
+      S.keyburst(o, n + 2.0); sparkle(n + 2.6, 0.05, [2637, 3136, 3951, 4699, 5274, 6272, 7040]);
+    };
     window.a07sfx = function (name) {
       if (!S[name] || !playing || !ac || ac.state !== 'running') return;
       try { var o = gain(1); o.connect(master); S[name](o, ac.currentTime); } catch (e) { if (window.console) console.warn('a07sfx', name, e); }
@@ -4751,7 +4797,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       g.restore();
     }
     function rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
-    function stoneRumble(v, dur) { snd(function (n) { nz(out(1), 'bandpass', 380, 260, 1.2, v, dur, n); for (var k = 0; k < 6; k++) nz(out(1), 'bandpass', 900 + Math.random() * 900, 600, 3, v * 0.4, 0.05, n + Math.random() * dur); }); }
+    function stoneRumble(v, dur) { snd(function (n) { nz(out(1), 'bandpass', 900, 600, 1.2, v * 0.8, dur, n); for (var k = 0; k < 6; k++) nz(out(1), 'bandpass', 900 + Math.random() * 900, 600, 3, v * 0.4, 0.05, n + Math.random() * dur); }); }
 
     /* ---- ch12 mở hòm: chạm ổ khoá là bật (lần này dễ hơn), vuốt lên lật nắp, chạm lật thẻ úp ---- */
     function CHEST() {
@@ -4789,7 +4835,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
         },
         up: function (S, dn, tap) {
           if (!tap) return;
-          if (phase === 0) { phase = 1; unT = performance.now() / 1000; S.say('vuốt lên để lật nắp hòm'); snd(function (n) { var o = out(1); nz(o, 'bandpass', 3000, 2400, 3, 0.4, 0.04, n); nz(o, 'bandpass', 2000, 1600, 4, 0.3, 0.05, n + 0.07); }); if (window.a07shot) window.a07shot('keyburst'); S.kick(1500); return; }
+          if (phase === 0) { phase = 1; unT = performance.now() / 1000; S.say('vuốt lên để lật nắp hòm'); snd(function (n) { var o = out(1); nz(o, 'bandpass', 3000, 2400, 3, 0.4, 0.04, n); nz(o, 'bandpass', 2000, 1600, 4, 0.3, 0.05, n + 0.07); }); if (window.a07cast) window.a07cast(true); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst'); }, 250); if (window.a07power) { var tp = S.box.previousElementSibling; if (tp && tp.tagName === 'P') window.a07power(tp, 'clevia', 250); } S.kick(1500); return; }
           if (phase === 2 && !flip && this._card) { var c = this._card; if (dn.x > c[0] - 20 && dn.x < c[0] + c[2] + 20 && dn.y > c[1] - 20 && dn.y < c[1] + c[3] + 20) { flip = 1; flipT = performance.now() / 1000; S.say('Remedy'); if (window.a07sfx) a07sfx('flip'); S.finish(); S.kick(1500); } }
         },
         move: function (S, p, dx, dy) {
@@ -4904,8 +4950,13 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
         },
         open: function (S) {
           open = performance.now() / 1000; S.finish(); S.say(''); stoneRumble(0.18, 1.6);
-          snd(function (n) { var o = out(1); [1046, 1318, 1568, 2093].forEach(function (f, i) { tn(o, 'sine', f, f, 0.03, 1.6, n + 1.6 + i * 0.08); }); });
-          markFired(S, 'heat');
+          // năng lực Clevia (vòng đỏ rượu + tiếng A3, không cú cạch): nối vào hiệu ứng stoneopen của đoạn sau, đánh dấu đoạn đó đã chạy
+          var tp = null, ps = document.querySelectorAll('.scene p[data-fx="stoneopen"]'), me = S.box.getBoundingClientRect().top;
+          for (var i = 0; i < ps.length; i++) if (ps[i].getBoundingClientRect().top > me) { tp = ps[i]; break; }
+          markFired(S, 'stoneopen'); markFired(S, 'heat');
+          if (window.a07cast) window.a07cast();
+          setTimeout(function () { if (window.a07shot) window.a07shot('stoneopen'); }, 850);
+          if (tp && window.a07power) window.a07power(tp, 'clevia', 850);
         },
         down: function (S, p) { if (open) return; holding = true; palm = p; if (!grind) grind = hum('bandpass', 260, 1.2); },
         up: function (S) {
