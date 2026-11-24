@@ -627,10 +627,100 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .tg-credit div{display:flex;justify-content:space-between;gap:1em;padding:.35em 0;line-height:1.4}
 .tg-credit span{opacity:.75}
 .tg-credit b{font-weight:400;font-style:italic;color:var(--lamp);text-align:right}
-.tg-how{margin:2.4em 0 0;padding:1.2em 1.1em;border:1px solid var(--line);border-radius:14px}
+.tg-how{margin:2.4em 0 0;padding:1.2em 1.1em 1.1em;border:1px solid var(--line);border-radius:14px}
 .tg-how .k{margin:0 0 .7em;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
 .tg-how p{margin:0;color:var(--soft);line-height:1.65}
 .tg-how b{color:var(--ink);font-weight:600}
+.tgf-try{position:relative}
+.tgf-try::after{content:"";position:absolute;inset:-3px;border-radius:12px;border:1px dashed var(--lamp);opacity:0;animation:tgfhint 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes tgfhint{0%,100%{opacity:0}50%{opacity:.55}}
+.tg-how button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.tg-how svg{display:block;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.tgf-verbs{display:flex;gap:10px;margin:1.1em 0 0}
+.tgf-v{flex:1;display:flex;flex-direction:column;align-items:center;gap:.35em;padding:.7em 0 .55em;border-radius:10px;background:color-mix(in srgb,var(--veil) 70%,transparent);color:var(--ink)}
+.tgf-v>span:last-child{font-size:14px;letter-spacing:.08em;color:var(--soft)}
+.tgf-v svg{width:46px;height:46px}
+#tgf-giu .rg{stroke:var(--line);stroke-width:1.2}
+#tgf-giu .pr{stroke:var(--lamp);stroke-width:2.2;stroke-dasharray:100;stroke-dashoffset:100}
+#tgf-giu .sh{transition:transform .35s cubic-bezier(.3,1.6,.5,1);transform-origin:40px 30px}
+#tgf-giu .kh{stroke-width:1.4}
+#tgf-giu.on{color:var(--lamp)}
+#tgf-giu.on .sh{transform:translateY(-5px) rotate(14deg)}
+#tgf-giu.hold .bd{animation:tgfshake .12s linear infinite}
+@keyframes tgfshake{0%,100%{transform:none}25%{transform:translateX(-.6px)}75%{transform:translateX(.6px)}}
+.tgf-card{position:relative;width:30px;height:42px;margin:2px 0;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.3,.5,1)}
+.tgf-card>span{position:absolute;inset:0;border-radius:4px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center}
+.tgf-card .b{background:#16181b;border:1px solid #3a3f45;color:#7d8790}
+.tgf-card .f{transform:rotateY(180deg);background:color-mix(in srgb,var(--lamp) 14%,var(--veil));border:1px solid var(--lamp);color:var(--lamp)}
+.tgf-card svg{width:30px;height:42px;stroke-width:1.2}
+#tgf-lat.on .tgf-card{transform:rotateY(180deg)}
+#tgf-nghe .hp{stroke:var(--ink)}
+#tgf-nghe .wv{stroke:var(--lamp);stroke-width:2;opacity:.35}
+#tgf-nghe .wv path{transform-box:fill-box;transform-origin:center}
+#tgf-nghe.on .wv{opacity:1}
+#tgf-nghe.on .wv path{animation:tgfbar .5s ease-in-out infinite alternate}
+#tgf-nghe.on .wv path:nth-child(2){animation-delay:-.2s}#tgf-nghe.on .wv path:nth-child(3){animation-delay:-.35s}#tgf-nghe.on .wv path:nth-child(4){animation-delay:-.1s}#tgf-nghe.on .wv path:nth-child(5){animation-delay:-.4s}
+@keyframes tgfbar{from{transform:scaleY(.35)}to{transform:scaleY(1.25)}}
+.tgf-lead{margin:1.4em 0 .2em!important}
+.tgf-list{list-style:none;margin:0;padding:0}
+.tgf-list li{display:flex;gap:14px;align-items:flex-start;padding:.85em 0;border-top:1px dashed var(--line)}
+.tgf-list li:first-child{border-top:0}
+.tgf-pic{flex:none;width:64px;height:64px;border-radius:10px;background:color-mix(in srgb,var(--veil) 70%,transparent);color:var(--ink)}
+.tgf-pic svg{width:64px;height:64px}
+.tgf-list .t{display:inline-block;color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--lamp) 55%,transparent);line-height:1.3;margin:.1em 0 .25em}
+.tgf-list p{font-size:.94em;line-height:1.55}
+/* Sổ tay: Luke gạch suy đoán cũ, viết đoán mới (mực xanh Luke) */
+#tgf-sotay{color:var(--pw-luke)}
+#tgf-sotay .pp{fill:var(--bg);stroke:var(--line)}
+#tgf-sotay .ln{stroke:var(--line);stroke-width:1}
+#tgf-sotay text{fill:currentColor;stroke:none;font-family:var(--disp,serif);font-style:italic;font-size:16px}
+#tgf-sotay .st{stroke:var(--lamp);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .35s ease}
+#tgf-sotay .nw{clip-path:inset(0 100% 0 0);transition:clip-path .6s ease .35s}
+#tgf-sotay .old{transition:opacity .4s}
+#tgf-sotay .cur{stroke-width:1.3;opacity:.7;transition:transform .7s ease,opacity .3s ease .6s}
+#tgf-sotay.on .st{stroke-dashoffset:0}
+#tgf-sotay.on .old{opacity:.45}
+#tgf-sotay.on .nw{clip-path:inset(0 0 0 0)}
+#tgf-sotay.on .cur{transform:translate(-6px,16px);opacity:0}
+/* Bộ sưu tập: thẻ lật rồi bay vào album */
+#tgf-the .alb{stroke:var(--soft);stroke-width:1.3}
+#tgf-the .bg{fill:var(--lamp);stroke:none;opacity:0;transition:opacity .3s}
+#tgf-the .bgt{fill:#fff;stroke:none;font-size:6.5px;font-weight:700;text-anchor:middle;opacity:0;transition:opacity .3s}
+#tgf-the .cd{transform-box:fill-box;transform-origin:center}
+#tgf-the .cb rect{fill:#16181b;stroke:#3a3f45}#tgf-the .cb circle,#tgf-the .cb path{stroke:#7d8790;stroke-width:1.2}
+#tgf-the .cf rect{fill:color-mix(in srgb,var(--lamp) 14%,var(--veil));stroke:var(--lamp)}#tgf-the .cf path{stroke:var(--lamp)}
+#tgf-the .cf{opacity:0}
+#tgf-the.on .cd{animation:tgffly 1.5s cubic-bezier(.5,0,.3,1) both}
+#tgf-the.on .cf{animation:tgfface 1.5s step-end both}
+#tgf-the.on .alb{animation:tgfbump .4s ease 1.3s}
+#tgf-the.got .bg,#tgf-the.got .bgt{opacity:1}
+@keyframes tgffly{0%{transform:none}18%{transform:scaleX(0)}36%{transform:none}62%{transform:none;opacity:1}100%{transform:translate(24px,28px) scale(.22);opacity:0}}
+@keyframes tgfface{0%{opacity:0}18%{opacity:1}100%{opacity:1}}
+@keyframes tgfbump{50%{transform:translateY(-2px)}}
+#tgf-the .alb{transform-box:fill-box;transform-origin:center}
+/* Bản đồ: mực hiện dần, dấu chân đỏ */
+#tgf-bando .pp{fill:color-mix(in srgb,var(--bg) 85%,transparent);stroke:var(--line)}
+#tgf-bando .fold{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+#tgf-bando .ink{stroke:var(--ink);stroke-width:1.4;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset 1.1s ease,opacity .15s}
+#tgf-bando .i2{transition-delay:.25s}#tgf-bando .i3{transition-delay:.5s}#tgf-bando .i4{transition-delay:.7s}
+#tgf-bando .fp circle{fill:var(--lamp);stroke:none;opacity:0;transition:opacity .3s}
+#tgf-bando.on .ink{stroke-dashoffset:0;opacity:.85}
+#tgf-bando.on .fp circle{opacity:1}
+#tgf-bando.on .fp circle:nth-child(1){transition-delay:.3s}#tgf-bando.on .fp circle:nth-child(2){transition-delay:.55s}#tgf-bando.on .fp circle:nth-child(3){transition-delay:.8s}#tgf-bando.on .fp circle:nth-child(4){transition-delay:1.05s}#tgf-bando.on .fp circle:nth-child(5){transition-delay:1.3s}
+/* Góc nhìn khác: mắt mở, đổi màu người kể */
+#tgf-mat .eye{transform-origin:32px 32px;transform:scaleY(.08);opacity:0;transition:transform .45s cubic-bezier(.3,1.4,.5,1),opacity .2s}
+#tgf-mat .iris{stroke:var(--pw-luke);fill:color-mix(in srgb,var(--pw-luke) 22%,transparent);transition:stroke .4s,fill .4s}
+#tgf-mat .pu{fill:currentColor;stroke:none}
+#tgf-mat .shut{transition:opacity .2s}
+#tgf-mat.on .eye{transform:none;opacity:1}
+#tgf-mat.on .shut{opacity:0}
+#tgf-mat.leon .iris{stroke:var(--pw-leon);fill:color-mix(in srgb,var(--pw-leon) 22%,transparent)}
+.tgf-more{margin:1em 0 0!important;font-style:italic;display:flex;align-items:center;gap:.5em}
+.tgf-lk{flex:none;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;color:var(--lamp)}
+.tgf-lk svg{width:18px;height:18px;stroke-width:1.5}
+.tgf-lk.no svg{animation:tgfno .4s linear}
+@keyframes tgfno{20%{transform:translateX(-2px) rotate(-6deg)}40%{transform:translateX(2px) rotate(5deg)}60%{transform:translateX(-1.5px)}80%{transform:translateX(1px)}}
+@media (prefers-reduced-motion: reduce){.tgf-try::after,#tgf-nghe.on .wv path,#tgf-giu.hold .bd{animation:none}}
 .tg-how .from{display:none}
 .tg-arrive .tg-how .from{display:inline}
 .tg-arrive .tg-ring{animation:tgin 1.4s cubic-bezier(.2,.8,.2,1) both}
@@ -672,9 +762,26 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     <p>Truyện vẫn đang được viết tiếp từng chương. Nếu có đoạn nào làm các cậu nín thở, hay một tấm thẻ nào khiến các cậu tò mò, tui sẽ vui lắm nếu được nghe kể lại.</p>
     <p>Cảm ơn các cậu đã ghé qua. Chúc các cậu có một trải nghiệm thật tuyệt vời với PROJECT ARTOS 07 và nhớ đeo tai nghe để trải nghiệm thật hấp dẫn nha!</p>
   </div>
-  <section class="tg-how" aria-label="Cách đọc">
+  <section class="tg-how" aria-label="Truyện này không chỉ để đọc">
     <p class="k">Truyện này không chỉ để đọc</p>
-    <p><span class="from">Ổ khoá vừa rồi là một chỗ chạm. </span>Trong truyện còn nhiều chỗ như thế: <b>giữ</b> để mở khoá hay giơ đèn, <b>lật</b> những tấm thẻ úp, <b>nghe</b> tiếng từng cảnh (nên đeo tai nghe), và <b>Sổ tay của Luke</b> ghi lại suy đoán về năng lực từng người.</p>
+    <p><span class="from">Ổ khoá vừa rồi là một chỗ chạm. </span>Trong truyện còn nhiều chỗ như thế: <b>giữ</b> để mở khoá hay giơ đèn, <b>lật</b> những tấm thẻ úp, <b>nghe</b> tiếng từng cảnh (nên đeo tai nghe).</p>
+    <div class="tgf-verbs">
+      <button type="button" class="tgf-v tgf-try" id="tgf-giu" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="rg" cx="32" cy="32" r="29"/><circle class="pr" cx="32" cy="32" r="29" pathLength="100" transform="rotate(-90 32 32)"/><path class="sh" d="M24 30v-6a8 8 0 0 1 16 0v6"/><rect class="bd" x="19" y="30" width="26" height="19" rx="3.5"/><circle class="kh" cx="32" cy="38.5" r="2.4"/><path class="kh" d="M32 40v4"/></svg><span>giữ</span></button>
+      <button type="button" class="tgf-v tgf-try" id="tgf-lat" aria-label="Chạm để lật thẻ"><span class="tgf-card"><span class="b"><svg viewBox="0 0 30 42" aria-hidden="true"><circle cx="15" cy="21" r="8.5"/><circle cx="15.6" cy="20.4" r="6"/><path d="M8 19c2-5 11-6 13 0s-6 9-10 5"/></svg></span><span class="f"><svg viewBox="0 0 30 42" aria-hidden="true"><path d="M15 11l7 10-7 10-7-10z"/></svg></span></span><span>lật</span></button>
+      <button type="button" class="tgf-v tgf-try" id="tgf-nghe" aria-label="Chạm để nghe"><svg viewBox="0 0 64 64" aria-hidden="true"><path class="hp" d="M16 38v-6a16 16 0 0 1 32 0v6"/><rect class="hp" x="12" y="36" width="8" height="13" rx="3"/><rect class="hp" x="44" y="36" width="8" height="13" rx="3"/><g class="wv"><path d="M27 43v-4"/><path d="M30 46v-10"/><path d="M33 44v-6"/><path d="M36 47v-12"/><path d="M39 43v-4"/></g></svg><span>nghe</span></button>
+    </div>
+    <p class="tgf-lead">Đọc tới đâu, các <b>tính năng phụ</b> mở thêm tới đó:</p>
+    <ul class="tgf-list">
+      <li><button type="button" class="tgf-pic tgf-try" id="tgf-sotay" aria-label="Chạm xem Luke sửa suy đoán"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="pp" x="10" y="8" width="44" height="48" rx="2.5"/><path class="ln" d="M16 22h32M16 34h32M16 46h32"/><text class="old" x="15" y="42">B</text><path class="st" pathLength="1" d="M13 35l14-3"/><text class="nw" x="31" y="42">A?</text><path class="cur" d="M48 10l4 4-12 12-5 1 1-5z"/></svg></button>
+        <div><a class="t" href="sotay.html">Sổ tay của Luke</a><p>Suy đoán của Luke về năng lực từng người. Cậu đoán thử rồi lật xem Luke nghĩ gì.</p></div></li>
+      <li><button type="button" class="tgf-pic tgf-try" id="tgf-the" aria-label="Chạm để cất thẻ vào album"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="alb"><rect x="42" y="40" width="16" height="18" rx="2"/><rect x="46" y="44" width="8" height="10" rx="1"/><circle class="bg" cx="56" cy="40" r="4.5"/><text class="bgt" x="56" y="42.2">1</text></g><g class="cd"><g class="cb"><rect x="14" y="6" width="26" height="36" rx="3"/><circle cx="27" cy="24" r="7"/><path d="M21 22c2-4 9-5 11 0s-5 7-8 4"/></g><g class="cf"><rect x="14" y="6" width="26" height="36" rx="3"/><path d="M27 15l6 9-6 9-6-9z"/></g></g></svg></button>
+        <div><a class="t" href="bosuutap.html">Bộ sưu tập thẻ</a><p>Mỗi tấm thẻ xuất hiện trong truyện sẽ bay vào album của cậu.</p></div></li>
+      <li><button type="button" class="tgf-pic tgf-try" id="tgf-bando" aria-label="Chạm để mực hiện lên bản đồ"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="pp" x="6" y="10" width="52" height="44" rx="2"/><path class="fold" d="M32 10v44M6 32h52"/><path class="ink i1" pathLength="1" d="M8 46c8-2 12-8 20-8s10 4 18-2 8-10 10-14"/><path class="ink i2" pathLength="1" d="M10 20c6 2 10 1 14-2"/><path class="ink i3" pathLength="1" d="M42 46h8v-6h-8zM46 40l4-4 4 4"/><path class="ink i4" pathLength="1" d="M14 30c3 0 3-4 6-4s3 4 6 4"/><g class="fp"><circle cx="14" cy="45" r="1.6"/><circle cx="20" cy="42" r="1.6"/><circle cx="27" cy="39" r="1.6"/><circle cx="34" cy="40" r="1.6"/><circle cx="40" cy="38" r="1.6"/></g></svg></button>
+        <div><a class="t" href="bando.html">Bản đồ ảo cảnh</a><p>Tấm bản đồ hiện mực dần theo bước chân Clevia.</p></div></li>
+      <li><button type="button" class="tgf-pic tgf-try" id="tgf-mat" aria-label="Chạm để đổi người kể"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="eye"><path class="lid" d="M8 32s9-13 24-13 24 13 24 13-9 13-24 13S8 32 8 32z"/><circle class="iris" cx="32" cy="32" r="8"/><circle class="pu" cx="32" cy="32" r="3"/></g><g class="shut"><path d="M8 32s9 9 24 9 24-9 24-9"/><path d="M20 39l-2 4M32 41v4.5M44 39l2 4"/></g></svg></button>
+        <div><a class="t" href="gocnhin.html">Góc nhìn khác</a><p>Cùng một chuyện, kể lại qua mắt một người khác. Đọc hết chương thì mở.</p></div></li>
+    </ul>
+    <p class="tgf-more"><button type="button" class="tgf-lk" id="tgf-lk" aria-label="Chưa mở được"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11V8a4 4 0 0 1 8 0v3"/><rect x="5.5" y="11" width="13" height="9" rx="2"/></svg></button>Còn nhiều thứ đang chờ mở khoá.</p>
   </section>
   <dl class="tg-credit"><dt>Credit</dt><div><span>Tác giả</span><b>Clair</b></div><div><span>Phụ tá &amp; chuốt lời văn</span><b>June</b></div></dl>
   <section class="tg-msg" id="nhan-tin" aria-label="Gửi lời nhắn cho Clair">
@@ -758,6 +865,47 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     btn.addEventListener('contextmenu',function(e){e.preventDefault()});
     btn.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!busy){e.preventDefault();if(ready())done()}});
   })
+})();
+/* Giới thiệu tính năng phụ: mỗi hình nhỏ một chạm, có tiếng (theo nút Tiếng ở trang chương). Không trống, không tiếng trầm. */
+(function(){
+  function $(id){return document.getElementById(id)}
+  var SF=true;try{SF=localStorage.getItem('a07-sfx')!=='off'}catch(e){}
+  var ac=null,out=null,nb=null;
+  function ctx(){if(!SF)return null;if(!ac){var AC=window.AudioContext||window.webkitAudioContext;if(!AC){SF=false;return null}
+    ac=new AC();out=ac.createGain();out.gain.value=.5;out.connect(ac.destination);nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);var d=nb.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    if(ac.state==='suspended')ac.resume();return ac}
+  function noise(t,dur,f,qv,v,f2){var s=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nb;s.loop=true;bp.type='bandpass';bp.frequency.setValueAtTime(f,t);if(f2)bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=qv;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(bp);bp.connect(g);g.connect(out);s.start(t,Math.random()*.5);s.stop(t+dur+.02)}
+  function tone(t,f,dur,v,type){var o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02)}
+  var SND={
+    grip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.06,3600,4,.05)},
+    unlock:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.05,3000,3,.14);noise(t+.07,.04,4200,3,.1);tone(t+.08,1568,.14,.04);tone(t+.16,2093,.3,.035)},
+    flip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.13,2200,1.2,.16,5600);tone(t+.11,1980,.07,.04)},
+    listen:function(){if(!ctx())return;var t=ac.currentTime;noise(t,1.2,1400,.7,.045,3600);[1318.5,1760,2349.3].forEach(function(f,i){tone(t+.1+i*.16,f,.6,.022)})},
+    scratch:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.1,4800,2,.07,6200);noise(t+.38,.18,5200,2.4,.06,4400);noise(t+.6,.12,5600,2.4,.05,6800)},
+    fly:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.13,2200,1.2,.16,5600);tone(t+.11,1980,.07,.04);var u=t+1.05;noise(u,.3,3000,1,.05,8000);[2637,3136,3951].forEach(function(f,i){tone(u+.2+i*.05,f,.35,.02)})},
+    ink:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.22,1800,1,.09,4200);[0,1,2,3,4].forEach(function(i){tone(t+.3+i*.25,1568+i*110,.18,.016)})},
+    eye:function(leon){if(!ctx())return;var t=ac.currentTime;noise(t,.12,5200,1.5,.04,2600);tone(t+.05,leon?1174.7:1760,.35,.03);tone(t+.13,leon?1568:2637,.4,.022)},
+    locked:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.05,3200,3,.12);noise(t+.09,.05,2800,3,.1);tone(t,1480,.05,.03,'square')}
+  };
+  function tried(el){el.classList.remove('tgf-try')}
+  function tap(id,fn){var el=$(id);if(el)el.addEventListener('click',function(){tried(el);fn(el)})}
+  /* giữ: giữ ~0,9 giây thì khoá bật */
+  (function(){var el=$('tgf-giu');if(!el)return;var pr=el.querySelector('.pr'),t0=0,raf=0,done=false;
+    function set(p){pr.style.strokeDashoffset=100-100*p}
+    function step(){var p=Math.min(1,(performance.now()-t0)/900);set(p);if(p>=1){done=true;el.classList.remove('hold');el.classList.add('on');SND.unlock();setTimeout(function(){el.classList.remove('on');pr.style.transition='stroke-dashoffset .5s';set(0);setTimeout(function(){pr.style.transition='';done=false},520)},1700);return}raf=requestAnimationFrame(step)}
+    function down(e){if(done)return;e.preventDefault();tried(el);ctx();t0=performance.now();el.classList.add('hold');SND.grip();raf=requestAnimationFrame(step)}
+    function up(){if(done)return;cancelAnimationFrame(raf);el.classList.remove('hold');pr.style.transition='stroke-dashoffset .3s';set(0);setTimeout(function(){pr.style.transition=''},320)}
+    el.addEventListener('pointerdown',down);['pointerup','pointerleave','pointercancel'].forEach(function(n){el.addEventListener(n,up)});
+    el.addEventListener('contextmenu',function(e){e.preventDefault()});
+    el.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){if(!el.classList.contains('hold'))down(e)}});el.addEventListener('keyup',up)})();
+  tap('tgf-lat',function(el){el.classList.toggle('on');SND.flip()});
+  var nT=0;tap('tgf-nghe',function(el){el.classList.add('on');SND.listen();clearTimeout(nT);nT=setTimeout(function(){el.classList.remove('on')},1500)});
+  tap('tgf-sotay',function(el){var on=el.classList.toggle('on');if(on)SND.scratch();else SND.flip()});
+  var busy=false;tap('tgf-the',function(el){if(busy)return;busy=true;el.classList.remove('on');void el.offsetWidth;el.classList.add('on');SND.fly();setTimeout(function(){el.classList.add('got')},1300);setTimeout(function(){el.classList.remove('on');busy=false},1900)});
+  tap('tgf-bando',function(el){var on=el.classList.toggle('on');if(on)SND.ink();else SND.flip()});
+  tap('tgf-mat',function(el){if(!el.classList.contains('on')){el.classList.add('on');SND.eye(false)}else{var l=el.classList.toggle('leon');SND.eye(l)}});
+  tap('tgf-lk',function(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no');SND.locked()});
 })();
 </script>
 </body>
