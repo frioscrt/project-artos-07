@@ -567,7 +567,16 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .toc a{display:flex;gap:1em;align-items:baseline;padding:.85em 0;color:var(--ink);text-decoration:none;line-height:1.35}
 .toc .n{flex:0 0 1.6em;color:var(--soft);font-variant-numeric:tabular-nums;font-size:.85em}
 .toc a:hover .t{color:var(--lamp)}
-.st-link{margin-left:1.4em;color:var(--soft)}
+/* Tính năng phụ (Clair chốt 24/11): gom các trang thêm như Sổ tay vào một khu, sau này có gì mới cứ thêm thẻ */
+.extras{margin:0 0 3.4em}
+.extras h2{font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ice);margin:0 0 1em;padding-bottom:.6em;border-bottom:1px solid color-mix(in srgb,var(--ice) 35%,transparent)}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.ex{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px;color:var(--ink);text-decoration:none;transition:border-color .25s,box-shadow .25s}
+.ex svg{flex:0 0 34px;width:34px;height:34px;color:var(--ice);margin-top:2px;transition:color .25s}
+.ex .t{display:block;font-size:19px;line-height:1.3;margin-bottom:.2em}
+.ex .s{display:block;font-size:14px;line-height:1.45;color:var(--soft)}
+.ex:hover,.ex:focus-visible{border-color:var(--lamp);box-shadow:0 0 18px color-mix(in srgb,var(--lamp) 22%,transparent)}
+.ex:hover svg,.ex:focus-visible svg,.ex:hover .t{color:var(--lamp)}
 .toc-end{padding-bottom:calc(14vh + env(safe-area-inset-bottom))}
 
 .intro{margin:0 0 2.6em}
@@ -603,7 +612,6 @@ body.warping main{transition:transform 1.4s cubic-bezier(.6,0,.3,1),filter 1.4s;
     <div class="act act-lock steel" data-hold="1.2"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 120 150" aria-hidden="true"><path class="shackle" d="M36 70 V44 a24 24 0 0 1 48 0 V70" /><rect class="body" x="18" y="66" width="84" height="70" rx="9"/><path class="hole" d="M60 92 a7 7 0 1 1 0.1 0 M57 97 h6 l2 16 h-10z"/></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">thử chạm và giữ ổ khoá</span></div>
   </section>
     <a class="resume" id="resume" href="ch01.html">Bắt đầu đọc</a>
-    <a class="resume st-link" href="sotay.html">Sổ tay của Luke</a>
   </div>
   <ol class="toc">
 <li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li>
@@ -619,6 +627,12 @@ body.warping main{transition:transform 1.4s cubic-bezier(.6,0,.3,1),filter 1.4s;
 <li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li>
 <li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li>
   </ol>
+  <section class="extras" aria-labelledby="ex-h">
+    <h2 id="ex-h">Tính năng phụ</h2>
+    <div class="ex-grid">
+      <a class="ex" href="sotay.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h20a3 3 0 0 1 3 3v25H12a3 3 0 0 1-3-3z"/><path d="M9 31a3 3 0 0 1 3-3h20"/><circle cx="21" cy="16" r="5"/><path d="M21 11v-2M21 23v-2M16 16h-2M28 16h-2"/></g></svg><span><span class="t">Sổ tay của Luke</span><span class="s">Luke đoán gì về năng lực những người đã gặp. Mở dần theo chương đã đọc.</span></span></a>
+    </div>
+  </section>
   <div class="toc-end">
     <a class="gate" href="https://frioscrt.github.io/crvillage/">
       <span class="t">Bên Kia Bức Tường</span>
