@@ -811,7 +811,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
       <a class="next" href="ch07.html"><small>Chương sau</small>Việc làng</a>
     </nav>
     <a class="notebook" href="sotay.html#ch6">Sổ tay của Luke<small>Luke đoán gì về những người đã gặp, tới hết chương này</small></a>
-    
+    <div class="pov-end"><span class="lb">Góc nhìn khác</span><a class="pov leon" href="gocnhin.html#ch06-leon"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="54"/><circle cx="100" cy="128" r="46" stroke-width=".8"/><path d="M134.5 128.0 C120.6 138.8 95.8 143.4 105.6 145.1 C86.4 153.2 73.6 133.2 75.7 145.7 C70.8 131.7 82.5 104.7 74.3 109.3 C93.5 91.4 121.0 102.5 103.7 116.7 C123.9 111.9 120.1 146.3 113.7 128.0"/><path d="M118.5 156.8 C111.7 160.0 91.0 141.3 89.0 160.3 C92.9 140.9 62.3 128.1 86.4 132.9 C93.7 127.4 95.6 114.7 78.7 114.9 C92.7 119.6 107.8 92.2 96.9 103.1 C102.6 100.2 132.3 109.5 108.4 119.5 C111.0 118.8 115.7 135.1 123.8 130.4 C125.0 135.7 101.8 140.4 111.6 146.1"/><path d="M90.7 148.4 C85.5 145.4 78.0 124.7 69.1 139.5 C70.6 125.3 90.3 119.1 74.1 116.2 C84.3 118.9 97.0 95.6 91.0 103.8 C97.3 121.6 116.6 119.3 113.9 97.7 C104.3 116.7 124.2 139.4 113.6 122.9 C108.9 126.2 123.0 157.2 113.0 133.9 C124.2 155.5 89.2 157.4 111.7 159.4 C103.1 134.2 97.5 131.4 92.6 144.1"/><path d="M83.6 130.3 C87.4 126.1 90.7 93.6 78.3 107.6 C95.3 121.0 115.5 112.9 101.4 111.4 C121.8 98.0 104.9 127.6 108.8 122.1 C121.6 116.7 113.4 153.1 132.3 138.3 C122.0 138.3 101.2 133.9 106.2 144.3 C98.9 150.0 95.2 130.4 84.5 154.3 C74.6 141.5 63.9 129.3 86.8 129.9"/><path d="M78.1 102.6 C107.5 97.4 118.5 123.0 117.1 99.8 C117.9 123.7 107.5 138.1 116.5 131.9 C107.3 143.1 90.6 152.7 101.8 149.0 C91.2 145.2 88.9 126.0 72.7 139.5 C77.2 114.0 102.9 92.8 87.8 113.9"/><path d="M104.5 112.9 C106.1 104.7 131.6 124.8 124.0 115.0 C119.1 121.6 109.2 132.3 133.7 138.0 C119.7 138.4 101.5 159.2 113.3 152.4 C102.4 142.7 92.9 150.4 94.3 147.1 C92.8 138.4 73.2 135.3 86.1 135.5 C71.7 146.0 77.2 99.0 79.2 121.9 C95.7 125.2 108.4 97.7 83.7 98.0 C99.0 122.6 107.6 123.2 107.4 102.9"/><path d="M112.8 124.3 C137.8 131.0 101.2 139.0 107.1 138.5 C101.5 140.8 80.9 135.4 91.4 139.1 C69.6 137.5 88.4 113.8 65.8 115.7 C75.6 105.8 108.3 89.9 100.7 106.7 C106.9 123.0 111.6 129.4 113.9 124.0"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span><span class="w">Leon</span><span class="t">Món nợ cũ</span></span></a></div>
     <a class="gate" href="https://frioscrt.github.io/crvillage/">
       <span class="t">Bên Kia Bức Tường</span>
       <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
@@ -2740,6 +2740,183 @@ els.forEach(function(el){io.observe(el)});})();
     g.lineWidth = Math.max(1.5, w / 400);
     [[0.5, 0.62], [0.72, 1]].forEach(function (s) { g.beginPath(); g.moveTo(w * s[0], fb - h * 0.08); g.lineTo(w * s[1], fb - h * 0.08); g.stroke(); g.beginPath(); g.moveTo(w * s[0], fb - h * 0.14); g.lineTo(w * s[1], fb - h * 0.14); g.stroke(); });
     for (var b = 0; b < 3; b++) bamboo(g, w * (0.82 + b * 0.07), fb, h * (0.32 + R[b + 5] * 0.08), fc, t, b + 7);
+  };
+
+  /* ---------- Góc nhìn khác ch06, Leon "Món nợ cũ" ---------- */
+  // Từ chạc ba trên cây đa nhìn xuống ngã ba giếng: thân cành tối ôm hai mép khung, rễ phụ thõng ngay trước mắt,
+  // dưới xa là miệng giếng và bốn con đường gặp nhau, ruộng đêm với mấy chiếc nón lá trôi. Không người.
+  ART.perch = function (g, w, h, t, R) {
+    var dk = C.dark;
+    sky(g, w, h, 'night');
+    // mặt đất nhìn từ trên cao (chiếm gần hết khung, nghiêng)
+    var gr = g.createLinearGradient(0, h * 0.18, 0, h);
+    if (dk) { gr.addColorStop(0, '#16201f'); gr.addColorStop(1, '#222c29'); } else { gr.addColorStop(0, '#9da99a'); gr.addColorStop(1, '#b9b39a'); }
+    g.fillStyle = gr; g.fillRect(0, h * 0.18, w, h);
+    // ruộng: các ô ngăn bằng bờ, nước lấp loáng ánh sao
+    g.strokeStyle = rgba(dk ? '#34423e' : '#6d7a66', 0.9); g.lineWidth = 1;
+    for (var i = 0; i < 7; i++) { var y = h * (0.24 + i * 0.1); g.beginPath(); g.moveTo(0, y); g.lineTo(w, y - h * 0.03); g.stroke(); }
+    for (var s = 0; s < 22; s++) { var a = 0.5 + 0.5 * Math.sin(t * 1.3 + s * 2.1); g.fillStyle = rgba(dk ? '#cfe3e6' : '#ffffff', (dk ? 0.18 : 0.35) * a); g.fillRect(R[s] * w, h * (0.22 + R[s + 22] * 0.7), w * 0.012, 1); }
+    // bốn con đường đất gặp nhau ở giếng
+    var cx = w * 0.56, cy = h * 0.66, road = dk ? '#3a423b' : '#cfc3a2';
+    g.strokeStyle = road; g.lineCap = 'round';
+    [[w * 0.05, h * 0.3, w * 0.03], [w * 1.02, h * 0.36, w * 0.028], [w * 0.15, h * 1.05, w * 0.06], [w * 0.95, h * 1.05, w * 0.06]].forEach(function (p) {
+      g.lineWidth = p[2]; g.beginPath(); g.moveTo(cx, cy); g.quadraticCurveTo((cx + p[0]) / 2 + w * 0.03, (cy + p[1]) / 2, p[0], p[1]); g.stroke();
+    });
+    g.lineCap = 'butt';
+    g.fillStyle = road; g.beginPath(); g.ellipse(cx, cy, w * 0.11, h * 0.07, 0, 0, 7); g.fill();
+    // sỏi
+    g.fillStyle = rgba(dk ? '#3b4440' : '#a99d7e', 0.9); for (var p = 0; p < 40; p++) g.fillRect(cx + (R[p + 50] - 0.5) * w * 0.2, cy + (R[p + 90] - 0.5) * h * 0.12, 1.5, 1.2);
+    // miệng giếng nhìn từ trên: vành đá và lòng đen
+    g.fillStyle = dk ? '#55605b' : '#8d978a'; g.beginPath(); g.ellipse(cx - w * 0.05, cy - h * 0.005, w * 0.035, h * 0.025, 0, 0, 7); g.fill();
+    g.fillStyle = dk ? '#020405' : '#2f3634'; g.beginPath(); g.ellipse(cx - w * 0.05, cy - h * 0.005, w * 0.022, h * 0.015, 0, 0, 7); g.fill();
+    // nón lá trôi trên ruộng (rất nhỏ vì xa), lờ đờ
+    for (var n = 0; n < 7; n++) {
+      var nx = ((R[n + 140] * w + t * w * 0.003 * (1 + R[n + 150])) % w), ny = h * (0.26 + R[n + 160] * 0.3), ns = w * 0.009;
+      if (Math.abs(nx - cx) < w * 0.14 && Math.abs(ny - cy) < h * 0.1) continue;
+      g.fillStyle = rgba(dk ? '#bfc4b8' : '#f2efe2', dk ? 0.55 : 0.85); g.beginPath(); g.ellipse(nx, ny + Math.sin(t + n) * 1, ns, ns * 0.6, 0, 0, 7); g.fill();
+    }
+    // tán đa che phía trên, cành và thân ôm mép trái + mép dưới (chạc ba anh ngồi)
+    var col = sil('night');
+    g.fillStyle = col;
+    for (var c = 0; c < 8; c++) { g.beginPath(); g.ellipse(w * (c * 0.15) + Math.sin(t * 0.35 + c) * 3, -h * 0.06 + h * 0.05 * Math.sin(c * 2.3), w * 0.14, h * 0.16, 0, 0, 7); g.fill(); }
+    g.beginPath(); g.moveTo(0, h * 0.1); g.quadraticCurveTo(w * 0.1, h * 0.5, w * 0.06, h); g.lineTo(0, h); g.fill();
+    g.beginPath(); g.moveTo(0, h * 0.92); g.quadraticCurveTo(w * 0.35, h * 0.86, w * 0.62, h * 0.95); g.lineTo(w * 0.7, h); g.lineTo(0, h); g.fill();
+    g.beginPath(); g.moveTo(w * 0.04, h * 0.6); g.quadraticCurveTo(w * 0.2, h * 0.7, w * 0.3, h * 0.9); g.lineTo(w * 0.22, h * 0.92); g.quadraticCurveTo(w * 0.12, h * 0.75, w * 0.03, h * 0.7); g.fill();
+    // lá viền tán
+    for (var l = 0; l < 26; l++) { var lx = R[l + 180] * w, ly = h * (0.06 + R[l + 200] * 0.1) + Math.sin(t * 0.8 + l) * 1.5; g.beginPath(); g.ellipse(lx, ly, w * 0.012, h * 0.008, R[l + 220] * 3, 0, 7); g.fill(); }
+    // rễ phụ thõng ngay trước mắt, gần nên to và mờ
+    g.strokeStyle = col; g.lineCap = 'round';
+    for (var r = 0; r < 9; r++) {
+      var rx = w * (0.18 + R[r + 230] * 0.75), len = h * (0.35 + R[r + 5] * 0.5), sw = Math.sin(t * 0.5 + r * 1.3) * w * 0.006;
+      g.lineWidth = r < 3 ? Math.max(2, w / 260) : 1; g.globalAlpha = r < 3 ? 0.95 : 0.7;
+      g.beginPath(); g.moveTo(rx, 0); g.quadraticCurveTo(rx + sw, len * 0.5, rx + sw * 2, len); g.stroke();
+    }
+    g.globalAlpha = 1; g.lineCap = 'butt';
+  };
+
+  // Một nhánh xích nhỏ cong lên như ngón tay, quặp một tấm thẻ úp (mặt lưng vòng tròn), đung đưa trên nền sỏi đêm.
+  ART.chaincard = function (g, w, h, t, R) {
+    var dk = C.dark;
+    sky(g, w, h, 'night', 0.6);
+    var hz = h * 0.62;
+    g.fillStyle = dk ? '#0e1416' : '#c2b9a0'; g.fillRect(0, hz, w, h - hz);
+    g.fillStyle = dk ? '#1c2426' : '#a89f86'; for (var p = 0; p < 70; p++) g.fillRect(R[p] * w, hz + R[p + 70] * (h - hz), 2, 1.5);
+    var star = rgba(dk ? '#d9eef0' : '#ffffff', 0.6); g.fillStyle = star; for (var s = 0; s < 9; s++) { g.globalAlpha = Math.max(0, Math.sin(t * 0.8 + s * 2)); g.fillRect(R[s + 150] * w, h * (0.08 + R[s + 160] * 0.4), 1.5, 1.5); } g.globalAlpha = 1;
+    // xích chính từ mép trái vào, võng xuống; nhánh nhỏ mọc ra cong lên giữ thẻ
+    var chain = dk ? '#9aa6a6' : '#3a4442', link = Math.max(5, h * 0.03), sw = Math.sin(t * 0.9) * h * 0.012;
+    chainCurve(g, -w * 0.02, h * 0.3, w * 0.25, h * 0.62, w * 0.46, h * 0.5 + sw, link, chain);
+    chainCurve(g, w * 0.46, h * 0.5 + sw, w * 0.52, h * 0.36, w * 0.6, h * 0.34 + sw * 1.4, link * 0.7, chain);
+    // tấm thẻ: hơi xoay, mặt lưng tối, vòng tròn, ánh lạnh lướt qua
+    var cxp = w * 0.64, cyp = h * 0.36 + sw * 1.5, cw = h * 0.22, ch = h * 0.31, rot = 0.22 + Math.sin(t * 0.9 - 0.4) * 0.06;
+    g.save(); g.translate(cxp, cyp); g.rotate(rot);
+    g.fillStyle = rgba('#000000', 0.4); g.fillRect(-cw / 2 + 4, 6, cw, ch);
+    g.fillStyle = dk ? '#14202b' : '#23313c'; g.strokeStyle = dk ? '#3a5060' : '#4c6372'; g.lineWidth = 1.2;
+    g.beginPath(); if (g.roundRect) g.roundRect(-cw / 2, 0, cw, ch, cw * 0.08); else g.rect(-cw / 2, 0, cw, ch); g.fill(); g.stroke();
+    g.strokeStyle = rgba('#9fb6c4', 0.75); g.lineWidth = 1; g.beginPath(); g.arc(0, ch * 0.44, cw * 0.3, 0, 7); g.stroke();
+    g.lineWidth = 0.6; g.beginPath(); g.arc(0, ch * 0.44, cw * 0.24, 0, 7); g.stroke();
+    // nét rối trong vòng tròn
+    g.beginPath(); for (var k = 0; k < 18; k++) { var a = k * 2.4 + 0.3, rr = cw * (0.06 + R[k + 100] * 0.16); var x = Math.cos(a) * rr, y = ch * 0.44 + Math.sin(a) * rr; k ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke();
+    g.fillStyle = rgba('#9fb6c4', 0.7); g.fillRect(-cw * 0.28, ch * 0.86, cw * 0.56, 1);
+    // ánh lạnh lướt chéo qua mặt thẻ
+    var sh = ((t * 0.35) % 1.6) - 0.3;
+    g.save(); g.beginPath(); g.rect(-cw / 2, 0, cw, ch); g.clip();
+    var lg = g.createLinearGradient(-cw / 2 + cw * sh * 2 - cw * 0.3, 0, -cw / 2 + cw * sh * 2 + cw * 0.3, ch);
+    lg.addColorStop(0, rgba('#d9eef0', 0)); lg.addColorStop(0.5, rgba('#d9eef0', 0.22)); lg.addColorStop(1, rgba('#d9eef0', 0));
+    g.fillStyle = lg; g.fillRect(-cw / 2, 0, cw, ch); g.restore();
+    g.restore();
+    // móc xích ôm mép thẻ
+    g.strokeStyle = chain; g.lineWidth = Math.max(1.2, link * 0.18);
+    g.beginPath(); g.ellipse(w * 0.6, h * 0.34 + sw * 1.4, link * 0.45, link * 0.3, 0.6, 0, 7); g.stroke();
+    glow(g, w * 0.62, h * 0.4, h * 0.3, '#d9eef0', dk ? 0.08 : 0.12);
+  };
+
+  // Ký ức: sàn gỗ câu lạc bộ sau buổi tập, nắng chiều nhạt màu. Ba chai nước, một chai nằm lăn qua sàn.
+  // Hai thanh kiếm tre dựa tường. Mọi thứ hơi nhoè như nhớ lại.
+  ART.dojo = function (g, w, h, t, R) {
+    var dk = C.dark;
+    var gr = g.createLinearGradient(0, 0, 0, h);
+    if (dk) { gr.addColorStop(0, '#2a2620'); gr.addColorStop(1, '#3a2f22'); } else { gr.addColorStop(0, '#e8dcc2'); gr.addColorStop(1, '#d2b88e'); }
+    g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    var fl = h * 0.5;
+    // tường: tấm vách gỗ dọc
+    g.strokeStyle = rgba(dk ? '#000000' : '#8a6e48', 0.22); g.lineWidth = 1;
+    for (var x = 0; x < w; x += w * 0.07) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, fl); g.stroke(); }
+    g.fillStyle = dk ? '#1d1914' : '#a88c62'; g.fillRect(0, fl - h * 0.02, w, h * 0.02);
+    // sàn ván gỗ nhìn chéo, đường ván chụm về xa
+    g.fillStyle = dk ? '#4a3b28' : '#c9a273'; g.fillRect(0, fl, w, h - fl);
+    g.strokeStyle = rgba(dk ? '#1e170e' : '#8e6c42', 0.5);
+    for (var i = -8; i <= 8; i++) { g.beginPath(); g.moveTo(w * 0.5 + i * w * 0.03, fl); g.lineTo(w * 0.5 + i * w * 0.16, h); g.stroke(); }
+    // vệt nắng chéo từ cửa sổ, bụi bay trong vệt nắng
+    g.fillStyle = rgba('#fff0c8', dk ? 0.07 : 0.28);
+    g.beginPath(); g.moveTo(w * 0.62, 0); g.lineTo(w * 0.8, 0); g.lineTo(w * 0.55, h); g.lineTo(w * 0.22, h); g.fill();
+    for (var d = 0; d < 18; d++) { var dx = w * (0.4 + R[d] * 0.35) + Math.sin(t * 0.4 + d) * w * 0.01, dy = (h * R[d + 20] + t * h * 0.01 * (1 + R[d + 40])) % h; g.fillStyle = rgba('#fff3d6', (dk ? 0.25 : 0.6) * (0.5 + 0.5 * Math.sin(t + d))); g.fillRect(dx, dy, 1.5, 1.5); }
+    // hai thanh kiếm tre dựa tường bên trái
+    g.strokeStyle = dk ? '#8c7a52' : '#7a6236'; g.lineCap = 'round';
+    [[0.14, 0.2], [0.18, 0.24]].forEach(function (k) {
+      g.lineWidth = Math.max(2, w / 220); g.beginPath(); g.moveTo(w * k[0], fl + h * 0.02); g.lineTo(w * k[1], h * 0.06); g.stroke();
+      g.lineWidth = Math.max(3, w / 140); g.beginPath(); g.moveTo(w * k[0], fl + h * 0.02); g.lineTo(w * (k[0] + (k[1] - k[0]) * 0.22), fl - h * 0.1); g.stroke();
+    });
+    g.lineCap = 'butt';
+    // ba chai nước: hai chai đứng, một chai lăn chậm qua sàn
+    function bottle(x, y, s, ang) {
+      g.save(); g.translate(x, y); g.rotate(ang);
+      g.fillStyle = rgba('#000000', dk ? 0.35 : 0.15); g.beginPath(); g.ellipse(ang ? 0 : s * 0.15, ang ? s * 0.4 : 0, s * (ang ? 1.2 : 0.5), s * 0.15, 0, 0, 7); g.fill();
+      g.fillStyle = rgba(dk ? '#9fc3cf' : '#e8f6fb', dk ? 0.5 : 0.8); g.strokeStyle = rgba(dk ? '#cfe6ee' : '#7aa4b4', 0.8); g.lineWidth = 1;
+      g.beginPath(); if (g.roundRect) g.roundRect(-s * 0.3, -s * 1.6, s * 0.6, s * 1.6, s * 0.12); else g.rect(-s * 0.3, -s * 1.6, s * 0.6, s * 1.6); g.fill(); g.stroke();
+      g.fillRect(-s * 0.13, -s * 1.95, s * 0.26, s * 0.35);
+      g.fillStyle = dk ? '#3f7d8f' : '#4f9fb3'; g.fillRect(-s * 0.15, -s * 2.05, s * 0.3, s * 0.14);
+      g.fillStyle = rgba('#ffffff', 0.35); g.fillRect(-s * 0.2, -s * 1.4, s * 0.06, s * 1.1);
+      g.restore();
+    }
+    var s = h * 0.06;
+    bottle(w * 0.36, h * 0.72, s, 0); bottle(w * 0.44, h * 0.7, s * 0.95, 0);
+    var roll = (t * 0.06) % 1, rx = w * (0.56 + roll * 0.3), ry = h * (0.82 + roll * 0.06);
+    bottle(rx, ry, s * 1.05, Math.PI / 2 + roll * 0.4);
+    // nhoè viền như ký ức
+    var vg = g.createRadialGradient(w * 0.5, h * 0.6, h * 0.25, w * 0.5, h * 0.6, w * 0.7);
+    vg.addColorStop(0, rgba(dk ? '#000000' : '#f5ecd8', 0)); vg.addColorStop(1, rgba(dk ? '#000000' : '#f5ecd8', dk ? 0.75 : 0.7));
+    g.fillStyle = vg; g.fillRect(0, 0, w, h);
+  };
+
+  // Hửng sáng: trời xám nhạt như nước vo gạo, bờ ruộng im, con đường đất với một hàng dấu giày đi xa dần,
+  // gốc đa và rễ phụ lùi lại phía sau bên trái. Không người.
+  ART.leondawn = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.42;
+    var gr = g.createLinearGradient(0, 0, 0, hz);
+    if (dk) { gr.addColorStop(0, '#2b3134'); gr.addColorStop(1, '#5a5f5c'); } else { gr.addColorStop(0, '#cfd3d0'); gr.addColorStop(1, '#ecebe2'); }
+    g.fillStyle = gr; g.fillRect(0, 0, w, hz);
+    // dải sáng chân trời hửng dần
+    var lift = 0.6 + 0.4 * Math.sin(t * 0.15);
+    gGlow(g, w * 0.72, hz, w * 0.5, dk ? '#c9c6b4' : '#fffaf0', (dk ? 0.18 : 0.4) * lift);
+    // rặng tre xa
+    g.fillStyle = dk ? '#2a302e' : '#9ea79c';
+    g.beginPath(); g.moveTo(0, hz); for (var x = 0; x <= w; x += w / 50) g.lineTo(x, hz - h * (0.03 + 0.025 * Math.abs(Math.sin(x / w * 17)) + 0.015 * Math.sin(x / w * 5))); g.lineTo(w, hz); g.fill();
+    // ruộng nước xám, phản chiếu trời
+    var fg = g.createLinearGradient(0, hz, 0, h);
+    if (dk) { fg.addColorStop(0, '#3f4644'); fg.addColorStop(1, '#232a28'); } else { fg.addColorStop(0, '#d5d8cf'); fg.addColorStop(1, '#a7ad9c'); }
+    g.fillStyle = fg; g.fillRect(0, hz, w, h - hz);
+    g.strokeStyle = rgba(dk ? '#1a201e' : '#7e8673', 0.8); g.lineWidth = 1.5;
+    [0.5, 0.6, 0.74, 0.9].forEach(function (y, i) { g.beginPath(); g.moveTo(0, h * y); g.lineTo(w, h * (y - 0.01 * i)); g.stroke(); });
+    // mạ non lấm tấm
+    g.strokeStyle = rgba(dk ? '#4f6050' : '#7e9470', 0.7); g.lineWidth = 1;
+    for (var m = 0; m < 80; m++) { var mx = R[m] * w, my = hz + h * 0.04 + R[m + 80] * (h - hz), mh = h * 0.01 * (0.5 + (my - hz) / h * 2); g.beginPath(); g.moveTo(mx, my); g.lineTo(mx + Math.sin(t * 0.8 + m) * 1, my - mh); g.stroke(); }
+    // con đường đất từ gần (dưới giữa) đi xa về phía phải chân trời
+    g.fillStyle = dk ? '#4a463c' : '#c9bea0';
+    g.beginPath(); g.moveTo(w * 0.32, h); g.quadraticCurveTo(w * 0.5, h * 0.7, w * 0.7, hz + h * 0.01); g.lineTo(w * 0.72, hz + h * 0.01); g.quadraticCurveTo(w * 0.62, h * 0.7, w * 0.62, h); g.fill();
+    // dấu giày đi xa dần (đế khía nhẹ), mỗi dấu mờ hơn dấu trước
+    for (var i = 0; i < 12; i++) {
+      var u = i / 11, py = h - (h - hz) * Math.pow(u, 0.8) * 0.95 - h * 0.03, px = w * (0.47 + u * 0.24) + (i % 2 ? 1 : -1) * w * 0.012 * (1 - u), sc = 1.1 - u * 0.9;
+      g.save(); g.translate(px, py); g.rotate(-0.35 * u); g.fillStyle = rgba('#000000', (dk ? 0.45 : 0.25) * (1 - u * 0.6));
+      g.beginPath(); g.ellipse(0, 0, w * 0.009 * sc, h * 0.018 * sc, 0, 0, 7); g.fill(); g.beginPath(); g.ellipse(0, h * 0.025 * sc, w * 0.007 * sc, h * 0.009 * sc, 0, 0, 7); g.fill(); g.restore();
+    }
+    // gốc đa lùi lại phía sau bên trái: thân, tán, rễ phụ
+    var col = dk ? '#151b1c' : '#5d6863';
+    g.fillStyle = col; g.fillRect(w * 0.08, hz - h * 0.22, w * 0.05, h * 0.26);
+    for (var c = 0; c < 6; c++) { g.beginPath(); g.ellipse(w * (0.02 + c * 0.05) + Math.sin(t * 0.3 + c) * 2, hz - h * (0.26 + 0.05 * Math.sin(c * 1.9)), w * 0.07, h * 0.08, 0, 0, 7); g.fill(); }
+    g.strokeStyle = col; g.lineWidth = 1;
+    for (var r = 0; r < 12; r++) { var rx = w * (0.0 + R[r + 170] * 0.3), sw = Math.sin(t * 0.5 + r) * 2; g.beginPath(); g.moveTo(rx, hz - h * 0.22); g.quadraticCurveTo(rx + sw, hz - h * 0.12, rx + sw * 1.4, hz - h * (0.02 + R[r + 190] * 0.08)); g.stroke(); }
+    // sương sát mặt ruộng
+    for (var f = 0; f < 5; f++) { var fy = hz + h * (0.03 + f * 0.05), fx = ((t * w * 0.006 + f * w * 0.3) % (w * 1.4)) - w * 0.2; gGlow(g, fx, fy, w * 0.25, dk ? '#8d938f' : '#ffffff', dk ? 0.08 : 0.25); }
   };
 
   /* ---------- chạy tranh khi thấy ---------- */
