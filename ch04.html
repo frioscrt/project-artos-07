@@ -299,6 +299,19 @@ em .nm{font-style:italic}
 .nav span{color:var(--soft)}
 .notebook{display:block;margin:0 auto 2.4em;color:var(--lamp);text-decoration:none;font-size:17px;line-height:1.4}
 .notebook small{display:block;color:var(--soft);font-size:13px;font-style:italic;margin-top:.2em}
+
+.pov-end{margin:0 auto 2.6em;max-width:30em}
+.pov-end .lb{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ice);margin:0 0 .9em}
+.pov{display:flex;gap:16px;align-items:center;padding:14px 16px;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px;color:var(--ink);text-decoration:none;margin-bottom:10px;transition:border-color .25s,box-shadow .25s}
+.pov:hover,.pov:focus-visible{border-color:var(--lamp);box-shadow:0 0 18px color-mix(in srgb,var(--lamp) 22%,transparent)}
+.pov svg{flex:0 0 46px;width:46px;height:64px;color:#9fb6c4;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+.pov svg .bk{fill:#14202b;stroke:#2c3d4a}.pov svg text{fill:#9fb6c4;font-size:15px;letter-spacing:2px;font-family:Literata,Georgia,serif}
+.pov .w{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pv)}
+.pov .t{display:block;font-size:19px;line-height:1.3;font-style:italic}
+.pov.luke{--pv:#4f9fb3}.pov.leon{--pv:#8a959c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pov.luke{--pv:#8FD3E0}:root:not([data-theme="light"]) .pov.leon{--pv:#b4bec4}}
+:root[data-theme="dark"] .pov.luke{--pv:#8FD3E0}:root[data-theme="dark"] .pov.leon{--pv:#b4bec4}
+
 .gate{
   display:block;max-width:24em;margin:0 auto;padding:1.4em 1.4em 1.5em;text-decoration:none;color:var(--ink);
   background:var(--veil);border-radius:2px;line-height:1.5;
@@ -613,7 +626,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   <div class="dr-shade" data-close></div>
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
-    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="tacgia.html">Tác giả</a></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
     <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html" aria-current="page"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
   </nav>
 </div>
@@ -736,6 +749,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
       <a class="next" href="ch05.html"><small>Chương sau</small>Lửa bếp</a>
     </nav>
     <a class="notebook" href="sotay.html#ch4">Sổ tay của Luke<small>Luke đoán gì về những người đã gặp, tới hết chương này</small></a>
+    
     <a class="gate" href="https://frioscrt.github.io/crvillage/">
       <span class="t">Bên Kia Bức Tường</span>
       <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
@@ -774,6 +788,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   // đọc tới cuối chương thì Sổ tay mở thêm tới chương này (a07-done)
   function done(){try{if(cn>+(localStorage.getItem('a07-done')||0))localStorage.setItem('a07-done',cn)}catch(e){}}
   var nb=document.querySelector('a.notebook'); if(nb) nb.addEventListener('click',done);
+  [].forEach.call(document.querySelectorAll('a.pov'),function(a){a.addEventListener('click',done)});
   var last=0;
   addEventListener('scroll',function(){
     var y=scrollY, h=document.documentElement.scrollHeight-innerHeight;
