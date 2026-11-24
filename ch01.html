@@ -339,6 +339,33 @@ em .nm{font-style:italic}
   h1 .w,.opening .hint{animation:none}
   header.bar,body{transition:none}
 }
+
+.cmt{margin:3.4em auto 0;max-width:34em;text-align:left}
+.cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
+.cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
+.cmt-list{list-style:none;margin:0 0 1.8em;padding:0}
+.cmt-list li{padding:1em 0;border-bottom:1px solid var(--line)}
+.cmt-list li:first-child{border-top:1px solid var(--line)}
+.cmt-list .who{display:flex;justify-content:space-between;gap:1em;margin:0 0 .35em;font-size:14px}
+.cmt-list .who b{color:var(--lamp);font-weight:600}
+.cmt-list .who time{color:var(--soft)}
+.cmt-list .tx{margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
+.cmt-list .me{animation:cmtin .8s ease both}
+@keyframes cmtin{from{opacity:0;transform:translateY(10px)}}
+.cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
+.bl-form{display:flex;flex-direction:column;gap:10px}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px;padding:.7em .8em;width:100%;box-sizing:border-box}
+.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.5}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--lamp)}
+.bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bl-form button{font:inherit;font-size:16px;color:var(--lamp);background:transparent;border:1px solid var(--lamp);border-radius:999px;padding:.55em 1.6em;cursor:pointer}
+.bl-form button:disabled{opacity:.5;cursor:default}
+.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
+.bl-form .st.ok{color:var(--lamp)}
+.tg-msg{margin:2.6em 0 0;padding:1.6em 1.2em 1.4em;border:1px solid var(--line);border-radius:14px;position:relative}
+.tg-msg::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:3px;background:var(--pw-luke,#2E7484);border-radius:2px}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -664,6 +691,18 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
       <span class="t">Bên Kia Bức Tường</span>
       <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
     </a>
+    <section class="cmt" id="binh-luan" data-ch="1" aria-label="Bình luận">
+    <h2>Bình luận</h2>
+    <p class="sub">Cậu nghĩ gì về chương này? Lưu ý: bình luận có thể tiết lộ nội dung chương.</p>
+    <p class="cmt-empty">Đang tải bình luận…</p><ol class="cmt-list"></ol>
+    <form class="bl-form" data-kind="bl" novalidate>
+  <input name="name" maxlength="40" autocomplete="nickname" placeholder="Tên của cậu (bỏ trống = ẩn danh)">
+  
+  <textarea name="text" maxlength="1500" placeholder="Viết bình luận của cậu…"></textarea>
+  <input name="web" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <div class="row"><p class="st" role="status"></p><button type="submit">Gửi</button></div>
+</form>
+  </section>
   </footer>
 </main>
 <script>
@@ -692,6 +731,30 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
 function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
 b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();
+
+(function(){
+  function E(f,k){return f.elements.namedItem(k)}
+  var U="https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec";
+  function st(f,t,ok){var s=f.querySelector('.st');s.textContent=t;s.className='st'+(ok?' ok':'')}
+  function when(t){var d=new Date(t),p=function(x){return('0'+x).slice(-2)};return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()}
+  function item(c,me){var li=document.createElement('li');if(me)li.className='me';var w=document.createElement('p');w.className='who';var b=document.createElement('b');b.textContent=c.n;var tm=document.createElement('time');tm.textContent=when(c.t);w.appendChild(b);w.appendChild(tm);var x=document.createElement('p');x.className='tx';x.textContent=c.x;li.appendChild(w);li.appendChild(x);return li}
+  var sec=document.querySelector('.cmt');
+  function load(){var ol=sec.querySelector('.cmt-list'),em=sec.querySelector('.cmt-empty');
+    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){ol.appendChild(item(c))});em.textContent='Chưa có bình luận nào. Cậu là người đầu tiên nha.';em.hidden=d.list.length>0})
+    .catch(function(){em.textContent='Chưa tải được bình luận. Cậu thử tải lại trang sau nha.';em.hidden=false})}
+  if(sec){if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();load()}},{rootMargin:'600px'});io.observe(sec)}else load()}
+  [].forEach.call(document.querySelectorAll('.bl-form'),function(f){
+    try{var nm=localStorage.getItem('a07-name');if(nm)E(f,'name').value=nm}catch(e){}
+    f.addEventListener('submit',function(e){e.preventDefault();var text=E(f,'text').value.trim();if(text.length<2){st(f,'Cậu viết thêm chút nữa nha.');E(f,'text').focus();return}
+      var kind=f.getAttribute('data-kind'),d={type:kind,name:E(f,'name').value.trim(),text:text,web:E(f,'web').value};if(kind==='ln')d.contact=E(f,'contact').value.trim();else d.ch=sec.getAttribute('data-ch');
+      try{localStorage.setItem('a07-name',d.name)}catch(e){}
+      var btn=f.querySelector('button');btn.disabled=true;st(f,'Đang gửi…');
+      fetch(U,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(r){
+        if(!r.ok){st(f,r.why==='nhieu'?'Đang có nhiều người gửi quá, cậu đợi vài phút rồi gửi lại nha.':'Chưa gửi được, cậu thử lại nha.');return}
+        E(f,'text').value='';if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
+        else{st(f,'Đã đăng bình luận.',1);if(r.item){var ol=sec.querySelector('.cmt-list');ol.appendChild(item(r.item,1));sec.querySelector('.cmt-empty').hidden=true}}
+      }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){btn.disabled=false})})})
+})();
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.
