@@ -3046,6 +3046,111 @@ els.forEach(function(el){io.observe(el)});})();
     vign(g, w, h, 0.65);
   };
 
+  /* ---------- Góc nhìn khác ch11, Mira "Còn ba vòng" (24/11). Không vẽ người, không vẽ người bỏ đi. ---------- */
+  // Lối mòn dưới chân dốc buổi sáng: sọt đá đặt bên đường, quai sọt buộc một mảnh vải trắng thắt nút dẹt,
+  // vài giọt máu khô trên đá; trên cao dân gánh đá chỉ là những vệt nhỏ.
+  ART.knot = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.5; mineLand(g, w, h, t, R, hz);
+    g.fillStyle = dk ? '#33332e' : '#a8a498'; g.beginPath(); g.moveTo(0, h * 0.62); g.quadraticCurveTo(w * 0.45, h * 0.4, w, h * 0.46); g.lineTo(w, h); g.lineTo(0, h); g.fill(); // dốc
+    // lối mòn
+    g.strokeStyle = rgba(dk ? '#55554c' : '#d6d1c2', 0.7); g.lineWidth = Math.max(6, h * 0.04); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(-w * 0.05, h * 0.98); g.quadraticCurveTo(w * 0.5, h * 0.7, w * 0.95, h * 0.5); g.stroke();
+    // trên dốc: đòn gánh nhấp nhô xa xa (chỉ là vệt), bụi
+    for (var p = 0; p < 4; p++) { var u = ((t * 0.02 + p / 4) % 1), px = w * (0.5 + u * 0.45), py = h * (0.66 - u * 0.17) - Math.abs(Math.sin(t * 2 + p)) * 2; g.strokeStyle = rgba(dk ? '#1a1916' : '#6a5e4a', 0.6); g.lineWidth = 1.5; g.beginPath(); g.moveTo(px - w * 0.012, py); g.lineTo(px + w * 0.012, py); g.stroke(); }
+    // sọt đá
+    var cx = w * 0.42, cy = h * 0.9, cw = w * 0.1, ch = h * 0.15;
+    g.fillStyle = dk ? '#3d3122' : '#8a7148'; g.beginPath(); g.moveTo(cx - cw, cy - ch); g.lineTo(cx + cw, cy - ch); g.lineTo(cx + cw * 0.8, cy); g.lineTo(cx - cw * 0.8, cy); g.fill();
+    g.strokeStyle = rgba('#000000', 0.3); g.lineWidth = 1; for (var q = 1; q < 6; q++) { g.beginPath(); g.moveTo(cx - cw + q * cw / 3, cy - ch); g.lineTo(cx - cw * 0.8 + q * cw * 0.8 / 3, cy); g.stroke(); }
+    for (var r = 0; r < 8; r++) rock(g, cx - cw * 0.8 + R[r + 30] * cw * 1.6, cy - ch - R[r + 50] * h * 0.025, 4 + R[r + 70] * 6, R, r, dk ? '#4a4a48' : '#8a867c');
+    // quai sọt + mảnh vải trắng thắt nút dẹt, hai đầu vải lay
+    g.strokeStyle = dk ? '#5a4632' : '#6e5236'; g.lineWidth = Math.max(2, w * 0.004);
+    g.beginPath(); g.moveTo(cx - cw * 0.9, cy - ch); g.quadraticCurveTo(cx, cy - ch * 2.1, cx + cw * 0.9, cy - ch); g.stroke();
+    var kx = cx + cw * 0.38, ky = cy - ch * 1.68, cl = dk ? '#d8d4c8' : '#f6f3ea';
+    g.fillStyle = cl; g.beginPath(); g.ellipse(kx, ky, w * 0.014, h * 0.012, 0.3, 0, 7); g.fill();
+    g.strokeStyle = cl; g.lineWidth = Math.max(2.5, h * 0.014);
+    [[-1, 0], [1, 0.8]].forEach(function (s) { g.beginPath(); g.moveTo(kx, ky); for (var i = 1; i <= 6; i++) { var u = i / 6; g.lineTo(kx + s[0] * u * w * 0.012 + u * w * 0.015, ky + u * h * 0.07 + Math.sin(t * 2.4 + s[1] - u * 4) * h * 0.008 * u); } g.stroke(); });
+    // mấy giọt máu khô cạnh sọt
+    g.fillStyle = dk ? '#4a1e1e' : '#7a2a28'; [[0.56, 0.93], [0.585, 0.95], [0.6, 0.925]].forEach(function (d) { g.beginPath(); g.ellipse(w * d[0], h * d[1], w * 0.005, h * 0.004, 0, 0, 7); g.fill(); });
+    dust(g, w, h, t, R, hz, 14);
+    vign(g, w, h, 0.45);
+  };
+  // Hòn đá cạnh đụn đá vụn: vệt máu quệt dài trên mặt đá, một tấm thẻ đang sáng dần thành cuộn băng trắng tháo dở một vòng;
+  // một nhịp mạch đỏ mảnh chạy đều qua khung tranh như đường điện tim, đều như kim đồng hồ.
+  ART.stonecut = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.4; mineLand(g, w, h, t, R, hz);
+    rubble(g, w * 0.7, h * 0.84, w * 0.7, h * 0.5, dk ? '#2a2a26' : '#96928a');
+    // hòn đá + vệt máu
+    g.fillStyle = dk ? '#3a3a35' : '#aaa69c'; g.beginPath(); g.ellipse(w * 0.4, h * 0.78, w * 0.14, h * 0.07, -0.08, 0, 7); g.fill();
+    g.fillStyle = rgba('#ffffff', dk ? 0.05 : 0.15); g.beginPath(); g.ellipse(w * 0.38, h * 0.755, w * 0.1, h * 0.03, -0.08, 0, 7); g.fill();
+    g.strokeStyle = dk ? '#5a1f1f' : '#7a2a28'; g.lineWidth = Math.max(3, h * 0.014); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(w * 0.31, h * 0.76); g.quadraticCurveTo(w * 0.4, h * 0.735, w * 0.48, h * 0.755); g.stroke();
+    g.fillStyle = dk ? '#5a1f1f' : '#7a2a28'; [[0.47, 0.82], [0.48, 0.86], [0.465, 0.9]].forEach(function (d, i) { g.beginPath(); g.ellipse(w * d[0], h * d[1], w * (0.006 - i * 0.001), h * 0.005, 0, 0, 7); g.fill(); });
+    // cuộn băng trắng trên đất, một đoạn đã tháo ra
+    var bx = w * 0.18, by = h * 0.9, cl = dk ? '#d8d4c8' : '#f6f3ea';
+    g.fillStyle = cl; g.beginPath(); g.ellipse(bx, by, w * 0.035, h * 0.03, 0, 0, 7); g.fill();
+    g.fillStyle = rgba('#000000', 0.15); g.beginPath(); g.ellipse(bx, by, w * 0.012, h * 0.01, 0, 0, 7); g.fill();
+    g.strokeStyle = cl; g.lineWidth = Math.max(3, h * 0.02);
+    g.beginPath(); g.moveTo(bx + w * 0.03, by); g.quadraticCurveTo(w * 0.27, h * 0.92, w * 0.3, h * 0.84); g.stroke();
+    glow(g, bx, by, w * 0.08, '#cfe8ff', (dk ? 0.18 : 0.12) * (0.7 + 0.3 * Math.sin(t * 1.3)));
+    // nhịp mạch đỏ mảnh chạy qua khung: đều, không nhanh lên
+    var per = 1.15, ph = (t % per) / per, y0 = h * 0.22;
+    g.strokeStyle = rgba(dk ? '#E2566C' : '#B3263A', dk ? 0.55 : 0.45); g.lineWidth = Math.max(1, w / 600); g.shadowColor = rgba('#E2566C', 0.6); g.shadowBlur = 5;
+    g.beginPath();
+    for (var x = 0; x <= w; x += 2) { var u = x / w, k = (u * 3 - ph + 3) % 1, y = y0; if (k > 0.42 && k < 0.5) y -= Math.sin((k - 0.42) / 0.08 * Math.PI) * h * 0.06; else if (k > 0.5 && k < 0.55) y += Math.sin((k - 0.5) / 0.05 * Math.PI) * h * 0.02; x ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.stroke(); g.shadowBlur = 0;
+    dust(g, w, h, t, R, hz, 12);
+    vign(g, w, h, 0.5);
+  };
+  // Sườn dốc vừa im: sọt đá, đòn gánh đặt xuống ngay ngắn bên đường, không ai gánh; bụi lắng dần;
+  // một hàng vết giày đế khía đi đều ra lối mòn, mờ dần, lẫn vào những vết chân trần.
+  ART.baskets = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.45; mineLand(g, w, h, t, R, hz);
+    g.fillStyle = dk ? '#33332e' : '#a8a498'; g.beginPath(); g.moveTo(0, h * 0.5); g.quadraticCurveTo(w * 0.5, h * 0.3, w, h * 0.42); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    g.fillStyle = rgba('#000000', dk ? 0.25 : 0.08); g.fillRect(0, 0, w, h); // trời như tối đi một chút
+    // sọt và đòn gánh đặt xuống, thưa dần lên dốc
+    for (var i = 0; i < 6; i++) {
+      var u = i / 5, cx = w * (0.12 + u * 0.78), cy = h * (0.82 - u * 0.36), s = 1 - u * 0.6, cw = w * 0.045 * s, ch = h * 0.06 * s;
+      g.fillStyle = dk ? '#3d3122' : '#8a7148';
+      [-1, 1].forEach(function (d) { var x = cx + d * cw * 1.6; g.beginPath(); g.moveTo(x - cw, cy - ch); g.lineTo(x + cw, cy - ch); g.lineTo(x + cw * 0.8, cy); g.lineTo(x - cw * 0.8, cy); g.fill(); });
+      g.strokeStyle = dk ? '#5a4632' : '#6e5236'; g.lineWidth = Math.max(1.5, w * 0.005 * s); g.lineCap = 'round';
+      g.beginPath(); g.moveTo(cx - cw * 2.8, cy + h * 0.01 * s); g.lineTo(cx + cw * 2.8, cy + h * 0.006 * s); g.stroke();
+    }
+    // vết chân trần lốm đốm xuống dốc
+    g.fillStyle = rgba('#000000', dk ? 0.22 : 0.1);
+    for (var f = 0; f < 26; f++) { g.beginPath(); g.ellipse(R[f + 100] * w, h * (0.55 + R[f + 140] * 0.42), w * 0.006, h * 0.006, R[f] * 3, 0, 7); g.fill(); }
+    // vết giày đế khía: đều nhau, cách nhau đúng một sải, đi ra phía phải và mờ dần (hiện từng vết theo nhịp)
+    var shown = Math.floor((t * 0.9) % 14);
+    for (var k = 0; k < 10; k++) {
+      if (k > shown) break;
+      var v = k / 9, fx = w * (0.16 + v * 0.7), fy = h * (0.93 - v * 0.2) + (k % 2 ? 1 : -1) * h * 0.012, sc = 1 - v * 0.5, a = (dk ? 0.5 : 0.3) * (1 - v * 0.75);
+      g.save(); g.translate(fx, fy); g.rotate(-0.25); g.fillStyle = rgba('#000000', a); g.beginPath(); g.ellipse(0, 0, w * 0.016 * sc, h * 0.011 * sc, 0, 0, 7); g.fill();
+      g.strokeStyle = rgba(dk ? '#6a6a60' : '#d8d3c4', a * 0.9); g.lineWidth = 1; for (var z = -2; z <= 2; z++) { g.beginPath(); g.moveTo(z * w * 0.005 * sc, -h * 0.008 * sc); g.lineTo(z * w * 0.005 * sc, h * 0.008 * sc); g.stroke(); }
+      g.restore();
+    }
+    dust(g, w, h, t * 0.4, R, hz, 8);
+    vign(g, w, h, 0.55);
+  };
+  // Sau cùng: hòn đá, đoạn băng trắng vắt qua rồi buông xuống đất, đầu băng lay trong gió; bụi xám cuốn ngang;
+  // một nhịp mạch đỏ mảnh ở góc, mỗi lúc một thưa, một nhỏ.
+  ART.tail = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.42; mineLand(g, w, h, t, R, hz);
+    rubble(g, w * 0.66, h * 0.88, w * 0.8, h * 0.52, dk ? '#2a2a26' : '#96928a');
+    g.fillStyle = dk ? '#3a3a35' : '#aaa69c'; g.beginPath(); g.ellipse(w * 0.36, h * 0.8, w * 0.11, h * 0.055, -0.1, 0, 7); g.fill();
+    g.strokeStyle = dk ? '#4a1e1e' : '#7a2a28'; g.lineWidth = Math.max(2.5, h * 0.012); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(w * 0.3, h * 0.78); g.quadraticCurveTo(w * 0.36, h * 0.765, w * 0.42, h * 0.78); g.stroke();
+    var bw = Math.max(3, h * 0.022); g.strokeStyle = dk ? '#d8d4c8' : '#f6f3ea'; g.lineWidth = bw;
+    g.beginPath(); g.moveTo(w * 0.5, h * 0.92); g.quadraticCurveTo(w * 0.44, h * 0.76, w * 0.38, h * 0.78);
+    for (var i = 1; i <= 14; i++) { var u = i / 14, x = w * (0.38 - u * 0.22), y = h * (0.78 + u * 0.1) + Math.sin(t * 2.6 - u * 6) * h * 0.03 * u + Math.sin(t * 6 - u * 9) * h * 0.006 * u; g.lineTo(x, y); }
+    g.stroke();
+    // nhịp mạch thưa dần (chu kỳ 16 giây: đập nhanh, nhỏ dần, lặng, rồi lại)
+    var cyc = t % 16, y0 = h * 0.18, x0 = w * 0.62, x1 = w * 0.94;
+    g.strokeStyle = rgba(dk ? '#E2566C' : '#B3263A', dk ? 0.5 : 0.4); g.lineWidth = Math.max(1, w / 650); g.beginPath();
+    for (var x = x0; x <= x1; x += 2) { var uu = (x - x0) / (x1 - x0), tt = cyc - (1 - uu) * 2, y = y0; if (tt > 0 && tt < 12) { var per = 0.45, k = (tt % per) / per, amp = h * 0.05 * Math.max(0, 1 - tt / 12); if (k < 0.2) y -= Math.sin(k / 0.2 * Math.PI) * amp; } x === x0 ? g.moveTo(x, y) : g.lineTo(x, y); }
+    g.stroke();
+    dust(g, w, h, t, R, hz, 20);
+    vign(g, w, h, 0.6);
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
@@ -3112,7 +3217,7 @@ els.forEach(function(el){io.observe(el)});})();
        water  = mặt nước gợn tràn qua trang (nhìn từ dưới nước lên)
        door   = khung cửa sáng lên từng nét giữa trang
        dome   = vòm sáng mờ bung ra bọc lấy trang
-       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop soothe blink (soothe/blink: Góc nhìn khác ch05, tay bà Mabel làm dịu và Felix chớp mắt đổi chỗ; xích cứu người của Leon: thép như xích tấn công, vòng lỏng ôm lấy giữa trang, nhấc lên rồi đặt xuống; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
+       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop soothe blink vein (vein: Góc nhìn khác ch11, Mira nhìn thấu mạch máu; soothe/blink: Góc nhìn khác ch05, tay bà Mabel làm dịu và Felix chớp mắt đổi chỗ; xích cứu người của Leon: thép như xích tấn công, vòng lỏng ôm lấy giữa trang, nhấc lên rồi đặt xuống; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
        flicker = từ đoạn này tới hết chương, trang tối theo nhịp lửa chao
      - body[data-open="dark"]: mở chương trong bóng tối, sáng lại dần. */
   (function () {
@@ -3531,6 +3636,28 @@ els.forEach(function(el){io.observe(el)});})();
       [[0.33, -1], [1.13, 1]].forEach(function (s) { var u = (t - s[0]) / 0.6; if (u < 0 || u > 1) return; var x0 = W / 2 - s[1] * W * 0.18, x1 = W / 2 + s[1] * W * 0.18, y = H * 0.5;
         var gr = g.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, rgba('#b9f0cf', 0)); gr.addColorStop(1, rgba('#b9f0cf', (C.dark ? 0.55 : 0.7) * (1 - u))); g.fillStyle = gr; g.fillRect(Math.min(x0, x1), y - 2, Math.abs(x1 - x0), 4);
         var gl = g.createRadialGradient(x1, y, 0, x1, y, 40); gl.addColorStop(0, rgba('#e6fff0', 0.6 * (1 - u))); gl.addColorStop(1, rgba('#e6fff0', 0)); g.fillStyle = gl; g.fillRect(x1 - 40, y - 40, 80, 80); });
+      return false;
+    };
+    // Góc nhìn khác ch11 (Mira, Vein): da mỏng đi như tờ giấy dầu, mạch máu đỏ thẫm bò vào từ mép trang như rễ cây dưới lớp đất mỏng,
+    // phập phồng theo một nhịp đều; rồi tan. Không vẽ người, chỉ mạch.
+    MORE.vein = function (t, R) {
+      if (t > 6.5) return true; var k = env(t, 1.2, 3.2, 2.1), col = C.dark ? '#E2566C' : '#B3263A', grow = Math.min(1, t / 1.8);
+      var beat = Math.pow(Math.max(0, Math.sin(t * Math.PI * 2 / 1.1)), 8);
+      wash(C.dark ? '#3a1418' : '#f3d9d6', (C.dark ? 0.16 : 0.22) * k);
+      g.lineCap = 'round'; g.shadowColor = rgba(col, 0.8);
+      function br(x, y, a, len, w, d, s) {
+        var n = 6, px = x, py = y; g.lineWidth = w * (1 + 0.35 * beat); g.strokeStyle = rgba(col, (0.45 + 0.35 * beat) * k); g.shadowBlur = 4 + 6 * beat;
+        g.beginPath(); g.moveTo(px, py);
+        for (var j = 1; j <= n; j++) { if (j / n > grow) break; a += (R[(s + j * 7) % 60] - 0.5) * 0.7; px += Math.cos(a) * len / n; py += Math.sin(a) * len / n; g.lineTo(px, py); }
+        g.stroke();
+        if (d > 0 && grow > 0.45) { br(px, py, a - 0.5, len * 0.6, w * 0.65, d - 1, s + 13); br(px, py, a + 0.45, len * 0.55, w * 0.6, d - 1, s + 29); }
+      }
+      var L = Math.min(W, H) * 0.42;
+      for (var i = 0; i < 6; i++) { var u = (i + 0.5) / 6;
+        br(0, H * u, (R[i] - 0.5) * 0.6, L, 2.6, 2, i * 5); br(W, H * (1 - u), Math.PI + (R[i + 10] - 0.5) * 0.6, L, 2.6, 2, i * 5 + 3);
+      }
+      g.shadowBlur = 0;
+      edge(col, (0.1 + 0.12 * beat) * k, 0.45);
       return false;
     };
     // ch12: trần hầm sập: trang rung giật, bụi đá đổ ào từ mép trên, rồi tối sập
@@ -4616,6 +4743,8 @@ els.forEach(function(el){io.observe(el)});})();
       soothe: function (o, n) { bus(); var at = n; for (var k = 0; k < 14; k++) { nz(o, 'bandpass', 2600, 2200, 5, 0.05 * (1 - k / 16), 0.04, at); at += 0.11 + k * 0.035; } [880, 1108.7, 1318.5].forEach(function (f, i) { sine(wet(0.5), f, 0.03, 3.2, n + 0.8 + i * 0.12); }); nz(wet(0.4), 'lowpass', 2400, 800, 0.7, 0.05, 3, n + 0.6); },
       // Felix chớp mắt đổi chỗ (Chuyển hoá): hai nhát hút gió rất ngắn, mỗi nhát kèm một tiếng "póc" khô và lấp lánh mảnh
       blink: function (o, n) { bus(); [0.25, 1.05].forEach(function (d) { whoosh(n + d - 0.06, 0.14, 0.35, true); nz(o, 'highpass', 3500, 6500, 1, 0.2, 0.05, n + d + 0.08); sparkle(n + d + 0.09, 0.025, [2637, 3520]); }); },
+      // Góc nhìn khác ch11, Mira (Vein): một tiếng lướt mỏng như tờ giấy dầu, rồi nhịp tách đều như kim đồng hồ (không tiếng trầm)
+      vein: function (o, n) { bus(); nz(wet(0.5), 'bandpass', 1800, 4200, 1.2, 0.08, 0.9, n); for (var k = 0; k < 5; k++) { nz(o, 'bandpass', 2400, 2400, 6, 0.06, 0.03, n + 0.9 + k * 1.1); sine(o, 1760, 0.012, 0.05, n + 0.9 + k * 1.1); } sine(wet(0.4), 987.8, 0.02, 2.2, n + 0.4); },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
     /* tiếng năng lực Clevia (Clair chốt 24/11: kiểu anime "A3"): tiếng dồn ngược, mỗi vòng khoá khớp là một nhát "kshing" kèm lấp lánh,

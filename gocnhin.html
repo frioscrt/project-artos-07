@@ -737,6 +737,24 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .ck-n.bump{animation:cknum .35s ease-out}
 @keyframes cknum{0%{transform:scale(1.35)}100%{transform:none}}
 @media (prefers-reduced-motion: reduce){.tkedge.crk svg,.ck-n.bump,.tkedge path.b{animation:none!important}.tkedge path.b{stroke-dashoffset:0}}
+/* nét riêng của Mira: mạch máu đỏ mảnh dọc mép trái, dài dần theo chỗ đang đọc, đập đều; đoạn có "mạch" thì đập mạnh; cuối bài thì lặng */
+.vnedge{position:fixed;left:0;top:0;width:16px;height:100vh;z-index:2;pointer-events:none;opacity:0;transition:opacity .8s;--vn:#B3263A}
+.reader.n-mira ~ .vnedge.on{opacity:1}
+.vnedge svg{animation:vnbeat 1.1s ease-out infinite}
+.vnedge path{fill:none;stroke:var(--vn);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .3s}
+@keyframes vnbeat{0%{filter:drop-shadow(0 0 0 transparent);opacity:.65}12%{filter:drop-shadow(0 0 4px var(--vn));opacity:1}40%,100%{filter:drop-shadow(0 0 0 transparent);opacity:.65}}
+.vnedge.thb path{animation:vnthb .7s ease-out}
+@keyframes vnthb{0%{stroke-width:1.6}20%{stroke-width:3.4}100%{stroke-width:1.6}}
+.vnedge.still svg{animation:none;opacity:.35;transition:opacity 3s}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .vnedge,:root:not([data-theme="light"]) .gact.wrap{--vn:#E2566C}}
+:root[data-theme="dark"] .vnedge,:root[data-theme="dark"] .gact.wrap{--vn:#E2566C}
+.gact.wrap{--vn:#E2566C}
+.pv-text p.throb.lit{text-shadow:0 0 .8em color-mix(in srgb,var(--pv) 25%,transparent);transition:text-shadow 1.2s}
+.wr-stage{position:relative;height:180px;border-radius:12px;overflow:hidden;touch-action:manipulation}
+.gact.wrap:focus-visible .wr-stage{box-shadow:0 0 0 2px var(--lamp)}
+.wr-cv{position:absolute;inset:0;width:100%;height:100%}
+.wr-n{position:absolute;right:14px;bottom:8px;font-style:italic;font-size:18px;line-height:1;color:var(--pv);text-shadow:0 0 10px color-mix(in srgb,var(--pv) 45%,transparent);pointer-events:none}
+@media (prefers-reduced-motion: reduce){.vnedge svg,.vnedge.thb path{animation:none!important}}
 @media (prefers-reduced-motion: reduce){.pc .in{transition:none!important}.thread.twang svg,.pb-stone,.pm-hand{animation:none!important}.pc.turning .in,.pc.new .ba,.pc.turning .fa::after{animation:none!important}}
 
 .nen-artos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:#1d2126}
@@ -780,7 +798,7 @@ body > main{position:relative;z-index:1}
     <h1 class="gn-title">Góc nhìn khác</h1>
     <p class="gn-sub">Cùng một chuyện, nhưng kể qua mắt người khác. Đọc hết chương nào thì góc nhìn của chương ấy mở ra; thẻ mới nằm úp, chạm để lật.</p>
     <p class="gn-count" id="pcount"></p>
-    <section class="gch"><h2>Chương 1<span>Thứ gì đó đã bị bỏ quên</span></h2><div class="grow"><button type="button" class="pc luke" data-id="ch01-luke" data-ch="1" data-who="luke" data-name="luke" aria-label="Luke: Nửa nhịp"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Luke</span><span class="t">Nửa nhịp</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M114.1 128.0 C126.8 153.4 102.2 148.9 104.3 141.2 C97.6 135.5 88.7 130.8 79.1 143.2 C85.0 129.6 88.3 110.9 73.6 108.9 C89.9 111.4 117.6 108.8 104.5 114.3 C111.4 119.6 129.6 148.9 134.6 128.0"/><path d="M112.2 147.1 C100.4 137.2 85.4 143.3 80.1 152.3 C92.9 129.1 59.4 109.9 62.7 113.5 C90.3 91.0 104.2 123.5 102.4 87.0 C105.7 122.0 112.4 125.3 118.5 123.2 C142.6 135.7 98.8 141.4 115.0 151.3"/><path d="M90.5 148.7 C89.5 151.3 85.1 130.1 62.4 142.0 C60.3 144.4 70.7 93.2 87.6 122.3 C78.0 107.5 100.6 122.8 94.2 112.5 C94.9 113.8 122.2 100.4 106.1 114.6 C106.3 117.9 130.2 119.2 127.1 117.9 C141.7 110.6 104.4 132.9 111.4 133.2 C106.7 134.9 82.2 165.8 114.0 165.6 C99.5 164.0 81.5 160.8 89.0 152.1"/><path d="M65.2 133.0 C64.1 120.7 92.7 111.9 89.3 114.4 C91.5 106.8 112.1 117.2 109.6 104.1 C142.3 107.6 121.9 136.6 120.8 125.0 C113.8 137.6 102.6 162.7 110.1 140.9 C106.3 139.8 95.1 131.4 87.0 160.2 C83.9 148.9 59.4 110.8 78.0 131.1"/><path d="M80.9 105.9 C89.8 106.1 104.1 120.4 105.1 113.4 C130.6 111.7 137.5 126.3 115.4 125.1 C112.1 132.3 114.5 167.2 122.8 154.4 C102.7 133.1 70.3 159.9 93.1 147.7 C76.3 147.0 71.9 133.2 66.0 134.5 C53.7 129.5 88.1 108.3 91.1 117.7"/><path d="M110.7 91.9 C107.3 116.0 121.4 121.0 114.1 120.3 C106.9 126.1 107.5 132.2 116.0 132.7 C141.5 143.2 100.3 134.0 116.9 159.1 C117.0 162.9 77.5 149.8 95.7 142.4 C84.6 160.2 77.7 135.6 76.2 140.9 C69.1 149.7 96.2 122.1 79.9 122.1 C69.5 111.5 86.2 100.3 82.1 95.1 C92.0 102.5 121.7 105.5 104.1 114.2"/><path d="M130.9 119.0 C109.7 125.9 129.6 155.1 133.0 146.1 C119.7 146.6 111.0 167.1 106.2 149.3 C98.8 160.7 67.1 158.3 79.7 164.9 C85.1 159.7 73.0 131.3 83.5 132.8 C75.9 124.4 78.3 106.8 69.8 111.4 C88.3 111.9 98.2 118.3 93.6 106.1 C104.4 99.2 124.1 115.1 115.0 100.7 C114.8 94.7 124.1 131.2 115.5 123.5"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Luke</span></span><span class="tt">Nửa nhịp</span></span></span></button></div></section><section class="gch"><h2>Chương 5<span>Lửa bếp</span></h2><div class="grow"><button type="button" class="pc phu" data-id="ch05-mabel" data-ch="5" data-who="phu" data-name="mabel" aria-label="Mabel: Mấy bước nữa"><span class="in"><span class="fa"><span class="seal">M</span><span class="w">Mabel</span><span class="t">Mấy bước nữa</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M130.4 128.0 C125.0 147.4 100.0 157.0 104.5 141.9 C95.9 158.3 86.6 134.6 86.2 138.0 C79.9 128.5 97.0 121.4 65.5 102.9 C98.8 122.7 112.5 119.2 104.7 113.4 C113.0 114.6 109.3 129.2 114.6 128.0"/><path d="M123.4 164.4 C101.5 139.3 90.5 155.6 94.6 152.8 C94.9 134.5 57.3 132.2 67.8 148.7 C66.6 131.6 95.6 123.0 76.2 122.8 C74.7 109.8 98.2 111.5 79.5 96.1 C77.8 93.2 112.7 115.7 104.2 108.6 C124.3 99.1 143.5 132.4 118.6 116.0 C113.1 125.7 138.9 138.3 134.2 135.5 C106.9 133.4 108.4 147.1 120.8 160.4"/><path d="M94.7 139.6 C90.2 145.6 73.1 116.1 70.6 138.9 C84.8 129.7 61.7 105.0 80.4 119.0 C79.3 118.5 95.8 99.7 90.2 101.6 C98.4 94.9 136.6 114.8 116.0 93.1 C103.8 119.9 111.2 125.4 131.4 116.3 C142.9 109.2 119.6 141.9 138.0 145.4 C134.2 150.5 110.0 168.3 111.0 157.6 C110.8 173.5 83.0 145.9 86.7 157.1"/><path d="M67.5 132.6 C56.1 126.1 78.7 109.0 72.9 107.7 C88.7 114.6 99.6 121.5 95.7 97.9 C99.0 112.2 136.9 107.2 125.6 93.9 C134.0 106.9 136.5 142.3 117.6 125.5 C147.0 133.7 114.9 162.7 114.4 138.8 C120.2 142.3 102.6 161.5 102.0 141.8 C92.3 162.0 62.7 135.7 78.0 157.3 C76.1 141.8 74.5 119.8 86.8 129.9"/><path d="M75.0 99.0 C93.9 104.2 126.8 110.3 109.7 100.1 C118.7 113.5 118.3 134.7 141.9 120.0 C120.7 128.6 106.6 171.8 124.8 156.7 C108.5 172.4 83.2 165.7 90.0 156.6 C89.4 147.2 76.5 120.5 76.0 132.6 C87.6 125.3 94.2 88.6 87.9 114.0"/><path d="M104.9 111.4 C109.3 96.5 108.0 127.0 137.6 112.7 C128.1 130.8 119.1 140.2 116.4 137.2 C112.8 138.2 87.8 147.6 105.0 158.5 C97.3 152.9 81.0 142.8 74.0 156.7 C66.0 156.2 81.9 107.9 82.2 126.9 C73.9 113.2 91.9 98.2 87.9 110.6 C97.7 96.2 108.1 112.2 107.8 101.8"/><path d="M135.3 117.7 C112.5 131.0 117.7 140.7 124.4 145.2 C118.2 148.5 84.4 157.6 102.6 171.4 C91.1 145.9 62.8 138.0 81.4 144.7 C71.4 139.7 68.6 115.2 82.3 125.0 C63.9 108.9 108.1 100.1 88.2 106.7 C91.8 113.2 113.9 94.9 109.4 105.1 C104.7 116.8 124.5 124.8 136.7 117.3"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Mabel</span></span><span class="tt">Mấy bước nữa</span></span></span></button></div></section><section class="gch"><h2>Chương 6<span>Xích</span></h2><div class="grow"><button type="button" class="pc leon" data-id="ch06-leon" data-ch="6" data-who="leon" data-name="leon" aria-label="Leon: Món nợ cũ"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Leon</span><span class="t">Món nợ cũ</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M134.5 128.0 C124.4 160.9 87.2 156.2 111.7 164.1 C75.9 168.2 67.7 146.0 69.2 150.4 C57.3 128.1 86.5 94.8 69.8 106.0 C100.1 104.8 137.6 104.3 104.8 113.2 C127.4 97.3 113.3 128.0 132.9 128.0"/><path d="M113.6 149.2 C101.6 150.4 72.9 143.4 94.8 143.2 C81.2 163.8 58.0 135.1 71.6 138.2 C78.8 132.8 84.9 92.3 69.6 109.3 C88.4 104.4 101.3 99.9 96.7 101.1 C103.9 120.0 123.8 110.8 123.4 104.2 C125.6 106.5 137.3 142.1 133.1 131.4 C129.9 146.6 101.4 139.2 119.9 159.1"/><path d="M89.4 151.3 C81.2 169.7 73.5 130.6 74.9 137.3 C57.6 132.7 97.2 122.0 60.6 110.0 C95.8 124.4 113.3 93.1 93.1 109.5 C94.1 111.8 111.9 123.2 113.3 98.9 C115.4 104.1 105.7 130.7 128.3 117.5 C133.8 123.5 126.9 167.0 139.1 145.9 C114.0 144.9 97.9 174.8 108.2 150.1 C101.4 175.4 85.3 146.1 93.7 141.7"/><path d="M74.4 131.6 C65.6 117.6 95.5 114.8 74.1 95.0 C96.4 120.5 134.1 112.3 111.4 99.7 C123.7 110.9 106.7 128.0 121.3 125.0 C112.9 130.8 104.7 136.9 115.1 147.2 C110.8 150.8 67.1 159.5 91.3 149.7 C86.6 150.4 56.3 132.8 61.3 133.5"/><path d="M71.7 95.3 C80.2 88.3 113.8 92.3 106.1 95.3 C110.7 115.0 119.5 123.8 119.6 117.6 C129.8 122.2 106.9 137.1 112.4 133.4 C105.9 134.0 97.4 151.6 104.7 145.5 C104.8 159.9 87.0 144.0 88.5 143.6 C84.9 138.6 84.6 116.6 65.2 129.4 C90.7 125.5 76.7 90.4 77.5 102.0"/><path d="M106.1 107.4 C110.8 102.0 139.8 142.5 133.3 114.5 C136.9 115.7 125.5 159.4 124.8 142.0 C108.2 134.4 100.2 157.5 106.1 165.3 C98.9 133.3 79.7 131.6 74.8 155.8 C58.1 146.2 91.6 121.7 80.5 126.8 C64.4 116.8 75.2 88.2 78.0 96.6 C89.7 104.0 112.2 109.9 109.6 95.6"/><path d="M126.5 120.3 C112.8 126.7 119.0 154.1 117.8 140.6 C103.6 132.8 76.8 161.8 101.2 148.2 C93.6 169.3 70.3 133.7 84.4 142.0 C93.3 132.4 68.0 105.0 59.7 121.3 C69.7 103.5 101.3 118.6 81.0 93.9 C98.1 119.9 121.1 113.3 112.9 96.6 C135.2 96.3 111.7 134.5 134.2 118.0"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Leon</span></span><span class="tt">Món nợ cũ</span></span></span></button></div></section><section class="gch"><h2>Chương 12<span>Bên trong hầm tối</span></h2><div class="grow"><button type="button" class="pc phu" data-id="ch12-talia" data-ch="12" data-who="phu" data-name="talia" aria-label="Talia: Đếm vết nứt"><span class="in"><span class="fa"><span class="seal">T</span><span class="w">Talia</span><span class="t">Đếm vết nứt</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M128.0 128.0 C108.4 136.3 109.2 170.0 107.3 150.4 C90.5 142.3 58.1 128.9 67.4 151.7 C92.3 127.1 70.4 105.9 70.1 106.3 C82.0 87.2 103.6 121.9 105.3 111.8 C104.8 125.4 136.7 130.3 118.4 128.0"/><path d="M121.9 162.1 C111.4 173.5 67.1 156.2 89.7 148.0 C85.6 143.0 59.8 129.3 57.0 130.0 C68.6 110.2 99.3 109.7 77.5 92.9 C92.4 89.3 105.8 116.7 111.1 106.5 C122.1 112.5 114.5 128.2 121.5 127.0 C107.2 129.4 106.1 143.5 120.6 160.1"/><path d="M92.4 144.7 C64.9 138.8 78.9 124.5 69.5 124.5 C86.4 110.6 94.9 101.7 97.2 114.0 C102.4 120.6 139.0 119.1 119.0 117.3 C129.2 140.9 115.7 160.3 129.3 154.9 C107.5 153.0 78.3 168.4 89.9 150.1"/><path d="M63.6 133.2 C61.6 117.2 81.6 100.1 65.5 102.1 C68.4 103.1 96.1 81.1 94.9 92.5 C111.8 86.8 117.7 111.2 109.7 115.1 C113.6 120.7 127.1 144.5 124.3 124.5 C114.2 128.4 120.1 147.3 113.8 138.4 C103.2 133.7 95.8 133.4 105.8 168.7 C99.6 142.2 93.0 130.5 81.7 152.4 C70.4 154.7 72.1 121.0 60.9 133.6"/><path d="M91.2 117.8 C85.3 85.3 116.2 118.0 112.8 91.2 C108.2 119.7 107.0 131.4 123.4 123.5 C139.6 130.0 108.7 160.9 112.5 142.4 C105.7 166.2 86.5 138.3 88.1 162.2 C76.9 159.2 92.3 127.0 62.9 135.1 C61.3 120.0 93.6 113.4 72.5 96.1"/><path d="M104.0 114.5 C107.6 120.6 109.4 128.4 123.0 118.7 C124.0 118.2 116.5 164.6 129.8 144.7 C138.2 151.9 95.3 167.1 105.7 163.3 C88.5 158.1 71.2 137.3 79.8 150.3 C91.9 131.6 59.2 112.2 76.1 126.5 C60.3 105.7 90.1 98.6 88.1 110.9 C89.0 91.4 104.5 121.1 107.1 103.9"/><path d="M122.3 121.5 C136.8 132.7 103.4 138.1 118.7 155.5 C97.8 165.8 66.1 159.1 89.0 142.1 C79.7 127.6 73.0 96.1 63.0 114.7 C88.7 107.9 101.8 119.2 100.9 99.5 C130.4 103.3 113.3 135.2 122.8 121.4"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Talia</span></span><span class="tt">Đếm vết nứt</span></span></span></button></div></section>
+    <section class="gch"><h2>Chương 1<span>Thứ gì đó đã bị bỏ quên</span></h2><div class="grow"><button type="button" class="pc luke" data-id="ch01-luke" data-ch="1" data-who="luke" data-name="luke" aria-label="Luke: Nửa nhịp"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Luke</span><span class="t">Nửa nhịp</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M114.1 128.0 C126.8 153.4 102.2 148.9 104.3 141.2 C97.6 135.5 88.7 130.8 79.1 143.2 C85.0 129.6 88.3 110.9 73.6 108.9 C89.9 111.4 117.6 108.8 104.5 114.3 C111.4 119.6 129.6 148.9 134.6 128.0"/><path d="M112.2 147.1 C100.4 137.2 85.4 143.3 80.1 152.3 C92.9 129.1 59.4 109.9 62.7 113.5 C90.3 91.0 104.2 123.5 102.4 87.0 C105.7 122.0 112.4 125.3 118.5 123.2 C142.6 135.7 98.8 141.4 115.0 151.3"/><path d="M90.5 148.7 C89.5 151.3 85.1 130.1 62.4 142.0 C60.3 144.4 70.7 93.2 87.6 122.3 C78.0 107.5 100.6 122.8 94.2 112.5 C94.9 113.8 122.2 100.4 106.1 114.6 C106.3 117.9 130.2 119.2 127.1 117.9 C141.7 110.6 104.4 132.9 111.4 133.2 C106.7 134.9 82.2 165.8 114.0 165.6 C99.5 164.0 81.5 160.8 89.0 152.1"/><path d="M65.2 133.0 C64.1 120.7 92.7 111.9 89.3 114.4 C91.5 106.8 112.1 117.2 109.6 104.1 C142.3 107.6 121.9 136.6 120.8 125.0 C113.8 137.6 102.6 162.7 110.1 140.9 C106.3 139.8 95.1 131.4 87.0 160.2 C83.9 148.9 59.4 110.8 78.0 131.1"/><path d="M80.9 105.9 C89.8 106.1 104.1 120.4 105.1 113.4 C130.6 111.7 137.5 126.3 115.4 125.1 C112.1 132.3 114.5 167.2 122.8 154.4 C102.7 133.1 70.3 159.9 93.1 147.7 C76.3 147.0 71.9 133.2 66.0 134.5 C53.7 129.5 88.1 108.3 91.1 117.7"/><path d="M110.7 91.9 C107.3 116.0 121.4 121.0 114.1 120.3 C106.9 126.1 107.5 132.2 116.0 132.7 C141.5 143.2 100.3 134.0 116.9 159.1 C117.0 162.9 77.5 149.8 95.7 142.4 C84.6 160.2 77.7 135.6 76.2 140.9 C69.1 149.7 96.2 122.1 79.9 122.1 C69.5 111.5 86.2 100.3 82.1 95.1 C92.0 102.5 121.7 105.5 104.1 114.2"/><path d="M130.9 119.0 C109.7 125.9 129.6 155.1 133.0 146.1 C119.7 146.6 111.0 167.1 106.2 149.3 C98.8 160.7 67.1 158.3 79.7 164.9 C85.1 159.7 73.0 131.3 83.5 132.8 C75.9 124.4 78.3 106.8 69.8 111.4 C88.3 111.9 98.2 118.3 93.6 106.1 C104.4 99.2 124.1 115.1 115.0 100.7 C114.8 94.7 124.1 131.2 115.5 123.5"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Luke</span></span><span class="tt">Nửa nhịp</span></span></span></button></div></section><section class="gch"><h2>Chương 5<span>Lửa bếp</span></h2><div class="grow"><button type="button" class="pc phu" data-id="ch05-mabel" data-ch="5" data-who="phu" data-name="mabel" aria-label="Mabel: Mấy bước nữa"><span class="in"><span class="fa"><span class="seal">M</span><span class="w">Mabel</span><span class="t">Mấy bước nữa</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M130.4 128.0 C125.0 147.4 100.0 157.0 104.5 141.9 C95.9 158.3 86.6 134.6 86.2 138.0 C79.9 128.5 97.0 121.4 65.5 102.9 C98.8 122.7 112.5 119.2 104.7 113.4 C113.0 114.6 109.3 129.2 114.6 128.0"/><path d="M123.4 164.4 C101.5 139.3 90.5 155.6 94.6 152.8 C94.9 134.5 57.3 132.2 67.8 148.7 C66.6 131.6 95.6 123.0 76.2 122.8 C74.7 109.8 98.2 111.5 79.5 96.1 C77.8 93.2 112.7 115.7 104.2 108.6 C124.3 99.1 143.5 132.4 118.6 116.0 C113.1 125.7 138.9 138.3 134.2 135.5 C106.9 133.4 108.4 147.1 120.8 160.4"/><path d="M94.7 139.6 C90.2 145.6 73.1 116.1 70.6 138.9 C84.8 129.7 61.7 105.0 80.4 119.0 C79.3 118.5 95.8 99.7 90.2 101.6 C98.4 94.9 136.6 114.8 116.0 93.1 C103.8 119.9 111.2 125.4 131.4 116.3 C142.9 109.2 119.6 141.9 138.0 145.4 C134.2 150.5 110.0 168.3 111.0 157.6 C110.8 173.5 83.0 145.9 86.7 157.1"/><path d="M67.5 132.6 C56.1 126.1 78.7 109.0 72.9 107.7 C88.7 114.6 99.6 121.5 95.7 97.9 C99.0 112.2 136.9 107.2 125.6 93.9 C134.0 106.9 136.5 142.3 117.6 125.5 C147.0 133.7 114.9 162.7 114.4 138.8 C120.2 142.3 102.6 161.5 102.0 141.8 C92.3 162.0 62.7 135.7 78.0 157.3 C76.1 141.8 74.5 119.8 86.8 129.9"/><path d="M75.0 99.0 C93.9 104.2 126.8 110.3 109.7 100.1 C118.7 113.5 118.3 134.7 141.9 120.0 C120.7 128.6 106.6 171.8 124.8 156.7 C108.5 172.4 83.2 165.7 90.0 156.6 C89.4 147.2 76.5 120.5 76.0 132.6 C87.6 125.3 94.2 88.6 87.9 114.0"/><path d="M104.9 111.4 C109.3 96.5 108.0 127.0 137.6 112.7 C128.1 130.8 119.1 140.2 116.4 137.2 C112.8 138.2 87.8 147.6 105.0 158.5 C97.3 152.9 81.0 142.8 74.0 156.7 C66.0 156.2 81.9 107.9 82.2 126.9 C73.9 113.2 91.9 98.2 87.9 110.6 C97.7 96.2 108.1 112.2 107.8 101.8"/><path d="M135.3 117.7 C112.5 131.0 117.7 140.7 124.4 145.2 C118.2 148.5 84.4 157.6 102.6 171.4 C91.1 145.9 62.8 138.0 81.4 144.7 C71.4 139.7 68.6 115.2 82.3 125.0 C63.9 108.9 108.1 100.1 88.2 106.7 C91.8 113.2 113.9 94.9 109.4 105.1 C104.7 116.8 124.5 124.8 136.7 117.3"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Mabel</span></span><span class="tt">Mấy bước nữa</span></span></span></button></div></section><section class="gch"><h2>Chương 6<span>Xích</span></h2><div class="grow"><button type="button" class="pc leon" data-id="ch06-leon" data-ch="6" data-who="leon" data-name="leon" aria-label="Leon: Món nợ cũ"><span class="in"><span class="fa"><span class="seal">L</span><span class="w">Leon</span><span class="t">Món nợ cũ</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M134.5 128.0 C124.4 160.9 87.2 156.2 111.7 164.1 C75.9 168.2 67.7 146.0 69.2 150.4 C57.3 128.1 86.5 94.8 69.8 106.0 C100.1 104.8 137.6 104.3 104.8 113.2 C127.4 97.3 113.3 128.0 132.9 128.0"/><path d="M113.6 149.2 C101.6 150.4 72.9 143.4 94.8 143.2 C81.2 163.8 58.0 135.1 71.6 138.2 C78.8 132.8 84.9 92.3 69.6 109.3 C88.4 104.4 101.3 99.9 96.7 101.1 C103.9 120.0 123.8 110.8 123.4 104.2 C125.6 106.5 137.3 142.1 133.1 131.4 C129.9 146.6 101.4 139.2 119.9 159.1"/><path d="M89.4 151.3 C81.2 169.7 73.5 130.6 74.9 137.3 C57.6 132.7 97.2 122.0 60.6 110.0 C95.8 124.4 113.3 93.1 93.1 109.5 C94.1 111.8 111.9 123.2 113.3 98.9 C115.4 104.1 105.7 130.7 128.3 117.5 C133.8 123.5 126.9 167.0 139.1 145.9 C114.0 144.9 97.9 174.8 108.2 150.1 C101.4 175.4 85.3 146.1 93.7 141.7"/><path d="M74.4 131.6 C65.6 117.6 95.5 114.8 74.1 95.0 C96.4 120.5 134.1 112.3 111.4 99.7 C123.7 110.9 106.7 128.0 121.3 125.0 C112.9 130.8 104.7 136.9 115.1 147.2 C110.8 150.8 67.1 159.5 91.3 149.7 C86.6 150.4 56.3 132.8 61.3 133.5"/><path d="M71.7 95.3 C80.2 88.3 113.8 92.3 106.1 95.3 C110.7 115.0 119.5 123.8 119.6 117.6 C129.8 122.2 106.9 137.1 112.4 133.4 C105.9 134.0 97.4 151.6 104.7 145.5 C104.8 159.9 87.0 144.0 88.5 143.6 C84.9 138.6 84.6 116.6 65.2 129.4 C90.7 125.5 76.7 90.4 77.5 102.0"/><path d="M106.1 107.4 C110.8 102.0 139.8 142.5 133.3 114.5 C136.9 115.7 125.5 159.4 124.8 142.0 C108.2 134.4 100.2 157.5 106.1 165.3 C98.9 133.3 79.7 131.6 74.8 155.8 C58.1 146.2 91.6 121.7 80.5 126.8 C64.4 116.8 75.2 88.2 78.0 96.6 C89.7 104.0 112.2 109.9 109.6 95.6"/><path d="M126.5 120.3 C112.8 126.7 119.0 154.1 117.8 140.6 C103.6 132.8 76.8 161.8 101.2 148.2 C93.6 169.3 70.3 133.7 84.4 142.0 C93.3 132.4 68.0 105.0 59.7 121.3 C69.7 103.5 101.3 118.6 81.0 93.9 C98.1 119.9 121.1 113.3 112.9 96.6 C135.2 96.3 111.7 134.5 134.2 118.0"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Leon</span></span><span class="tt">Món nợ cũ</span></span></span></button></div></section><section class="gch"><h2>Chương 11<span>Cổng hầm</span></h2><div class="grow"><button type="button" class="pc phu" data-id="ch11-mira" data-ch="11" data-who="phu" data-name="mira" aria-label="Mira: Còn ba vòng"><span class="in"><span class="fa"><span class="seal">M</span><span class="w">Mira</span><span class="t">Còn ba vòng</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M123.9 128.0 C139.3 150.0 93.6 168.5 109.6 157.6 C92.3 170.7 80.2 127.4 84.4 139.3 C72.4 125.2 98.6 119.7 65.9 103.2 C98.8 101.2 109.4 109.9 105.2 112.0 C123.0 116.8 132.3 134.0 131.1 128.0"/><path d="M114.9 151.2 C115.7 160.2 70.6 157.1 93.2 159.0 C81.3 152.9 60.7 138.5 83.0 138.9 C95.1 130.2 79.2 108.1 70.3 121.5 C57.5 115.5 88.1 86.0 81.1 98.5 C96.5 111.5 129.0 93.2 108.3 89.9 C107.5 119.0 120.5 128.7 122.7 113.4 C115.2 119.4 135.1 138.1 114.9 131.3 C125.7 146.9 99.5 135.5 119.5 158.3"/><path d="M94.6 139.7 C74.5 138.9 80.4 122.7 59.3 131.9 C65.4 104.7 97.7 84.8 75.9 94.1 C90.6 97.7 112.9 113.9 108.5 109.4 C127.1 89.3 110.3 136.6 120.2 126.1 C131.2 135.8 106.1 141.4 116.5 151.2 C109.4 151.5 70.0 143.0 89.4 151.1"/><path d="M82.4 130.5 C78.7 117.3 87.3 100.5 88.3 113.0 C101.6 103.1 124.0 87.9 111.8 98.6 C126.5 95.1 140.2 127.3 113.4 126.1 C144.0 137.6 101.1 135.2 124.3 158.9 C109.6 169.4 84.4 138.0 90.1 152.8 C70.3 148.9 71.7 107.3 79.8 130.9"/><path d="M72.7 96.4 C100.9 98.8 110.9 118.6 114.1 87.5 C118.8 100.5 134.2 121.8 131.2 122.0 C126.7 136.0 121.1 160.4 115.4 145.9 C111.4 156.1 80.8 159.3 92.3 150.1 C92.1 138.4 77.5 118.8 77.8 132.2 C68.5 118.1 82.7 107.7 82.5 107.7"/><path d="M109.5 95.9 C112.8 112.1 143.2 140.5 129.7 127.2 C118.7 150.8 103.3 156.4 111.0 159.0 C98.7 145.3 90.3 133.3 79.5 143.8 C58.4 121.1 94.4 114.2 75.4 111.1 C92.2 103.7 106.0 120.6 106.7 105.3"/><path d="M133.3 118.3 C121.1 123.6 135.9 152.7 127.4 143.0 C130.5 150.1 97.1 140.3 110.8 165.1 C104.3 143.4 64.1 149.0 89.2 147.7 C74.5 164.0 89.9 124.4 74.5 135.4 C64.8 123.4 86.6 113.3 71.5 112.3 C88.8 112.1 100.9 115.7 93.5 105.8 C101.4 111.3 114.9 101.8 118.6 94.2 C126.0 99.5 125.5 121.0 126.9 120.2"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Mira</span></span><span class="tt">Còn ba vòng</span></span></span></button></div></section><section class="gch"><h2>Chương 12<span>Bên trong hầm tối</span></h2><div class="grow"><button type="button" class="pc phu" data-id="ch12-talia" data-ch="12" data-who="phu" data-name="talia" aria-label="Talia: Đếm vết nứt"><span class="in"><span class="fa"><span class="seal">T</span><span class="w">Talia</span><span class="t">Đếm vết nứt</span></span><span class="ba"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="62"/><circle cx="100" cy="128" r="54" stroke-width=".8"/><path d="M128.0 128.0 C108.4 136.3 109.2 170.0 107.3 150.4 C90.5 142.3 58.1 128.9 67.4 151.7 C92.3 127.1 70.4 105.9 70.1 106.3 C82.0 87.2 103.6 121.9 105.3 111.8 C104.8 125.4 136.7 130.3 118.4 128.0"/><path d="M121.9 162.1 C111.4 173.5 67.1 156.2 89.7 148.0 C85.6 143.0 59.8 129.3 57.0 130.0 C68.6 110.2 99.3 109.7 77.5 92.9 C92.4 89.3 105.8 116.7 111.1 106.5 C122.1 112.5 114.5 128.2 121.5 127.0 C107.2 129.4 106.1 143.5 120.6 160.1"/><path d="M92.4 144.7 C64.9 138.8 78.9 124.5 69.5 124.5 C86.4 110.6 94.9 101.7 97.2 114.0 C102.4 120.6 139.0 119.1 119.0 117.3 C129.2 140.9 115.7 160.3 129.3 154.9 C107.5 153.0 78.3 168.4 89.9 150.1"/><path d="M63.6 133.2 C61.6 117.2 81.6 100.1 65.5 102.1 C68.4 103.1 96.1 81.1 94.9 92.5 C111.8 86.8 117.7 111.2 109.7 115.1 C113.6 120.7 127.1 144.5 124.3 124.5 C114.2 128.4 120.1 147.3 113.8 138.4 C103.2 133.7 95.8 133.4 105.8 168.7 C99.6 142.2 93.0 130.5 81.7 152.4 C70.4 154.7 72.1 121.0 60.9 133.6"/><path d="M91.2 117.8 C85.3 85.3 116.2 118.0 112.8 91.2 C108.2 119.7 107.0 131.4 123.4 123.5 C139.6 130.0 108.7 160.9 112.5 142.4 C105.7 166.2 86.5 138.3 88.1 162.2 C76.9 159.2 92.3 127.0 62.9 135.1 C61.3 120.0 93.6 113.4 72.5 96.1"/><path d="M104.0 114.5 C107.6 120.6 109.4 128.4 123.0 118.7 C124.0 118.2 116.5 164.6 129.8 144.7 C138.2 151.9 95.3 167.1 105.7 163.3 C88.5 158.1 71.2 137.3 79.8 150.3 C91.9 131.6 59.2 112.2 76.1 126.5 C60.3 105.7 90.1 98.6 88.1 110.9 C89.0 91.4 104.5 121.1 107.1 103.9"/><path d="M122.3 121.5 C136.8 132.7 103.4 138.1 118.7 155.5 C97.8 165.8 66.1 159.1 89.0 142.1 C79.7 127.6 73.0 96.1 63.0 114.7 C88.7 107.9 101.8 119.2 100.9 99.5 C130.4 103.3 113.3 135.2 122.8 121.4"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span class="tag"><span class="tx"></span><span class="tw">Talia</span></span><span class="tt">Đếm vết nứt</span></span></span></button></div></section>
   </div>
   <section class="reader" id="reader" hidden>
     <div class="pv-text" data-id="ch01-luke" hidden><p class="rh">Chương 1 · Góc nhìn của Luke</p><h2>Nửa nhịp</h2><section class="scene" data-sound="bench"><figure class="plate"><canvas class="art" data-art="balcony" role="img" aria-label="Sân trường nhìn từ ban công tầng hai, một sợi chỉ đỏ mảnh căng xuống khoảng sân"></canvas></figure><p>Buổi tập sáng hôm ấy tan sớm hơn thường lệ, đám năm nhất kéo nhau xuống căng tin từ lúc chuông giải lao còn chưa dứt, còn Luke thì ở lại, tựa vai vào cây cột hành lang tầng hai, ôm thanh kiếm gỗ trước ngực như ôm một thói quen cũ. Anh vẫn hay đứng ở chỗ này những hôm chẳng muốn nghĩ gì, vì từ đây nhìn xuống, khoảng sân trước toà nhà câu lạc bộ lúc nào cũng y hệt nhau, mấy hàng cây, mấy vệt nắng, mấy người đi qua rồi đi mất, đều đặn đến mức anh nhắm mắt lại vẫn biết chiếc lá nào sắp rơi. Có lẽ chính vì vậy mà anh thích nó. Sau những nơi anh từng đi qua, được đứng trước một thứ chẳng bao giờ thay đổi cũng là một cách để nghỉ ngơi.</p>
@@ -922,6 +940,58 @@ body > main{position:relative;z-index:1}
 <p class="rattle">Những sợi xích đã cuộn lại dưới da cổ tay, im lìm như mọi khi. Nhưng ở chỗ sợi thứ ba, chỗ đã quấn quanh eo con bé, anh vẫn còn cảm thấy mấy dấu ấn rất nhẹ của những đầu ngón tay ấy, như ai đó đã gõ vào một cánh cửa mà anh không biết là mình có. Anh xoay cổ tay, nhìn nó một lúc, rồi lại thọc vào túi.</p>
 <p>Luke dắt theo một con bé như thế vào làng này. Anh không biết đó là chuyện tốt hay là chuyện sẽ lặp lại lần nữa.</p>
 <p>Nhưng nếu nó lặp lại, anh nghĩ, lần này anh sẽ không phải biết qua một tấm thẻ.</p></section></div>
+<div class="pv-text" data-id="ch11-mira" hidden><p class="rh">Chương 11 · Góc nhìn của Mira</p><h2>Còn ba vòng</h2><section class="scene" data-sound="mine"><figure class="plate"><canvas class="art" data-art="knot" role="img" aria-label="Lối mòn dưới chân dốc buổi sáng, sọt đá đặt bên đường, quai sọt buộc một mảnh vải trắng thắt nút dẹt"></canvas></figure><p>Mira không nhìn mặt người bệnh lúc làm.</p>
+<p>Chị học được điều đó từ năm đầu ở khoa cấp cứu, từ một chị y tá già có cái giọng khàn như giấy nhám. Mặt người ta lúc đau chẳng giúp gì cho em đâu, chị ấy bảo, nhìn vết thương ấy. Vết thương không biết nói dối, không biết van xin, không biết làm em run tay. Tám năm sau, chị vẫn làm đúng như thế. Người ta khóc, người ta chửi, người ta nắm cổ tay chị đến bầm cả lên, chị vẫn chỉ nhìn chỗ cần nhìn.</p>
+<p class="throb" data-fx="vein" data-cast="1">Ở cái làng này thì chuyện ấy còn dễ hơn. Từ đêm đầu tiên tỉnh dậy, chị đã nhìn thấy những thứ không ai nhìn thấy được. Chị nhìn một người, và lớp da của họ mỏng đi, mờ đi như một tờ giấy dầu, để lộ ra bên dưới những sợi mạch máu đỏ thẫm chằng chịt như rễ cây dưới lớp đất mỏng, phập phồng theo nhịp tim, và sâu hơn nữa là bóng xương trắng đục, là những thớ cơ xếp lớp. Lần đầu chị suýt nôn. Lần thứ hai chị đã quen. Đến lần thứ ba thì chị hiểu ra người ta cho chị cái này để làm gì.</p>
+<p>Chỉ có một người chị không nhìn thấu được, là chính chị. Chị cúi xuống nhìn bàn tay mình, nó vẫn là bàn tay, da vẫn là da, không mỏng đi chút nào. Chị thấy thế cũng hợp lý. Có bao giờ y tá tự băng cho mình đâu.</p>
+<p>Sáng nay chị mới có tấm thẻ đầu tiên.</p>
+<p>Ở cái lối mòn dưới chân dốc, có một chị áo nâu đang gánh đá thì trượt tay, cạnh sọt đá cứa một đường dài trên mu bàn tay. Chị áo nâu chẳng kêu một tiếng, chỉ đứng nhìn máu chảy, cái nhìn trống rỗng như người ta nhìn trời mưa. Mira chẳng nghĩ gì nhiều. Chị xé vạt áo lót của mình ra, buộc lại cho người ta, thắt một cái nút dẹt như chị vẫn thắt cả nghìn lần ở khoa. Chị áo nâu nhìn chị rất lâu. Rồi chị ta thò tay vào túi áo, chìa ra một tấm thẻ. Trên mặt thẻ vẽ một cuộn băng trắng quấn dở.</p>
+<p>Mira cầm tấm thẻ lên, lật qua lật lại, rồi cất vào túi áo ngực. Chị không định dùng cho mình.</p></section>
+<div class="break" aria-hidden="true"></div>
+<section class="scene" data-sound="mine"><figure class="plate"><canvas class="art" data-art="stonecut" role="img" aria-label="Hòn đá cạnh đụn đá vụn có vệt máu quệt dài, cuộn băng trắng tháo dở trên đất, một nhịp mạch đỏ mảnh chạy đều"></canvas></figure><p>Người ấy ngồi trên một hòn đá cạnh đụn đá vụn, ống quần xắn lên tới gối.</p>
+<p>Mira thấy máu trước khi thấy người. Một vệt đỏ quệt dài trên mặt đá, nhỏ giọt xuống lớp bụi xám, và chị đã đi về phía đó trước cả khi chị kịp nghĩ có nên đi hay không. Người ấy không gọi chị. Người ấy cũng không xua chị đi.</p>
+<p>"Ngồi yên để tôi xem," chị nói. "Đừng cãi."</p>
+<p>Chị quỳ xuống, và nhìn.</p>
+<p class="throb">Đường rách chạy chéo trên bắp chân, dài hơn một gang tay, mép nham nhở như bị cạnh đá sắc rạch qua. Lớp da mỏng đi dưới mắt chị. Thớ cơ bên dưới bị xé toạc một đoạn, nhưng không sâu. Mạch máu lớn chạy dọc xương ống chân vẫn nguyên, đỏ thẫm, căng tròn, không sứt chỗ nào. Xương không sao. Chị thở ra một hơi dài. Vết này trông thì ghê, nhưng không chết được ai. Băng lại cho cầm máu, rồi người ta vẫn đi được, chạy được, chỉ đau một chút.</p>
+<p>"Ngã à?" chị hỏi.</p>
+<p>"Ừ. Trên đụn đá."</p>
+<p data-fx="heal" data-cast="1">Chị lấy tấm thẻ ra. Nó ấm lên trong lòng bàn tay chị, ấm dần, rồi chị thấy trong tay mình là một cuộn băng trắng, mát lạnh như vừa lấy từ tủ thuốc ra. Chị tháo đầu băng, đặt lên mép dưới vết thương, và bắt đầu quấn.</p>
+<p class="throb">Vòng thứ nhất, chị kéo căng vừa đủ. Vòng thứ hai chồng lên một nửa vòng thứ nhất. Tay chị tự làm, chẳng cần nghĩ. Trong lúc quấn, chị nhìn sợi mạch máu ở cổ chân người ấy, nhìn nó phồng lên xẹp xuống, và theo thói quen, chị đếm.</p>
+<p class="throb">Mạch đều. Đều đến lạ.</p>
+<p class="throb">Người ta đau thì mạch nhảy. Người ta sợ thì mạch nhảy. Người ta ngồi trên một hòn đá giữa một cái làng chết tiệt, chân rách một đường dài, máu dây ra đá, để một người lạ quỳ dưới chân mình quấn băng, thì mạch phải nhảy. Chị đã đếm mạch cho hàng nghìn người, chị biết. Mạch người này thì không. Nó đập chậm, đều, chẳng nhanh lên chút nào, như tiếng kim đồng hồ treo tường trong phòng trực lúc ba giờ sáng.</p>
+<p>Chị không ngẩng lên. Chị quấn tiếp.</p></section>
+<div class="break" aria-hidden="true"></div>
+<section class="scene" data-sound="shuffle"><figure class="plate"><canvas class="art" data-art="baskets" role="img" aria-label="Sườn dốc vừa im, sọt đá và đòn gánh đặt xuống bên đường, một hàng vết giày đế khía đi đều ra lối mòn"></canvas></figure><p>Chị nghe thấy cái im trước khi đọc được dòng chữ.</p>
+<p data-fx="hush">Cả sườn dốc đang lục cục tiếng đá đổ vào sọt, tiếng đòn gánh kẽo kẹt, tiếng bước chân nặng nề của những người áo nâu, bỗng nhiên tắt. Tắt hết một lượt, như ai vừa vặn nhỏ âm lượng của cả thế giới. Rồi dòng chữ xanh lạnh ngắt hiện ra giữa không trung, ngay trên cuộn băng trong tay chị.</p>
+<p class="sys"><em>[Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng.]</em></p>
+<p>Mira ngước lên nhìn sườn dốc.</p>
+<p>Những người áo nâu đã dừng lại. Từng người một, họ đặt sọt đá xuống, đặt đòn gánh xuống, chậm rãi, cẩn thận, như sợ làm vỡ cái gì. Rồi những cái đầu bắt đầu nghiêng sang một bên.</p>
+<p>Chị không nhìn vào bên trong họ. Chị không muốn biết.</p>
+<p>Họ bắt đầu bước. Lệt sệt. Lừ đừ. Xuống dốc.</p>
+<p>Còn ba vòng. Mira nhìn xuống bắp chân trước mặt mình, nhìn mép băng mới phủ được hơn nửa đường rách, chỗ máu vẫn còn rỉ ra ở đầu dưới. Ba vòng nữa thì kín. Ba vòng nữa thì gài đầu băng lại, rồi cả hai đứng dậy mà chạy. Ba vòng thì mất chừng mười hơi thở. Chị đã làm việc này giữa một phòng cấp cứu có tám cái giường kín người và một ông say rượu đang vung ghế, thì chẳng có lý do gì chị lại không làm được giữa một sườn dốc.</p>
+<p>"Ngồi yên," chị nói. "Còn ba vòng nữa."</p><div class="gact wrap" role="button" tabindex="0" aria-label="Chạm để quấn băng từng vòng"><div class="wr-stage"><canvas class="wr-cv" aria-hidden="true"></canvas><span class="wr-n" aria-live="polite">còn 3 vòng</span></div><p class="gact-hint">chạm để quấn một vòng</p></div>
+<p>Chị quấn vòng thứ ba.</p>
+<p class="throb">Tiếng chân lệt sệt đã xuống tới chân dốc. Chị nghe thấy rõ hơn, gần hơn, cái tiếng bàn chân trần kéo lê trên lớp bụi xám. Tim chị đập thình thịch trong lồng ngực, nhanh, mạnh, chị chẳng cần nhìn cũng đếm được. Còn mạch ở cổ chân người ấy thì vẫn đều. Vẫn chậm. Vẫn như tiếng kim đồng hồ.</p>
+<p class="hit">Rồi bắp chân trước mặt chị rút đi.</p>
+<p>Nó rút ra khỏi vòng băng đang quấn dở, nhẹ nhàng, chẳng giật chẳng vội, như người ta rút chân ra khỏi một chiếc dép. Đoạn băng chưa gài mất chỗ bám, tuột xuống, vắt qua hòn đá rồi buông thõng xuống đất. Mira vẫn quỳ đó, tay còn cầm cuộn băng, ngón cái còn đặt ở chỗ định quấn vòng thứ tư.</p>
+<p>Chị nhìn thấy một bàn chân đặt xuống lớp bụi xám ngay cạnh đầu gối chị. Đế giày có khía.</p>
+<p>Rồi bước thứ hai. Bước thứ ba.</p>
+<p>Chị không ngẩng lên. Tám năm rồi chị không nhìn mặt người bệnh lúc làm, và chị nhận ra mình chẳng muốn bắt đầu vào lúc này. Chị chỉ nghe thấy những bước chân ấy xa dần. Không chạy. Không vấp. Đều đặn như một người đi bộ buổi sáng, từng bước, từng bước, cách nhau đúng một sải chân, rồi lẫn vào tiếng chân lệt sệt đang tràn xuống từ khắp sườn dốc.</p>
+<p>Người ấy đi được, chạy được, chỉ đau một chút. Chính chị đã nhìn thấy thế.</p></section>
+<div class="break" aria-hidden="true"></div>
+<section class="scene" data-sound="dust"><figure class="plate"><canvas class="art" data-art="tail" role="img" aria-label="Đoạn băng trắng vắt qua hòn đá rồi buông xuống đất, đầu băng lay trong gió, bụi xám cuốn ngang"></canvas></figure><p>Có một lúc, chị nghĩ mình vẫn còn kịp đứng dậy.</p>
+<p data-fx="scratch">Rồi một cái gì đó cắm vào đùi chị từ phía sau, lạnh, sắc, và kéo. Chị ngã sang một bên. Lưng chị đập vào chân đụn đá, và mặt đất nghiêng đi. Có những bóng người đứng quanh chị, đầu nghiêng, chân trần lấm bụi. Chị nằm im. Chị không biết vì sao chúng buông. Có lẽ vì chị đã thôi cựa quậy. Có lẽ vì chúng chẳng cần gì ở chị nữa. Những bàn chân lệt sệt bước qua chị, bước tiếp, xa dần, cũng như những bước chân kia.</p>
+<p>Rồi sườn dốc lại im.</p>
+<p>Mira không nhìn thấy vết thương của mình. Chị chưa bao giờ nhìn thấu được chính mình. Nhưng chị không cần nhìn. Chị biết cái ấm đang loang ra dưới người chị là gì, nó loang nhanh thế nào, và nó bắt đầu từ chỗ nào. Chỗ ấy sát bẹn, cao quá, chẳng có cái garô nào buộc nổi. Phải có một người ép thật chặt bằng cả hai tay, đè cả sức nặng của mình lên, trong mười phút, hai mươi phút, cho tới khi có người tới. Chị đã làm việc ấy cho người khác. Lúc này chẳng có ai làm cho chị.</p>
+<p>Chị đặt hai ngón tay lên cổ tay mình, như đặt lên cổ tay một người bệnh.</p>
+<p class="throb">Mạch nhanh. Nhỏ. Nhỏ dần.</p>
+<p>Chị nghĩ tới người đàn ông ở cổng bệnh viện năm chị hai mươi ba tuổi. Hôm ấy chị vừa hết ca, đang đứng đợi xe buýt, thì chiếc xe máy ấy lao vào cột điện ngay trước mặt chị. Chị đứng đó. Chị đã học, đã thi, đã thực tập, đã biết hết phải làm gì, mà chị vẫn đứng đó, hai tay cầm quai túi, chân như chôn xuống vỉa hè, có khi chỉ mười giây, có khi nửa phút, chị chẳng bao giờ biết chắc. Khi chị chạy tới được thì máu đã loang ra cả một mảng đường. Từ đó, chưa bao giờ chị đứng nhìn ai chảy máu nữa. Thấy máu là chị quỳ xuống. Chẳng cần nghĩ.</p>
+<p>Sáng nay chị cũng chẳng nghĩ.</p>
+<p>Cuộn băng vẫn nằm trong lòng bàn tay chị, mát lạnh. Chị nắm lại. Ngón tay chị không còn nghe lời lắm, nên chỉ nắm hờ được thôi. Chị nhìn đoạn băng vắt qua hòn đá, cái đoạn đáng lẽ đã thành hai vòng nữa quanh một bắp chân, và chị thấy tiếc, một nỗi tiếc rất nghề nghiệp, rất vụn vặt. Băng mà chưa gài đầu thì sớm muộn gì cũng tuột. Chị biết thế. Thế mà vẫn để tuột.</p>
+<p>Ở khoa, người ta khỏi thì người ta về. Chẳng mấy ai quay lại cảm ơn. Chị chưa bao giờ trách ai chuyện đó.</p>
+<p data-fx="darkend">Gió thổi qua sườn dốc, cuốn theo một làn bụi xám. Đầu đoạn băng khẽ lay động.</p>
+<p>Lần này chị không đứng nhìn, chị nghĩ. Chị đã quỳ xuống ngay.</p>
+<p class="flat">Rồi chị thôi đếm.</p></section></div>
 <div class="pv-text" data-id="ch12-talia" hidden><p class="rh">Chương 12 · Góc nhìn của Talia</p><h2>Đếm vết nứt</h2><section class="scene" data-sound="mine"><figure class="plate"><canvas class="art" data-art="shed" role="img" aria-label="Cái lán lợp tôn dưới chân đồi lúc trời còn tối, đống tro còn đỏ, gói lá chuối có mấy củ khoai, đòn gánh gác ngang hai sọt đá, miệng hầm đen trên sườn núi"></canvas></figure><p>Mấy củ khoai ấy Talia phải gánh đá mới có.</p>
 <p>Lúc trời còn tối, ở cái lán lợp tôn dưới chân đồi, có một bà già áo nâu ngồi lùi khoai trong đống tro, bên cạnh là hai sọt đá chưa ai gánh. Chị chẳng hỏi han gì. Chị đặt đòn gánh lên vai, gánh hai sọt đá lên tận đỉnh dốc, đổ xuống, rồi quay lại gánh tiếp, cho tới khi bà già đứng dậy, bới trong đống tro ra mấy củ khoai đen nhẻm, gói vào một mảnh lá chuối, dúi vào tay chị. Không cảm ơn. Không nói câu nào. Talia thấy thế là sòng phẳng. Từ lúc tỉnh dậy ở cái làng này, chị đã hiểu ra một điều, rằng ở đây chẳng ai cho không ai cái gì, người hay ma cũng vậy, và chị thấy dễ chịu với điều đó hơn chị tưởng. Làm thì được trả. Không làm thì thôi. Chẳng ai phải nợ ai.</p>
 <p>Lão già ngoài cổng hầm cầm mấy củ khoai, ngửi một cái, rồi đứng dậy mở khoá.</p>
@@ -1015,6 +1085,7 @@ body > main{position:relative;z-index:1}
   </section>
   <div class="lkedge" id="lkedge" aria-hidden="true"><svg width="16"></svg></div>
   <div class="tkedge" id="tkedge" aria-hidden="true"><svg width="16" height="100%" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="m" pathLength="1" d="M8 0"/><g></g></svg></div>
+  <div class="vnedge" id="vnedge" aria-hidden="true"><svg width="16" height="100%" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="m" pathLength="1" d="M8 0"/></svg></div>
   <div class="thread" id="thread" aria-hidden="true"><svg width="14" height="100%" viewBox="0 0 14 1000" preserveAspectRatio="none"><path pathLength="1" d="M7 0C9 120 4 240 7 360S10 600 6 760 8 920 7 1000"/></svg></div>
 </main>
 <script>
@@ -1046,6 +1117,9 @@ body > main{position:relative;z-index:1}
     stone:function(i){if(!ctx())return;var t=ac.currentTime;noise(t,.03,1500+i*120,4,.08);tone(t,620+i*25,.06,.02,'triangle')},
     pass:function(){if(!ctx())return;var t=ac.currentTime;[0,.42,.9].forEach(function(d){noise(t+d,.22,520,1.4,.05,380)})},
     pick:function(){if(!ctx())return;var t=ac.currentTime;[0,.75,1.3,1.85].forEach(function(d,i){noise(t+d,.04,2600,4,i?.12:.08);tone(t+d,1240,.09,i?.03:.02,'triangle');tone(t+d+.004,2480,.05,.01,'sine')})},
+    shuf:function(v){if(!ctx())return;var t=ac.currentTime;[0,.38,.8].forEach(function(d){noise(t+d,.26,460,1.3,v||.04,340)})},
+    gauze:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.5,2600,.9,.05,1500);noise(t+.45,.05,3200,3,.03)},
+    slip:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.35,1800,.8,.06,700);noise(t+.32,.25,900,.8,.035,500)},
     locked:function(){if(!ctx())return;var t=ac.currentTime;noise(t,.05,3200,3,.12);noise(t+.09,.05,2800,3,.1);tone(t,1480,.05,.03,'square')}};
 
   var cards=[].slice.call(document.querySelectorAll('.pc')),open=0;
@@ -1187,10 +1261,70 @@ body > main{position:relative;z-index:1}
     st.addEventListener('pointerdown',function(e){ctx();hitAt(e)});
     st.addEventListener('contextmenu',function(e){e.preventDefault()});
     a.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();if(done)return;while(kb<N&&C[kb].t)kb++;count(kb,performance.now())}}});
+  /* nét riêng Mira: một mạch máu đỏ mảnh dọc mép trái, dài dần theo chỗ đang đọc, đập đều; đoạn có chữ "mạch" thì đập mạnh một nhịp kèm tiếng tách;
+     tới "Rồi chị thôi đếm." thì thôi đập */
+  var vne=document.getElementById('vnedge'),vnp=vne.querySelector('path.m');
+  (function(){var d='M8 0',y=0,k=1;while(y<1000){y+=22+Math.abs(Math.sin(k*2.9))*24;d+=' L'+(8+Math.sin(k*1.7)*2.6+Math.sin(k*.5)*1.4).toFixed(1)+' '+Math.min(1000,y).toFixed(0);k++}vnp.setAttribute('d',d)})();
+  addEventListener('scroll',function(){if(!reader.hidden&&reader.classList.contains('n-mira'))vnp.style.strokeDashoffset=String(1-tkP)},{passive:true});
+  if('IntersectionObserver' in window){var io6=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting||e.target._v)return;var el=e.target;el._v=1;el.classList.add('lit');if(reader.hidden||!reader.classList.contains('n-mira'))return;
+      vne.classList.remove('thb');void vne.offsetWidth;vne.classList.add('thb');SND.tick(.05)})},{rootMargin:'0px 0px -35% 0px'});
+    [].forEach.call(document.querySelectorAll('.pv-text p.throb'),function(p){io6.observe(p)});
+    /* đoạn cuối bài nằm sát đáy trang nên chỉ cần hiện trọn là đủ */
+    var io8=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!reader.hidden&&reader.classList.contains('n-mira'))vne.classList.add('still')})},{threshold:.9});
+    [].forEach.call(document.querySelectorAll('.pv-text p.flat'),function(p){io8.observe(p)})}
+  /* quấn băng: hai vòng có sẵn; người đọc quấn vòng ba; vòng bốn đang quấn dở thì bắp chân rút đi, băng tuột */
+  [].forEach.call(document.querySelectorAll('.gact.wrap'),function(a){
+    var cv=a.querySelector('.wr-cv'),g=cv.getContext('2d'),st=a.querySelector('.wr-stage'),hint=a.querySelector('.gact-hint'),num=a.querySelector('.wr-n'),
+      W=0,H=0,run=0,bands=2,anim=null,gone=0,goneAt=0,first=0,nextBeat=0,beats=0,nextShuf=0,shufV=.025,press=0,last=0,sx=null;
+    function fit(){var d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*d);cv.height=Math.round(H*d);g.setTransform(d,0,0,d,0,0)}
+    function css(n,f){return getComputedStyle(a).getPropertyValue(n).trim()||f}
+    function ease(u){return u<0?0:u>1?1:1-Math.pow(1-u,3)}
+    function go(){if(gone||anim)return;ctx();var now=performance.now();if(!first){first=now;nextBeat=now+300;nextShuf=now+900}
+      anim={i:bands,t:now};SND.gauze();hint.textContent='quấn…';
+      if(bands>=3)setTimeout(function(){gone=1;goneAt=performance.now();anim=null;SND.slip();num.textContent='';hint.textContent='bắp chân rút đi';a.classList.add('done','used');
+        setTimeout(function(){var h=a.parentNode.querySelector('p.hit');if(h)h.classList.add('lit')},RED?0:1600)},RED?0:330)}
+    function band(cx,lw,y,bh,u,col,a2){if(u<=0)return;var x0=cx-lw*.6,L=lw*1.2,x1=x0+L*u,sk=bh*.3,bow=bh*.35,n=16,i,xx,top=[],bot=[];
+      for(i=0;i<=n;i++){xx=x0+(x1-x0)*i/n;var v=(xx-x0)/L,yy=y+sk-sk*2*v+Math.sin(v*Math.PI)*bow;top.push([xx,yy]);bot.push([xx,yy+bh])}
+      g.globalAlpha=a2;g.fillStyle=col;g.beginPath();top.forEach(function(q,j){j?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1])});for(i=n;i>=0;i--)g.lineTo(bot[i][0],bot[i][1]);g.closePath();g.fill();
+      var sh=g.createLinearGradient(x0,0,x0+L,0);sh.addColorStop(0,'rgba(0,0,0,.45)');sh.addColorStop(.3,'rgba(0,0,0,0)');sh.addColorStop(.75,'rgba(0,0,0,0)');sh.addColorStop(1,'rgba(0,0,0,.5)');g.fillStyle=sh;g.fill();
+      g.globalAlpha=a2*.5;g.strokeStyle='rgba(120,110,95,1)';g.lineWidth=1;g.beginPath();bot.forEach(function(q,j){j?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1])});g.stroke();g.globalAlpha=1}
+    function frame(now){if(!W)fit();var dt=Math.min(.05,(now-(last||now))/1000);last=now;g.clearRect(0,0,W,H);
+      var red=css('--vn','#E2566C'),gz='#ece8dc',bg=g.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.7);bg.addColorStop(0,'#2a1c1e');bg.addColorStop(1,'#0e0b0c');g.fillStyle=bg;g.fillRect(0,0,W,H);
+      var cx=W*.5,lw=Math.min(W*.24,96),off=gone?-ease((now-goneAt)/1100)*H*1.5:0,bh=H*.12;
+      /* nhịp mạch của người ấy: đều, không nhanh lên; bắp chân rút đi thì tiếng tách xa dần rồi tắt */
+      var per=1100;if(first&&now>=nextBeat){nextBeat+=per;beats++;var v=gone?Math.max(0,.05-(now-goneAt)/5000*.05):.05;if(v>.004)SND.tick(v)}
+      var beat=first?Math.pow(Math.max(0,1-((now-(nextBeat-per))/per)*4),2):.4*Math.pow(Math.max(0,Math.sin(now/per*Math.PI)),8);
+      if(first&&!gone&&now>=nextShuf){nextShuf=now+2300;shufV=Math.min(.09,shufV+.012);SND.shuf(shufV)}
+      if(first&&!gone)press=Math.min(1,press+dt*.08);else if(gone)press=Math.max(0,press-dt*.12);
+      if(off>-H*1.4){g.save();g.translate(0,off);
+        /* da mỏng như giấy dầu: một dải mờ; xương trắng đục; mạch đỏ */
+        var sk=g.createLinearGradient(cx-lw/2,0,cx+lw/2,0);sk.addColorStop(0,'rgba(240,200,190,0)');sk.addColorStop(.2,'rgba(240,200,190,.08)');sk.addColorStop(.8,'rgba(240,200,190,.08)');sk.addColorStop(1,'rgba(240,200,190,0)');g.fillStyle=sk;g.fillRect(cx-lw/2,-10,lw,H+20);
+        g.strokeStyle='rgba(235,228,210,.28)';g.lineWidth=lw*.13;g.lineCap='round';g.beginPath();g.moveTo(cx-lw*.12,-10);g.quadraticCurveTo(cx-lw*.08,H*.5,cx-lw*.14,H+10);g.stroke();
+        g.strokeStyle=red;g.shadowColor=red;g.shadowBlur=4+8*beat;g.globalAlpha=.55+.4*beat;g.lineWidth=2+1.2*beat;g.beginPath();g.moveTo(cx+lw*.1,-10);g.bezierCurveTo(cx+lw*.2,H*.3,cx+lw*.02,H*.6,cx+lw*.14,H+10);g.stroke();
+        g.lineWidth=1+.6*beat;[[.2,-1],[.45,1],[.7,-1],[.85,1]].forEach(function(b){var y=H*b[0];g.beginPath();g.moveTo(cx+lw*.12,y);g.quadraticCurveTo(cx+lw*(.12+b[1]*.18),y+H*.05,cx+lw*(.12+b[1]*.36),y+H*.12);g.stroke()});
+        g.shadowBlur=0;g.globalAlpha=1;
+        /* vết rách chéo */
+        g.strokeStyle='#7a1f24';g.lineWidth=Math.max(3,lw*.07);g.beginPath();g.moveTo(cx-lw*.36,H*.3);g.quadraticCurveTo(cx,H*.45,cx+lw*.3,H*.64);g.stroke();
+        g.strokeStyle='rgba(255,120,120,.25)';g.lineWidth=1;g.beginPath();g.moveTo(cx-lw*.34,H*.29);g.quadraticCurveTo(cx,H*.44,cx+lw*.31,H*.62);g.stroke();
+        if(!gone)for(var i=0;i<bands;i++)band(cx,lw,H*.8-i*bh*.72,bh,1,gz,.95);
+        if(anim){var u=ease((now-anim.t)/600);band(cx,lw,H*.8-anim.i*bh*.72,bh,anim.i>=3?Math.min(u,.42):u,gz,.95);if(u>=1&&anim.i<3){bands++;anim=null;num.textContent='còn '+(5-bands)+' vòng';hint.textContent=bands<3?'chạm để quấn một vòng':'chạm để quấn tiếp'}}
+        g.restore()}
+      /* băng tuột: rơi xuống, vắt ngang đáy khung, đầu băng lay */
+      if(gone){var du=(now-goneAt)/700;if(du<1)for(var j=0;j<=bands;j++)band(cx,lw,H*.8-j*bh*.72+du*du*H*.35,bh,j<bands?1:.42,gz,.95*(1-du));var fu=ease((now-goneAt-250)/900);if(fu>0){g.strokeStyle=gz;g.globalAlpha=.9*fu;g.lineWidth=Math.max(5,H*.05);g.lineCap='round';g.beginPath();g.moveTo(cx+lw*.4,H*.98);g.quadraticCurveTo(cx,H*(.98-.12*fu),cx-lw*.5,H*.86+(1-fu)*H*.1);
+        for(var q=1;q<=12;q++){var uu=q/12;g.lineTo(cx-lw*.5-uu*W*.22,H*.86+uu*H*.08+Math.sin(now/380-uu*6)*H*.03*uu)}g.stroke();g.globalAlpha=1}}
+      /* tiếng chân tới gần: mép trên tối dần */
+      if(press>.01){var tg=g.createLinearGradient(0,0,0,H*.7);tg.addColorStop(0,'rgba(0,0,0,'+(.9*press).toFixed(3)+')');tg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=tg;g.fillRect(0,0,W,H*.7)}
+      if(run)requestAnimationFrame(frame)}
+    var io7='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!run){run=1;last=0;fit();requestAnimationFrame(frame)}else if(!e.isIntersecting)run=0})}):null;
+    if(io7)io7.observe(a);else{run=1;requestAnimationFrame(frame)}
+    addEventListener('resize',function(){W=0});
+    st.addEventListener('pointerdown',function(e){sx=e.clientX;go()});
+    st.addEventListener('contextmenu',function(e){e.preventDefault()});
+    a.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
   function show(id,jump){var c=document.querySelector('.pc[data-id="'+id+'"]');if(!c||c.classList.contains('locked'))return false;
     [].forEach.call(document.querySelectorAll('.pv-text'),function(a){a.hidden=a.getAttribute('data-id')!==id});
     reader.hidden=false;reader.className='reader '+c.getAttribute('data-who')+' n-'+c.getAttribute('data-name');list.hidden=true;
-    thr.classList.add('on');lke.classList.add('on');tke.classList.add('on');LK=[];setTimeout(function(){dispatchEvent(new Event('resize'));dispatchEvent(new Event('scroll'));readScroll()},30);
+    thr.classList.add('on');lke.classList.add('on');tke.classList.add('on');vne.classList.add('on');vne.classList.remove('still');LK=[];setTimeout(function(){dispatchEvent(new Event('resize'));dispatchEvent(new Event('scroll'));readScroll()},30);
     document.getElementById('back').href='ch'+String(c.getAttribute('data-ch')).padStart(2,'0')+'.html';
     document.getElementById('back').textContent='Về chương '+c.getAttribute('data-ch');
     if(history.replaceState)history.replaceState(null,'','#'+id);
@@ -1201,7 +1335,7 @@ body > main{position:relative;z-index:1}
   cards.forEach(function(c){c.onclick=function(){
     if(c.classList.contains('locked')){c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');SND.locked();return}
     var id=c.getAttribute('data-id');if(c.classList.contains('new'))flip(c,function(){show(id)});else show(id)}});
-  document.getElementById('tolist').onclick=function(e){e.preventDefault();reader.hidden=true;list.hidden=false;thr.classList.remove('on');lke.classList.remove('on');tke.classList.remove('on');setTimeout(function(){dispatchEvent(new Event('scroll'))},30);if(history.replaceState)history.replaceState(null,'',location.pathname);scrollTo(0,0)};
+  document.getElementById('tolist').onclick=function(e){e.preventDefault();reader.hidden=true;list.hidden=false;thr.classList.remove('on');lke.classList.remove('on');tke.classList.remove('on');vne.classList.remove('on');setTimeout(function(){dispatchEvent(new Event('scroll'))},30);if(history.replaceState)history.replaceState(null,'',location.pathname);scrollTo(0,0)};
   /* tới từ thẻ cuối chương: gocnhin.html#ch01-luke -> lật rồi mở luôn */
   var h=decodeURIComponent(location.hash.slice(1));
   if(h){var c=document.querySelector('.pc[data-id="'+h+'"]');if(c&&!c.classList.contains('locked')){mark(h);c.classList.remove('new');c.classList.add('seen');c.querySelector('.tx').textContent='';show(h,true)}}
@@ -3301,6 +3435,111 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     vign(g, w, h, 0.65);
   };
 
+  /* ---------- Góc nhìn khác ch11, Mira "Còn ba vòng" (24/11). Không vẽ người, không vẽ người bỏ đi. ---------- */
+  // Lối mòn dưới chân dốc buổi sáng: sọt đá đặt bên đường, quai sọt buộc một mảnh vải trắng thắt nút dẹt,
+  // vài giọt máu khô trên đá; trên cao dân gánh đá chỉ là những vệt nhỏ.
+  ART.knot = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.5; mineLand(g, w, h, t, R, hz);
+    g.fillStyle = dk ? '#33332e' : '#a8a498'; g.beginPath(); g.moveTo(0, h * 0.62); g.quadraticCurveTo(w * 0.45, h * 0.4, w, h * 0.46); g.lineTo(w, h); g.lineTo(0, h); g.fill(); // dốc
+    // lối mòn
+    g.strokeStyle = rgba(dk ? '#55554c' : '#d6d1c2', 0.7); g.lineWidth = Math.max(6, h * 0.04); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(-w * 0.05, h * 0.98); g.quadraticCurveTo(w * 0.5, h * 0.7, w * 0.95, h * 0.5); g.stroke();
+    // trên dốc: đòn gánh nhấp nhô xa xa (chỉ là vệt), bụi
+    for (var p = 0; p < 4; p++) { var u = ((t * 0.02 + p / 4) % 1), px = w * (0.5 + u * 0.45), py = h * (0.66 - u * 0.17) - Math.abs(Math.sin(t * 2 + p)) * 2; g.strokeStyle = rgba(dk ? '#1a1916' : '#6a5e4a', 0.6); g.lineWidth = 1.5; g.beginPath(); g.moveTo(px - w * 0.012, py); g.lineTo(px + w * 0.012, py); g.stroke(); }
+    // sọt đá
+    var cx = w * 0.42, cy = h * 0.9, cw = w * 0.1, ch = h * 0.15;
+    g.fillStyle = dk ? '#3d3122' : '#8a7148'; g.beginPath(); g.moveTo(cx - cw, cy - ch); g.lineTo(cx + cw, cy - ch); g.lineTo(cx + cw * 0.8, cy); g.lineTo(cx - cw * 0.8, cy); g.fill();
+    g.strokeStyle = rgba('#000000', 0.3); g.lineWidth = 1; for (var q = 1; q < 6; q++) { g.beginPath(); g.moveTo(cx - cw + q * cw / 3, cy - ch); g.lineTo(cx - cw * 0.8 + q * cw * 0.8 / 3, cy); g.stroke(); }
+    for (var r = 0; r < 8; r++) rock(g, cx - cw * 0.8 + R[r + 30] * cw * 1.6, cy - ch - R[r + 50] * h * 0.025, 4 + R[r + 70] * 6, R, r, dk ? '#4a4a48' : '#8a867c');
+    // quai sọt + mảnh vải trắng thắt nút dẹt, hai đầu vải lay
+    g.strokeStyle = dk ? '#5a4632' : '#6e5236'; g.lineWidth = Math.max(2, w * 0.004);
+    g.beginPath(); g.moveTo(cx - cw * 0.9, cy - ch); g.quadraticCurveTo(cx, cy - ch * 2.1, cx + cw * 0.9, cy - ch); g.stroke();
+    var kx = cx + cw * 0.38, ky = cy - ch * 1.68, cl = dk ? '#d8d4c8' : '#f6f3ea';
+    g.fillStyle = cl; g.beginPath(); g.ellipse(kx, ky, w * 0.014, h * 0.012, 0.3, 0, 7); g.fill();
+    g.strokeStyle = cl; g.lineWidth = Math.max(2.5, h * 0.014);
+    [[-1, 0], [1, 0.8]].forEach(function (s) { g.beginPath(); g.moveTo(kx, ky); for (var i = 1; i <= 6; i++) { var u = i / 6; g.lineTo(kx + s[0] * u * w * 0.012 + u * w * 0.015, ky + u * h * 0.07 + Math.sin(t * 2.4 + s[1] - u * 4) * h * 0.008 * u); } g.stroke(); });
+    // mấy giọt máu khô cạnh sọt
+    g.fillStyle = dk ? '#4a1e1e' : '#7a2a28'; [[0.56, 0.93], [0.585, 0.95], [0.6, 0.925]].forEach(function (d) { g.beginPath(); g.ellipse(w * d[0], h * d[1], w * 0.005, h * 0.004, 0, 0, 7); g.fill(); });
+    dust(g, w, h, t, R, hz, 14);
+    vign(g, w, h, 0.45);
+  };
+  // Hòn đá cạnh đụn đá vụn: vệt máu quệt dài trên mặt đá, một tấm thẻ đang sáng dần thành cuộn băng trắng tháo dở một vòng;
+  // một nhịp mạch đỏ mảnh chạy đều qua khung tranh như đường điện tim, đều như kim đồng hồ.
+  ART.stonecut = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.4; mineLand(g, w, h, t, R, hz);
+    rubble(g, w * 0.7, h * 0.84, w * 0.7, h * 0.5, dk ? '#2a2a26' : '#96928a');
+    // hòn đá + vệt máu
+    g.fillStyle = dk ? '#3a3a35' : '#aaa69c'; g.beginPath(); g.ellipse(w * 0.4, h * 0.78, w * 0.14, h * 0.07, -0.08, 0, 7); g.fill();
+    g.fillStyle = rgba('#ffffff', dk ? 0.05 : 0.15); g.beginPath(); g.ellipse(w * 0.38, h * 0.755, w * 0.1, h * 0.03, -0.08, 0, 7); g.fill();
+    g.strokeStyle = dk ? '#5a1f1f' : '#7a2a28'; g.lineWidth = Math.max(3, h * 0.014); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(w * 0.31, h * 0.76); g.quadraticCurveTo(w * 0.4, h * 0.735, w * 0.48, h * 0.755); g.stroke();
+    g.fillStyle = dk ? '#5a1f1f' : '#7a2a28'; [[0.47, 0.82], [0.48, 0.86], [0.465, 0.9]].forEach(function (d, i) { g.beginPath(); g.ellipse(w * d[0], h * d[1], w * (0.006 - i * 0.001), h * 0.005, 0, 0, 7); g.fill(); });
+    // cuộn băng trắng trên đất, một đoạn đã tháo ra
+    var bx = w * 0.18, by = h * 0.9, cl = dk ? '#d8d4c8' : '#f6f3ea';
+    g.fillStyle = cl; g.beginPath(); g.ellipse(bx, by, w * 0.035, h * 0.03, 0, 0, 7); g.fill();
+    g.fillStyle = rgba('#000000', 0.15); g.beginPath(); g.ellipse(bx, by, w * 0.012, h * 0.01, 0, 0, 7); g.fill();
+    g.strokeStyle = cl; g.lineWidth = Math.max(3, h * 0.02);
+    g.beginPath(); g.moveTo(bx + w * 0.03, by); g.quadraticCurveTo(w * 0.27, h * 0.92, w * 0.3, h * 0.84); g.stroke();
+    glow(g, bx, by, w * 0.08, '#cfe8ff', (dk ? 0.18 : 0.12) * (0.7 + 0.3 * Math.sin(t * 1.3)));
+    // nhịp mạch đỏ mảnh chạy qua khung: đều, không nhanh lên
+    var per = 1.15, ph = (t % per) / per, y0 = h * 0.22;
+    g.strokeStyle = rgba(dk ? '#E2566C' : '#B3263A', dk ? 0.55 : 0.45); g.lineWidth = Math.max(1, w / 600); g.shadowColor = rgba('#E2566C', 0.6); g.shadowBlur = 5;
+    g.beginPath();
+    for (var x = 0; x <= w; x += 2) { var u = x / w, k = (u * 3 - ph + 3) % 1, y = y0; if (k > 0.42 && k < 0.5) y -= Math.sin((k - 0.42) / 0.08 * Math.PI) * h * 0.06; else if (k > 0.5 && k < 0.55) y += Math.sin((k - 0.5) / 0.05 * Math.PI) * h * 0.02; x ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.stroke(); g.shadowBlur = 0;
+    dust(g, w, h, t, R, hz, 12);
+    vign(g, w, h, 0.5);
+  };
+  // Sườn dốc vừa im: sọt đá, đòn gánh đặt xuống ngay ngắn bên đường, không ai gánh; bụi lắng dần;
+  // một hàng vết giày đế khía đi đều ra lối mòn, mờ dần, lẫn vào những vết chân trần.
+  ART.baskets = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.45; mineLand(g, w, h, t, R, hz);
+    g.fillStyle = dk ? '#33332e' : '#a8a498'; g.beginPath(); g.moveTo(0, h * 0.5); g.quadraticCurveTo(w * 0.5, h * 0.3, w, h * 0.42); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    g.fillStyle = rgba('#000000', dk ? 0.25 : 0.08); g.fillRect(0, 0, w, h); // trời như tối đi một chút
+    // sọt và đòn gánh đặt xuống, thưa dần lên dốc
+    for (var i = 0; i < 6; i++) {
+      var u = i / 5, cx = w * (0.12 + u * 0.78), cy = h * (0.82 - u * 0.36), s = 1 - u * 0.6, cw = w * 0.045 * s, ch = h * 0.06 * s;
+      g.fillStyle = dk ? '#3d3122' : '#8a7148';
+      [-1, 1].forEach(function (d) { var x = cx + d * cw * 1.6; g.beginPath(); g.moveTo(x - cw, cy - ch); g.lineTo(x + cw, cy - ch); g.lineTo(x + cw * 0.8, cy); g.lineTo(x - cw * 0.8, cy); g.fill(); });
+      g.strokeStyle = dk ? '#5a4632' : '#6e5236'; g.lineWidth = Math.max(1.5, w * 0.005 * s); g.lineCap = 'round';
+      g.beginPath(); g.moveTo(cx - cw * 2.8, cy + h * 0.01 * s); g.lineTo(cx + cw * 2.8, cy + h * 0.006 * s); g.stroke();
+    }
+    // vết chân trần lốm đốm xuống dốc
+    g.fillStyle = rgba('#000000', dk ? 0.22 : 0.1);
+    for (var f = 0; f < 26; f++) { g.beginPath(); g.ellipse(R[f + 100] * w, h * (0.55 + R[f + 140] * 0.42), w * 0.006, h * 0.006, R[f] * 3, 0, 7); g.fill(); }
+    // vết giày đế khía: đều nhau, cách nhau đúng một sải, đi ra phía phải và mờ dần (hiện từng vết theo nhịp)
+    var shown = Math.floor((t * 0.9) % 14);
+    for (var k = 0; k < 10; k++) {
+      if (k > shown) break;
+      var v = k / 9, fx = w * (0.16 + v * 0.7), fy = h * (0.93 - v * 0.2) + (k % 2 ? 1 : -1) * h * 0.012, sc = 1 - v * 0.5, a = (dk ? 0.5 : 0.3) * (1 - v * 0.75);
+      g.save(); g.translate(fx, fy); g.rotate(-0.25); g.fillStyle = rgba('#000000', a); g.beginPath(); g.ellipse(0, 0, w * 0.016 * sc, h * 0.011 * sc, 0, 0, 7); g.fill();
+      g.strokeStyle = rgba(dk ? '#6a6a60' : '#d8d3c4', a * 0.9); g.lineWidth = 1; for (var z = -2; z <= 2; z++) { g.beginPath(); g.moveTo(z * w * 0.005 * sc, -h * 0.008 * sc); g.lineTo(z * w * 0.005 * sc, h * 0.008 * sc); g.stroke(); }
+      g.restore();
+    }
+    dust(g, w, h, t * 0.4, R, hz, 8);
+    vign(g, w, h, 0.55);
+  };
+  // Sau cùng: hòn đá, đoạn băng trắng vắt qua rồi buông xuống đất, đầu băng lay trong gió; bụi xám cuốn ngang;
+  // một nhịp mạch đỏ mảnh ở góc, mỗi lúc một thưa, một nhỏ.
+  ART.tail = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.42; mineLand(g, w, h, t, R, hz);
+    rubble(g, w * 0.66, h * 0.88, w * 0.8, h * 0.52, dk ? '#2a2a26' : '#96928a');
+    g.fillStyle = dk ? '#3a3a35' : '#aaa69c'; g.beginPath(); g.ellipse(w * 0.36, h * 0.8, w * 0.11, h * 0.055, -0.1, 0, 7); g.fill();
+    g.strokeStyle = dk ? '#4a1e1e' : '#7a2a28'; g.lineWidth = Math.max(2.5, h * 0.012); g.lineCap = 'round';
+    g.beginPath(); g.moveTo(w * 0.3, h * 0.78); g.quadraticCurveTo(w * 0.36, h * 0.765, w * 0.42, h * 0.78); g.stroke();
+    var bw = Math.max(3, h * 0.022); g.strokeStyle = dk ? '#d8d4c8' : '#f6f3ea'; g.lineWidth = bw;
+    g.beginPath(); g.moveTo(w * 0.5, h * 0.92); g.quadraticCurveTo(w * 0.44, h * 0.76, w * 0.38, h * 0.78);
+    for (var i = 1; i <= 14; i++) { var u = i / 14, x = w * (0.38 - u * 0.22), y = h * (0.78 + u * 0.1) + Math.sin(t * 2.6 - u * 6) * h * 0.03 * u + Math.sin(t * 6 - u * 9) * h * 0.006 * u; g.lineTo(x, y); }
+    g.stroke();
+    // nhịp mạch thưa dần (chu kỳ 16 giây: đập nhanh, nhỏ dần, lặng, rồi lại)
+    var cyc = t % 16, y0 = h * 0.18, x0 = w * 0.62, x1 = w * 0.94;
+    g.strokeStyle = rgba(dk ? '#E2566C' : '#B3263A', dk ? 0.5 : 0.4); g.lineWidth = Math.max(1, w / 650); g.beginPath();
+    for (var x = x0; x <= x1; x += 2) { var uu = (x - x0) / (x1 - x0), tt = cyc - (1 - uu) * 2, y = y0; if (tt > 0 && tt < 12) { var per = 0.45, k = (tt % per) / per, amp = h * 0.05 * Math.max(0, 1 - tt / 12); if (k < 0.2) y -= Math.sin(k / 0.2 * Math.PI) * amp; } x === x0 ? g.moveTo(x, y) : g.lineTo(x, y); }
+    g.stroke();
+    dust(g, w, h, t, R, hz, 20);
+    vign(g, w, h, 0.6);
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
@@ -3367,7 +3606,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
        water  = mặt nước gợn tràn qua trang (nhìn từ dưới nước lên)
        door   = khung cửa sáng lên từng nét giữa trang
        dome   = vòm sáng mờ bung ra bọc lấy trang
-       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop soothe blink (soothe/blink: Góc nhìn khác ch05, tay bà Mabel làm dịu và Felix chớp mắt đổi chỗ; xích cứu người của Leon: thép như xích tấn công, vòng lỏng ôm lấy giữa trang, nhấc lên rồi đặt xuống; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
+       và các kiểu trong MORE: dapple shake darkend unlock rain typing whiteout ripple frost hush flare dawn wind scratch thud heal heat tally ribbon creep rescue rescuehold rescuedrop soothe blink vein (vein: Góc nhìn khác ch11, Mira nhìn thấu mạch máu; soothe/blink: Góc nhìn khác ch05, tay bà Mabel làm dịu và Felix chớp mắt đổi chỗ; xích cứu người của Leon: thép như xích tấn công, vòng lỏng ôm lấy giữa trang, nhấc lên rồi đặt xuống; hold = kéo không nổi, drop = người được cứu tự gỡ ra)
        flicker = từ đoạn này tới hết chương, trang tối theo nhịp lửa chao
      - body[data-open="dark"]: mở chương trong bóng tối, sáng lại dần. */
   (function () {
@@ -3786,6 +4025,28 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       [[0.33, -1], [1.13, 1]].forEach(function (s) { var u = (t - s[0]) / 0.6; if (u < 0 || u > 1) return; var x0 = W / 2 - s[1] * W * 0.18, x1 = W / 2 + s[1] * W * 0.18, y = H * 0.5;
         var gr = g.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, rgba('#b9f0cf', 0)); gr.addColorStop(1, rgba('#b9f0cf', (C.dark ? 0.55 : 0.7) * (1 - u))); g.fillStyle = gr; g.fillRect(Math.min(x0, x1), y - 2, Math.abs(x1 - x0), 4);
         var gl = g.createRadialGradient(x1, y, 0, x1, y, 40); gl.addColorStop(0, rgba('#e6fff0', 0.6 * (1 - u))); gl.addColorStop(1, rgba('#e6fff0', 0)); g.fillStyle = gl; g.fillRect(x1 - 40, y - 40, 80, 80); });
+      return false;
+    };
+    // Góc nhìn khác ch11 (Mira, Vein): da mỏng đi như tờ giấy dầu, mạch máu đỏ thẫm bò vào từ mép trang như rễ cây dưới lớp đất mỏng,
+    // phập phồng theo một nhịp đều; rồi tan. Không vẽ người, chỉ mạch.
+    MORE.vein = function (t, R) {
+      if (t > 6.5) return true; var k = env(t, 1.2, 3.2, 2.1), col = C.dark ? '#E2566C' : '#B3263A', grow = Math.min(1, t / 1.8);
+      var beat = Math.pow(Math.max(0, Math.sin(t * Math.PI * 2 / 1.1)), 8);
+      wash(C.dark ? '#3a1418' : '#f3d9d6', (C.dark ? 0.16 : 0.22) * k);
+      g.lineCap = 'round'; g.shadowColor = rgba(col, 0.8);
+      function br(x, y, a, len, w, d, s) {
+        var n = 6, px = x, py = y; g.lineWidth = w * (1 + 0.35 * beat); g.strokeStyle = rgba(col, (0.45 + 0.35 * beat) * k); g.shadowBlur = 4 + 6 * beat;
+        g.beginPath(); g.moveTo(px, py);
+        for (var j = 1; j <= n; j++) { if (j / n > grow) break; a += (R[(s + j * 7) % 60] - 0.5) * 0.7; px += Math.cos(a) * len / n; py += Math.sin(a) * len / n; g.lineTo(px, py); }
+        g.stroke();
+        if (d > 0 && grow > 0.45) { br(px, py, a - 0.5, len * 0.6, w * 0.65, d - 1, s + 13); br(px, py, a + 0.45, len * 0.55, w * 0.6, d - 1, s + 29); }
+      }
+      var L = Math.min(W, H) * 0.42;
+      for (var i = 0; i < 6; i++) { var u = (i + 0.5) / 6;
+        br(0, H * u, (R[i] - 0.5) * 0.6, L, 2.6, 2, i * 5); br(W, H * (1 - u), Math.PI + (R[i + 10] - 0.5) * 0.6, L, 2.6, 2, i * 5 + 3);
+      }
+      g.shadowBlur = 0;
+      edge(col, (0.1 + 0.12 * beat) * k, 0.45);
       return false;
     };
     // ch12: trần hầm sập: trang rung giật, bụi đá đổ ào từ mép trên, rồi tối sập
@@ -4871,6 +5132,8 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       soothe: function (o, n) { bus(); var at = n; for (var k = 0; k < 14; k++) { nz(o, 'bandpass', 2600, 2200, 5, 0.05 * (1 - k / 16), 0.04, at); at += 0.11 + k * 0.035; } [880, 1108.7, 1318.5].forEach(function (f, i) { sine(wet(0.5), f, 0.03, 3.2, n + 0.8 + i * 0.12); }); nz(wet(0.4), 'lowpass', 2400, 800, 0.7, 0.05, 3, n + 0.6); },
       // Felix chớp mắt đổi chỗ (Chuyển hoá): hai nhát hút gió rất ngắn, mỗi nhát kèm một tiếng "póc" khô và lấp lánh mảnh
       blink: function (o, n) { bus(); [0.25, 1.05].forEach(function (d) { whoosh(n + d - 0.06, 0.14, 0.35, true); nz(o, 'highpass', 3500, 6500, 1, 0.2, 0.05, n + d + 0.08); sparkle(n + d + 0.09, 0.025, [2637, 3520]); }); },
+      // Góc nhìn khác ch11, Mira (Vein): một tiếng lướt mỏng như tờ giấy dầu, rồi nhịp tách đều như kim đồng hồ (không tiếng trầm)
+      vein: function (o, n) { bus(); nz(wet(0.5), 'bandpass', 1800, 4200, 1.2, 0.08, 0.9, n); for (var k = 0; k < 5; k++) { nz(o, 'bandpass', 2400, 2400, 6, 0.06, 0.03, n + 0.9 + k * 1.1); sine(o, 1760, 0.012, 0.05, n + 0.9 + k * 1.1); } sine(wet(0.4), 987.8, 0.02, 2.2, n + 0.4); },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
     /* tiếng năng lực Clevia (Clair chốt 24/11: kiểu anime "A3"): tiếng dồn ngược, mỗi vòng khoá khớp là một nhát "kshing" kèm lấp lánh,
