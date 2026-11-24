@@ -346,8 +346,17 @@ em .nm{font-style:italic}
 .cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
 .cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
 .cc{perspective:1200px}
-.cc .ci{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,1.25,.5,1)}
+.cc .ci{position:relative;transform-style:preserve-3d}
 .cc.back .ci{transform:rotateY(180deg)}
+.cc.back{cursor:pointer}
+.cc.flip .ci{animation:ccflip .9s cubic-bezier(.3,1.2,.5,1) both}
+@keyframes ccflip{0%{transform:rotateY(180deg)}45%{transform:rotateY(95deg) translateZ(40px) scale(1.06)}100%{transform:none}}
+.cc .cf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--pw-clevia) 35%,transparent) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.cc.flip .cf::after{animation:ccglint 1s ease .5s both}
+@keyframes ccglint{to{transform:translateX(120%)}}
+.cc.back:hover .cb,.cc.back:focus-visible .cb{box-shadow:0 0 0 1px #7FC4D6,0 0 22px -6px #7FC4D6}
+.cc:focus-visible{outline:none}
+.cc .cb .tap{font-size:12px;letter-spacing:.06em;opacity:.55;margin-top:2px}
 .cc .cf,.cc .cb{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px}
 .cc .cf{position:relative;overflow:hidden;padding:14px 16px 16px;border:1px solid color-mix(in srgb,var(--seal) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--seal) 10%,transparent),transparent 65%)}
 .cc .cf::before{content:"";position:absolute;left:16px;right:16px;top:0;height:2px;background:var(--seal);opacity:.8;border-radius:0 0 2px 2px}
@@ -357,6 +366,10 @@ em .nm{font-style:italic}
 .cc .cb svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2;opacity:.85}
 .cc .cb svg .d{fill:#D4697E;stroke:none}
 .cc .cb span{font-size:10px;letter-spacing:.32em;opacity:.7}
+.cc .cb{animation:ccbreath 3.2s ease-in-out infinite}
+@keyframes ccbreath{50%{border-color:#4f86a8}}
+.cmt .all{display:block;margin:-.6em auto 1.4em;font:inherit;font-size:14px;color:var(--lamp);background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 2px;cursor:pointer}
+.cmt .all[hidden]{display:none}
 .cc .who{display:flex;align-items:center;gap:10px;margin:4px 0 8px;font-size:14px}
 .cc .seal{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--seal);color:var(--seal);font-size:14px;font-weight:600;position:relative}
 .cc .seal::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px dashed var(--seal);opacity:.45}
@@ -364,7 +377,7 @@ em .nm{font-style:italic}
 .cc .who time{color:var(--soft);font-size:13px;font-variant-numeric:tabular-nums}
 .cc .tx{position:relative;margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
 .cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
-@media (prefers-reduced-motion: reduce){.cc .ci{transition:none}.cc.back .ci{transform:none}.cc .cb{display:none}}
+@media (prefers-reduced-motion: reduce){.cc.flip .ci,.cc.flip .cf::after,.cc .cb{animation:none}}
 .cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
 .bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
 .bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
@@ -792,6 +805,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
     <section class="cmt" id="binh-luan" data-ch="10" aria-label="Bình luận">
     <h2>Bình luận<span class="cnt" hidden></span></h2>
     <p class="sub">Cậu nghĩ gì về chương này? Lưu ý: bình luận có thể tiết lộ nội dung chương.</p>
+    <button type="button" class="all" hidden>Lật hết các thẻ</button>
     <p class="cmt-empty">Đang tải bình luận…</p><ol class="cmt-list"></ol>
     <form class="bl-form" data-kind="bl" novalidate>
   <p class="k">Thẻ của cậu</p>
@@ -848,23 +862,22 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
   function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
   function card(c,me){
-    var li=el('li','cc'+(reduce?'':' back')+(me?' me':''));li.style.setProperty('--seal',SEALS[hash(c.n)%SEALS.length]);
+    var li=el('li','cc back'+(me?' me':''));li.tabIndex=0;li.setAttribute('aria-label','Thẻ úp, chạm để lật');li.style.setProperty('--seal',SEALS[hash(c.n)%SEALS.length]);
     var ci=el('div','ci'),cf=el('div','cf'),cb=el('div','cb');
     cf.innerHTML=RING;var w=el('p','who');var seal=el('span','seal',(c.n.trim()[0]||'?').toUpperCase());w.appendChild(seal);w.appendChild(el('b','',c.n));w.appendChild(el('time','',when(c.t)));
     cf.appendChild(w);cf.appendChild(el('p','tx',c.x));
-    cb.innerHTML=RING;cb.appendChild(el('span','','PROJECT ARTOS 07'));cb.setAttribute('aria-hidden','true');
+    cb.innerHTML=RING;cb.appendChild(el('span','','PROJECT ARTOS 07'));cb.appendChild(el('em','tap','chạm để lật'));cb.setAttribute('aria-hidden','true');
     ci.appendChild(cf);ci.appendChild(cb);li.appendChild(ci);return li}
-  var flipQ=[],flipT=0;
-  function queueFlip(li){flipQ.push(li);if(!flipT)run()}
-  function run(){var li=flipQ.shift();if(!li){flipT=0;return}li.classList.remove('back');flipSnd();flipT=setTimeout(run,160)}
-  var fio='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fio.unobserve(e.target);queueFlip(e.target)}})},{threshold:.35}):null;
-  function watch(li){if(reduce)return;if(fio)fio.observe(li);else li.classList.remove('back')}
+  function flip(li,quiet){if(!li.classList.contains('back'))return;li.classList.remove('back');li.classList.add('flip');li.removeAttribute('aria-label');if(!quiet)flipSnd();upd()}
+  function watch(li){li.addEventListener('click',function(){flip(li)});li.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(li)}})}
+  function upd(){var a=sec&&sec.querySelector('.all');if(a)a.hidden=!sec.querySelector('.cc.back')}
   var sec=document.querySelector('.cmt');
   function count(n){var c=sec.querySelector('.cnt');c.textContent=n+' tấm thẻ';c.hidden=!n}
   var total=0;
   function load(){var ol=sec.querySelector('.cmt-list'),em=sec.querySelector('.cmt-empty');
-    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){var li=card(c);ol.appendChild(li);watch(li)});total=d.list.length;count(total);em.textContent='Chưa có tấm thẻ nào. Cậu là người đầu tiên nha.';em.hidden=total>0})
+    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){var li=card(c);ol.appendChild(li);watch(li)});total=d.list.length;count(total);upd();em.textContent='Chưa có tấm thẻ nào. Cậu là người đầu tiên nha.';em.hidden=total>0})
     .catch(function(){em.textContent='Chưa tải được bình luận. Cậu thử tải lại trang sau nha.';em.hidden=false})}
+  if(sec){sec.querySelector('.all').addEventListener('click',function(){[].forEach.call(sec.querySelectorAll('.cc.back'),function(li,i){setTimeout(function(){flip(li,i%2)},i*130)})})}
   if(sec){if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();load()}},{rootMargin:'600px'});io.observe(sec)}else load()}
   [].forEach.call(document.querySelectorAll('.bl-form'),function(f){
     try{var nm=localStorage.getItem('a07-name');if(nm)E(f,'name').value=nm}catch(e){}
@@ -878,7 +891,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       fetch(U,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(r){
         if(!r.ok){st(f,r.why==='nhieu'?'Đang có nhiều người gửi quá, cậu đợi vài phút rồi gửi lại nha.':'Chưa gửi được, cậu thử lại nha.');return}
         E(f,'text').value='';if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
-        else{st(f,'Thẻ của cậu đã nằm trên bàn.',1);if(r.item){var ol=sec.querySelector('.cmt-list'),li=card(r.item,1);ol.appendChild(li);sec.querySelector('.cmt-empty').hidden=true;count(++total);sfx('deal');setTimeout(function(){li.classList.remove('back');flipSnd()},450)}}
+        else{st(f,'Thẻ của cậu đã nằm trên bàn.',1);if(r.item){var ol=sec.querySelector('.cmt-list'),li=card(r.item,1);ol.appendChild(li);watch(li);sec.querySelector('.cmt-empty').hidden=true;count(++total);sfx('deal');setTimeout(function(){flip(li)},450)}}
       }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){busy=false;btn.disabled=false;setP(0);btn.classList.remove('burst')})}
     function done(){cancelAnimationFrame(raf);btn.classList.remove('on');setP(1);btn.classList.add('burst');sfx('keyburst');setTimeout(send,reduce?0:450)}
     function tick(){var p=Math.min(1,(performance.now()-t0)/NEED);setP(p);if(p>=1)done();else raf=requestAnimationFrame(tick)}
