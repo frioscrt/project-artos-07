@@ -174,6 +174,23 @@ em .nm{font-style:italic}
 .scene .dots i:nth-child(2){animation-delay:.18s}.scene .dots i:nth-child(3){animation-delay:.36s}
 @keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-.2em)}}
 @media (prefers-reduced-motion: reduce){.scene p.msg{opacity:1;transform:none;transition:none}}
+.act-press{max-width:300px}
+.pressbtn{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pressbtn .card-inner{transition:transform .2s,filter .2s,opacity 1.2s;transform:rotateX(8deg) rotateZ(-3deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.pressbtn.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.act-press.holding .card-inner{transition:none}
+.act-press.heat .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*22px) rgba(255,150,60,calc(var(--p,0)*.9))) sepia(calc(var(--p,0)*.6)) saturate(calc(1 + var(--p,0)*2))}
+.act-press.smoke .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*18px) rgba(200,210,205,calc(var(--p,0)*.9)))}
+.act-press.done .card-inner{opacity:0;filter:blur(10px)}
+.act-heat{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 80% 70% at 50% 55%,rgba(255,170,90,.0),rgba(255,120,40,.35) 60%,rgba(170,40,10,.75))}
+.act-ribbon{position:relative;margin:2.4em -16px}
+.act-ribbon canvas{display:block;width:100%;height:min(40vh,300px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-ribbon{margin-left:-4em;margin-right:-4em}}
+.card-fig[data-dust]{position:relative}
+.dust{position:absolute;left:0;right:0;top:0;width:100%;z-index:3;touch-action:pan-y;cursor:grab;transition:opacity 1s}
+.dust.gone{opacity:0;pointer-events:none}
+.protect-hint{position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:7;text-align:center;font-size:13px;letter-spacing:.08em;color:var(--lamp);opacity:0;transition:opacity .6s;pointer-events:none}
+.protect-hint.on{opacity:1}
 /* tương tác người đọc */
 .act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
