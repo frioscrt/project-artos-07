@@ -208,6 +208,9 @@ em .nm{font-style:italic}
 .act-press.smoke .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*18px) rgba(200,210,205,calc(var(--p,0)*.9)))}
 .act-press.done .card-inner{opacity:0;filter:blur(10px)}
 .act-heat{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 80% 70% at 50% 55%,rgba(255,170,90,.0),rgba(255,120,40,.35) 60%,rgba(170,40,10,.75))}
+.act-missed{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:8;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:opacity .5s,transform .5s;border:1px solid var(--lamp);background:var(--bg);color:var(--lamp);font:inherit;font-size:13px;letter-spacing:.04em;padding:.55em 1.1em;border-radius:99px;box-shadow:0 4px 18px rgba(0,0,0,.25);white-space:nowrap}
+.act-missed.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.act-missed .ar{display:inline-block;margin-right:.3em;animation:tapcore 2.4s ease-in-out infinite}
 .act-cv{position:relative;margin:2.4em -16px}
 .act-cv canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent)}
 .act-map canvas{height:min(52vh,380px)}.act-letter canvas{height:min(52vh,400px)}.act-knock canvas{cursor:pointer}.act-hearth canvas{cursor:pointer}

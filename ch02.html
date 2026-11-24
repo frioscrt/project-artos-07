@@ -208,6 +208,9 @@ em .nm{font-style:italic}
 .act-press.smoke .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*18px) rgba(200,210,205,calc(var(--p,0)*.9)))}
 .act-press.done .card-inner{opacity:0;filter:blur(10px)}
 .act-heat{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 80% 70% at 50% 55%,rgba(255,170,90,.0),rgba(255,120,40,.35) 60%,rgba(170,40,10,.75))}
+.act-missed{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:8;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:opacity .5s,transform .5s;border:1px solid var(--lamp);background:var(--bg);color:var(--lamp);font:inherit;font-size:13px;letter-spacing:.04em;padding:.55em 1.1em;border-radius:99px;box-shadow:0 4px 18px rgba(0,0,0,.25);white-space:nowrap}
+.act-missed.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.act-missed .ar{display:inline-block;margin-right:.3em;animation:tapcore 2.4s ease-in-out infinite}
 .act-cv{position:relative;margin:2.4em -16px}
 .act-cv canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent)}
 .act-map canvas{height:min(52vh,380px)}.act-letter canvas{height:min(52vh,400px)}.act-knock canvas{cursor:pointer}.act-hearth canvas{cursor:pointer}
@@ -2998,8 +3001,6 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       btn.addEventListener('pointermove', function (e) { if (holding && Math.abs(e.clientY - sy) + Math.abs(e.clientX - sx) > 16) up(); });
       btn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
       btn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(true); } });
-      // đọc lướt qua không chạm: khoá tự mở lặng lẽ, để lúc cuộn ngược lên vẫn khớp với chữ
-      addEventListener('scroll', function () { if (!done && !holding && box.getBoundingClientRect().bottom < innerHeight * 0.12) open(false); }, { passive: true });
     });
 
     /* ---- 1. bức tường kính: áp tay giữ ---- */
@@ -3083,12 +3084,6 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { cv.addEventListener(t, up); });
       cv.addEventListener('pointermove', function (e) { if (hold && Math.abs(e.clientY - sy) + Math.abs(e.clientX - sx) > 16) up(); });
       cv.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-      // đọc lướt qua không chạm: một dấu tay mờ tự in lên giữa kính
-      addEventListener('scroll', function () {
-        if (touched || box.getBoundingClientRect().top > innerHeight * 0.18) return;
-        touched = true; box.classList.add('done'); var n = performance.now();
-        prints.push({ x: w / 2, y: h * 0.5, t0: n, t1: n + 1600, grow: 2600, R: rnd() }); kick();
-      }, { passive: true });
       draw(performance.now());
     });
 
@@ -3298,9 +3293,42 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       msg: function (o, n) { sine(o, 1320, 0.04, 0.12, n); sine(o, 1760, 0.035, 0.15, n + 0.06); },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
+    /* ba kiểu tiếng mới cho năng lực Clevia, nghe thử bằng ?tieng=a|b|c (Clair chưa ưng tiếng hiện tại, 24/11). Nhịp khớp hình:
+       bốn vòng khoá cạch ở 1.0 / 1.4 / 1.8 / 2.2 giây, tia lỗ khoá ở 2.5 giây; bản ngắn (keyburst) bật ở 0.15 giây. Không tiếng trầm, không tiếng chuông. */
+    var TV = (location.search.match(/tieng=([abc])/) || [])[1];
+    // A. Đồng hồ cơ: tiếng lẫy kim loại nhỏ, khô, chính xác; cú mở là một "tách" gọn và một làn gió kim loại mảnh
+    function tick(o, at, v, f) { nz(o, 'bandpass', f, f * 0.9, 9, v, 0.012, at); sine(o, f * 1.5, v * 0.18, 0.03, at, 'square'); nz(o, 'highpass', 7000, 9000, 1, v * 0.35, 0.008, at + 0.004); }
+    S.keysense_a = function (o, n) {
+      for (var i = 0; i < 18; i++) tick(o, n + 0.2 + i * 0.11, 0.05 + (i % 2) * 0.02, 4200 + (i % 3) * 300);   // vòng quay: lách tách đều như bánh xe đồng hồ
+      [1.0, 1.4, 1.8, 2.2].forEach(function (d, k) { tick(o, n + d, 0.35, 3000 + k * 450); tick(o, n + d + 0.03, 0.2, 5200 + k * 300); });
+      S.keyburst_a(o, n + 2.35);
+    };
+    S.keyburst_a = function (o, n) { tick(o, n + 0.15, 0.6, 2600); tick(o, n + 0.19, 0.45, 4400); nz(o, 'bandpass', 5000, 9000, 2, 0.08, 0.5, n + 0.2); for (var j = 0; j < 6; j++) tick(o, n + 0.35 + j * 0.06, 0.06, 6000 - j * 300); };
+    // B. Hơi gió: vòng khoá là luồng gió xoáy khẽ, mỗi lần khớp là một "phụt" mềm; cú mở là gió thoát ra, nhẹ bẫng
+    function puff(o, at, v, f) { nz(o, 'bandpass', f * 1.6, f, 1.4, v, 0.22, at); nz(o, 'highpass', 6000, 4000, 0.7, v * 0.3, 0.15, at); }
+    S.keysense_b = function (o, n) {
+      bus(); var w = wet(1); nz(w, 'bandpass', 900, 3200, 3, 0.12, 2.2, n + 0.05); nz(w, 'bandpass', 3200, 1400, 4, 0.05, 2.2, n + 0.1);
+      [1.0, 1.4, 1.8, 2.2].forEach(function (d, k) { puff(wet(1), n + d, 0.14 + k * 0.03, 1400 + k * 500); });
+      S.keyburst_b(o, n + 2.35);
+    };
+    S.keyburst_b = function (o, n) { bus(); var w = wet(1); nz(w, 'bandpass', 600, 7000, 1.2, 0.3, 0.7, n + 0.1); nz(w, 'highpass', 4000, 9000, 0.8, 0.12, 1.4, n + 0.2); puff(w, n + 0.15, 0.25, 2600); };
+    // C. Gảy dây: mỗi vòng khớp là một nốt gảy như đàn tranh, đi lên theo thang ngũ cung; cú mở là một chuỗi vuốt dây lên cao
+    function pluck(o, f, at, v) {
+      var sr = ac.sampleRate, len = Math.floor(sr * 1.6), b = ac.createBuffer(1, len, sr), d = b.getChannelData(0), N = Math.max(2, Math.round(sr / f));
+      for (var i = 0; i < len; i++) d[i] = i < N ? (Math.random() * 2 - 1) * (1 - i / N * 0.3) : 0.497 * (d[i - N] + d[i - N + 1 < i ? i - N + 1 : i - N]);
+      var s = ac.createBufferSource(); s.buffer = b; var hp = filt('highpass', 180), g = gain(v); s.connect(hp); hp.connect(g); g.connect(o); s.start(at);
+    }
+    var PENTA = [587, 659, 784, 880, 988, 1175, 1319, 1568, 1760];
+    S.keysense_c = function (o, n) {
+      bus(); var w = wet(0.9); nz(w, 'bandpass', 2000, 4000, 5, 0.03, 1.8, n + 0.2);
+      [1.0, 1.4, 1.8, 2.2].forEach(function (d, k) { pluck(w, PENTA[k * 2], n + d, 0.5); });
+      S.keyburst_c(o, n + 2.35);
+    };
+    S.keyburst_c = function (o, n) { bus(); var w = wet(0.9); for (var i = 0; i < 6; i++) pluck(w, PENTA[3 + i] || 1760, n + 0.15 + i * 0.045, 0.32); pluck(w, 1760, n + 0.5, 0.25); };
     window.a07sfx = function (name) {
       if (!S[name] || !playing || !ac || ac.state !== 'running') return;
-      try { var o = gain(1); o.connect(master); S[name](o, ac.currentTime); } catch (e) {}
+      if (TV && S[name + '_' + TV]) name = name + '_' + TV;
+      try { var o = gain(1); o.connect(master); S[name](o, ac.currentTime); } catch (e) { if (window.console) console.warn('a07sfx', name, e); }
     };
   })();
 
@@ -3324,6 +3352,20 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       var d = document.createElement('span'); d.className = 'tapdot'; d.setAttribute('aria-hidden', 'true'); d.innerHTML = '<i></i>'; host.appendChild(d);
       box.addEventListener('pointerdown', function () { box.classList.add('touched'); var h = box.nextSibling; if (h && h.className === 'row-hint') h.classList.add('touched'); }, { passive: true });
     });
+    /* lướt qua mà chưa chạm: không tự làm thay người đọc (Clair 24/11, tự xong thấy hụt hẫng). Thay vào đó hiện một nhắc nhỏ ở mép dưới,
+       chạm vào thì cuộn ngược về đúng chỗ; mỗi chỗ chỉ nhắc một lần, không chặn đọc tiếp. */
+    (function () {
+      var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'act-missed'; pill.innerHTML = '<span class="ar">↑</span> Còn một chỗ chạm được ở phía trên'; document.body.appendChild(pill);
+      var target = null, tm = 0;
+      pill.addEventListener('click', function () { if (!target) return; var r = target.getBoundingClientRect(); scrollBy({ top: r.top - innerHeight * 0.3, behavior: 'smooth' }); pill.classList.remove('on'); });
+      addEventListener('scroll', function () {
+        groups.forEach(function (gp) {
+          var b = gp[0]; if (b._reminded || b.classList.contains('touched') || b.classList.contains('done')) return;
+          var r = b.getBoundingClientRect(); if (r.bottom < 0 && r.bottom > -innerHeight * 1.5) { b._reminded = true; target = b; pill.classList.add('on'); clearTimeout(tm); tm = setTimeout(function () { pill.classList.remove('on'); }, 5000); }
+        });
+        if (target && pill.classList.contains('on')) { var tr = target.getBoundingClientRect(); if (tr.bottom > 0) pill.classList.remove('on'); }
+      }, { passive: true });
+    })();
     if (!window.IntersectionObserver) return;
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -3423,11 +3465,6 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       cv.addEventListener('pointermove', function (e) { if (!down) return; var p = pos(e); rub(p[0], p[1]); });
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { cv.addEventListener(t, function () { down = false; lastX = null; stopScrape(); }); });
       cv.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-      // đọc lướt không miết: vết xước tự lộ ra như có bàn tay vô hình quét ngang
-      addEventListener('scroll', function () {
-        if (touched || box.getBoundingClientRect().top > innerHeight * 0.15) return; touched = true; box.classList.add('done');
-        var t0 = performance.now(); (function sweep(now) { var u = Math.min(1, (now - t0) / 1400), x = w * u; lastX = null; for (var yy = h * 0.3; yy <= h * 0.72; yy += 30) { mg.fillStyle = '#fff'; mg.beginPath(); mg.arc(x, yy, 26, 0, 7); mg.fill(); } draw(); if (u < 1) requestAnimationFrame(sweep); })(t0);
-      }, { passive: true });
       fit(); addEventListener('resize', fit); addEventListener('a07-theme', draw);
     });
   })();
@@ -3507,8 +3544,6 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       cv.addEventListener('pointerdown', function (e) { down = true; last = null; startScrape(); var p = pos(e); wipe(p[0], p[1]); });
       cv.addEventListener('pointermove', function (e) { if (down) { var p = pos(e); wipe(p[0], p[1]); } });
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { cv.addEventListener(t, function () { down = false; last = null; stopScrape(); }); });
-      // đọc lướt qua không lau: bụi tự bay đi
-      addEventListener('scroll', function () { if (!cleared && fig.getBoundingClientRect().bottom < innerHeight * 0.2) clear(false); }, { passive: true });
       var cap = fig.querySelector('figcaption'); if (cap) cap.textContent = 'Miết tay lau bụi, rồi chạm để lật thẻ';
       setTimeout(fit, 50); addEventListener('resize', function () { if (!cleared) fit(); });
     });
@@ -3578,7 +3613,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
        blood   = ch07 rê ngón tay dọc bờ ruộng, từng giọt máu hiện ra; khúc giữa không có gì cả
        knock   = ch08 gõ ba tiếng lên khung cửa gỗ
        bandage = ch08 vuốt ngang để quấn cuộn băng quanh cánh tay bầm
-     Luật chung: không chặn cuộn (chỉ cử chỉ ngang, chạm, giữ), cuộn qua thì tự xong lặng lẽ, có tiếng (không tiếng trầm kiểu trống),
+     Luật chung: không chặn cuộn (chỉ cử chỉ ngang, chạm, giữ), cuộn qua thì để nguyên chờ người đọc (có nhắc nhỏ ở mép dưới), có tiếng (không tiếng trầm kiểu trống),
      không vẽ người, không gợi ý ý nghĩa cơ chế ẩn. */
   (function () {
     var boxes = [].slice.call(document.querySelectorAll('.act-cv'));
@@ -3636,7 +3671,6 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { cv.addEventListener(t, function () { if (!down) return; var dn = down; down = null; if (K.up) K.up(S, dn, t === 'pointerup' && dn.far < 12 && performance.now() - dn.t0 < 450); }); });
       cv.addEventListener('contextmenu', function (e) { e.preventDefault(); });
       new IntersectionObserver(function (es) { S.vis = es[0].isIntersecting; if (S.vis) S.kick(); else if (K.hide) K.hide(S); }).observe(box);
-      addEventListener('scroll', function () { if (!S.done && box.getBoundingClientRect().bottom < innerHeight * 0.12) { if (K.auto) K.auto(S); S.finish(); S.kick(1800); } }, { passive: true });
       addEventListener('resize', fit); addEventListener('a07-theme', fit);
       if (K.init) K.init(S);
       fit();
