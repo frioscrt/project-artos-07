@@ -141,7 +141,7 @@ em .nm{font-style:italic}
 .nm.first.lit{animation:nmlit 2.2s ease-out both}
 .nm-card.first.lit{animation-name:nmlitice}
 @keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
-@keyframes nmlitice{0%{text-shadow:0 0 0 transparent;filter:brightness(1)}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor;filter:brightness(1.35)}100%{text-shadow:0 0 0 transparent;filter:brightness(1)}}
+@keyframes nmlitice{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor}100%{text-shadow:0 0 0 transparent}}
 @media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
 /* chỗ chạm được: nhịp tròn màu đèn đập liên tục tới khi người đọc chạm, chữ gợi ý màu đèn; tranh động không có dấu này */
 .tap-host{position:relative}
@@ -160,6 +160,20 @@ em .nm{font-style:italic}
 .nudge{animation:nudge 1.3s ease-out}
 @keyframes nudge{0%{filter:none;transform:none}25%{filter:drop-shadow(0 0 16px var(--lamp));transform:scale(1.035)}100%{filter:none;transform:none}}
 @media (prefers-reduced-motion: reduce){.tapdot::before,.tapdot::after,.tapdot i,.act-hint::before,.card-fig figcaption::before,.row-hint::before{animation:none}.nudge{animation:none}}
+.act-rub{position:relative;margin:2.4em -16px}
+.act-rub canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-rub{margin-left:-4em;margin-right:-4em}}
+/* tin nhắn Luke và Clevia ở ch03: bong bóng như trên màn hình điện thoại */
+.scene p.msg{text-indent:0;max-width:78%;margin:.55em 0;padding:.5em .85em;border-radius:1.1em;font-size:.93em;line-height:1.5;opacity:0;transform:translateY(10px) scale(.96);transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
+.scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
+.scene p.msg.show{opacity:1;transform:none}
+.scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
+.scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
+.scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
+.scene .dots i:nth-child(2){animation-delay:.18s}.scene .dots i:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-.2em)}}
+@media (prefers-reduced-motion: reduce){.scene p.msg{opacity:1;transform:none;transition:none}}
 /* tương tác người đọc */
 .act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
@@ -258,13 +272,13 @@ em .nm{font-style:italic}
 <figure class="plate"><canvas class="art" data-art="board15" role="img" aria-label="Tờ giấy giữa tấm bảng gỗ, con số mười lăm"></canvas></figure>
 <p>Trong cái khoảnh khắc trước khi khung cửa nuốt lấy mình, <span class="nm nm-person first">Clevia</span> đã mở mắt ra.</p>
 <p>Cô không định thế. Có lẽ là vì tiếng chân lệt sệt đã lên tới bậc thềm, có lẽ là vì cái bản năng của một con thú bị dồn vào góc, cứ phải ngoái lại nhìn xem thứ gì đang tới. Nhưng mắt cô không nhìn ra cửa. Nó trượt qua vai <span class="nm nm-person first">Luke</span>, qua những dãy ghế dựng thẳng tắp, rồi dừng lại đúng ở tấm bảng gỗ cuối gian nhà, ở tờ giấy to nhất ở chính giữa, cái chỗ mà cô đã cố tình né đi suốt từ nãy đến giờ.</p>
-<p>Mười lăm.</p>
+<p data-act="count" data-n="15">Mười lăm.</p>
 <p data-fx="tally">Rồi ánh sáng trắng phủ lên tất cả.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="mine">
 <figure class="plate"><canvas class="art" data-art="mine" role="img" aria-label="Khu Mỏ giữa trưa: đồi trọc, đụn đá vụn, ống khói gạch nhả khói mỏng"></canvas></figure>
-<p>Khu Mỏ đón cô bằng bụi.</p>
+<p data-act="count-off">Khu Mỏ đón cô bằng bụi.</p>
 <p>Bụi xám, mịn như bột, bám vào gót giày, bám vào ống quần, bay lên thành từng làn mỏng mỗi khi gió lùa qua, và trong miệng cô có vị đất khô lạo xạo. <span class="nm nm-person">Clevia</span> đứng chôn chân giữa con đường mòn, một tay vẫn còn chìa ra như đang đặt trên mặt đá, và phải mất mấy nhịp thở cô mới hiểu ra rằng dưới bàn tay mình chẳng còn gì nữa, rằng không còn mái ngói, không còn cột gỗ lim, không còn tiếng chân lệt sệt nào sau lưng.</p>
 <p>Chỉ có những ngọn đồi trọc, lổn nhổn đá, xám như tro nguội. Một con đường mòn ngoằn ngoèo chạy lên chân núi. Và ở xa xa, đúng như trong đầu cô lúc nhắm mắt, một mái nhà lá với cái ống khói xây gạch đang nhả lên trời một làn khói mỏng.</p>
 <p>Mười lăm.</p>
@@ -429,7 +443,7 @@ em .nm{font-style:italic}
 <p>Ông già nhìn cô một lúc. Rồi ông quay mặt về phía con đường mòn, như thể hai người họ chưa từng đứng đó.</p>
 <p><span class="nm nm-person">Clevia</span> nhìn cái cổng.</p>
 <p>Rồi cô nhìn kỹ hơn.</p>
-<p>Trên những chấn song sắt, ngay ngang tầm ngực, có những vết xước. Không phải gỉ. Những vết xước còn mới, sáng loáng lên dưới lớp gỉ đỏ, chạy ngang chạy dọc, chồng chéo lên nhau, như có ai đã dùng một thứ gì đó rất cứng, rất nặng quất vào đây không biết bao nhiêu lần. Và những chấn song sắt ấy vẫn thẳng tắp. Không một chấn song nào cong đi lấy một li.</p>
+<div class="act act-rub"><canvas aria-hidden="true"></canvas><span class="act-hint">miết tay ngang qua</span></div><p>Trên những chấn song sắt, ngay ngang tầm ngực, có những vết xước. Không phải gỉ. Những vết xước còn mới, sáng loáng lên dưới lớp gỉ đỏ, chạy ngang chạy dọc, chồng chéo lên nhau, như có ai đã dùng một thứ gì đó rất cứng, rất nặng quất vào đây không biết bao nhiêu lần. Và những chấn song sắt ấy vẫn thẳng tắp. Không một chấn song nào cong đi lấy một li.</p>
 <p>Cô bước tới. <span class="nm nm-person">Luke</span> khẽ gọi tên cô, nhưng cô đã đặt tay lên ổ khoá.</p>
 <p>Cái ổ khoá lạnh, nặng, xù xì gỉ sét dưới đầu ngón tay. Cô nhắm mắt lại, như lúc mở cái hòm trong căn nhà dân đêm qua, như lúc đặt tay lên mặt bàn đá ở Nhà họp làng, và cô cảm thấy nó. Bên trong cái khối sắt đen sì ấy là những rãnh, những lẫy, những lò xo nhỏ xíu cuộn tròn, những chốt gỗ… không, chốt sắt, xếp thành một hàng, cái nào cũng đang chờ một thứ gì đó đẩy vào đúng chỗ. Cô không biết cô làm thế nào. Cô chưa bao giờ biết. Cô chỉ nghĩ, thật rõ ràng, như nghĩ đến một cánh cửa mình muốn đi qua: mở ra đi.</p>
 <p data-fx="keysense" data-cast="1">Bên trong ổ khoá, có gì đó xoay đi, từng nấc, từng nấc một.</p>
@@ -3263,6 +3277,7 @@ em .nm{font-style:italic}
         g2.gain.linearRampToValueAtTime(0, st + 3); x.connect(lp); lp.connect(g2); g2.connect(hg); x.start(st); x.stop(st + 3.1);
         shing(st, 0.1, 0.5);
       },
+      msg: function (o, n) { sine(o, 1320, 0.04, 0.12, n); sine(o, 1760, 0.035, 0.15, n + 0.06); },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
     window.a07sfx = function (name) {
@@ -3299,6 +3314,102 @@ em .nm{font-style:italic}
       });
     }, { rootMargin: '0px 0px -35% 0px' });
     groups.forEach(function (gp) { if (gp[1]) { gp[0]._host = gp[1]; io.observe(gp[0]); } });
+  })();
+
+  /* ch03: tin nhắn thành bong bóng. Tin của Luke có dấu ba chấm "đang gõ" trước khi hiện. */
+  (function () {
+    var ms = [].slice.call(document.querySelectorAll('.scene p[data-act~="msg-in"], .scene p[data-act~="msg-out"]'));
+    if (!ms.length) return;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    ms.forEach(function (p) {
+      var inn = / msg-in /.test(' ' + p.getAttribute('data-act') + ' ');
+      p.classList.add('msg', inn ? 'in' : 'out');
+      // bỏ ngoặc kép hai đầu: đã là bong bóng tin nhắn
+      var w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), first = w.nextNode(), last = first, t;
+      while ((t = w.nextNode())) last = t;
+      if (first) first.nodeValue = first.nodeValue.replace(/^\s*[“"]/, '');
+      if (last) last.nodeValue = last.nodeValue.replace(/[”"]\s*$/, '');
+    });
+    if (reduce || !window.IntersectionObserver) { ms.forEach(function (p) { p.classList.add('show'); }); return; }
+    function pop() { if (window.a07sfx) window.a07sfx('msg'); }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; var p = e.target; io.unobserve(p);
+        if (p.classList.contains('in')) {
+          var d = document.createElement('span'); d.className = 'dots'; d.setAttribute('aria-hidden', 'true'); d.innerHTML = '<i></i><i></i><i></i>';
+          p.parentNode.insertBefore(d, p);
+          setTimeout(function () { d.remove(); p.classList.add('show'); pop(); }, 1100);
+        } else { p.classList.add('show'); pop(); }
+      });
+    }, { rootMargin: '0px 0px -22% 0px' });
+    ms.forEach(function (p) { io.observe(p); });
+  })();
+
+  /* ch11: miết tay ngang qua chấn song gỉ để lộ những vết xước còn mới, sáng loáng */
+  (function () {
+    var boxes = [].slice.call(document.querySelectorAll('.act-rub'));
+    boxes.forEach(function (box) {
+      var cv = box.querySelector('canvas'), g = cv.getContext('2d'), mk = document.createElement('canvas'), mg = mk.getContext('2d'), w = 0, h = 0, R = [], i;
+      for (i = 0; i < 200; i++) R.push(Math.random());
+      var bars = 6, scr = [], touched = false, lastX = null, lastY = null, scrape = null, revealed = 0, raf = 0;
+      function build() {
+        scr = [];
+        for (var k = 0; k < 46; k++) {
+          var y = h * (0.3 + R[k] * 0.4), x = w * (0.05 + R[k + 50] * 0.8), len = w * (0.08 + R[k + 100] * 0.28), a = (R[k + 150] - 0.5) * (k % 5 === 0 ? 2.2 : 0.5);
+          scr.push([x, y, x + Math.cos(a) * len, y + Math.sin(a) * len, 0.8 + R[(k * 3) % 200] * 1.8]);
+        }
+      }
+      function fit() { var d = Math.min(devicePixelRatio || 1, 2), r = cv.getBoundingClientRect(); w = r.width; h = r.height; cv.width = Math.round(w * d); cv.height = Math.round(h * d); g.setTransform(d, 0, 0, d, 0, 0); mk.width = Math.round(w); mk.height = Math.round(h); build(); draw(); }
+      function draw() {
+        // miệng hầm tối phía sau
+        var bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, C.dark ? '#0b0d0e' : '#2a2f30'); bg.addColorStop(1, C.dark ? '#050606' : '#151819');
+        g.fillStyle = bg; g.fillRect(0, 0, w, h);
+        var hole = g.createRadialGradient(w / 2, h * 0.55, 0, w / 2, h * 0.55, w * 0.5); hole.addColorStop(0, 'rgba(0,0,0,.9)'); hole.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = hole; g.fillRect(0, 0, w, h);
+        // chấn song gỉ đỏ
+        var bw = Math.max(14, w * 0.045);
+        for (var b = 0; b < bars; b++) {
+          var x = w * (0.1 + b * 0.16), gr = g.createLinearGradient(x - bw / 2, 0, x + bw / 2, 0);
+          gr.addColorStop(0, '#3a1d12'); gr.addColorStop(0.35, '#8a4325'); gr.addColorStop(0.6, '#6d3119'); gr.addColorStop(1, '#2a140c');
+          g.fillStyle = gr; g.fillRect(x - bw / 2, 0, bw, h);
+          for (var sp = 0; sp < 14; sp++) { g.fillStyle = 'rgba(' + (60 + R[(b * 14 + sp) % 200] * 60 | 0) + ',25,10,.6)'; g.beginPath(); g.arc(x + (R[(b * 7 + sp) % 200] - 0.5) * bw, R[(b * 11 + sp * 3) % 200] * h, 1 + R[(sp + b) % 200] * 3, 0, 7); g.fill(); }
+        }
+        // thanh ngang
+        g.fillStyle = '#5a2a17'; g.fillRect(0, h * 0.18, w, bw * 0.6); g.fillRect(0, h * 0.82, w, bw * 0.6);
+        // vết xước: chỉ hiện chỗ tay đã miết qua (và chỉ trên thân chấn song)
+        g.save(); g.beginPath(); for (var c = 0; c < bars; c++) g.rect(w * (0.1 + c * 0.16) - bw / 2, 0, bw, h); g.clip();
+        var tmp = document.createElement('canvas'); tmp.width = cv.width; tmp.height = cv.height; var tg = tmp.getContext('2d'); var d = cv.width / w; tg.setTransform(d, 0, 0, d, 0, 0);
+        tg.lineCap = 'round'; tg.shadowColor = '#ffffff'; tg.shadowBlur = 6;
+        scr.forEach(function (s) { tg.strokeStyle = 'rgba(235,240,240,.95)'; tg.lineWidth = s[4]; tg.beginPath(); tg.moveTo(s[0], s[1]); tg.lineTo(s[2], s[3]); tg.stroke(); });
+        tg.setTransform(1, 0, 0, 1, 0, 0); tg.globalCompositeOperation = 'destination-in'; tg.drawImage(mk, 0, 0, tmp.width, tmp.height);
+        g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(tmp, 0, 0); g.setTransform(d, 0, 0, d, 0, 0);
+        g.restore();
+      }
+      function rub(x, y) {
+        mg.fillStyle = '#fff'; mg.lineCap = 'round'; mg.strokeStyle = '#fff'; mg.lineWidth = 46;
+        mg.beginPath(); if (lastX == null) { mg.arc(x, y, 23, 0, 7); mg.fill(); } else { mg.moveTo(lastX, lastY); mg.lineTo(x, y); mg.stroke(); }
+        var sp = lastX == null ? 0 : Math.hypot(x - lastX, y - lastY); lastX = x; lastY = y;
+        if (scrape) { var n = ac.currentTime; scrape.g.gain.setTargetAtTime(Math.min(0.18, sp * 0.008), n, 0.03); scrape.f.frequency.setTargetAtTime(1800 + sp * 40, n, 0.05); }
+        if (!raf) raf = requestAnimationFrame(function () { raf = 0; draw(); });
+      }
+      function startScrape() {
+        if (scrape || !(playing && ac && ac.state === 'running')) return;
+        var len = ac.sampleRate, b = ac.createBuffer(1, len, ac.sampleRate), d = b.getChannelData(0); for (var k = 0; k < len; k++) d[k] = Math.random() * 2 - 1;
+        var s = ac.createBufferSource(); s.buffer = b; s.loop = true; var f = filt('bandpass', 2000, 3), g2 = gain(0); s.connect(f); f.connect(g2); g2.connect(master); s.start(); scrape = { s: s, f: f, g: g2 };
+      }
+      function stopScrape() { if (!scrape) return; var sc = scrape; scrape = null; sc.g.gain.setTargetAtTime(0, ac.currentTime, 0.05); setTimeout(function () { try { sc.s.stop(); } catch (e) {} }, 300); }
+      function pos(e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+      var down = false;
+      cv.addEventListener('pointerdown', function (e) { down = true; touched = true; box.classList.add('done', 'touched'); lastX = null; startScrape(); var p = pos(e); rub(p[0], p[1]); });
+      cv.addEventListener('pointermove', function (e) { if (!down) return; var p = pos(e); rub(p[0], p[1]); });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { cv.addEventListener(t, function () { down = false; lastX = null; stopScrape(); }); });
+      cv.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      // đọc lướt không miết: vết xước tự lộ ra như có bàn tay vô hình quét ngang
+      addEventListener('scroll', function () {
+        if (touched || box.getBoundingClientRect().top > innerHeight * 0.15) return; touched = true; box.classList.add('done');
+        var t0 = performance.now(); (function sweep(now) { var u = Math.min(1, (now - t0) / 1400), x = w * u; lastX = null; for (var yy = h * 0.3; yy <= h * 0.72; yy += 30) { mg.fillStyle = '#fff'; mg.beginPath(); mg.arc(x, yy, 26, 0, 7); mg.fill(); } draw(); if (u < 1) requestAnimationFrame(sweep); })(t0);
+      }, { passive: true });
+      fit(); addEventListener('resize', fit); addEventListener('a07-theme', draw);
+    });
   })();
 
 })();
