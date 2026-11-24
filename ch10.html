@@ -2419,8 +2419,10 @@ em .nm{font-style:italic}
       }
       return false;
     };
-    function cast() {
+    function cast(silent) {
       shots.push({ kind: 'sigil', t0: performance.now(), R: seeds() }); kick();
+      if (silent) return;
+      if (window.a07sfx) { window.a07sfx('cast'); return; }
       try {
         if (playing && ac && ac.state === 'running') {
           var n = ac.currentTime, o = gain(1); o.connect(master);
@@ -2908,7 +2910,7 @@ em .nm{font-style:italic}
         if (bronze) pins.forEach(function (r) { r.classList.add('on'); });
         box.classList.remove('holding'); box.classList.add('done'); if (!sound) box.classList.add('quiet');
         btn.setAttribute('aria-label', 'Ổ khoá đã mở');
-        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst', true); }, 250); }
+        if (sound) { clack(bronze); if (window.a07cast) window.a07cast(true); if (window.a07shot) setTimeout(function () { window.a07shot('keyburst'); }, 250); }
       }
       function down(e) {
         if (done || (e.button && e.button > 0)) return;
@@ -3137,37 +3139,85 @@ em .nm{font-style:italic}
     function sine(o, f, v, dur, at, type) { var x = ac.createOscillator(), g = gain(0); x.type = type || 'sine'; x.frequency.value = f; g.gain.setValueAtTime(v, at); g.gain.exponentialRampToValueAtTime(0.0001, at + dur); x.connect(g); g.connect(o); x.start(at); x.stop(at + dur + 0.05); }
     function clank(o, at, v) { [523, 1371, 2307, 3790].forEach(function (f, i) { sine(o, f * (0.95 + Math.random() * 0.1), v * [0.5, 0.35, 0.22, 0.12][i], 0.25 + 0.35 / (i + 1), at); }); nz(o, 'bandpass', 2600, 1800, 2, v * 1.6, 0.06, at); sine(o, 70, v * 2.2, 0.25, at); }
     function clink(o, at, v) { sine(o, 2400 + Math.random() * 1800, v, 0.12, at, 'triangle'); }
+    /* bộ tiếng "anime": vang dài (convolver), bão hoà cho cú nổ dày, tiếng dồn lên trước cú đánh */
+    var busD = null, busW = null, sat = null;
+    function bus() {
+      if (busD) return;
+      var len = Math.floor(ac.sampleRate * 2.8), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (var c = 0; c < 2; c++) { var d = ir.getChannelData(c); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+      var cv = ac.createConvolver(); cv.buffer = ir;
+      busD = gain(1); busW = gain(0.55); busD.connect(master); busW.connect(cv); cv.connect(master);
+      sat = ac.createWaveShaper(); var cu = new Float32Array(1024); for (var k = 0; k < 1024; k++) { var x = k / 512 - 1; cu[k] = Math.tanh(x * 3.2); } sat.curve = cu;
+      var sg = gain(0.8); sat.connect(sg); sg.connect(busD); sg.connect(busW);
+    }
+    function wet(v) { var g = gain(v); g.connect(busD); g.connect(busW); return g; }   // có vang
+    function hard(v) { var g = gain(v); g.connect(sat); return g; }                    // bão hoà + vang
+    // tiếng dồn lên: nhiễu quét lên cao + âm cưa trượt lên, kết thúc đúng lúc cú đánh tới
+    function riser(o, at, dur, v) {
+      var s = ac.createBufferSource(); s.buffer = white(); var f = filt('bandpass', 300, 1.5), g = gain(0.0001);
+      f.frequency.setValueAtTime(300, at); f.frequency.exponentialRampToValueAtTime(7000, at + dur);
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(v, at + dur * 0.95); g.gain.linearRampToValueAtTime(0, at + dur + 0.02);
+      s.connect(f); f.connect(g); g.connect(o); s.start(at); s.stop(at + dur + 0.05);
+      var x = ac.createOscillator(), xg = gain(0.0001); x.type = 'sawtooth'; x.frequency.setValueAtTime(90, at); x.frequency.exponentialRampToValueAtTime(900, at + dur);
+      var lp = filt('lowpass', 1800); xg.gain.setValueAtTime(0.0001, at); xg.gain.exponentialRampToValueAtTime(v * 0.25, at + dur * 0.95); xg.gain.linearRampToValueAtTime(0, at + dur + 0.02);
+      x.connect(lp); lp.connect(xg); xg.connect(o); x.start(at); x.stop(at + dur + 0.05);
+    }
+    // cú nổ: tiếng trầm rơi xuống tận đáy + cú đập + bụi, đi qua bão hoà cho dày
+    function boom(at, v) {
+      bus(); var o = hard(v);
+      var x = ac.createOscillator(), g = gain(0); x.frequency.setValueAtTime(140, at); x.frequency.exponentialRampToValueAtTime(32, at + 0.7);
+      g.gain.setValueAtTime(1, at); g.gain.exponentialRampToValueAtTime(0.0001, at + 0.9); x.connect(g); g.connect(o); x.start(at); x.stop(at + 0.95);
+      nz(o, 'lowpass', 3000, 200, 0.7, 0.9, 0.35, at); nz(wet(v * 0.5), 'bandpass', 1800, 400, 1, 0.5, 0.6, at + 0.01);
+    }
+    function whoosh(at, dur, v, up) { bus(); nz(wet(v), 'bandpass', up ? 400 : 4000, up ? 4000 : 300, 1.6, 1, dur, at); }
+    // tiếng kim loại ngân dài kiểu "shiiing"
+    function shing(at, v, base) {
+      bus(); var o = wet(v), b = base || 1;
+      [1180, 2950, 4720, 6330, 8100].forEach(function (f, i) { sine(o, f * b * (0.98 + Math.random() * 0.04), [0.35, 0.3, 0.2, 0.12, 0.08][i], 1.6 - i * 0.2, at); });
+      nz(o, 'highpass', 6000, 9000, 1, 0.5, 0.25, at);
+    }
+    function sparkle(at, v, notes) { bus(); var o = wet(v); (notes || [1568, 2093, 2637, 3136, 4186]).forEach(function (f, i) { sine(o, f, 0.4, 0.9, at + i * 0.045); }); }
+    function heavyClank(at, v) { bus(); clank(wet(v), at, 1); boom(at, v * 0.6); }
     var S = {
       flip: function (o, n) { nz(o, 'bandpass', 900, 3400, 1.2, 0.22, 0.2, n); nz(o, 'lowpass', 900, 400, 1, 0.3, 0.06, n + 0.17); },
       deal: function (o, n) { for (var i = 0; i < 3; i++) nz(o, 'bandpass', 700, 2600, 1, 0.18, 0.24, n + i * 0.25); },
       dissolve: function (o, n) { nz(o, 'highpass', 3000, 7000, 0.7, 0.07, 1.8, n); [1568, 1175, 880].forEach(function (f, i) { sine(o, f, 0.03, 1.2, n + i * 0.2); }); },
+      // dấu kích hoạt (vòng tròn rối): tiếng dồn lên 0,85 giây rồi loé một cái, nối thẳng vào hiệu ứng năng lực
+      cast: function (o, n) { bus(); riser(wet(1), n, 0.85, 0.35); sparkle(n + 0.05, 0.05, [2637, 3136, 3951]); whoosh(n + 0.7, 0.3, 0.3, true); },
       chains: function (o, n) {
-        nz(o, 'bandpass', 1400, 5200, 6, 0.35, 0.42, n);                     // rít lên
-        for (var c = 0; c < 5; c++) clank(o, n + 0.34 + c * 0.075, 0.09);       // đập trúng
-        for (var k = 0; k < 14; k++) clink(o, n + 0.8 + k * (0.12 + Math.random() * 0.15), 0.025 * (1 - k / 14)); // căng rung
-        nz(o, 'bandpass', 4200, 1200, 4, 0.25, 0.5, n + 5.1);                 // giật ngược về
-        for (var j = 0; j < 10; j++) clink(o, n + 5.1 + j * 0.045, 0.03);
+        bus(); boom(n, 0.7);                                                     // bóng tối sập xuống
+        nz(wet(1), 'bandpass', 1200, 6000, 7, 0.6, 0.45, n + 0.02);              // xích rít lên
+        whoosh(n + 0.05, 0.35, 0.5, true);
+        for (var c = 0; c < 5; c++) heavyClank(n + 0.34 + c * 0.075, 0.18);      // đập trúng từng sợi
+        shing(n + 0.5, 0.12, 0.6);
+        for (var k = 0; k < 16; k++) clink(wet(1), n + 0.9 + k * (0.1 + Math.random() * 0.12), 0.05 * (1 - k / 16)); // căng rung
+        whoosh(n + 5.05, 0.5, 0.6, false); nz(wet(1), 'bandpass', 5000, 1200, 5, 0.4, 0.5, n + 5.1); // giật ngược về
+        for (var j = 0; j < 12; j++) clink(wet(1), n + 5.1 + j * 0.04, 0.05);
       },
       keysense: function (o, n) {
-        sine(o, 45, 0.5, 0.6, n); nz(o, 'lowpass', 400, 80, 1, 0.5, 0.5, n);       // tối sập: tiếng ầm
-        [0.15, 0.32, 0.48, 0.6].forEach(function (d) { clank(o, n + d + 0.22, 0.08); sine(o, 60, 0.35, 0.3, n + d + 0.22); }); // bánh răng đập vào
-        nz(o, 'bandpass', 900, 1100, 3, 0.05, 2.2, n + 0.5);                        // tiếng bánh răng quay rè rè
-        for (var k = 0; k < 5; k++) { clank(o, n + 1.25 + k * 0.24, 0.05); sine(o, 90 + k * 12, 0.25, 0.15, n + 1.25 + k * 0.24); } // lẫy bị đẩy lên
+        bus(); boom(n, 0.6);                                                      // tối sập
+        [0.15, 0.32, 0.48, 0.6].forEach(function (d) { heavyClank(n + d + 0.22, 0.2); whoosh(n + d, 0.24, 0.25, true); }); // bánh răng lao vào, đập
+        var gr = wet(0.06); nz(gr, 'bandpass', 700, 900, 4, 1, 2.2, n + 0.5);    // bánh răng quay rè rè
+        for (var k = 0; k < 5; k++) { heavyClank(n + 1.25 + k * 0.24, 0.1 + k * 0.02); } // từng cái lẫy
+        riser(wet(1), n + 1.6, 0.85, 0.3);                                        // dồn lên trước cú bật
         S.keyburst(o, n + 2.45);
       },
       keyburst: function (o, n) {
-        clank(o, n + 0.15, 0.12); sine(o, 40, 0.7, 0.8, n + 0.15); nz(o, 'lowpass', 1200, 100, 1, 0.6, 0.9, n + 0.15);
-        nz(o, 'bandpass', 2500, 7000, 2, 0.25, 0.5, n + 0.17);                       // quai khoá bật vút lên
-        [1046, 1568, 2093, 3136].forEach(function (f, i) { sine(o, f, 0.035, 1.6, n + 0.25 + i * 0.05); });
-        for (var j = 0; j < 8; j++) clink(o, n + 0.5 + j * 0.09, 0.02);             // bánh răng văng, rơi lách cách
+        bus(); boom(n + 0.15, 1); heavyClank(n + 0.15, 0.25); shing(n + 0.15, 0.18, 0.8);   // "CẠCH" thật to
+        whoosh(n + 0.17, 0.55, 0.6, true);                                        // quai khoá vút lên
+        sparkle(n + 0.3, 0.07);
+        for (var j = 0; j < 10; j++) clink(wet(1), n + 0.6 + j * 0.08, 0.04);    // bánh răng văng, rơi lách cách
       },
       anomaly: function (o, n) {
-        sine(o, 5400, 0.015, 4.2, n + 0.1);                                         // ù tai, thời gian ngừng
-        nz(o, 'lowpass', 2000, 150, 1, 0.3, 0.6, n);                                // âm thanh xung quanh bị hút mất
-        [0.4, 0.66, 1.5, 1.76, 2.6, 2.86, 3.7, 3.96].forEach(function (b, i) { sine(o, 52, i % 2 ? 0.45 : 0.65, 0.25, n + b); nz(o, 'lowpass', 160, 60, 1, i % 2 ? 0.3 : 0.45, 0.15, n + b); });
-        [0.35, 1.35, 2.35].forEach(function (w) { sine(o, 880, 0.03, 0.8, n + w); nz(o, 'bandpass', 3500, 500, 2, 0.08, 1, n + w); });
-        var x = ac.createOscillator(), g2 = gain(0), st = n + 1.0; x.type = 'sawtooth'; x.frequency.value = 92; var lp = filt('bandpass', 1100, 2); g2.gain.setValueAtTime(0, st); g2.gain.linearRampToValueAtTime(0.06, st + 0.04);
-        for (var q = 0; q < 24; q++) g2.gain.setValueAtTime(q % 2 ? 0.008 : 0.06, st + 0.06 + q * 0.06); g2.gain.linearRampToValueAtTime(0, st + 3); x.connect(lp); lp.connect(g2); g2.connect(o); x.start(st); x.stop(st + 3.1);
+        bus(); whoosh(n, 0.6, 0.5, false); nz(wet(1), 'lowpass', 3000, 120, 1, 0.5, 0.7, n);  // âm thanh xung quanh bị hút mất
+        sine(wet(1), 5400, 0.02, 4.3, n + 0.1);                                   // ù tai: thời gian ngừng
+        [0.4, 0.66, 1.5, 1.76, 2.6, 2.86, 3.7, 3.96].forEach(function (b, i) { boom(n + b, i % 2 ? 0.35 : 0.55); }); // tim đập rung cả trang
+        [0.35, 1.35, 2.35].forEach(function (w) { var og = wet(0.2); sine(og, 1320, 0.5, 1.2, n + w); sine(og, 1980, 0.25, 1, n + w); whoosh(n + w, 0.9, 0.2, false); }); // sóng dò "ping"
+        var x = ac.createOscillator(), g2 = gain(0), st = n + 1.0, hg = hard(0.6); x.type = 'sawtooth'; x.frequency.value = 85; var lp = filt('bandpass', 1300, 1.5);
+        g2.gain.setValueAtTime(0, st); g2.gain.linearRampToValueAtTime(0.3, st + 0.03);
+        for (var q = 0; q < 26; q++) g2.gain.setValueAtTime(q % 2 ? 0.02 : 0.3, st + 0.05 + q * 0.055);   // giật nhoè
+        g2.gain.linearRampToValueAtTime(0, st + 3); x.connect(lp); lp.connect(g2); g2.connect(hg); x.start(st); x.stop(st + 3.1);
+        shing(st, 0.1, 0.5);
       },
       creep: function (o, n) { for (var k = 0; k < 22; k++) clink(o, n + k * (0.12 + Math.random() * 0.2), 0.018); nz(o, 'lowpass', 300, 120, 1, 0.25, 6, n + 3); }
     };
