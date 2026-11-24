@@ -2851,6 +2851,112 @@ els.forEach(function(el){io.observe(el)});})();
     for (var f = 0; f < 5; f++) { var fy = hz + h * (0.03 + f * 0.05), fx = ((t * w * 0.006 + f * w * 0.3) % (w * 1.4)) - w * 0.2; gGlow(g, fx, fy, w * 0.25, dk ? '#8d938f' : '#ffffff', dk ? 0.08 : 0.25); }
   };
 
+  // ---------- Góc nhìn khác ch12, Talia "Đếm vết nứt" ----------
+  // vết nứt trên đá: một đường gãy khúc, chẻ nhánh ở cuối (dùng chung cho ba tranh của Talia)
+  function tCrack(g, x, y, ang, len, R, k, depth) {
+    var px = x, py = y, n = 6;
+    g.beginPath(); g.moveTo(px, py);
+    for (var i = 1; i <= n; i++) { var a = ang + (R[(k * 13 + i) % 240] - 0.5) * 0.9; px += Math.cos(a) * len / n; py += Math.sin(a) * len / n; g.lineTo(px, py); }
+    g.stroke();
+    if (depth > 0) { tCrack(g, px, py, ang - 0.5, len * 0.45, R, k + 7, depth - 1); tCrack(g, px, py, ang + 0.45, len * 0.38, R, k + 11, depth - 1); }
+  }
+  // Lán lợp tôn dưới chân đồi lúc trời còn tối: đống tro còn đỏ, mấy củ khoai gói lá chuối,
+  // đòn gánh gác ngang hai sọt đá, con dốc mờ mờ phía sau, miệng hầm đen trên sườn núi.
+  ART.shed = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.5;
+    var sk = g.createLinearGradient(0, 0, 0, hz);
+    if (dk) { sk.addColorStop(0, '#0d1219'); sk.addColorStop(1, '#232a33'); } else { sk.addColorStop(0, '#5d6a7a'); sk.addColorStop(1, '#a9acaa'); }
+    g.fillStyle = sk; g.fillRect(0, 0, w, h);
+    // sườn núi với miệng hầm đen
+    g.fillStyle = dk ? '#151a1e' : '#5a5f5e';
+    g.beginPath(); g.moveTo(0, hz); g.quadraticCurveTo(w * 0.35, h * 0.12, w * 0.72, h * 0.2); g.quadraticCurveTo(w * 0.9, h * 0.26, w, h * 0.36); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    g.fillStyle = '#000000'; g.beginPath(); g.ellipse(w * 0.66, h * 0.33, w * 0.025, h * 0.035, 0, Math.PI, 0); g.lineTo(w * 0.685, h * 0.35); g.lineTo(w * 0.635, h * 0.35); g.fill();
+    // con dốc đá dẫn lên
+    g.strokeStyle = rgba(dk ? '#3a3e3f' : '#8d8f88', 0.8); g.lineWidth = 2; g.beginPath(); g.moveTo(w * 0.45, h); g.quadraticCurveTo(w * 0.55, h * 0.55, w * 0.65, h * 0.36); g.stroke();
+    // nền đất trước lán
+    g.fillStyle = dk ? '#1d1c1a' : '#6b6255'; g.fillRect(0, h * 0.74, w, h * 0.26);
+    // lán: hai cột, mái tôn gợn sóng chéo
+    var lx = w * 0.06, rx = w * 0.44, ty = h * 0.42, by = h * 0.78;
+    g.fillStyle = dk ? '#2a2018' : '#4d3c2c'; g.fillRect(lx + w * 0.02, ty, w * 0.012, by - ty); g.fillRect(rx - w * 0.03, ty + h * 0.03, w * 0.012, by - ty - h * 0.03);
+    g.fillStyle = dk ? '#3a3d40' : '#7e8386'; g.beginPath(); g.moveTo(lx - w * 0.02, ty - h * 0.02); g.lineTo(rx + w * 0.02, ty + h * 0.04); g.lineTo(rx + w * 0.02, ty + h * 0.07); g.lineTo(lx - w * 0.02, ty + h * 0.01); g.fill();
+    g.strokeStyle = rgba('#000000', 0.35); g.lineWidth = 1; for (var s = 0; s < 14; s++) { var u = s / 14, x = lx - w * 0.02 + u * (rx - lx + w * 0.04); g.beginPath(); g.moveTo(x, ty - h * 0.02 + u * h * 0.06); g.lineTo(x, ty + h * 0.01 + u * h * 0.06); g.stroke(); }
+    // đống tro còn đỏ dưới mái, khói mỏng
+    var ax = w * 0.22, ay = h * 0.79, fl = 0.75 + 0.25 * Math.sin(t * 2.3) * Math.sin(t * 3.7);
+    gGlow(g, ax, ay, w * 0.14, '#ff9a5a', (dk ? 0.3 : 0.25) * fl);
+    g.fillStyle = dk ? '#3a3632' : '#8a847a'; g.beginPath(); g.ellipse(ax, ay, w * 0.07, h * 0.025, 0, 0, 7); g.fill();
+    for (var e = 0; e < 7; e++) { var a = 0.4 + 0.6 * Math.abs(Math.sin(t * 1.6 + e * 2.1)); g.fillStyle = rgba('#ff7a3a', a * 0.8); g.beginPath(); g.arc(ax - w * 0.05 + R[e] * w * 0.1, ay - h * 0.004 + R[e + 7] * h * 0.012, 1.2 + R[e + 14], 0, 7); g.fill(); }
+    for (var m = 0; m < 4; m++) { var k = ((t * 0.12 + m / 4) % 1); g.fillStyle = rgba(dk ? '#9aa0a4' : '#e8e8e4', 0.12 * (1 - k)); g.beginPath(); g.arc(ax + Math.sin(k * 5 + m) * w * 0.02, ay - k * h * 0.28, w * 0.02 + k * w * 0.03, 0, 7); g.fill(); }
+    // gói lá chuối, mấy củ khoai đen nhẻm hé ra
+    g.fillStyle = dk ? '#2d4430' : '#5e8a5a'; g.beginPath(); g.ellipse(w * 0.33, h * 0.84, w * 0.045, h * 0.022, -0.2, 0, 7); g.fill();
+    g.fillStyle = dk ? '#1a1410' : '#2e241c'; [0, 1, 2].forEach(function (i) { g.beginPath(); g.ellipse(w * (0.315 + i * 0.016), h * (0.83 - i * 0.002), w * 0.01, h * 0.007, 0.3, 0, 7); g.fill(); });
+    // hai sọt đá và đòn gánh gác ngang
+    [0.56, 0.74].forEach(function (u, i) {
+      var cx = w * u, cy = h * 0.86, cw = w * 0.065, ch = h * 0.09;
+      g.fillStyle = dk ? '#3d3122' : '#8a7148'; g.beginPath(); g.moveTo(cx - cw, cy - ch); g.lineTo(cx + cw, cy - ch); g.lineTo(cx + cw * 0.8, cy); g.lineTo(cx - cw * 0.8, cy); g.fill();
+      g.strokeStyle = rgba('#000000', 0.3); for (var q = 1; q < 5; q++) { g.beginPath(); g.moveTo(cx - cw + q * cw * 0.4, cy - ch); g.lineTo(cx - cw * 0.8 + q * cw * 0.32, cy); g.stroke(); }
+      for (var r = 0; r < 6; r++) rock(g, cx - cw * 0.7 + R[r + i * 6 + 30] * cw * 1.4, cy - ch - R[r + i * 6 + 50] * h * 0.02, 3 + R[r + 70] * 5, R, r + i * 6, dk ? '#4a4a48' : '#8a867c');
+    });
+    g.strokeStyle = dk ? '#5a4632' : '#6e5236'; g.lineWidth = Math.max(3, w * 0.007); g.lineCap = 'round'; g.beginPath(); g.moveTo(w * 0.5, h * 0.75); g.quadraticCurveTo(w * 0.65, h * 0.73, w * 0.8, h * 0.75); g.stroke(); g.lineCap = 'butt';
+    vign(g, w, h, 0.55);
+  };
+  // Khe đá giữa hai cột chống, nhìn từ bên trong: vách đá sát mặt, vết nứt chạy chéo chẻ đôi ở cuối,
+  // những vết nhỏ rẽ ra; hai mép tối ép vào rồi nới ra theo nhịp thở rất khẽ; ngoài khe một bóng mờ đi qua.
+  ART.crevice = function (g, w, h, t, R) {
+    var dk = C.dark;
+    var bg = g.createRadialGradient(w * 0.5, h * 0.45, 0, w * 0.5, h * 0.45, Math.max(w, h) * 0.6);
+    if (dk) { bg.addColorStop(0, '#3b3833'); bg.addColorStop(1, '#0e0e0f'); } else { bg.addColorStop(0, '#6e665a'); bg.addColorStop(1, '#2a2520'); }
+    g.fillStyle = bg; g.fillRect(0, 0, w, h);
+    // vân đá ẩm, hạt li ti
+    for (var k = 0; k < 120; k++) { g.fillStyle = rgba(R[k] > 0.5 ? '#ffffff' : '#000000', 0.04 + R[k + 120] * 0.05); g.fillRect(R[(k * 3) % 240] * w, R[(k * 7) % 240] * h, 1.5, 1.5); }
+    // vết nứt: một vết lớn chạy chéo, chẻ đôi; vài vết nhỏ quanh
+    g.lineCap = 'round';
+    g.strokeStyle = rgba('#000000', dk ? 0.85 : 0.7); g.lineWidth = Math.max(1.6, w / 300);
+    tCrack(g, w * 0.3, h * 0.24, 0.62, Math.min(w, h) * 0.6, R, 3, 1);
+    g.lineWidth = Math.max(1, w / 520);
+    for (var c = 0; c < 9; c++) { g.strokeStyle = rgba('#000000', 0.45 + R[c + 90] * 0.3); tCrack(g, R[c + 20] * w, R[c + 40] * h, R[c + 60] * 6.28, Math.min(w, h) * (0.1 + R[c + 80] * 0.16), R, c * 5 + 17, c % 3 ? 0 : 1); }
+    // mép sáng mảnh bên dưới mỗi vết (đá ướt)
+    g.strokeStyle = rgba(dk ? '#c9c0ae' : '#efe4cc', dk ? 0.16 : 0.08); g.lineWidth = 1; g.save(); g.translate(1, 1.5); tCrack(g, w * 0.3, h * 0.24, 0.62, Math.min(w, h) * 0.6, R, 3, 1); g.restore(); g.lineCap = 'butt';
+    // một giọt nước bò xuống
+    var dy = (t * 0.05 % 1); g.fillStyle = rgba(dk ? '#9fb6c4' : '#dfe8ec', 0.5 * (1 - dy)); g.beginPath(); g.ellipse(w * 0.72, h * (0.1 + dy * 0.7), 1.6, 2.6, 0, 0, 7); g.fill();
+    // bóng ngoài khe đi qua (chỉ là một vệt tối lướt ngang mép phải, rồi dừng, rồi đi tiếp)
+    var cyc = (t * 0.09) % 1, sx = cyc < 0.4 ? cyc / 0.4 * 0.5 : cyc < 0.6 ? 0.5 : 0.5 + (cyc - 0.6) / 0.4 * 0.5;
+    var sh = g.createLinearGradient(0, 0, w, 0); sh.addColorStop(Math.max(0, sx - 0.12), rgba('#000000', 0)); sh.addColorStop(sx, rgba('#000000', 0.35)); sh.addColorStop(Math.min(1, sx + 0.12), rgba('#000000', 0));
+    g.fillStyle = sh; g.fillRect(0, 0, w, h);
+    // hai mép tối ép vào, nới ra theo nhịp thở bằng mũi, rất chậm
+    var br = 0.5 + 0.5 * Math.sin(t * 0.9), ew = w * (0.16 + 0.04 * br);
+    var L = g.createLinearGradient(0, 0, ew, 0); L.addColorStop(0, rgba('#000000', 0.98)); L.addColorStop(1, rgba('#000000', 0)); g.fillStyle = L; g.fillRect(0, 0, ew, h);
+    var Rr = g.createLinearGradient(w, 0, w - ew, 0); Rr.addColorStop(0, rgba('#000000', 0.98)); Rr.addColorStop(1, rgba('#000000', 0)); g.fillStyle = Rr; g.fillRect(w - ew, 0, ew, h);
+    vign(g, w, h, 0.7);
+  };
+  // Trần hầm nhìn từ dưới lên: cột gãy một bên, vết nứt toả ra như rễ cây, đá vụn rơi lả tả;
+  // dưới nền vài mắt xích nằm lại và cán búa gỗ thò ra khỏi đá đổ.
+  ART.roots = function (g, w, h, t, R) {
+    var dk = C.dark; g.fillStyle = dk ? '#09090a' : '#1f1c18'; g.fillRect(0, 0, w, h);
+    var fl = 0.8 + 0.2 * Math.sin(t * 7) * Math.sin(t * 11);
+    glow(g, w * 0.82, h * 0.6, w * 0.5, LAMP, (dk ? 0.18 : 0.24) * fl);
+    // mặt trần đá
+    var cg = g.createLinearGradient(0, 0, 0, h * 0.7); cg.addColorStop(0, dk ? '#1a1a1c' : '#4a443b'); cg.addColorStop(1, dk ? '#0e0e10' : '#2e2a24');
+    g.fillStyle = cg; g.beginPath(); g.moveTo(0, 0); g.lineTo(w, 0); g.lineTo(w, h * 0.6); g.quadraticCurveTo(w * 0.5, h * 0.72, 0, h * 0.62); g.fill();
+    // cột gãy bên trái: nửa trên còn treo, nửa dưới nghiêng
+    g.fillStyle = dk ? '#2b2017' : '#5a4330'; g.fillRect(w * 0.12, 0, w * 0.04, h * 0.3);
+    g.save(); g.translate(w * 0.16, h * 0.96); g.rotate(-0.42); g.fillRect(-w * 0.02, -h * 0.55, w * 0.04, h * 0.55); g.restore();
+    g.strokeStyle = dk ? '#6a5a44' : '#c8b08a'; g.lineWidth = 1.2; g.beginPath(); for (var s = 0; s < 6; s++) { g.moveTo(w * (0.12 + s * 0.007), h * 0.3); g.lineTo(w * (0.122 + s * 0.007), h * (0.32 + R[s] * 0.03)); } g.stroke();
+    // vết nứt toả ra từ đầu cột gãy, dài dần, nối vào nhau như rễ
+    var grow = Math.min(1, 0.55 + 0.45 * ((t * 0.08) % 1.3));
+    g.lineCap = 'round'; g.strokeStyle = rgba('#000000', 0.9);
+    for (var c = 0; c < 7; c++) { g.lineWidth = Math.max(1, w / (260 + c * 60)); tCrack(g, w * 0.15, h * 0.06, -0.15 + c * 0.17 + (R[c + 30] - 0.5) * 0.15, w * (0.35 + R[c] * 0.4) * grow, R, c * 9 + 5, 2); }
+    g.strokeStyle = rgba(dk ? '#c9c0ae' : '#efe4cc', dk ? 0.16 : 0.07); g.lineWidth = 1; g.save(); g.translate(0, 1.5); for (var c2 = 0; c2 < 7; c2++) tCrack(g, w * 0.15, h * 0.06, -0.15 + c2 * 0.17 + (R[c2 + 30] - 0.5) * 0.15, w * (0.35 + R[c2] * 0.4) * grow, R, c2 * 9 + 5, 2); g.restore(); g.lineCap = 'butt';
+    // đá vụn rơi lả tả
+    for (var d = 0; d < 16; d++) { var u = ((t * (0.25 + R[d + 100] * 0.3) + R[d + 120]) % 1), x = w * (0.2 + R[d + 140] * 0.7), y = h * (0.1 + u * 0.85); g.fillStyle = rgba(dk ? '#8a8478' : '#b8b0a0', 0.6 * (1 - u * 0.5)); g.fillRect(x, y, 1.5 + R[d + 160] * 2.5, 1.5 + R[d + 160] * 2.5); }
+    // nền: đá đổ, cán búa thò ra, mấy mắt xích nằm lại
+    g.fillStyle = dk ? '#141416' : '#3a352e'; g.fillRect(0, h * 0.84, w, h * 0.16);
+    for (var r = 0; r < 16; r++) rock(g, w * (0.02 + R[r + 180] * 0.5), h * (0.82 + R[r + 200] * 0.14), 6 + R[r + 220] * 14, R, r, dk ? '#24252a' : '#57524a');
+    g.save(); g.translate(w * 0.36, h * 0.9); g.rotate(-0.12); g.fillStyle = dk ? '#5a4632' : '#7a5c3e'; g.fillRect(0, -3, w * 0.16, 6); g.restore();
+    var lk = Math.max(7, h * 0.035), pts = []; for (var i = 0; i < 7; i++) pts.push([w * (0.6 + i * 0.045), h * (0.93 - Math.sin(i * 0.9) * 0.012)]);
+    chainPath(g, pts, t, lk, 0.85);
+    vign(g, w, h, 0.65);
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
