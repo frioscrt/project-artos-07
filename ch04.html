@@ -2288,7 +2288,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     function drawChains(t, R) {
       if (t > 7.2) { main.style.transform = ''; return true; }
       var cx = W / 2, cy = H * 0.5, m = Math.min(W, H), link = Math.max(12, m * 0.034), lw = Math.max(2.4, link * 0.28);
-      var iron = C.dark ? '#14181a' : '#1b1f21', hi = C.dark ? '#b9c6c8' : '#8e9ba0', glint = '#e9f6f8';
+      var iron = C.dark ? '#59646a' : '#1b1f21', hi = C.dark ? '#eef6f7' : '#8e9ba0', glint = '#e9f6f8';  // nền tối: thép sáng hơn, có quầng ánh kim để xích nổi lên (Clair 24/11)
       var O = [[-0.08, -0.05], [0.5, -0.1], [1.08, -0.05], [-0.1, 0.62], [1.1, 0.58]];
       var fade = t > 6.4 ? Math.max(0, 1 - (t - 6.4) / 0.8) : 1;
       // bóng tối sập xuống
@@ -2298,7 +2298,10 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       function linkAt(x, y, ang, face, a) {
         g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = a;
         var rx = link * 0.62, ry = face ? link * 0.36 : link * 0.13;
+        if (C.dark) { g.shadowColor = 'rgba(180,205,215,.6)'; g.shadowBlur = link * 0.7; }
         g.lineWidth = lw * 1.5; g.strokeStyle = iron; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 7); g.stroke();
+        g.shadowBlur = 0;
+        if (C.dark) { g.lineWidth = Math.max(1, lw * 0.25); g.strokeStyle = 'rgba(210,228,232,.55)'; g.beginPath(); g.ellipse(0, 0, rx + lw * 0.75, ry + lw * 0.75, 0, 0, 7); g.stroke(); }
         g.lineWidth = lw * 0.45; g.strokeStyle = hi; g.beginPath(); g.ellipse(0, -lw * 0.2, rx * 0.92, Math.max(1, ry * 0.85), 0, 3.5, 5.9); g.stroke();
         g.restore();
       }
@@ -2565,7 +2568,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     // sợi xích bò từ mép dưới vào giữa trang, rồi bóng tối nuốt dần
     MORE.creep = function (t) {
       if (t > 8) return true; var col = C.dark ? '#a9b4b4' : '#3a4442', link = Math.max(9, H * 0.022), L = Math.min(1, t / 3) * H * 0.55, n = Math.floor(L / link), fade = t > 6.5 ? 1 - (t - 6.5) / 1.5 : 1;
-      g.save(); g.globalAlpha = Math.max(0, fade); g.strokeStyle = col; g.lineWidth = Math.max(1.4, W / 320);
+      g.save(); g.globalAlpha = Math.max(0, fade); g.strokeStyle = C.dark ? '#d6e0e2' : col; g.lineWidth = Math.max(1.4, W / 320); if (C.dark) { g.shadowColor = 'rgba(180,205,215,.7)'; g.shadowBlur = 8; }
       for (var k = 0; k < n; k++) { var u = k / Math.max(1, n), x = W * 0.3 + k * link * 0.45 + Math.sin(k * 0.5 - t * 2) * link * 0.8, y = H + 6 - k * link * 0.85; g.save(); g.translate(x, y); g.rotate(0.5 + Math.sin(k * 0.5 - t * 2) * 0.2); g.beginPath(); if (k % 2) g.ellipse(0, 0, link * 0.12, link * 0.6, 0, 0, 7); else g.ellipse(0, 0, link * 0.32, link * 0.6, 0, 0, 7); g.stroke(); g.restore(); }
       g.restore();
       var d = t < 3 ? 0 : Math.min(1, (t - 3) / 3) * (t > 6.5 ? Math.max(0, 1 - (t - 6.5) / 1.5) : 1);
@@ -2640,7 +2643,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
     /* ---- năng lực Clevia (Clair chốt 24/11: gộp A + C): vòng khoá xoay khớp từng cú cạch, đồng thời các đoạn chữ lệch như lẫy khoá rồi về hàng,
        cuối cùng tia sáng lỗ khoá xuyên qua và vệt sáng quét ngang. Không tô tối trang, không bánh răng. ---- */
     var CW = { core: '#8E2238', mid: '#C0465F', light: '#F6C9D1', hot: '#FFE8EC' };
-    function ring(cx, cy, r, w, a, gapA, gapW) { g.strokeStyle = rgba(CW.mid, a); g.lineWidth = w; g.beginPath(); g.arc(cx, cy, r, gapA + gapW / 2, gapA - gapW / 2 + 6.283); g.stroke(); }
+    function ring(cx, cy, r, w, a, gapA, gapW) { var dk = C.dark; g.strokeStyle = rgba(dk ? '#E8869B' : CW.mid, dk ? Math.min(1, a * 1.25) : a); g.lineWidth = w; if (dk) { g.shadowColor = rgba('#E8869B', 0.7 * a); g.shadowBlur = 10; } g.beginPath(); g.arc(cx, cy, r, gapA + gapW / 2, gapA - gapW / 2 + 6.283); g.stroke(); g.shadowBlur = 0; }
     function glow(x, y, r, col, a) { var f = g.createRadialGradient(x, y, 0, x, y, r); f.addColorStop(0, rgba(col, a)); f.addColorStop(1, rgba(col, 0)); g.fillStyle = f; g.fillRect(x - r, y - r, r * 2, r * 2); }
     // A. Vòng khoá: bốn vòng sáng mảnh có khe, quay lệch nhau; từng vòng "cạch" khớp khe lên đỉnh; khớp đủ thì một tia sáng hình lỗ khoá xuyên qua, các vòng nở tung
     MORE.clevia_a = function (t, R) {
@@ -4046,7 +4049,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
               var an = Math.atan2(y - prev[1], x - prev[0]), lx = (x + prev[0]) / 2, ly = (y + prev[1]) / 2, len = Math.hypot(x - prev[0], y - prev[1]);
               g.save(); g.translate(lx, ly); g.rotate(an);
               var hot = fired ? Math.max(0, 1 - (t - fired) / 1.2) : ten * ten;
-              g.strokeStyle = i % 2 ? '#3a3f44' : '#596068'; g.lineWidth = i % 2 ? 3.2 : 2.4;
+              g.strokeStyle = i % 2 ? '#5f6a70' : '#8a959b'; g.lineWidth = i % 2 ? 3.2 : 2.4; g.shadowColor = 'rgba(180,205,215,.5)'; g.shadowBlur = 6;
               g.beginPath(); if (i % 2) g.ellipse(0, 0, len * 0.62, 4.2, 0, 0, 7); else { g.moveTo(-len * 0.6, 0); g.lineTo(len * 0.6, 0); } g.stroke();
               if (hot > 0.05) { g.strokeStyle = 'rgba(220,230,240,' + (0.5 * hot).toFixed(3) + ')'; g.lineWidth = 1; g.beginPath(); g.ellipse(0, -1, len * 0.5, 2.6, 0, 3.4, 6); g.stroke(); }
               g.restore();
