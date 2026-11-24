@@ -3364,10 +3364,10 @@ em .nm{font-style:italic}
       // dấu kích hoạt (vòng tròn rối): tiếng dồn lên 0,85 giây rồi loé một cái, nối thẳng vào hiệu ứng năng lực
       cast: function (o, n) { bus(); riser(wet(1), n, 0.85, 0.35); sparkle(n + 0.05, 0.05, [2637, 3136, 3951]); whoosh(n + 0.7, 0.3, 0.3, true); },
       chains: function (o, n) {
-        bus(); boom(n, 0.7);                                                     // bóng tối sập xuống
+        bus(); whoosh(n, 0.4, 0.5, false);                                       // bóng tối sập xuống (không dùng tiếng ầm trầm: Clair nghe như trống, 24/11)
         nz(wet(1), 'bandpass', 1200, 6000, 7, 0.6, 0.45, n + 0.02);              // xích rít lên
         whoosh(n + 0.05, 0.35, 0.5, true);
-        for (var c = 0; c < 5; c++) heavyClank(n + 0.34 + c * 0.075, 0.18);      // đập trúng từng sợi
+        for (var c = 0; c < 5; c++) clank(wet(1), n + 0.34 + c * 0.075, 0.16);    // đập trúng từng sợi: tiếng kim loại, không tiếng ầm
         shing(n + 0.5, 0.12, 0.6);
         for (var k = 0; k < 16; k++) clink(wet(1), n + 0.9 + k * (0.1 + Math.random() * 0.12), 0.05 * (1 - k / 16)); // căng rung
         whoosh(n + 5.05, 0.5, 0.6, false); nz(wet(1), 'bandpass', 5000, 1200, 5, 0.4, 0.5, n + 5.1); // giật ngược về
