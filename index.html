@@ -2936,6 +2936,285 @@ addEventListener('pageshow',function(e){if(e.persisted){[].forEach.call(document
     vign(g, w, h, 0.6);
   };
 
+  /* ---------- tranh cho Góc nhìn khác, đợt 2 (25/11): ch11 Leon, ch08 Oscar, ch09 Ruby, ch03 Luke. Không vẽ người, chỉ dấu vết. ---------- */
+
+  // ===== ch11 Leon "Cánh cổng không cong" =====
+  // Cổng hầm giữa trưa, sợi xích quất vào chấn song theo chu kỳ: vệt xích thép lướt tới, bụi gỉ đỏ bung ra, cổng vẫn thẳng tắp.
+  ART.gatelash = function (g, w, h, t, R) {
+    var dk = C.dark; gate(g, w, h, t, R, false);
+    var mx = w * 0.5, my = h * 0.78, mw = w * 0.44, mh = h * 0.6, per = 3.4, k = Math.floor(t / per), ph = (t % per) / per;
+    var bi = Math.floor(R[(k * 7) % 200] * 7) + 1, bx = mx - mw / 2 + bi / 8 * mw, by = my - mh * (0.3 + R[(k * 11) % 200] * 0.3);
+    // vệt xích: cung thép quét từ mép trái tới chấn song
+    if (ph < 0.12) {
+      var u = ph / 0.12, ex = w * 0.02 + (bx - w * 0.02) * u, ey = h * 0.95 + (by - h * 0.95) * u;
+      g.strokeStyle = rgba(dk ? '#c8d0d2' : '#3a4244', 0.9); g.lineWidth = Math.max(2, w / 220); g.lineCap = 'round';
+      g.beginPath(); g.moveTo(-w * 0.02, h * 1.02); g.quadraticCurveTo(w * 0.1, by - h * 0.2, ex, ey); g.stroke();
+      g.strokeStyle = rgba(dk ? '#ffffff' : '#000000', 0.12); g.lineWidth = Math.max(6, w / 70); g.beginPath(); g.moveTo(-w * 0.02, h * 1.02); g.quadraticCurveTo(w * 0.1, by - h * 0.2, ex, ey); g.stroke();
+    }
+    // va: loé sáng nhỏ + bụi gỉ đỏ bung ra rồi rơi
+    if (ph >= 0.1 && ph < 0.7) {
+      var v = (ph - 0.1) / 0.6;
+      if (v < 0.15) gGlow(g, bx, by, w * 0.06, dk ? '#ffffff' : '#fff6e0', 0.5 * (1 - v / 0.15));
+      for (var i = 0; i < 26; i++) {
+        var an = R[(i + k * 3) % 220] * 6.283, sp = (0.3 + R[(i * 5 + k) % 230]) * w * 0.12, px = bx + Math.cos(an) * sp * v, py = by + Math.sin(an) * sp * v * 0.7 + v * v * h * 0.18;
+        g.fillStyle = rgba(i % 3 ? '#8a3a22' : '#c0603a', (dk ? 0.85 : 0.7) * (1 - v)); g.fillRect(px, py, 2.4, 2.4);
+      }
+      g.strokeStyle = rgba(dk ? '#f2ece0' : '#ffffff', 0.9 * (1 - v)); g.lineWidth = 1.4;
+      g.beginPath(); g.moveTo(bx - w * 0.008, by + h * 0.01); g.lineTo(bx + w * 0.008, by - h * 0.012); g.stroke();
+    }
+    dust(g, w, h, t, R, h * 0.78, 10);
+    vign(g, w, h, 0.45);
+  };
+  // Từ mỏm đá nhìn xuống sườn dốc lúc đợt nhiễm đi qua: sọt đá, đòn gánh bỏ lại, bụi đứng yên; tít dưới chân dốc một mẩu trắng lay trong gió.
+  ART.ledge = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.16; mineLand(g, w, h, t, R, hz);
+    var sg = g.createLinearGradient(0, hz, 0, h); sg.addColorStop(0, rgba('#000000', 0)); sg.addColorStop(1, rgba('#000000', dk ? 0.35 : 0.12)); g.fillStyle = sg; g.fillRect(0, hz, w, h - hz);
+    // lối mòn ngoằn ngoèo xuống dốc
+    g.strokeStyle = rgba(dk ? '#56564e' : '#d6d1c2', 0.9); g.lineWidth = Math.max(6, w * 0.02); g.lineCap = 'round'; g.beginPath(); g.moveTo(w * 0.2, h); g.bezierCurveTo(w * 0.5, h * 0.75, w * 0.3, h * 0.5, w * 0.62, h * 0.3); g.stroke();
+    rubble(g, w * 0.8, h * 0.62, w * 0.3, h * 0.16, dk ? '#2e2e2a' : '#a19d92');
+    rubble(g, w * 0.35, h * 0.4, w * 0.2, h * 0.08, dk ? '#32322d' : '#aaa69c');
+    // sọt đá và đòn gánh đặt bừa
+    [[0.42, 0.62, 0.2], [0.58, 0.48, -0.3], [0.7, 0.72, 0.5], [0.3, 0.3, 0.1]].forEach(function (b, i) {
+      var x = w * b[0], y = h * b[1], s = w * (0.022 - i * 0.002);
+      g.fillStyle = dk ? '#4a3e2c' : '#8a7452'; g.beginPath(); g.moveTo(x - s, y - s * 0.9); g.lineTo(x + s, y - s * 0.9); g.lineTo(x + s * 0.75, y); g.lineTo(x - s * 0.75, y); g.fill();
+      g.strokeStyle = dk ? '#3a3022' : '#6e5a3e'; g.lineWidth = Math.max(1.5, w / 400); g.beginPath(); g.moveTo(x - s * 2.2, y + s * 0.3); g.lineTo(x + s * 2.4, y - s * 0.2 + b[2] * s); g.stroke();
+    });
+    // mẩu băng trắng dưới chân đụn đá
+    var fx0 = w * 0.86, fy0 = h * 0.86; g.strokeStyle = dk ? '#cfcbc0' : '#f6f3ea'; g.lineWidth = Math.max(1.5, h * 0.008);
+    g.beginPath(); g.moveTo(fx0, fy0); for (var q = 1; q <= 8; q++) { var u = q / 8; g.lineTo(fx0 - u * w * 0.05, fy0 + u * h * 0.02 + Math.sin(t * 2.4 - u * 5) * h * 0.01 * u); } g.stroke();
+    // mỏm đá gần, tối, góc trái dưới (chỗ Leon ngồi)
+    g.fillStyle = dk ? '#121210' : '#4a4740'; g.beginPath(); g.moveTo(0, h * 0.7); g.lineTo(w * 0.1, h * 0.78); g.lineTo(w * 0.2, h * 0.86); g.lineTo(w * 0.24, h); g.lineTo(0, h); g.fill();
+    g.strokeStyle = rgba(dk ? '#2a2a26' : '#6a665c', 1); g.lineWidth = 1; g.beginPath(); g.moveTo(w * 0.02, h * 0.74); g.lineTo(w * 0.1, h * 0.8); g.lineTo(w * 0.16, h * 0.9); g.stroke();
+    dust(g, w, h, t * 0.15, R, hz, 14);
+    vign(g, w, h, 0.55);
+  };
+  // Cái ổ khoá cũ treo trên vòng xích gỉ, sát chấn song; một vệt nắng trắng lướt qua mặt sắt rồi đi, lặp lại thật chậm.
+  ART.lockstare = function (g, w, h, t, R) {
+    var dk = C.dark;
+    g.fillStyle = dk ? '#0a0b0b' : '#1c1a17'; g.fillRect(0, 0, w, h); // bóng tối trong hầm phía sau chấn song
+    var bar = dk ? '#5a3a2a' : '#7a4a30';
+    for (var i = 0; i < 5; i++) { var x = w * (0.1 + i * 0.2); g.fillStyle = bar; g.fillRect(x - w * 0.02, 0, w * 0.04, h);
+      g.fillStyle = rgba('#000000', 0.25); g.fillRect(x + w * 0.008, 0, w * 0.012, h);
+      g.strokeStyle = rgba(dk ? '#d8d0c0' : '#f4efe2', 0.6); g.lineWidth = 1.2; for (var s = 0; s < 4; s++) { var sy = h * (0.2 + R[i * 4 + s] * 0.6); g.beginPath(); g.moveTo(x - w * 0.02, sy); g.lineTo(x + w * 0.02, sy - h * 0.03); g.stroke(); } }
+    // vòng xích gỉ vắt ngang
+    g.strokeStyle = dk ? '#6a3a26' : '#5a2e1c'; g.lineWidth = Math.max(3, w / 120);
+    for (var k = 0; k < 9; k++) { var cx = w * (0.08 + k * 0.105), cy = h * 0.34 + Math.sin(k / 8 * Math.PI) * h * 0.1; g.beginPath(); if (k % 2) g.ellipse(cx, cy, w * 0.035, h * 0.03, 0.1, 0, 7); else g.ellipse(cx, cy, w * 0.035, h * 0.055, 0.1, 0, 7); g.stroke(); }
+    // ổ khoá to, đen sì, khẽ đung đưa
+    var sw = Math.sin(t * 0.7) * 0.04, lx = w * 0.5, ly = h * 0.44;
+    g.save(); g.translate(lx, ly); g.rotate(sw);
+    g.strokeStyle = dk ? '#2a2a28' : '#2a2824'; g.lineWidth = Math.max(5, w / 60); g.beginPath(); g.arc(0, h * 0.08, w * 0.07, Math.PI, 0); g.stroke();
+    var bw = w * 0.2, bh = h * 0.3, by = h * 0.08; var lg = g.createLinearGradient(-bw / 2, 0, bw / 2, 0); lg.addColorStop(0, dk ? '#141413' : '#1c1b19'); lg.addColorStop(0.5, dk ? '#2a2a27' : '#34322e'); lg.addColorStop(1, dk ? '#101010' : '#141312');
+    g.fillStyle = lg; g.beginPath(); g.moveTo(-bw / 2, by); g.lineTo(bw / 2, by); g.lineTo(bw / 2, by + bh * 0.8); g.quadraticCurveTo(0, by + bh * 1.1, -bw / 2, by + bh * 0.8); g.fill();
+    g.fillStyle = '#000000'; g.beginPath(); g.arc(0, by + bh * 0.4, w * 0.014, 0, 7); g.fill(); g.fillRect(-w * 0.005, by + bh * 0.4, w * 0.01, bh * 0.22);
+    // vệt nắng trắng lướt qua (chu kỳ 9 giây)
+    var c9 = (t % 9) / 9; if (c9 < 0.35) { var u = c9 / 0.35, gx = -bw * 0.8 + u * bw * 1.6, sh = g.createLinearGradient(gx - bw * 0.15, 0, gx + bw * 0.15, 0); sh.addColorStop(0, 'rgba(255,255,255,0)'); sh.addColorStop(0.5, rgba('#ffffff', dk ? 0.35 : 0.45)); sh.addColorStop(1, 'rgba(255,255,255,0)');
+      g.save(); g.beginPath(); g.moveTo(-bw / 2, by); g.lineTo(bw / 2, by); g.lineTo(bw / 2, by + bh * 0.8); g.quadraticCurveTo(0, by + bh * 1.1, -bw / 2, by + bh * 0.8); g.clip(); g.fillStyle = sh; g.fillRect(-bw, by, bw * 2, bh); g.restore(); }
+    g.restore();
+    gGlow(g, w * 0.9, h * 0.1, w * 0.3, dk ? '#a9b8bc' : '#ffffff', dk ? 0.08 : 0.15); // nắng ngoài cổng
+    vign(g, w, h, 0.5);
+  };
+
+  // ===== ch08 Oscar "Gần sông" =====
+  function riverBank(g, w, h, t, R, tod, wl) {
+    sky(g, w, h, tod, 0.6);
+    hills(g, w, h, wl, h * 0.06, rgba(sil(tod), 0.55), 3);
+    var wg = g.createLinearGradient(0, wl, 0, h); wg.addColorStop(0, C.dark ? '#22343a' : '#b9cac6'); wg.addColorStop(1, C.dark ? '#0a1316' : '#8ea29d'); g.fillStyle = wg; g.fillRect(0, wl, w, h - wl);
+    g.strokeStyle = rgba(C.dark ? '#a9c0bc' : '#ffffff', 0.22); g.lineWidth = 1;
+    for (var r = 0; r < 10; r++) { var y = wl + (h - wl) * (r + 1) / 11 * 0.7, off = ((t * (6 + r * 2) + R[r] * w) % (w * 1.3)) - w * 0.15; g.beginPath(); g.moveTo(off, y); g.lineTo(off + w * (0.04 + R[r + 30] * 0.08), y); g.stroke(); }
+  }
+  // Trời vừa hửng: con sông đen thẫm, cái chòi lá lụp xụp sát mép nước, cây cầu gỗ ngắn chìa ra; trên bờ, tảng đá lùi hẳn vào trong, cây cần câu dựng cạnh.
+  ART.riverdawn = function (g, w, h, t, R) {
+    var dk = C.dark, wl = h * 0.5; riverBank(g, w, h, t, R, 'dawn', wl);
+    // bờ đất gần (dưới)
+    g.fillStyle = dk ? '#1e1c17' : '#7a6e58'; g.beginPath(); g.moveTo(0, h * 0.78); g.quadraticCurveTo(w * 0.5, h * 0.72, w, h * 0.8); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    // chòi trên cọc, bên phải
+    var col = sil('dawn'), x = w * 0.62, b = wl + h * 0.02;
+    g.fillStyle = col; for (var p = 0; p < 4; p++) g.fillRect(x + p * w * 0.06, b, w * 0.007, h * 0.12);
+    g.fillRect(x - w * 0.01, b - h * 0.02, w * 0.22, h * 0.022); g.fillRect(x, b - h * 0.14, w * 0.19, h * 0.12);
+    g.beginPath(); g.moveTo(x - w * 0.035, b - h * 0.13); g.lineTo(x + w * 0.08, b - h * 0.27); g.lineTo(x + w * 0.24, b - h * 0.12); g.fill();
+    // cầu gỗ ngắn chìa ra mặt nước
+    g.fillStyle = dk ? '#2a2318' : '#5e4e36'; g.beginPath(); g.moveTo(x - w * 0.02, b + h * 0.01); g.lineTo(x - w * 0.2, b + h * 0.06); g.lineTo(x - w * 0.2, b + h * 0.075); g.lineTo(x - w * 0.02, b + h * 0.03); g.fill();
+    for (var c = 0; c < 4; c++) g.fillRect(x - w * (0.05 + c * 0.05), b + h * (0.02 + c * 0.012), w * 0.005, h * 0.06);
+    // vòng nước lớn ngoài đầu cầu (cá to đớp mồi), thỉnh thoảng
+    var cy = (t % 7) / 7; if (cy < 0.5) { var u = cy / 0.5; g.strokeStyle = rgba(dk ? '#9fbcbc' : '#ffffff', 0.5 * (1 - u)); g.lineWidth = 1.2; g.beginPath(); g.ellipse(x - w * 0.26, b + h * 0.1, w * 0.05 * u + 2, h * 0.012 * u + 1, 0, 0, 7); g.stroke(); }
+    // tảng đá trên bờ, lùi vào trong; cây cần câu dựng nghiêng
+    g.fillStyle = dk ? '#34322c' : '#9a948a'; g.beginPath(); g.ellipse(w * 0.24, h * 0.86, w * 0.08, h * 0.045, 0, Math.PI, 0); g.fill(); g.fillRect(w * 0.16, h * 0.86, w * 0.16, h * 0.02);
+    g.strokeStyle = dk ? '#5a4a30' : '#4a3a24'; g.lineWidth = Math.max(1.5, w / 400); g.beginPath(); g.moveTo(w * 0.34, h * 0.9); g.lineTo(w * 0.42, h * 0.5); g.stroke();
+    g.strokeStyle = rgba(dk ? '#c8d0d0' : '#ffffff', 0.4); g.lineWidth = 0.8; g.beginPath(); g.moveTo(w * 0.42, h * 0.5); g.quadraticCurveTo(w * 0.46, h * 0.62, w * 0.45, h * 0.76); g.stroke();
+    // ba bước chân từ đá tới mép nước: ba chấm mờ trên bờ
+    fog(g, w, h, t, wl, 0.32, R);
+    vign(g, w, h, 0.5);
+  };
+  // Cái thùng gỗ nhỏ đựng nước cạnh tảng đá: mặt nước gợn từng vòng theo nhịp thở. o: '' (sáng, giỏ hai con cá) | 'still' (phẳng lặng) | 'left' (bị để quên trên bờ, chiều)
+  ART.bucket = function (g, w, h, t, R, o) {
+    var dk = C.dark, mode = (o && o[0]) || '', wl = h * 0.3; riverBank(g, w, h, t, R, 'day', wl);
+    g.fillStyle = dk ? '#1c1a15' : '#8a7c62'; g.beginPath(); g.moveTo(0, h * 0.55); g.quadraticCurveTo(w * 0.5, h * 0.5, w, h * 0.58); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    if (mode !== 'left') { g.fillStyle = dk ? '#34322c' : '#9a948a'; g.beginPath(); g.ellipse(w * 0.2, h * 0.78, w * 0.16, h * 0.09, 0, Math.PI, 0); g.fill(); g.fillRect(w * 0.04, h * 0.78, w * 0.32, h * 0.05); }
+    // thùng gỗ
+    var cx = w * 0.55, top = h * 0.6, rx = w * 0.12, ry = h * 0.05, ht = h * 0.24;
+    g.fillStyle = dk ? '#3a2c1c' : '#7a5a38'; g.beginPath(); g.moveTo(cx - rx, top); g.lineTo(cx - rx * 0.88, top + ht); g.ellipse(cx, top + ht, rx * 0.88, ry * 0.8, 0, Math.PI, 0, true); g.lineTo(cx + rx, top); g.fill();
+    g.strokeStyle = rgba('#000000', 0.3); g.lineWidth = 1; for (var s = 1; s < 6; s++) { var u = s / 6; g.beginPath(); g.moveTo(cx - rx + u * rx * 2, top + ry * Math.sin(u * Math.PI) * 0.9); g.lineTo(cx - rx * 0.88 + u * rx * 1.76, top + ht + ry * 0.8 * Math.sin(u * Math.PI)); g.stroke(); }
+    g.strokeStyle = dk ? '#1c1a18' : '#3a3530'; g.lineWidth = Math.max(2, h * 0.012); [0.25, 0.75].forEach(function (u) { g.beginPath(); g.ellipse(cx, top + ht * u, rx * (1 - 0.12 * u), ry * (1 - 0.2 * u), 0, 0, Math.PI); g.stroke(); });
+    // mặt nước + vòng gợn theo nhịp thở (thở ~4 giây một nhịp)
+    var wg = g.createRadialGradient(cx, top, 0, cx, top, rx); wg.addColorStop(0, dk ? '#2c4a50' : '#9fbcbc'); wg.addColorStop(1, dk ? '#122026' : '#6f8e8c');
+    g.fillStyle = wg; g.beginPath(); g.ellipse(cx, top, rx * 0.94, ry * 0.85, 0, 0, 7); g.fill();
+    g.save(); g.beginPath(); g.ellipse(cx, top, rx * 0.94, ry * 0.85, 0, 0, 7); g.clip();
+    var amp = mode === 'still' ? 0.12 : mode === 'left' ? 0.55 : 1, per = 4;
+    for (var k = 0; k < 4; k++) { var u2 = ((t / per + k / 4) % 1); g.strokeStyle = rgba(dk ? '#b8d4d4' : '#ffffff', 0.55 * (1 - u2) * amp); g.lineWidth = 1.2; g.beginPath(); g.ellipse(cx, top, rx * 0.9 * u2 + 1, ry * 0.8 * u2 + 0.5, 0, 0, 7); g.stroke(); }
+    gGlow(g, cx - rx * 0.3, top - ry * 0.2, rx * 0.5, '#ffffff', dk ? 0.08 : 0.2);
+    g.restore();
+    g.strokeStyle = dk ? '#4a3a26' : '#5a4428'; g.lineWidth = Math.max(2, h * 0.01); g.beginPath(); g.ellipse(cx, top, rx, ry, 0, 0, 7); g.stroke();
+    // giỏ tre hai con cá diếc
+    if (!mode) { var gx = w * 0.82, gy = h * 0.8; g.fillStyle = dk ? '#4a4030' : '#a08a5e'; g.beginPath(); g.ellipse(gx, gy, w * 0.07, h * 0.04, 0, 0, 7); g.fill();
+      g.fillStyle = dk ? '#8a9a9a' : '#d8dede'; [[-0.02, -0.01, 0.3], [0.015, 0.005, -0.2]].forEach(function (f) { g.save(); g.translate(gx + w * f[0], gy + h * f[1]); g.rotate(f[2]); g.beginPath(); g.ellipse(0, 0, w * 0.025, h * 0.012, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(w * 0.024, 0); g.lineTo(w * 0.036, -h * 0.01); g.lineTo(w * 0.036, h * 0.01); g.fill(); g.restore(); }); }
+    if (mode === 'left') gGlow(g, cx, top, rx * 1.6, dk ? '#7fb0c4' : '#ffffff', 0.06 + 0.04 * Math.sin(t * 1.57));
+    vign(g, w, h, 0.5);
+  };
+  // Ký ức mười hai năm trước: biển xám, bãi cát, mũi ghe vừa cập, những vệt chân chạy ra đón; sóng lừng.
+  ART.greysea = function (g, w, h, t, R) {
+    var dk = C.dark, hz = h * 0.42;
+    var sg = g.createLinearGradient(0, 0, 0, hz); sg.addColorStop(0, dk ? '#1a1f22' : '#aeb4b6'); sg.addColorStop(1, dk ? '#33393b' : '#cfd3d2'); g.fillStyle = sg; g.fillRect(0, 0, w, hz);
+    var se = g.createLinearGradient(0, hz, 0, h * 0.75); se.addColorStop(0, dk ? '#2a3133' : '#9aa2a2'); se.addColorStop(1, dk ? '#1c2224' : '#848d8d'); g.fillStyle = se; g.fillRect(0, hz, w, h * 0.75 - hz);
+    for (var r = 0; r < 7; r++) { var y = hz + (h * 0.33) * (r / 7), sw = Math.sin(t * 0.5 + r) * h * 0.008; g.strokeStyle = rgba(dk ? '#6a7476' : '#e8ecec', 0.25 + r * 0.04); g.lineWidth = 1 + r * 0.2; g.beginPath();
+      for (var x = 0; x <= w; x += w / 30) { var yy = y + sw + Math.sin(x / w * (6 + r) + t * (0.6 + r * 0.1)) * h * 0.006 * (r + 1); x ? g.lineTo(x, yy) : g.moveTo(x, yy); } g.stroke(); }
+    // sóng lừng (con sóng lớn dâng lên rồi hạ, chu kỳ 8 giây)
+    var c8 = (t % 8) / 8, sh = Math.sin(c8 * Math.PI) * h * 0.06; g.fillStyle = rgba(dk ? '#3a4446' : '#8d9696', 0.85); g.beginPath(); g.moveTo(0, hz + h * 0.12);
+    for (var x2 = 0; x2 <= w; x2 += w / 40) g.lineTo(x2, hz + h * 0.12 - sh * Math.exp(-Math.pow((x2 / w - 0.62) * 4, 2))); g.lineTo(w, hz + h * 0.2); g.lineTo(0, hz + h * 0.2); g.fill();
+    // bãi cát
+    var bg = g.createLinearGradient(0, h * 0.72, 0, h); bg.addColorStop(0, dk ? '#3a3730' : '#c9c0aa'); bg.addColorStop(1, dk ? '#24221d' : '#ab9f86'); g.fillStyle = bg; g.beginPath(); g.moveTo(0, h * 0.75); g.quadraticCurveTo(w * 0.5, h * 0.7, w, h * 0.76); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    // bọt sóng liếm bờ
+    var fu = 0.5 + 0.5 * Math.sin(t * 0.8); g.strokeStyle = rgba(dk ? '#9aa4a4' : '#ffffff', 0.5); g.lineWidth = 1.5; g.beginPath(); for (var x3 = 0; x3 <= w; x3 += w / 30) { var y3 = h * (0.735 + 0.012 * fu) + Math.sin(x3 / w * 14 + t) * h * 0.004; x3 ? g.lineTo(x3, y3) : g.moveTo(x3, y3); } g.stroke();
+    // mũi ghe cập bờ
+    g.fillStyle = dk ? '#2a221a' : '#5a4632'; g.beginPath(); g.moveTo(w * 0.18, h * 0.8); g.lineTo(w * 0.46, h * 0.78); g.quadraticCurveTo(w * 0.52, h * 0.74, w * 0.5, h * 0.7); g.lineTo(w * 0.22, h * 0.74); g.fill();
+    g.strokeStyle = dk ? '#6a2a26' : '#8a3a30'; g.lineWidth = 2; g.beginPath(); g.moveTo(w * 0.24, h * 0.755); g.lineTo(w * 0.48, h * 0.72); g.stroke();
+    // vệt chân chạy ra từ phía trên bãi
+    for (var f = 0; f < 18; f++) { var fx = w * (0.6 + (f % 3) * 0.08 + R[f] * 0.03), fy = h * (0.98 - f / 18 * 0.2); g.fillStyle = rgba('#000000', dk ? 0.4 : 0.2); g.beginPath(); g.ellipse(fx + (f % 2) * w * 0.012, fy, w * 0.006, h * 0.008, 0.3, 0, 7); g.fill(); }
+    // mưa bụi nước
+    g.strokeStyle = rgba(dk ? '#8a9496' : '#ffffff', 0.18); g.lineWidth = 1; for (var d = 0; d < 40; d++) { var dx = (R[d + 60] * w + t * 40) % w, dy = (R[d + 100] * h + t * 140) % h; g.beginPath(); g.moveTo(dx, dy); g.lineTo(dx - 3, dy + 9); g.stroke(); }
+    vign(g, w, h, 0.6);
+  };
+  // Sát mép nước: những gợn dài chạy về một chỗ, lưng cá bạc lấp loáng quẫy bọt trắng; giữa chỗ ấy một vòng nước lõm như có bàn tay áp xuống.
+  ART.fishrush = function (g, w, h, t, R) {
+    var dk = C.dark, cx = w * 0.5, cy = h * 0.72;
+    var wg = g.createLinearGradient(0, 0, 0, h); wg.addColorStop(0, dk ? '#0c171a' : '#7f9894'); wg.addColorStop(1, dk ? '#1c3036' : '#b2c6c2'); g.fillStyle = wg; g.fillRect(0, 0, w, h);
+    // gợn dài chạy vào
+    for (var k = 0; k < 9; k++) { var u = 1 - ((t * 0.25 + k / 9) % 1), rx = w * 0.9 * u + 4, ry = h * 0.55 * u + 2; g.strokeStyle = rgba(dk ? '#8fb8bc' : '#ffffff', 0.45 * (1 - u) + 0.05); g.lineWidth = 1 + (1 - u) * 1.5; g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, Math.PI * 1.05, Math.PI * 1.95); g.stroke(); }
+    // lưng cá bạc quẫy
+    for (var f = 0; f < 14; f++) { var a0 = R[f] * Math.PI + Math.PI, rr = (0.12 + R[f + 20] * 0.3), ph = (t * (0.8 + R[f + 40]) + R[f + 60] * 6) % 1.6;
+      if (ph > 1) continue; var x = cx + Math.cos(a0) * w * rr, y = cy + Math.sin(a0) * h * rr * 0.8, s = w * (0.018 + R[f + 80] * 0.01), up = Math.sin(ph * Math.PI);
+      g.save(); g.translate(x, y); g.rotate(R[f + 100] * 6); g.fillStyle = rgba(dk ? '#cfdcdc' : '#f4f8f8', 0.85 * up); g.beginPath(); g.ellipse(0, 0, s, s * 0.32 * up + 0.5, 0, Math.PI, 0); g.fill(); g.restore();
+      if (up > 0.7) { g.fillStyle = rgba('#ffffff', 0.5 * up); for (var b = 0; b < 4; b++) g.fillRect(x + (R[(f * 4 + b) % 230] - 0.5) * s * 3, y - up * s * 0.8 * R[(f + b) % 200], 2, 2); } }
+    // vòng lõm chỗ bàn tay
+    var p = 0.5 + 0.5 * Math.sin(t * 2); gGlow(g, cx, cy, w * 0.12, dk ? '#6fa6b8' : '#ffffff', 0.18 + 0.08 * p);
+    g.strokeStyle = rgba(dk ? '#d8e8ea' : '#ffffff', 0.6); g.lineWidth = 1.5; g.beginPath(); g.ellipse(cx, cy, w * 0.06, h * 0.025, 0, 0, 7); g.stroke();
+    // bờ bùn gần
+    g.fillStyle = dk ? '#1a1712' : '#6e624c'; g.beginPath(); g.moveTo(0, h * 0.9); g.quadraticCurveTo(w * 0.5, h * 0.84, w, h * 0.92); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    vign(g, w, h, 0.5);
+  };
+
+  // ===== ch09 Ruby "Một bước" =====
+  function pawPrint(g, x, y, s, rot, a, col) { g.save(); g.translate(x, y); g.rotate(rot); g.fillStyle = rgba(col, a); g.beginPath(); g.ellipse(0, s * 0.35, s * 0.42, s * 0.34, 0, 0, 7); g.fill();
+    [[-0.42, -0.2], [-0.15, -0.45], [0.15, -0.45], [0.42, -0.2]].forEach(function (q) { g.beginPath(); g.ellipse(q[0] * s, q[1] * s, s * 0.14, s * 0.18, 0, 0, 7); g.fill(); }); g.restore(); }
+  // Đêm ở khu giữa: mái hiên một ngôi nhà, gầm hiên tối đặc; trong bóng tối hai đốm mắt nhỏ chớp; dấu chân mèo bước ra khỏi bóng, một tấm thẻ úp nằm lại trên bậc.
+  ART.eaves = function (g, w, h, t, R) {
+    var dk = C.dark; sky(g, w, h, 'night', 0.5); moon(g, w * 0.82, h * 0.14, h * 0.03, t);
+    var col = sil('night');
+    // nhà: tường + mái hiên chìa ra
+    g.fillStyle = dk ? '#121a1d' : '#5e6a66'; g.fillRect(w * 0.1, h * 0.28, w * 0.62, h * 0.5);
+    g.fillStyle = col; g.beginPath(); g.moveTo(w * 0.02, h * 0.36); g.lineTo(w * 0.4, h * 0.12); g.lineTo(w * 0.8, h * 0.36); g.lineTo(w * 0.8, h * 0.4); g.lineTo(w * 0.02, h * 0.4); g.fill();
+    g.fillStyle = dk ? '#060909' : '#2a302e'; g.fillRect(w * 0.12, h * 0.4, w * 0.58, h * 0.36); // gầm hiên tối
+    g.fillStyle = dk ? '#1e1a14' : '#6e5e46'; [0.14, 0.42, 0.68].forEach(function (x) { g.fillRect(w * x, h * 0.4, w * 0.014, h * 0.38); });
+    // bậc thềm + sân
+    g.fillStyle = dk ? '#2a2620' : '#9a8e76'; g.fillRect(w * 0.08, h * 0.76, w * 0.66, h * 0.04); g.fillStyle = dk ? '#1a1814' : '#7e735e'; g.fillRect(0, h * 0.8, w, h * 0.2);
+    // hai đốm mắt trong bóng tối, chớp
+    var bl = (t % 5.2) / 5.2, open = bl > 0.06 ? 1 : 0.1, ex = w * 0.3, ey = h * 0.66;
+    [0, 1].forEach(function (i) { var x = ex + i * w * 0.022; gGlow(g, x, ey, w * 0.02, '#c3a8ec', 0.35 * open); g.fillStyle = rgba(dk ? '#e2d4ff' : '#f2ecff', 0.95); g.beginPath(); g.ellipse(x, ey, w * 0.006, h * 0.008 * open, 0, 0, 7); g.fill(); });
+    // dấu chân mèo bước ra khỏi bóng, về phía phải
+    for (var k = 0; k < 7; k++) { var u = k / 6, a = Math.max(0, Math.min(1, ((t * 0.5) % 4) - u * 2.4)) * (dk ? 0.5 : 0.35); pawPrint(g, w * (0.36 + u * 0.48), h * (0.86 + (k % 2) * 0.03), w * 0.018, 1.4, a, dk ? '#c3a8ec' : '#4a3a6a'); }
+    // tấm thẻ úp trên bậc (mặt lưng vòng tròn)
+    var cxx = w * 0.56, cyy = h * 0.775; g.save(); g.translate(cxx, cyy); g.rotate(-0.15); g.fillStyle = dk ? '#14202b' : '#203040'; g.fillRect(-w * 0.025, -h * 0.025, w * 0.05, h * 0.05);
+    g.strokeStyle = rgba('#9fb6c4', 0.8); g.lineWidth = 1; g.beginPath(); g.arc(0, 0, h * 0.015, 0, 7); g.stroke(); g.restore();
+    vign(g, w, h, 0.6);
+  };
+  // Sau bức tường rào: vách một căn nhà, con đường lát đá ong chạy về phía chợ; dấu chân mèo đi trước, nhỏ dần; mái chợ mờ xa.
+  ART.alleycard = function (g, w, h, t, R) {
+    var dk = C.dark; sky(g, w, h, 'day', 0.6);
+    // mái chợ xa
+    g.fillStyle = rgba(sil('day'), 0.55); for (var m = 0; m < 4; m++) { var x = w * (0.55 + m * 0.1); g.beginPath(); g.moveTo(x, h * 0.42); g.lineTo(x + w * 0.05, h * 0.34); g.lineTo(x + w * 0.1, h * 0.42); g.fill(); }
+    // đường đá ong phối cảnh
+    g.fillStyle = dk ? '#3a2a22' : '#a8735a'; g.beginPath(); g.moveTo(w * 0.1, h); g.lineTo(w * 0.62, h * 0.43); g.lineTo(w * 0.72, h * 0.43); g.lineTo(w * 0.98, h); g.fill();
+    g.strokeStyle = rgba('#000000', dk ? 0.35 : 0.15); g.lineWidth = 1;
+    for (var r = 1; r < 10; r++) { var u = Math.pow(r / 10, 1.8), y = h * 0.43 + (h * 0.57) * u, xl = w * 0.62 - (w * 0.52) * u, xr = w * 0.72 + (w * 0.26) * u; g.beginPath(); g.moveTo(xl, y); g.lineTo(xr, y); g.stroke(); }
+    // vách nhà bên trái (gần)
+    g.fillStyle = dk ? '#1c1a16' : '#8a7c64'; g.beginPath(); g.moveTo(0, 0); g.lineTo(w * 0.3, h * 0.2); g.lineTo(w * 0.3, h * 0.66); g.lineTo(0, h); g.fill();
+    g.strokeStyle = rgba('#000000', 0.25); for (var b = 0; b < 8; b++) { g.beginPath(); g.moveTo(0, h * (0.1 + b * 0.11)); g.lineTo(w * 0.3, h * (0.24 + b * 0.055)); g.stroke(); }
+    // tường rào cuối (phải)
+    g.fillStyle = dk ? '#232019' : '#9c8e74'; g.fillRect(w * 0.8, h * 0.36, w * 0.2, h * 0.24);
+    // dấu chân mèo dẫn về chợ
+    for (var k = 0; k < 10; k++) { var u2 = k / 9, yy = h * (0.95 - u2 * 0.5), xx = w * (0.52 + u2 * 0.14) + (k % 2 ? 1 : -1) * w * 0.012 * (1 - u2), s = w * 0.014 * (1 - u2 * 0.7);
+      var a = Math.max(0, Math.min(1, ((t * 0.6) % 5) - u2 * 3)) * (dk ? 0.55 : 0.4); pawPrint(g, xx, yy, s, -0.4, a, dk ? '#c3a8ec' : '#4a3a6a'); }
+    // nắng qua mép mái
+    var sg = g.createLinearGradient(w * 0.3, 0, w, h); sg.addColorStop(0, rgba('#ffffff', dk ? 0.04 : 0.15)); sg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = sg; g.fillRect(0, 0, w, h);
+    vign(g, w, h, 0.5);
+  };
+
+  // ===== ch03 Luke "Anh sẽ đợi" =====
+  // Mặt bàn, cái điện thoại nằm ngửa, màn hình sáng khung chat: một dòng gõ dần rồi bị xoá, gõ lại, lại xoá. o: 'day' | 'dusk' (úp xuống bàn, phòng tối dần, ánh màn hình lọt ra mép)
+  ART.phone = function (g, w, h, t, R, o) {
+    var dk = C.dark, dusk = o && o[0] === 'dusk';
+    var bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, dusk ? (dk ? '#0c1216' : '#5a666c') : (dk ? '#1a2328' : '#c9d1cf')); bg.addColorStop(1, dusk ? (dk ? '#06090b' : '#3c4448') : (dk ? '#0e1417' : '#a9b2b0')); g.fillStyle = bg; g.fillRect(0, 0, w, h);
+    // mặt bàn gỗ
+    g.fillStyle = dk ? (dusk ? '#14110d' : '#221c15') : (dusk ? '#4a3c2c' : '#8a7458'); g.beginPath(); g.moveTo(0, h * 0.42); g.lineTo(w, h * 0.38); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    g.strokeStyle = rgba('#000000', 0.2); g.lineWidth = 1; for (var r = 0; r < 6; r++) { g.beginPath(); g.moveTo(0, h * (0.5 + r * 0.09)); g.lineTo(w, h * (0.46 + r * 0.095)); g.stroke(); }
+    // cửa sổ phía sau
+    g.fillStyle = dusk ? (dk ? '#1a2a38' : '#7c8c9c') : (dk ? '#3a4a52' : '#e6ecea'); g.fillRect(w * 0.62, h * 0.04, w * 0.3, h * 0.28);
+    g.strokeStyle = dk ? '#0a0e10' : '#5a6462'; g.lineWidth = 3; g.strokeRect(w * 0.62, h * 0.04, w * 0.3, h * 0.28); g.beginPath(); g.moveTo(w * 0.77, h * 0.04); g.lineTo(w * 0.77, h * 0.32); g.stroke();
+    if (dusk) for (var l = 0; l < 6; l++) { var on = Math.sin(t * 0.3 + l * 2.1) > -0.6; if (on) { g.fillStyle = rgba('#cfe4ee', 0.5); g.fillRect(w * (0.64 + R[l] * 0.26), h * (0.2 + R[l + 9] * 0.1), 3, 3); } }
+    var px = w * 0.42, py = h * 0.68, pw = w * 0.17, ph = h * 0.34;
+    g.save(); g.translate(px, py); g.rotate(-0.12);
+    g.fillStyle = rgba('#000000', 0.35); g.fillRect(-pw / 2 + 6, -ph / 2 + 8, pw, ph);
+    if (dusk) {
+      g.fillStyle = dk ? '#0a0c0e' : '#1a1c1e'; g.fillRect(-pw / 2, -ph / 2, pw, ph);
+      var gl = 0.25 + 0.1 * Math.sin(t * 0.8); g.shadowColor = rgba('#8FD3E0', gl); g.shadowBlur = 18; g.strokeStyle = rgba('#8FD3E0', gl * 0.6); g.lineWidth = 1; g.strokeRect(-pw / 2, -ph / 2, pw, ph); g.shadowBlur = 0;
+      g.strokeStyle = rgba('#9fb6c4', 0.35); g.beginPath(); g.arc(0, -ph * 0.1, pw * 0.18, 0, 7); g.stroke();
+    } else {
+      g.fillStyle = '#0a0c0e'; g.fillRect(-pw / 2, -ph / 2, pw, ph);
+      var sc = g.createLinearGradient(0, -ph / 2, 0, ph / 2); sc.addColorStop(0, '#16242c'); sc.addColorStop(1, '#0c151a'); g.fillStyle = sc; g.fillRect(-pw / 2 + 3, -ph / 2 + 6, pw - 6, ph - 12);
+      // bong bóng chat: anh (phải, xanh), em (trái, xám)
+      g.fillStyle = '#2f6f80'; g.fillRect(pw * 0.02, -ph * 0.38, pw * 0.4, ph * 0.06);
+      g.fillStyle = '#3a4448'; g.fillRect(-pw * 0.42, -ph * 0.28, pw * 0.36, ph * 0.06);
+      // ô gõ: dòng chữ dài dần rồi bị xoá (chu kỳ 6 giây), con trỏ nhấp nháy
+      var c6 = (t % 6) / 6, len = c6 < 0.5 ? c6 / 0.5 : c6 < 0.62 ? 1 : Math.max(0, 1 - (c6 - 0.62) / 0.3);
+      g.fillStyle = '#1e2a30'; g.fillRect(-pw * 0.44, ph * 0.3, pw * 0.88, ph * 0.1);
+      g.fillStyle = '#8FD3E0'; for (var c = 0; c < Math.floor(len * 9); c++) g.fillRect(-pw * 0.4 + c * pw * 0.075, ph * 0.335, pw * 0.055, ph * 0.03);
+      if (Math.sin(t * 6) > 0) g.fillRect(-pw * 0.4 + Math.floor(len * 9) * pw * 0.075, ph * 0.32, 1.5, ph * 0.06);
+      gGlow(g, 0, 0, pw, '#8FD3E0', 0.1);
+    }
+    g.restore();
+    vign(g, w, h, dusk ? 0.7 : 0.5);
+  };
+  // Đêm không ngủ: căn phòng tối, khung cửa sổ, vài ô đèn xa; một sợi chỉ đỏ mảnh căng từ mép giường ra ngoài cửa sổ, về một chỗ không nhìn thấy, rung khẽ.
+  ART.nightthread = function (g, w, h, t, R) {
+    var dk = C.dark; g.fillStyle = dk ? '#05080a' : '#2a3236'; g.fillRect(0, 0, w, h);
+    var wx = w * 0.55, wy = h * 0.12, ww = w * 0.34, wh = h * 0.46;
+    var sk = g.createLinearGradient(0, wy, 0, wy + wh); sk.addColorStop(0, dk ? '#0a1620' : '#4a5a66'); sk.addColorStop(1, dk ? '#14222c' : '#66767e'); g.fillStyle = sk; g.fillRect(wx, wy, ww, wh);
+    for (var s = 0; s < 14; s++) { var a = 0.3 + 0.3 * Math.sin(t * 0.6 + s * 1.9); g.fillStyle = rgba('#cfe4ee', a * (dk ? 0.6 : 0.4)); g.fillRect(wx + R[s] * ww, wy + wh * (0.55 + R[s + 20] * 0.4), 2.5, 2.5); }
+    g.fillStyle = rgba(sil('night'), 0.9); for (var b = 0; b < 6; b++) { var bx = wx + b * ww / 6, bh = wh * (0.2 + R[b + 40] * 0.25); g.fillRect(bx, wy + wh - bh, ww / 6 - 2, bh); }
+    g.strokeStyle = dk ? '#0e1316' : '#1a1f22'; g.lineWidth = 5; g.strokeRect(wx, wy, ww, wh); g.beginPath(); g.moveTo(wx + ww / 2, wy); g.lineTo(wx + ww / 2, wy + wh); g.stroke();
+    // ánh trăng loang trên sàn
+    g.fillStyle = rgba('#9fb6c4', dk ? 0.05 : 0.08); g.beginPath(); g.moveTo(wx, wy + wh); g.lineTo(wx + ww, wy + wh); g.lineTo(wx + ww * 0.6, h); g.lineTo(wx - ww * 0.5, h); g.fill();
+    // mép giường, gối, chăn
+    g.fillStyle = dk ? '#0e1418' : '#3e484e'; g.beginPath(); g.moveTo(0, h * 0.66); g.lineTo(w * 0.42, h * 0.7); g.lineTo(w * 0.46, h); g.lineTo(0, h); g.fill();
+    g.fillStyle = dk ? '#18222a' : '#56626a'; g.beginPath(); g.ellipse(w * 0.1, h * 0.68, w * 0.09, h * 0.035, -0.05, 0, 7); g.fill();
+    // sợi chỉ đỏ: từ mép giường ra cửa sổ, căng, rung (càng về khuya càng căng: biên độ nhỏ mà nhanh)
+    var ax = w * 0.22, ay = h * 0.74, bx2 = wx + ww * 0.8, by2 = wy + wh * 0.35, amp = h * 0.006;
+    g.strokeStyle = dk ? '#E2566C' : '#c23a4e'; g.lineWidth = Math.max(1, w / 650); g.shadowColor = rgba('#E2566C', 0.8); g.shadowBlur = 7; g.beginPath();
+    for (var k = 0; k <= 50; k++) { var u = k / 50, x = ax + (bx2 - ax) * u, y = ay + (by2 - ay) * u + Math.sin(u * Math.PI) * h * 0.012 + Math.sin(u * Math.PI) * Math.sin(t * 12 + u * 3) * amp; k ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.stroke(); g.shadowBlur = 0;
+    gGlow(g, bx2, by2, w * 0.03, '#E2566C', 0.3 + 0.15 * Math.sin(t * 1.3));
+    vign(g, w, h, 0.65);
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
