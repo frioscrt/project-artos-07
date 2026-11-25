@@ -3575,13 +3575,14 @@ els.forEach(function(el){io.observe(el)});})();
       wash(C.dark ? '#3a1418' : '#f3d9d6', (C.dark ? 0.16 : 0.22) * k);
       g.lineCap = 'round'; g.shadowColor = rgba(col, 0.8);
       function br(x, y, a, len, w, d, s) {
-        var n = 6, px = x, py = y; g.lineWidth = w * (1 + 0.35 * beat); g.strokeStyle = rgba(col, (0.45 + 0.35 * beat) * k); g.shadowBlur = 4 + 6 * beat;
+        var n = 6, px = x, py = y; g.lineWidth = w * (1 + 0.35 * beat); g.strokeStyle = rgba(col, (0.32 + 0.26 * beat) * k); g.shadowBlur = 4 + 6 * beat;
         g.beginPath(); g.moveTo(px, py);
         for (var j = 1; j <= n; j++) { if (j / n > grow) break; a += (R[(s + j * 7) % 60] - 0.5) * 0.7; px += Math.cos(a) * len / n; py += Math.sin(a) * len / n; g.lineTo(px, py); }
         g.stroke();
         if (d > 0 && grow > 0.45) { br(px, py, a - 0.5, len * 0.6, w * 0.65, d - 1, s + 13); br(px, py, a + 0.45, len * 0.55, w * 0.6, d - 1, s + 29); }
       }
-      var L = Math.min(W, H) * 0.42;
+      // Clair 25/11: mạch chỉ bò ở hai mép, không đè lên chữ (điện thoại: ngắn hẳn, mờ hơn)
+      var L = W < 700 ? W * 0.09 : Math.min(W * 0.14, 150);
       for (var i = 0; i < 6; i++) { var u = (i + 0.5) / 6;
         br(0, H * u, (R[i] - 0.5) * 0.6, L, 2.6, 2, i * 5); br(W, H * (1 - u), Math.PI + (R[i + 10] - 0.5) * 0.6, L, 2.6, 2, i * 5 + 3);
       }
