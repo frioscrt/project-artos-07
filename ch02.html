@@ -552,6 +552,59 @@ html.giu-on .cv{opacity:0;pointer-events:none}
 .cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
 @media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
+
+#pen{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;width:46px;height:46px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--soft);border:1px solid color-mix(in srgb,var(--pw-clevia) 45%,transparent);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.7);transition:color .25s,box-shadow .25s,transform .2s}
+#pen:active{transform:scale(.92)}
+#pen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#pen[aria-pressed="true"]{color:#fff;background:var(--pw-clevia);border-color:var(--pw-clevia);box-shadow:0 0 22px -4px var(--pw-clevia)}
+#pen .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--pw-clevia);color:#fff;font:600 10px/16px system-ui,sans-serif;text-align:center}
+#pen .n:empty{display:none}
+html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:background .25s,box-shadow .25s}
+html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
+article p.pen-has{position:relative}
+article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
+article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
+html:not(.pen-on) article p.pen-has::before{opacity:.45}
+.pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
+  padding:.55em 1.1em;border-radius:999px;background:#0b1418;color:#e8eef0;border:1px solid var(--pw-clevia);font:500 13px/1.2 system-ui,sans-serif;letter-spacing:.02em;
+  box-shadow:0 6px 24px -8px #000;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s;white-space:nowrap}
+html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
+.pen-pill b{color:var(--pw-clevia);font-weight:600}
+.pen-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.pen-sheet.on{opacity:1}
+.pen-sheet[hidden]{display:none}
+.pen-box{width:100%;max-width:40em;max-height:88vh;overflow:auto;background:#0d1417;color:#e3e7e6;border-top:2px solid var(--pw-clevia);border-radius:18px 18px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .35s cubic-bezier(.3,1.3,.5,1);font-family:system-ui,sans-serif}
+.pen-sheet.on .pen-box{transform:none}
+:root[data-theme="light"] .pen-box{background:#f3f4f2;color:#1d2526}
+.pen-box h3{margin:0 0 .2em;font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--pw-clevia)}
+.pen-box .sub{margin:0 0 .9em;font-size:13px;opacity:.65}
+.pen-box textarea{display:block;width:100%;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:10px;background:transparent;color:inherit;
+  font:400 17px/1.6 Literata,Georgia,serif;padding:.6em .7em;resize:vertical}
+.pen-box textarea:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
+.pen-box .note{font:400 15px/1.5 system-ui,sans-serif;min-height:3.2em}
+.pen-box label{display:block;margin:1em 0 .35em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
+.pen-diff[hidden]{display:none}
+.pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
+.pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
+.pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
+.pen-row .rm{color:var(--pw-clevia)}
+.pen-row button[hidden]{display:none}
+.pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
+.pen-list{list-style:none;margin:0;padding:0}
+.pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
+.pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
+.pen-list li.nt small{color:var(--pw-luke)}
+@keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
+article p.pen-flash{animation:penflash .8s ease-out}
+@media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -756,101 +809,101 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   <article>
 <section class="scene" data-sound="room">
 <figure class="plate"><canvas class="art" data-art="room:night" role="img" aria-label="Bàn học dưới ánh đèn, cửa sổ nhìn ra phố đêm"></canvas></figure>
-<p>Về đến phòng, <span class="nm nm-person first">Clevia</span> mất gần ba tiếng đồng hồ chỉ để cố thuyết phục bản thân rằng mọi chuyện đều có thể giải thích được.</p>
-<p>Cô ngồi trước bàn học, cuốn vở mở sẵn, cây bút trong tay, vậy mà chẳng viết nổi một chữ. Ngoài cửa sổ, khu trọ chìm dần vào buổi tối với những âm thanh quen thuộc, tiếng tivi phòng bên, tiếng xe máy rồ lên ngoài hẻm, rồi tiếng mưa bắt đầu lộp độp trên mái tôn từ lúc nào cô cũng không hay. Chỉ biết đến một lúc nào đó, thế giới bên ngoài đã trở nên xám xịt và ướt át, còn cô vẫn ngồi nguyên chỗ cũ trước trang giấy trắng.</p>
-<p>Có thể chỉ là trùng hợp thôi, cô thử bắt đầu từ đó. Tấm thẻ rõ ràng là đồ ai đánh rơi, chất liệu lạ thì có khi được làm riêng, còn cái cảm giác nó tan vào tay có lẽ chỉ là ảo giác của một người vừa mệt vừa thiếu ngủ. Ổ khoá tự mở, biết đâu nó đã hỏng từ trước mà cô không để ý. Máy bán nước thì vốn hay dở chứng, chính anh ta cũng nói vậy còn gì.</p>
-<p>Anh ta.</p>
-<p>Cô gõ đầu bút xuống mặt bàn, từng cái một. <span class="nm nm-person first">Luke</span>, trưởng câu lạc bộ kiếm đạo, tự dưng xuất hiện, hỏi những câu chẳng ai đem ra hỏi người lạ, rồi bảo sẽ nói cho cô những gì anh biết như thể đó là chuyện đương nhiên phải làm. Anh không giải thích vì sao lại để tâm đến cô, cũng không nói làm sao anh biết, cứ nói xong là đi, bỏ lại một khoảng trống đủ lớn để cô không thể nào thôi nghĩ tới. Và còn ánh mắt trên tầng hai hôm ấy nữa, lúc cô chưa nhặt tấm thẻ nào cả, lúc mọi thứ vẫn còn bình thường.</p>
-<p><span class="nm nm-person">Clevia</span> nhìn xuống bàn tay mình, ngón tay vẫn là ngón tay, lòng bàn tay vẫn là lòng bàn tay, chẳng có dấu vết gì của thứ đã thấm vào đó tối hôm trước. Cô gấp vở lại, tắt đèn, nằm nghe mưa cho đến khi không còn phân biệt được mình đang nghĩ hay đang mơ.</p>
+<p data-pi="0">Về đến phòng, <span class="nm nm-person first">Clevia</span> mất gần ba tiếng đồng hồ chỉ để cố thuyết phục bản thân rằng mọi chuyện đều có thể giải thích được.</p>
+<p data-pi="1">Cô ngồi trước bàn học, cuốn vở mở sẵn, cây bút trong tay, vậy mà chẳng viết nổi một chữ. Ngoài cửa sổ, khu trọ chìm dần vào buổi tối với những âm thanh quen thuộc, tiếng tivi phòng bên, tiếng xe máy rồ lên ngoài hẻm, rồi tiếng mưa bắt đầu lộp độp trên mái tôn từ lúc nào cô cũng không hay. Chỉ biết đến một lúc nào đó, thế giới bên ngoài đã trở nên xám xịt và ướt át, còn cô vẫn ngồi nguyên chỗ cũ trước trang giấy trắng.</p>
+<p data-pi="2">Có thể chỉ là trùng hợp thôi, cô thử bắt đầu từ đó. Tấm thẻ rõ ràng là đồ ai đánh rơi, chất liệu lạ thì có khi được làm riêng, còn cái cảm giác nó tan vào tay có lẽ chỉ là ảo giác của một người vừa mệt vừa thiếu ngủ. Ổ khoá tự mở, biết đâu nó đã hỏng từ trước mà cô không để ý. Máy bán nước thì vốn hay dở chứng, chính anh ta cũng nói vậy còn gì.</p>
+<p data-pi="3">Anh ta.</p>
+<p data-pi="4">Cô gõ đầu bút xuống mặt bàn, từng cái một. <span class="nm nm-person first">Luke</span>, trưởng câu lạc bộ kiếm đạo, tự dưng xuất hiện, hỏi những câu chẳng ai đem ra hỏi người lạ, rồi bảo sẽ nói cho cô những gì anh biết như thể đó là chuyện đương nhiên phải làm. Anh không giải thích vì sao lại để tâm đến cô, cũng không nói làm sao anh biết, cứ nói xong là đi, bỏ lại một khoảng trống đủ lớn để cô không thể nào thôi nghĩ tới. Và còn ánh mắt trên tầng hai hôm ấy nữa, lúc cô chưa nhặt tấm thẻ nào cả, lúc mọi thứ vẫn còn bình thường.</p>
+<p data-pi="5"><span class="nm nm-person">Clevia</span> nhìn xuống bàn tay mình, ngón tay vẫn là ngón tay, lòng bàn tay vẫn là lòng bàn tay, chẳng có dấu vết gì của thứ đã thấm vào đó tối hôm trước. Cô gấp vở lại, tắt đèn, nằm nghe mưa cho đến khi không còn phân biệt được mình đang nghĩ hay đang mơ.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="bridge">
 <figure class="plate"><canvas class="art" data-art="bridge" role="img" aria-label="Cây cầu trong giấc mơ, sương phủ mặt sông"></canvas></figure>
-<p>Đêm đó cô lại mơ thấy cây cầu.</p>
-<p>Lần này <span class="nm nm-person first">Renie</span> đứng quay mặt về phía cô, điều mà trước giờ chưa từng xảy ra. Gương mặt ấy vẫn mờ như mọi khi, như thể trí nhớ của <span class="nm nm-person">Clevia</span> đang cố vẽ lại một thứ đã bị tẩy đi và chỉ còn sót lại vài nét phác. Nhưng biểu cảm đêm nay không phải nụ cười, cũng không phải thất vọng hay giận dữ, mà là sợ hãi.</p>
-<p><span class="nm nm-person">Renie</span> nhìn thẳng vào cô bằng ánh mắt của một người đang cố nói điều gì đó rất quan trọng mà không thốt được thành lời. Môi cô ấy mấp máy, <span class="nm nm-person">Clevia</span> cố lắng nghe, cố đến mức ngay trong giấc mơ cô vẫn cảm nhận được cơ thể mình đang căng lên, vậy mà chẳng có âm thanh nào cả, chỉ có tiếng gió luồn qua lan can và tiếng mặt sông khẽ rung bên dưới, như một tấm gương vừa bị ai chạm vào từ phía sau.</p>
-<p>Rồi <span class="nm nm-person">Renie</span> giơ tay lên, chỉ về phía sau lưng cô.</p>
-<p data-fx="darkend"><span class="nm nm-person">Clevia</span> quay đầu lại. Không có gì cả, chỉ có cây cầu kéo dài vào bóng tối, nhưng thứ bóng tối ở tận cùng ấy dường như đặc hơn bình thường, đặc đến mức trông như thể nó đang dần có hình dạng.</p>
-<p>Cô tỉnh dậy lúc bốn giờ hai phút, tim đập thình thịch, rồi cứ nằm im nhìn trần nhà như thế cho đến khi chuông báo thức reo.</p>
+<p data-pi="6">Đêm đó cô lại mơ thấy cây cầu.</p>
+<p data-pi="7">Lần này <span class="nm nm-person first">Renie</span> đứng quay mặt về phía cô, điều mà trước giờ chưa từng xảy ra. Gương mặt ấy vẫn mờ như mọi khi, như thể trí nhớ của <span class="nm nm-person">Clevia</span> đang cố vẽ lại một thứ đã bị tẩy đi và chỉ còn sót lại vài nét phác. Nhưng biểu cảm đêm nay không phải nụ cười, cũng không phải thất vọng hay giận dữ, mà là sợ hãi.</p>
+<p data-pi="8"><span class="nm nm-person">Renie</span> nhìn thẳng vào cô bằng ánh mắt của một người đang cố nói điều gì đó rất quan trọng mà không thốt được thành lời. Môi cô ấy mấp máy, <span class="nm nm-person">Clevia</span> cố lắng nghe, cố đến mức ngay trong giấc mơ cô vẫn cảm nhận được cơ thể mình đang căng lên, vậy mà chẳng có âm thanh nào cả, chỉ có tiếng gió luồn qua lan can và tiếng mặt sông khẽ rung bên dưới, như một tấm gương vừa bị ai chạm vào từ phía sau.</p>
+<p data-pi="9">Rồi <span class="nm nm-person">Renie</span> giơ tay lên, chỉ về phía sau lưng cô.</p>
+<p data-pi="10" data-fx="darkend"><span class="nm nm-person">Clevia</span> quay đầu lại. Không có gì cả, chỉ có cây cầu kéo dài vào bóng tối, nhưng thứ bóng tối ở tận cùng ấy dường như đặc hơn bình thường, đặc đến mức trông như thể nó đang dần có hình dạng.</p>
+<p data-pi="11">Cô tỉnh dậy lúc bốn giờ hai phút, tim đập thình thịch, rồi cứ nằm im nhìn trần nhà như thế cho đến khi chuông báo thức reo.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="bench">
 <figure class="plate"><canvas class="art" data-art="bench" role="img" aria-label="Sân trường buổi sáng, hàng ghế đá"></canvas></figure>
-<p>Sau tiết học đầu tiên của buổi sáng hôm sau, <span class="nm nm-person">Clevia</span> đi tìm <span class="nm nm-person">Luke</span>.</p>
-<p>Không phải vì cô đã tin anh ta. Chỉ là sau một đêm gần như không ngủ và một buổi sáng ngồi nghe giảng viên nói về những thứ chẳng dính dáng gì đến chuyện đang xảy ra với mình, cô nhận ra chẳng có lựa chọn nào tốt hơn đang nằm sẵn đâu đó chờ cô cả. Anh ta biết điều gì đó. Cô không biết anh ta là ai, cũng không biết anh ta muốn gì, nhưng anh ta biết điều mà cô cần biết, và có lẽ như vậy là đủ.</p>
-<p>Giờ này sân tập của câu lạc bộ kiếm đạo vắng tanh, nhưng <span class="nm nm-person">Luke</span> đang ngồi trên bậc thềm trước cửa phòng kho, lưng tựa vào tường, mắt dán vào điện thoại, dáng vẻ của một người đang đợi, không phải đợi ai cụ thể, mà là đợi theo kiểu biết chắc thứ mình cần rồi sẽ tự tìm đến.</p>
-<p>Thấy cô lại gần, anh ngẩng lên, chẳng có vẻ gì là ngạc nhiên, rồi tắt màn hình điện thoại.</p>
-<p class="say say-x"><span class="q">“Em đến rồi đấy à.”</span></p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Anh bảo sẽ nói cho em biết,”</span> <span class="nm nm-person">Clevia</span> đáp, không vòng vo.</p>
-<p><span class="nm nm-person">Luke</span> nhìn cô một giây, rồi đứng dậy, nhét điện thoại vào túi. “Ừ.”</p>
-<p>Anh quay về phía cánh cửa kho sau lưng, một cánh cửa sắt cũ, sơn tróc lở ở góc dưới, chiếc ổ khoá treo trông khá nặng tay. Anh đứng đó, không làm gì thêm, chỉ nhìn sang cô, rồi nhìn ổ khoá, rồi lại nhìn cô. Anh không cần nói ra, vì cái cách anh đứng tay không trước cánh cửa ấy đã đủ rõ ràng rồi. Đây chẳng phải lời nhờ vả gì, mà là một bài kiểm tra, và anh cũng không buồn che giấu điều đó.</p>
-<p>Cô có thể bỏ đi, có thể lắc đầu từ chối, nhưng cô đã đi đến tận đây rồi, và cánh cửa thì vẫn đứng đó chờ.</p>
-<div class="act act-lock steel" data-hold="1.5"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 120 150" aria-hidden="true"><path class="shackle" d="M36 70 V44 a24 24 0 0 1 48 0 V70" /><rect class="body" x="18" y="66" width="84" height="70" rx="9"/><path class="hole" d="M60 92 a7 7 0 1 1 0.1 0 M57 97 h6 l2 16 h-10z"/></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">chạm và giữ</span></div><p><span class="nm nm-person">Clevia</span> bước tới, đặt tay lên ổ khoá. Một tiếng “cạch” khẽ vang lên, chiếc khoá bật ra, và cô rụt tay lại ngay như vừa chạm phải lửa.</p>
-<p><span class="nm nm-person">Luke</span> nhìn ổ khoá đang lủng lẳng mở trên vòng khoen, rồi nhìn cô. Trong mắt anh không có sự ngạc nhiên, chỉ có một thứ gì đó giống như người vừa đoán đúng và giờ mới cầm được bằng chứng trong tay. Anh gật đầu một cái thật ngắn, rồi đẩy cửa bước vào.</p>
-<p class="say say-x"><span class="q">“Vào đi.”</span></p>
+<p data-pi="12">Sau tiết học đầu tiên của buổi sáng hôm sau, <span class="nm nm-person">Clevia</span> đi tìm <span class="nm nm-person">Luke</span>.</p>
+<p data-pi="13">Không phải vì cô đã tin anh ta. Chỉ là sau một đêm gần như không ngủ và một buổi sáng ngồi nghe giảng viên nói về những thứ chẳng dính dáng gì đến chuyện đang xảy ra với mình, cô nhận ra chẳng có lựa chọn nào tốt hơn đang nằm sẵn đâu đó chờ cô cả. Anh ta biết điều gì đó. Cô không biết anh ta là ai, cũng không biết anh ta muốn gì, nhưng anh ta biết điều mà cô cần biết, và có lẽ như vậy là đủ.</p>
+<p data-pi="14">Giờ này sân tập của câu lạc bộ kiếm đạo vắng tanh, nhưng <span class="nm nm-person">Luke</span> đang ngồi trên bậc thềm trước cửa phòng kho, lưng tựa vào tường, mắt dán vào điện thoại, dáng vẻ của một người đang đợi, không phải đợi ai cụ thể, mà là đợi theo kiểu biết chắc thứ mình cần rồi sẽ tự tìm đến.</p>
+<p data-pi="15">Thấy cô lại gần, anh ngẩng lên, chẳng có vẻ gì là ngạc nhiên, rồi tắt màn hình điện thoại.</p>
+<p data-pi="16" class="say say-x"><span class="q">“Em đến rồi đấy à.”</span></p>
+<p data-pi="17" class="say say-clevia" data-name="Clevia"><span class="q">“Anh bảo sẽ nói cho em biết,”</span> <span class="nm nm-person">Clevia</span> đáp, không vòng vo.</p>
+<p data-pi="18"><span class="nm nm-person">Luke</span> nhìn cô một giây, rồi đứng dậy, nhét điện thoại vào túi. “Ừ.”</p>
+<p data-pi="19">Anh quay về phía cánh cửa kho sau lưng, một cánh cửa sắt cũ, sơn tróc lở ở góc dưới, chiếc ổ khoá treo trông khá nặng tay. Anh đứng đó, không làm gì thêm, chỉ nhìn sang cô, rồi nhìn ổ khoá, rồi lại nhìn cô. Anh không cần nói ra, vì cái cách anh đứng tay không trước cánh cửa ấy đã đủ rõ ràng rồi. Đây chẳng phải lời nhờ vả gì, mà là một bài kiểm tra, và anh cũng không buồn che giấu điều đó.</p>
+<p data-pi="20">Cô có thể bỏ đi, có thể lắc đầu từ chối, nhưng cô đã đi đến tận đây rồi, và cánh cửa thì vẫn đứng đó chờ.</p>
+<div class="act act-lock steel" data-hold="1.5"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 120 150" aria-hidden="true"><path class="shackle" d="M36 70 V44 a24 24 0 0 1 48 0 V70" /><rect class="body" x="18" y="66" width="84" height="70" rx="9"/><path class="hole" d="M60 92 a7 7 0 1 1 0.1 0 M57 97 h6 l2 16 h-10z"/></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">chạm và giữ</span></div><p data-pi="21"><span class="nm nm-person">Clevia</span> bước tới, đặt tay lên ổ khoá. Một tiếng “cạch” khẽ vang lên, chiếc khoá bật ra, và cô rụt tay lại ngay như vừa chạm phải lửa.</p>
+<p data-pi="22"><span class="nm nm-person">Luke</span> nhìn ổ khoá đang lủng lẳng mở trên vòng khoen, rồi nhìn cô. Trong mắt anh không có sự ngạc nhiên, chỉ có một thứ gì đó giống như người vừa đoán đúng và giờ mới cầm được bằng chứng trong tay. Anh gật đầu một cái thật ngắn, rồi đẩy cửa bước vào.</p>
+<p data-pi="23" class="say say-x"><span class="q">“Vào đi.”</span></p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="store">
 <figure class="plate"><canvas class="art" data-art="store" role="img" aria-label="Căn kho hẹp, vệt nắng từ ô cửa nhỏ rọi xuống sàn gỗ"></canvas></figure>
-<p>Căn kho hẹp, trần thấp, nồng mùi gỗ ẩm và bụi của những món đồ đã lâu không ai đụng tới. Dọc tường là mấy cái giá trống, vài tấm chiếu cuộn tròn dựng ở góc, giữa phòng có một chiếc bàn gỗ cũ có lẽ từng được dùng để họp. Ánh sáng duy nhất lọt vào từ ô cửa sổ nhỏ sát trần, vừa đủ để hai người nhìn rõ mặt nhau.</p>
-<p><span class="nm nm-person">Luke</span> kéo chiếc bàn ra giữa phòng, ngồi luôn lên mặt bàn chứ không buồn tìm ghế. <span class="nm nm-person">Clevia</span> đứng gần cửa, không ngồi.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Em nhặt được thẻ từ hôm nào?”</span> anh hỏi.</p>
-<p class="say say-x"><span class="q">“Hôm kia.”</span></p>
-<p>Có gì đó thoáng thay đổi trên gương mặt anh, không rõ ràng lắm, chỉ là khoé mắt khẽ căng lại một chút. “Vậy là còn chừng bốn ngày nữa,” anh nói, giọng bình thản, cái kiểu bình thản mà nghe kỹ thì không hẳn là bình thản.</p>
-<p class="say say-x"><span class="q">“Bốn ngày nữa thì sao ạ?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Tính từ lúc tấm thẻ nhập vào người, đủ bảy ngày là em sẽ bị kéo vào một chỗ người ta gọi là ảo cảnh.”</span> Anh ngừng lại một chút. <span class="q">“Lần đầu là ảo cảnh dành cho người mới. Và không có cách nào để em từ chối đâu.”</span></p>
-<p class="say say-x"><span class="q">“Bị kéo vào là sao?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Là dù em đang ngủ, đang đi đường hay đang làm gì đi nữa, đến lúc là em sẽ ở một nơi khác.”</span> Anh nói chậm rãi, không phải kiểu giảng giải cho người chậm hiểu, mà như đang cân nhắc xem nên nói đến đâu thì vừa. <span class="q">“Ở trong đó, em phải làm được điều kiện để ra ngoài. Làm được thì thắng, có thưởng. Còn không thì…”</span></p>
-<p class="say say-x"><span class="q">“Không thì sao?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Thì thua, và mất một phần cơ thể, phần nào thì không biết trước.”</span> Anh nói câu đó bằng cái giọng của người đọc lại một điều khoản đã thuộc lòng. <span class="q">“Sau này thắng được thì có cách lấy lại. Nhưng nếu thua ba lần liền, hoặc thua tổng cộng hơn mười hai lần…”</span> Anh bỏ lửng câu nói, mà cũng chẳng cần nói hết.</p>
-<p>Căn kho rơi vào im lặng. Ngoài sân vọng vào tiếng sinh viên đi lại, tiếng ai đó cười giòn tan, những âm thanh hoàn toàn chẳng liên quan gì đến những điều đang được nói ra trong căn phòng chật hẹp này.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Em nghe bình tĩnh ghê,”</span> <span class="nm nm-person">Luke</span> nói.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Em không bình tĩnh đâu,”</span> <span class="nm nm-person">Clevia</span> đáp. <span class="q">“Em chỉ chưa tin thôi.”</span></p>
-<p>Anh khẽ nhếch môi, như thể câu trả lời ấy đúng như anh đoán, và không nói gì thêm.</p>
+<p data-pi="24">Căn kho hẹp, trần thấp, nồng mùi gỗ ẩm và bụi của những món đồ đã lâu không ai đụng tới. Dọc tường là mấy cái giá trống, vài tấm chiếu cuộn tròn dựng ở góc, giữa phòng có một chiếc bàn gỗ cũ có lẽ từng được dùng để họp. Ánh sáng duy nhất lọt vào từ ô cửa sổ nhỏ sát trần, vừa đủ để hai người nhìn rõ mặt nhau.</p>
+<p data-pi="25"><span class="nm nm-person">Luke</span> kéo chiếc bàn ra giữa phòng, ngồi luôn lên mặt bàn chứ không buồn tìm ghế. <span class="nm nm-person">Clevia</span> đứng gần cửa, không ngồi.</p>
+<p data-pi="26" class="say say-luke" data-name="Luke"><span class="q">“Em nhặt được thẻ từ hôm nào?”</span> anh hỏi.</p>
+<p data-pi="27" class="say say-x"><span class="q">“Hôm kia.”</span></p>
+<p data-pi="28">Có gì đó thoáng thay đổi trên gương mặt anh, không rõ ràng lắm, chỉ là khoé mắt khẽ căng lại một chút. “Vậy là còn chừng bốn ngày nữa,” anh nói, giọng bình thản, cái kiểu bình thản mà nghe kỹ thì không hẳn là bình thản.</p>
+<p data-pi="29" class="say say-x"><span class="q">“Bốn ngày nữa thì sao ạ?”</span></p>
+<p data-pi="30" class="say say-luke" data-name="Luke"><span class="q">“Tính từ lúc tấm thẻ nhập vào người, đủ bảy ngày là em sẽ bị kéo vào một chỗ người ta gọi là ảo cảnh.”</span> Anh ngừng lại một chút. <span class="q">“Lần đầu là ảo cảnh dành cho người mới. Và không có cách nào để em từ chối đâu.”</span></p>
+<p data-pi="31" class="say say-x"><span class="q">“Bị kéo vào là sao?”</span></p>
+<p data-pi="32" class="say say-luke" data-name="Luke"><span class="q">“Là dù em đang ngủ, đang đi đường hay đang làm gì đi nữa, đến lúc là em sẽ ở một nơi khác.”</span> Anh nói chậm rãi, không phải kiểu giảng giải cho người chậm hiểu, mà như đang cân nhắc xem nên nói đến đâu thì vừa. <span class="q">“Ở trong đó, em phải làm được điều kiện để ra ngoài. Làm được thì thắng, có thưởng. Còn không thì…”</span></p>
+<p data-pi="33" class="say say-x"><span class="q">“Không thì sao?”</span></p>
+<p data-pi="34" class="say say-luke" data-name="Luke"><span class="q">“Thì thua, và mất một phần cơ thể, phần nào thì không biết trước.”</span> Anh nói câu đó bằng cái giọng của người đọc lại một điều khoản đã thuộc lòng. <span class="q">“Sau này thắng được thì có cách lấy lại. Nhưng nếu thua ba lần liền, hoặc thua tổng cộng hơn mười hai lần…”</span> Anh bỏ lửng câu nói, mà cũng chẳng cần nói hết.</p>
+<p data-pi="35">Căn kho rơi vào im lặng. Ngoài sân vọng vào tiếng sinh viên đi lại, tiếng ai đó cười giòn tan, những âm thanh hoàn toàn chẳng liên quan gì đến những điều đang được nói ra trong căn phòng chật hẹp này.</p>
+<p data-pi="36" class="say say-luke" data-name="Luke"><span class="q">“Em nghe bình tĩnh ghê,”</span> <span class="nm nm-person">Luke</span> nói.</p>
+<p data-pi="37" class="say say-clevia" data-name="Clevia"><span class="q">“Em không bình tĩnh đâu,”</span> <span class="nm nm-person">Clevia</span> đáp. <span class="q">“Em chỉ chưa tin thôi.”</span></p>
+<p data-pi="38">Anh khẽ nhếch môi, như thể câu trả lời ấy đúng như anh đoán, và không nói gì thêm.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="store">
 <figure class="plate"><canvas class="art" data-art="cardtable" role="img" aria-label="Tấm thẻ nằm úp trên mặt bàn gỗ cũ, vòng tròn rối khẽ ánh lên"></canvas></figure>
-<p class="say say-x"><span class="q">“Cái thẻ em nhặt,”</span> lát sau <span class="nm nm-person">Luke</span> nói tiếp, <span class="q">“người ta gọi nó là <span class="nm nm-card first">Thẻ khoá</span>. Mặt sau thì em thấy rồi đấy, PROJECT ARTOS 07. Chạm vào là nó nhập vào người, cho em một năng lực, và từ lúc đó em thành người chơi. Bọn anh tự gọi nhau là Artoser.”</span></p>
-<p class="say say-x"><span class="q">“Project Artos 07 là gì vậy anh?”</span></p>
-<p>Anh im lặng một nhịp trước khi trả lời, không giống người không biết, mà giống người đang lựa xem nên bắt đầu từ đâu. “Một trò chơi,” anh nói. “Có điều không phải kiểu trò chơi em đang nghĩ. Nó có luật riêng, có thưởng phạt riêng, và nó chẳng hỏi em có muốn chơi hay không.” Anh nhún vai. “Ai làm ra nó, ai thả mấy tấm thẻ ấy ra ngoài đường, anh cũng không biết. Người chơi lâu hơn anh thì mỗi người đồn một kiểu, nhưng anh chưa thấy ai nói ra được điều gì chắc chắn cả. Mà bây giờ em biết thêm mấy chuyện đó cũng chẳng giúp được gì đâu, chỉ thêm nặng đầu thôi.”</p>
-<p class="say say-x"><span class="q">“Thế giờ em đang ở đâu?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Còn bốn ngày nữa là vào lần đầu, chưa hiểu năng lực của mình, chưa biết luật.”</span> Anh nhìn thẳng vào cô. <span class="q">“Chỗ tệ nhất có thể rồi.”</span></p>
-<p><span class="nm nm-person">Clevia</span> không thích câu trả lời đó chút nào. Nhưng lạ thay, cô lại thích cái sự thẳng thắn của nó, thẳng đến mức không chừa cho cô chỗ nào để tự dối mình rằng cứ ngồi im thì mọi chuyện rồi sẽ ổn cả thôi.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Vậy năng lực của em là gì?”</span> cô hỏi.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Theo những gì anh thấy,”</span> anh hất cằm về phía chiếc ổ khoá vẫn đang mở toang trên cửa, <span class="q">“thì chắc là mở khoá. Anh đoán người ta sẽ gọi nó là <span class="nm nm-card first">Unlock</span>, hoặc cái gì đó na ná vậy. Khoá cửa, máy móc, cơ quan, có lẽ cả mấy thứ dùng để nhốt người ta lại trong ảo cảnh nữa.”</span> Anh ngừng một chút. <span class="q">“Nghe thì đơn giản, nhưng vào tay người biết dùng thì không đơn giản đâu.”</span></p>
-<p><span class="nm nm-person">Clevia</span> nhớ lại mấy ngày vừa qua, cánh cửa phòng trọ, chiếc máy bán nước, những tiếng “cạch” đều đặn theo từng lần chạm tay. Đơn giản ư, cô chẳng thấy nó đơn giản chút nào.</p>
-<p class="say say-x"><span class="q">“Anh chơi được bao lâu rồi?”</span></p>
-<p class="say say-x"><span class="q">“Hơn một năm.”</span></p>
-<p class="say say-x"><span class="q">“Mà anh vẫn còn ở đây.”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Ừ, vẫn còn ở đây,”</span> anh xác nhận, giọng không thêm gì vào cả, không tự hào cũng chẳng nhẹ nhõm, chỉ như đang nói một sự thật hiển nhiên.</p>
-<p>Cô định hỏi năng lực của anh là gì, nhưng rồi lại thôi. Có điều gì đó trong cách anh ngồi, gọn gàng và kín kẽ, khiến cô có cảm giác câu hỏi ấy sẽ chỉ nhận về một nụ cười và một câu lảng đi mà thôi.</p>
+<p data-pi="39" class="say say-x"><span class="q">“Cái thẻ em nhặt,”</span> lát sau <span class="nm nm-person">Luke</span> nói tiếp, <span class="q">“người ta gọi nó là <span class="nm nm-card first">Thẻ khoá</span>. Mặt sau thì em thấy rồi đấy, PROJECT ARTOS 07. Chạm vào là nó nhập vào người, cho em một năng lực, và từ lúc đó em thành người chơi. Bọn anh tự gọi nhau là Artoser.”</span></p>
+<p data-pi="40" class="say say-x"><span class="q">“Project Artos 07 là gì vậy anh?”</span></p>
+<p data-pi="41">Anh im lặng một nhịp trước khi trả lời, không giống người không biết, mà giống người đang lựa xem nên bắt đầu từ đâu. “Một trò chơi,” anh nói. “Có điều không phải kiểu trò chơi em đang nghĩ. Nó có luật riêng, có thưởng phạt riêng, và nó chẳng hỏi em có muốn chơi hay không.” Anh nhún vai. “Ai làm ra nó, ai thả mấy tấm thẻ ấy ra ngoài đường, anh cũng không biết. Người chơi lâu hơn anh thì mỗi người đồn một kiểu, nhưng anh chưa thấy ai nói ra được điều gì chắc chắn cả. Mà bây giờ em biết thêm mấy chuyện đó cũng chẳng giúp được gì đâu, chỉ thêm nặng đầu thôi.”</p>
+<p data-pi="42" class="say say-x"><span class="q">“Thế giờ em đang ở đâu?”</span></p>
+<p data-pi="43" class="say say-luke" data-name="Luke"><span class="q">“Còn bốn ngày nữa là vào lần đầu, chưa hiểu năng lực của mình, chưa biết luật.”</span> Anh nhìn thẳng vào cô. <span class="q">“Chỗ tệ nhất có thể rồi.”</span></p>
+<p data-pi="44"><span class="nm nm-person">Clevia</span> không thích câu trả lời đó chút nào. Nhưng lạ thay, cô lại thích cái sự thẳng thắn của nó, thẳng đến mức không chừa cho cô chỗ nào để tự dối mình rằng cứ ngồi im thì mọi chuyện rồi sẽ ổn cả thôi.</p>
+<p data-pi="45" class="say say-clevia" data-name="Clevia"><span class="q">“Vậy năng lực của em là gì?”</span> cô hỏi.</p>
+<p data-pi="46" class="say say-luke" data-name="Luke"><span class="q">“Theo những gì anh thấy,”</span> anh hất cằm về phía chiếc ổ khoá vẫn đang mở toang trên cửa, <span class="q">“thì chắc là mở khoá. Anh đoán người ta sẽ gọi nó là <span class="nm nm-card first">Unlock</span>, hoặc cái gì đó na ná vậy. Khoá cửa, máy móc, cơ quan, có lẽ cả mấy thứ dùng để nhốt người ta lại trong ảo cảnh nữa.”</span> Anh ngừng một chút. <span class="q">“Nghe thì đơn giản, nhưng vào tay người biết dùng thì không đơn giản đâu.”</span></p>
+<p data-pi="47"><span class="nm nm-person">Clevia</span> nhớ lại mấy ngày vừa qua, cánh cửa phòng trọ, chiếc máy bán nước, những tiếng “cạch” đều đặn theo từng lần chạm tay. Đơn giản ư, cô chẳng thấy nó đơn giản chút nào.</p>
+<p data-pi="48" class="say say-x"><span class="q">“Anh chơi được bao lâu rồi?”</span></p>
+<p data-pi="49" class="say say-x"><span class="q">“Hơn một năm.”</span></p>
+<p data-pi="50" class="say say-x"><span class="q">“Mà anh vẫn còn ở đây.”</span></p>
+<p data-pi="51" class="say say-luke" data-name="Luke"><span class="q">“Ừ, vẫn còn ở đây,”</span> anh xác nhận, giọng không thêm gì vào cả, không tự hào cũng chẳng nhẹ nhõm, chỉ như đang nói một sự thật hiển nhiên.</p>
+<p data-pi="52">Cô định hỏi năng lực của anh là gì, nhưng rồi lại thôi. Có điều gì đó trong cách anh ngồi, gọn gàng và kín kẽ, khiến cô có cảm giác câu hỏi ấy sẽ chỉ nhận về một nụ cười và một câu lảng đi mà thôi.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="store">
 <figure class="plate"><canvas class="art" data-art="floorlight" role="img" aria-label="Vệt nắng từ ô cửa nhỏ trườn chậm trên sàn gỗ"></canvas></figure>
-<p>Hai người ngồi im một lúc lâu, vệt nắng từ ô cửa nhỏ chậm rãi trườn đi trên sàn gỗ.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Em hay mơ,”</span> <span class="nm nm-person">Clevia</span> nói, nghe không hẳn là một câu hỏi.</p>
-<p><span class="nm nm-person">Luke</span> nhìn cô, không chen vào.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Lúc nào cũng là một giấc mơ thôi. Một cây cầu, một con sông, và một cô gái đứng trên đó.”</span> Cô cúi nhìn đôi tay mình. <span class="q">“Em không biết cô ấy là ai, tỉnh dậy là không nhớ nổi mặt. Nhưng em biết tên cô ấy.”</span> Cô dừng lại. <span class="q">“Em có cảm giác hồi trước mình từng thân với cô ấy lắm. Nhưng em không nhớ nổi vì sao.”</span></p>
-<p><span class="nm nm-person">Luke</span> im lặng một lúc lâu, lâu đến mức <span class="nm nm-person">Clevia</span> nhận ra anh đang thật sự suy nghĩ chứ không phải đang lịch sự chờ đến lượt mình.</p>
-<p class="say say-x"><span class="q">“Anh từng nghe nói có một loại thẻ,”</span> cuối cùng anh lên tiếng, giọng chậm hơn hẳn, <span class="q">“gọi là Thẻ Mộng. Nghe bảo nó cho người dùng đi sâu vào ký ức, của mình, hoặc của người khác. Hiếm lắm. Anh chưa thấy tận mắt bao giờ, nhưng nó có thật.”</span></p>
-<p><span class="nm nm-person">Clevia</span> ngẩng phắt lên.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Anh không bảo là em nên đi tìm nó,”</span> anh nói luôn trước khi cô kịp mở miệng. <span class="q">“Anh chỉ nói là nó có thôi. Ký ức bị chôn đi thì thường là có lý do của nó.”</span></p>
-<p>Giọng anh không có vẻ gì là phán xét, chỉ như đang nói ra một điều mà anh đã thấy đủ nhiều để biết rằng không phải cánh cửa nào cũng nên mở. <span class="nm nm-person">Clevia</span> nhìn anh, có điều gì đó trong câu nói ấy, ký ức bị chôn đi thì thường là có lý do của nó, không hẳn là lạnh lùng, nhưng cũng chẳng phải sự quan tâm, chỉ là một lời nhận xét, như thể đây là thông tin chứ không phải lời khuyên. Cô không chắc mình có thích điều đó hay không.</p>
+<p data-pi="53">Hai người ngồi im một lúc lâu, vệt nắng từ ô cửa nhỏ chậm rãi trườn đi trên sàn gỗ.</p>
+<p data-pi="54" class="say say-clevia" data-name="Clevia"><span class="q">“Em hay mơ,”</span> <span class="nm nm-person">Clevia</span> nói, nghe không hẳn là một câu hỏi.</p>
+<p data-pi="55"><span class="nm nm-person">Luke</span> nhìn cô, không chen vào.</p>
+<p data-pi="56" class="say say-clevia" data-name="Clevia"><span class="q">“Lúc nào cũng là một giấc mơ thôi. Một cây cầu, một con sông, và một cô gái đứng trên đó.”</span> Cô cúi nhìn đôi tay mình. <span class="q">“Em không biết cô ấy là ai, tỉnh dậy là không nhớ nổi mặt. Nhưng em biết tên cô ấy.”</span> Cô dừng lại. <span class="q">“Em có cảm giác hồi trước mình từng thân với cô ấy lắm. Nhưng em không nhớ nổi vì sao.”</span></p>
+<p data-pi="57"><span class="nm nm-person">Luke</span> im lặng một lúc lâu, lâu đến mức <span class="nm nm-person">Clevia</span> nhận ra anh đang thật sự suy nghĩ chứ không phải đang lịch sự chờ đến lượt mình.</p>
+<p data-pi="58" class="say say-x"><span class="q">“Anh từng nghe nói có một loại thẻ,”</span> cuối cùng anh lên tiếng, giọng chậm hơn hẳn, <span class="q">“gọi là Thẻ Mộng. Nghe bảo nó cho người dùng đi sâu vào ký ức, của mình, hoặc của người khác. Hiếm lắm. Anh chưa thấy tận mắt bao giờ, nhưng nó có thật.”</span></p>
+<p data-pi="59"><span class="nm nm-person">Clevia</span> ngẩng phắt lên.</p>
+<p data-pi="60" class="say say-luke" data-name="Luke"><span class="q">“Anh không bảo là em nên đi tìm nó,”</span> anh nói luôn trước khi cô kịp mở miệng. <span class="q">“Anh chỉ nói là nó có thôi. Ký ức bị chôn đi thì thường là có lý do của nó.”</span></p>
+<p data-pi="61">Giọng anh không có vẻ gì là phán xét, chỉ như đang nói ra một điều mà anh đã thấy đủ nhiều để biết rằng không phải cánh cửa nào cũng nên mở. <span class="nm nm-person">Clevia</span> nhìn anh, có điều gì đó trong câu nói ấy, ký ức bị chôn đi thì thường là có lý do của nó, không hẳn là lạnh lùng, nhưng cũng chẳng phải sự quan tâm, chỉ là một lời nhận xét, như thể đây là thông tin chứ không phải lời khuyên. Cô không chắc mình có thích điều đó hay không.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="store">
 <figure class="plate"><canvas class="art" data-art="phone" role="img" aria-label="Màn hình điện thoại sáng lên trong túi áo rồi tắt"></canvas></figure>
-<p data-act="notify">Lúc cô đứng dậy chuẩn bị về, màn hình điện thoại trong túi quần <span class="nm nm-person">Luke</span> chợt sáng lên, một tin nhắn hiện trên màn hình khoá rồi tắt. Cô không đọc được nội dung, chỉ thấy anh liếc xuống, đọc lướt, rồi ngón tay bấm tắt màn hình bằng một động tác rất nhỏ mà rất dứt khoát, kiểu người đang gạt một chuyện sang bên để xử lý sau, chứ không phải kiểu người vừa nhận một tin nhắn bình thường. Gương mặt anh không hề thay đổi, vẫn cái vẻ thản nhiên ấy, vậy mà <span class="nm nm-person">Clevia</span> vẫn nhận ra sự dứt khoát trong cái động tác nhỏ xíu kia, và chẳng hiểu sao nó cứ làm cô để tâm mãi.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Anh sẽ giúp em chứ?”</span> cô hỏi khi đã đứng ở ngưỡng cửa.</p>
-<p><span class="nm nm-person">Luke</span> nhìn cô. “Anh sẽ nói cho em những gì anh biết,” anh đáp. “Còn lại thì tuỳ em.”</p>
-<p class="say say-x"><span class="q">“Sao anh lại làm vậy? Mình đâu có quen nhau.”</span></p>
-<p>Anh im một lúc, ánh mắt trôi đi đâu đó qua vai cô, về phía khoảng sân ngập nắng ngoài kia, và trong một thoáng rất ngắn trông anh như đang nhìn thấy một người khác chứ không phải cô. “Hồi anh mới vào, cũng có người làm vậy với anh,” anh nói, rồi đứng dậy khỏi mặt bàn, như thể câu chuyện đến đó là hết.</p>
-<p>Đó không phải câu trả lời cô muốn nghe, nhưng cô nhận ra đó là câu trả lời thật chứ không phải câu trả lời cho phải phép, và giữa hai thứ ấy, cô chọn cái thật.</p>
-<p><span class="nm nm-person">Clevia</span> gật đầu rồi bước ra ngoài. Cánh cửa kho khép lại sau lưng, chiếc ổ khoá vẫn nằm im trên vòng khoen, chưa ai khoá lại. Cô nhìn nó thêm một giây rồi quay đi.</p>
-<p data-fx="rain">Bên ngoài, bầu trời đã thấp xuống và nặng trĩu, mây xám kéo về từ lúc nào chẳng hay, trong không khí phảng phất mùi mưa sắp tới. Sân trường đông dần lên sau giờ giải lao, mọi thứ vẫn ở đúng chỗ của nó, tấm bảng tin, dãy ghế đá, con đường quen thuộc dẫn về giảng đường, như thể chẳng có gì trên đời này vừa thay đổi.</p>
-<p>Còn bốn ngày nữa. <span class="nm nm-person">Clevia</span> đút tay vào túi áo, bước đi, và cố không nghĩ xem thứ gì đang chờ mình ở cuối bốn ngày ấy.</p>
+<p data-pi="62" data-act="notify">Lúc cô đứng dậy chuẩn bị về, màn hình điện thoại trong túi quần <span class="nm nm-person">Luke</span> chợt sáng lên, một tin nhắn hiện trên màn hình khoá rồi tắt. Cô không đọc được nội dung, chỉ thấy anh liếc xuống, đọc lướt, rồi ngón tay bấm tắt màn hình bằng một động tác rất nhỏ mà rất dứt khoát, kiểu người đang gạt một chuyện sang bên để xử lý sau, chứ không phải kiểu người vừa nhận một tin nhắn bình thường. Gương mặt anh không hề thay đổi, vẫn cái vẻ thản nhiên ấy, vậy mà <span class="nm nm-person">Clevia</span> vẫn nhận ra sự dứt khoát trong cái động tác nhỏ xíu kia, và chẳng hiểu sao nó cứ làm cô để tâm mãi.</p>
+<p data-pi="63" class="say say-clevia" data-name="Clevia"><span class="q">“Anh sẽ giúp em chứ?”</span> cô hỏi khi đã đứng ở ngưỡng cửa.</p>
+<p data-pi="64"><span class="nm nm-person">Luke</span> nhìn cô. “Anh sẽ nói cho em những gì anh biết,” anh đáp. “Còn lại thì tuỳ em.”</p>
+<p data-pi="65" class="say say-x"><span class="q">“Sao anh lại làm vậy? Mình đâu có quen nhau.”</span></p>
+<p data-pi="66">Anh im một lúc, ánh mắt trôi đi đâu đó qua vai cô, về phía khoảng sân ngập nắng ngoài kia, và trong một thoáng rất ngắn trông anh như đang nhìn thấy một người khác chứ không phải cô. “Hồi anh mới vào, cũng có người làm vậy với anh,” anh nói, rồi đứng dậy khỏi mặt bàn, như thể câu chuyện đến đó là hết.</p>
+<p data-pi="67">Đó không phải câu trả lời cô muốn nghe, nhưng cô nhận ra đó là câu trả lời thật chứ không phải câu trả lời cho phải phép, và giữa hai thứ ấy, cô chọn cái thật.</p>
+<p data-pi="68"><span class="nm nm-person">Clevia</span> gật đầu rồi bước ra ngoài. Cánh cửa kho khép lại sau lưng, chiếc ổ khoá vẫn nằm im trên vòng khoen, chưa ai khoá lại. Cô nhìn nó thêm một giây rồi quay đi.</p>
+<p data-pi="69" data-fx="rain">Bên ngoài, bầu trời đã thấp xuống và nặng trĩu, mây xám kéo về từ lúc nào chẳng hay, trong không khí phảng phất mùi mưa sắp tới. Sân trường đông dần lên sau giờ giải lao, mọi thứ vẫn ở đúng chỗ của nó, tấm bảng tin, dãy ghế đá, con đường quen thuộc dẫn về giảng đường, như thể chẳng có gì trên đời này vừa thay đổi.</p>
+<p data-pi="70">Còn bốn ngày nữa. <span class="nm nm-person">Clevia</span> đút tay vào túi áo, bước đi, và cố không nghĩ xem thứ gì đang chờ mình ở cuối bốn ngày ấy.</p>
 </section>
   </article>
   <footer class="end">
@@ -1086,6 +1139,7 @@ els.forEach(function(el){io.observe(el)});})();
   function stop(b){var r=b.getBoundingClientRect(),h=r.height,vh=innerHeight;return h<vh-140?r.top+scrollY-(vh-h)/2:r.top+scrollY+h-vh+60}
   var gate=null, pushes=0, lastPush=0, onT=0;
   function find(){
+    if(root.classList.contains('pen-on'))return null; // Bút tác giả đang bật: Clair đọc lướt tự do
     for(var i=0;i<boxes.length;i++){var b=boxes[i];if(b._free)continue;if(ok(b)){keep(b);continue}if(shown(b))return b}
     return null;
   }
@@ -1163,6 +1217,160 @@ els.forEach(function(el){io.observe(el)});})();
     a.addEventListener('click',function(e){if(read()){sfx('flip');return}e.preventDefault();open(a.getAttribute('href'))})});
   var pv=cv.querySelector('.pv'); if(pv)pv.addEventListener('click',function(){sfx('flip')});
 })();
+(function client(URL) {
+  var KEY; try { KEY = localStorage.getItem('a07-pen'); } catch (e) {}
+  if (!KEY || !URL) return;
+  var root = document.documentElement, art = document.querySelector('article');
+  if (!art) return;
+  var CH = String(+((location.pathname.match(/ch(\d+)\.html$/) || [])[1] || 0)); if (CH === '0') return;
+  var SRC = null, EDITS = {}, QK = 'a07-pen-q';
+  function sfx(n) { if (window.a07sfx) window.a07sfx(n); }
+  function call(o) { o.type = 'pen'; o.key = KEY; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function q() { try { return JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch (e) { return []; } }
+  function setQ(l) { try { localStorage.setItem(QK, JSON.stringify(l)); } catch (e) {} }
+  function paras(pi) { return art.querySelectorAll('p[data-pi="' + pi + '"]'); }
+  function srcOf(pi) {
+    if (SRC && SRC[pi] != null) return SRC[pi];
+    return [].map.call(paras(pi), function (p) { return p.textContent; }).join(' ');
+  }
+  function lost() { try { localStorage.removeItem('a07-pen'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
+
+  // nút Bút trên thanh đầu trang
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút tác giả');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z"/><path d="M13.8 6.8l3.4 3.4"/><path d="M4 20h7"/></svg><span class="n"></span>'; document.body.appendChild(btn);
+  var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'pen-pill'; document.body.appendChild(pill);
+  var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
+
+  function count() {
+    var n = Object.keys(EDITS).length; btn.querySelector('.n').textContent = n ? n : '';
+    pill.innerHTML = n ? 'Chạm đoạn để sửa · <b>' + n + ' chỗ</b>' : 'Chạm một đoạn để sửa';
+  }
+  function mark(pi) {
+    var e = EDITS[pi];
+    [].forEach.call(paras(pi), function (p) {
+      p.classList.toggle('pen-has', !!e);
+      p.classList.toggle('pen-note', !!(e && !e.sua));
+      p.classList.toggle('pen-wait', !!(e && e.wait));
+    });
+  }
+  function on(v) {
+    root.classList.toggle('pen-on', v); btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+    try { sessionStorage.setItem('a07-pen-on', v ? '1' : ''); } catch (e) {}
+    dispatchEvent(new Event('scroll')); // trang thôi "giữ chân" ở tương tác khi bút bật
+    if (v) { sfx('glint'); load(); }
+  }
+  btn.onclick = function () { on(!root.classList.contains('pen-on')); };
+
+  var loaded = false;
+  function load() {
+    if (loaded) return; loaded = true;
+    fetch('goc/ch' + ('0' + CH).slice(-2) + '.json').then(function (r) { return r.json(); }).then(function (a) { SRC = a; }).catch(function () {});
+    flush().then(function () { return call({ op: 'list', ch: CH }); }).then(function (r) {
+      if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') lost(); return; }
+      r.list.forEach(function (e) { EDITS[e.pi] = e; });
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; } });
+      Object.keys(EDITS).forEach(mark); count();
+    }).catch(function () {
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; mark(o.pi); } });
+      count(); pill.innerHTML = 'Đang mất mạng · chỗ sửa sẽ được giữ lại';
+    });
+  }
+  // gửi lại những chỗ sửa lúc mất mạng
+  function flush() {
+    var l = q(); if (!l.length) return Promise.resolve();
+    var o = l[0];
+    return call(o).then(function (r) {
+      if (r.ok || r.why === 'trong') { setQ(q().slice(1)); if (o.ch === CH && EDITS[o.pi]) { delete EDITS[o.pi].wait; EDITS[o.pi].id = r.id; mark(o.pi); } return flush(); }
+    });
+  }
+
+  // so chữ cũ / mới theo từng từ
+  function diff(a, b) {
+    var A = a.split(/(\s+)/), B = b.split(/(\s+)/), n = A.length, m = B.length, i, j;
+    if (n * m > 400000) return esc(b);
+    var T = []; for (i = 0; i <= n; i++) { T.push(new Uint16Array(m + 1)); }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) T[i][j] = A[i] === B[j] ? T[i + 1][j + 1] + 1 : Math.max(T[i + 1][j], T[i][j + 1]);
+    var out = '', d = '', s = ''; i = 0; j = 0;
+    function put() { if (d) out += '<del>' + esc(d) + '</del>'; if (s) out += '<ins>' + esc(s) + '</ins>'; d = s = ''; }
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { put(); out += esc(A[i]); i++; j++; }
+      else if (T[i + 1][j] >= T[i][j + 1]) d += A[i++]; else s += B[j++];
+    }
+    while (i < n) d += A[i++]; while (j < m) s += B[j++]; put();
+    return out;
+  }
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function close() { sheet.classList.remove('on'); [].forEach.call(art.querySelectorAll('.pen-cur'), function (p) { p.classList.remove('pen-cur'); }); setTimeout(function () { sheet.hidden = true; sheet.innerHTML = ''; }, 260); document.body.style.overflow = ''; }
+  function openSheet(html) {
+    sheet.innerHTML = '<div class="pen-box" role="dialog" aria-modal="true">' + html + '</div>'; sheet.hidden = false;
+    document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { sheet.classList.add('on'); }); sfx('flip');
+  }
+  sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-x]')) close(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+
+  function edit(pi) {
+    var goc = srcOf(pi), e = EDITS[pi] || {};
+    [].forEach.call(paras(pi), function (p) { p.classList.add('pen-cur'); });
+    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3><p class="sub">Sửa thẳng vào chữ bên dưới. Chữ nghiêng nằm giữa hai dấu *.</p>' +
+      '<textarea class="tx" rows="6"></textarea><div class="pen-diff" hidden></div>' +
+      '<label for="pen-nt">Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2" placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
+      '<div class="pen-row"><button type="button" class="go">Lưu</button><button type="button" class="rm"' + (EDITS[pi] ? '' : ' hidden') + '>Bỏ chỗ sửa này</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
+    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff'), msg = sheet.querySelector('.pen-msg');
+    tx.value = e.sua || goc; nt.value = e.note || '';
+    function grow() { tx.style.height = 'auto'; tx.style.height = Math.min(tx.scrollHeight + 4, innerHeight * 0.45) + 'px'; }
+    function show() { var v = tx.value.trim(); dv.hidden = v === goc.trim(); if (!dv.hidden) dv.innerHTML = diff(goc.trim(), v); grow(); }
+    tx.addEventListener('input', show); setTimeout(show, 0);
+    sheet.querySelector('.go').onclick = function () {
+      var sua = tx.value.trim(), note = nt.value.trim();
+      if (sua === goc.trim()) sua = '';
+      if (!sua && !note) { msg.textContent = 'Chưa có gì đổi cả.'; return; }
+      var o = { op: 'save', ch: CH, pi: +pi, goc: goc, sua: sua, note: note };
+      EDITS[pi] = { pi: +pi, goc: goc, sua: sua, note: note, id: e.id, wait: 1 }; mark(pi); count();
+      msg.textContent = 'Đang gửi…'; this.disabled = true;
+      call(o).then(function (r) {
+        if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') { lost(); msg.textContent = 'Mật mã trên máy này không còn đúng.'; } else msg.textContent = 'Chưa lưu được, cậu thử lại nhé.'; return; }
+        EDITS[pi].id = r.id; delete EDITS[pi].wait; mark(pi); sfx('ink'); flash(pi); close();
+      }).catch(function () {
+        var l = q().filter(function (x) { return !(x.ch === CH && x.pi === +pi && x.op === 'save'); }); l.push(o); setQ(l);
+        sfx('ink'); flash(pi); close(); pill.innerHTML = 'Đang mất mạng · đã giữ chỗ sửa, có mạng sẽ tự gửi';
+      });
+    };
+    sheet.querySelector('.rm').onclick = function () {
+      var id = (EDITS[pi] || {}).id; delete EDITS[pi]; mark(pi); count();
+      setQ(q().filter(function (x) { return !(x.ch === CH && x.pi === +pi); }));
+      if (id) call({ op: 'del', id: id }).catch(function () {});
+      close();
+    };
+  }
+  function flash(pi) { [].forEach.call(paras(pi), function (p) { p.classList.remove('pen-flash'); void p.offsetWidth; p.classList.add('pen-flash'); }); }
+
+  // chạm một đoạn khi bút bật: mở ô sửa (chặn tương tác của đoạn đó)
+  art.addEventListener('click', function (e) {
+    if (!root.classList.contains('pen-on')) return;
+    var p = e.target.closest && e.target.closest('p[data-pi]'); if (!p || !art.contains(p)) return;
+    if (getSelection && String(getSelection()).length > 2) return; // đang bôi chọn chữ thì thôi
+    e.preventDefault(); e.stopPropagation(); edit(p.getAttribute('data-pi'));
+  }, true);
+
+  // viên thuốc dưới đáy: xem danh sách chỗ đã ghi trong chương
+  pill.onclick = function () {
+    var ks = Object.keys(EDITS).sort(function (a, b) { return a - b; });
+    if (!ks.length) return;
+    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".</p><ul class="pen-list">' +
+      ks.map(function (k) { var x = EDITS[k]; return '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>'; }).join('') +
+      '</ul><div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    sheet.querySelector('.pen-list').onclick = function (e) {
+      var li = e.target.closest('li'); if (!li) return; var k = li.getAttribute('data-go'); close();
+      var p = paras(k)[0]; if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { flash(k); }, 500); }
+    };
+  };
+
+  count();
+  var was; try { was = sessionStorage.getItem('a07-pen-on'); } catch (e) {}
+  if (was) on(true); else { load(); }
+})("https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec");
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.

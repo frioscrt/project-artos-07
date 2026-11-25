@@ -552,6 +552,59 @@ html.giu-on .cv{opacity:0;pointer-events:none}
 .cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
 @media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
+
+#pen{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;width:46px;height:46px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--soft);border:1px solid color-mix(in srgb,var(--pw-clevia) 45%,transparent);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.7);transition:color .25s,box-shadow .25s,transform .2s}
+#pen:active{transform:scale(.92)}
+#pen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#pen[aria-pressed="true"]{color:#fff;background:var(--pw-clevia);border-color:var(--pw-clevia);box-shadow:0 0 22px -4px var(--pw-clevia)}
+#pen .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--pw-clevia);color:#fff;font:600 10px/16px system-ui,sans-serif;text-align:center}
+#pen .n:empty{display:none}
+html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:background .25s,box-shadow .25s}
+html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
+article p.pen-has{position:relative}
+article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
+article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
+html:not(.pen-on) article p.pen-has::before{opacity:.45}
+.pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
+  padding:.55em 1.1em;border-radius:999px;background:#0b1418;color:#e8eef0;border:1px solid var(--pw-clevia);font:500 13px/1.2 system-ui,sans-serif;letter-spacing:.02em;
+  box-shadow:0 6px 24px -8px #000;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s;white-space:nowrap}
+html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
+.pen-pill b{color:var(--pw-clevia);font-weight:600}
+.pen-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.pen-sheet.on{opacity:1}
+.pen-sheet[hidden]{display:none}
+.pen-box{width:100%;max-width:40em;max-height:88vh;overflow:auto;background:#0d1417;color:#e3e7e6;border-top:2px solid var(--pw-clevia);border-radius:18px 18px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .35s cubic-bezier(.3,1.3,.5,1);font-family:system-ui,sans-serif}
+.pen-sheet.on .pen-box{transform:none}
+:root[data-theme="light"] .pen-box{background:#f3f4f2;color:#1d2526}
+.pen-box h3{margin:0 0 .2em;font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--pw-clevia)}
+.pen-box .sub{margin:0 0 .9em;font-size:13px;opacity:.65}
+.pen-box textarea{display:block;width:100%;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:10px;background:transparent;color:inherit;
+  font:400 17px/1.6 Literata,Georgia,serif;padding:.6em .7em;resize:vertical}
+.pen-box textarea:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
+.pen-box .note{font:400 15px/1.5 system-ui,sans-serif;min-height:3.2em}
+.pen-box label{display:block;margin:1em 0 .35em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
+.pen-diff[hidden]{display:none}
+.pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
+.pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
+.pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
+.pen-row .rm{color:var(--pw-clevia)}
+.pen-row button[hidden]{display:none}
+.pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
+.pen-list{list-style:none;margin:0;padding:0}
+.pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
+.pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
+.pen-list li.nt small{color:var(--pw-luke)}
+@keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
+article p.pen-flash{animation:penflash .8s ease-out}
+@media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).

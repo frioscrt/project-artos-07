@@ -552,6 +552,59 @@ html.giu-on .cv{opacity:0;pointer-events:none}
 .cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
 @media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
+
+#pen{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;width:46px;height:46px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--soft);border:1px solid color-mix(in srgb,var(--pw-clevia) 45%,transparent);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.7);transition:color .25s,box-shadow .25s,transform .2s}
+#pen:active{transform:scale(.92)}
+#pen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#pen[aria-pressed="true"]{color:#fff;background:var(--pw-clevia);border-color:var(--pw-clevia);box-shadow:0 0 22px -4px var(--pw-clevia)}
+#pen .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--pw-clevia);color:#fff;font:600 10px/16px system-ui,sans-serif;text-align:center}
+#pen .n:empty{display:none}
+html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:background .25s,box-shadow .25s}
+html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
+article p.pen-has{position:relative}
+article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
+article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
+html:not(.pen-on) article p.pen-has::before{opacity:.45}
+.pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
+  padding:.55em 1.1em;border-radius:999px;background:#0b1418;color:#e8eef0;border:1px solid var(--pw-clevia);font:500 13px/1.2 system-ui,sans-serif;letter-spacing:.02em;
+  box-shadow:0 6px 24px -8px #000;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s;white-space:nowrap}
+html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
+.pen-pill b{color:var(--pw-clevia);font-weight:600}
+.pen-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.pen-sheet.on{opacity:1}
+.pen-sheet[hidden]{display:none}
+.pen-box{width:100%;max-width:40em;max-height:88vh;overflow:auto;background:#0d1417;color:#e3e7e6;border-top:2px solid var(--pw-clevia);border-radius:18px 18px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .35s cubic-bezier(.3,1.3,.5,1);font-family:system-ui,sans-serif}
+.pen-sheet.on .pen-box{transform:none}
+:root[data-theme="light"] .pen-box{background:#f3f4f2;color:#1d2526}
+.pen-box h3{margin:0 0 .2em;font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--pw-clevia)}
+.pen-box .sub{margin:0 0 .9em;font-size:13px;opacity:.65}
+.pen-box textarea{display:block;width:100%;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:10px;background:transparent;color:inherit;
+  font:400 17px/1.6 Literata,Georgia,serif;padding:.6em .7em;resize:vertical}
+.pen-box textarea:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
+.pen-box .note{font:400 15px/1.5 system-ui,sans-serif;min-height:3.2em}
+.pen-box label{display:block;margin:1em 0 .35em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
+.pen-diff[hidden]{display:none}
+.pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
+.pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
+.pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
+.pen-row .rm{color:var(--pw-clevia)}
+.pen-row button[hidden]{display:none}
+.pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
+.pen-list{list-style:none;margin:0;padding:0}
+.pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
+.pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
+.pen-list li.nt small{color:var(--pw-luke)}
+@keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
+article p.pen-flash{animation:penflash .8s ease-out}
+@media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -756,58 +809,58 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   <article>
 <section class="scene" data-sound="room">
 <figure class="plate"><canvas class="art" data-art="room:dawn" role="img" aria-label="Căn phòng trọ trong ánh sáng sớm"></canvas></figure>
-<p><span class="nm nm-person first">Clevia</span> không đếm ngược bằng cách gạch lên tờ lịch hay đặt nhắc nhở trong điện thoại, cô đếm bằng cái cảm giác cứ nặng thêm mỗi sáng thức dậy, như thể không khí trong phòng đang đặc lại dần theo từng giờ trôi qua. Cô vẫn đi học, vẫn đi làm thêm, vẫn ăn, vẫn tắm, vẫn ngủ đúng giờ như trước, nhưng dường như tất cả những việc ấy chỉ đang diễn ra ở một lớp vỏ bên ngoài, còn phần còn lại của cô thì ngồi im ở một góc nào đó rất sâu bên trong, lặng lẽ đếm.</p>
-<p>Còn ba ngày, và cô bắt đầu hiểu ra rằng năng lực này chẳng hề hỏi ý kiến cô. Không phải cô điều khiển nó, mà chính nó đang tự quyết định khoảng cách giữa cô và mọi thứ xung quanh. Cái chốt cửa nhà vệ sinh tầng hai hỏng từ đời nào, cô chỉ đi ngang qua là nó tự bật ra, cái máy photo ở thư viện kẹt giấy, cô vừa đặt tay lên là nó lại chạy ro ro như chưa có chuyện gì. Toàn những chuyện nhỏ nhặt, liên tục, chẳng thèm hỏi xem cô có muốn hay không. Nó khó kiểm soát đến vậy, cô thầm nghĩ, thì năng lực của <span class="nm nm-person first">Luke</span> là gì, và anh ta đã mất bao lâu mới khiến nó chịu nghe lời mình? Cô nhận ra mình chưa từng thấy anh làm điều gì khác thường cả, không một lần nào, và chẳng hiểu sao điều đó lại khiến cô thấy bất an hơn là yên tâm.</p>
-<p>Mặc kệ, cô tự nhủ, rồi bắt đầu đi đường vòng để tránh xa những thứ có khoá.</p>
+<p data-pi="0"><span class="nm nm-person first">Clevia</span> không đếm ngược bằng cách gạch lên tờ lịch hay đặt nhắc nhở trong điện thoại, cô đếm bằng cái cảm giác cứ nặng thêm mỗi sáng thức dậy, như thể không khí trong phòng đang đặc lại dần theo từng giờ trôi qua. Cô vẫn đi học, vẫn đi làm thêm, vẫn ăn, vẫn tắm, vẫn ngủ đúng giờ như trước, nhưng dường như tất cả những việc ấy chỉ đang diễn ra ở một lớp vỏ bên ngoài, còn phần còn lại của cô thì ngồi im ở một góc nào đó rất sâu bên trong, lặng lẽ đếm.</p>
+<p data-pi="1">Còn ba ngày, và cô bắt đầu hiểu ra rằng năng lực này chẳng hề hỏi ý kiến cô. Không phải cô điều khiển nó, mà chính nó đang tự quyết định khoảng cách giữa cô và mọi thứ xung quanh. Cái chốt cửa nhà vệ sinh tầng hai hỏng từ đời nào, cô chỉ đi ngang qua là nó tự bật ra, cái máy photo ở thư viện kẹt giấy, cô vừa đặt tay lên là nó lại chạy ro ro như chưa có chuyện gì. Toàn những chuyện nhỏ nhặt, liên tục, chẳng thèm hỏi xem cô có muốn hay không. Nó khó kiểm soát đến vậy, cô thầm nghĩ, thì năng lực của <span class="nm nm-person first">Luke</span> là gì, và anh ta đã mất bao lâu mới khiến nó chịu nghe lời mình? Cô nhận ra mình chưa từng thấy anh làm điều gì khác thường cả, không một lần nào, và chẳng hiểu sao điều đó lại khiến cô thấy bất an hơn là yên tâm.</p>
+<p data-pi="2">Mặc kệ, cô tự nhủ, rồi bắt đầu đi đường vòng để tránh xa những thứ có khoá.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="bench">
 <figure class="plate"><canvas class="art" data-art="library" role="img" aria-label="Góc thư viện, cuốn sách mở và điện thoại hiện dấu ba chấm"></canvas></figure>
-<p>Còn hai ngày thì <span class="nm nm-person">Luke</span> nhắn tin, lúc cô đang ngồi trong góc thư viện với cuốn tiểu thuyết mở ra trước mặt mà chẳng đọc nổi một chữ.</p>
-<p data-act="msg-in">“Em thế nào rồi?”</p>
-<p class="msg-note"><span class="nm nm-person">Clevia</span> nhìn dòng tin ấy một lúc lâu rồi mới gõ lại:</p><p data-act="msg-out">“Bình thường ạ.”</p>
-<p data-fx="typing">Dấu ba chấm hiện lên, biến mất, rồi lại hiện lên.</p>
-<p data-act="msg-in">“Anh vừa nhận được thông báo. Hai ngày nữa anh cũng bị kéo vào một ảo cảnh, đúng lúc với em.”</p>
-<p>Cô đặt điện thoại xuống bàn, ngước nhìn lên trần thư viện một lúc, rồi lại cầm lên.</p>
-<p data-act="msg-out">“Thông báo? Ai báo cho anh ạ?”</p>
-<p data-act="msg-in">“Qua được lần đầu thì sẽ hiểu. Em cứ coi như có cái gì đó nói thẳng vào đầu mình đi, nghe thì kỳ, mà quen rồi thì cũng thấy bình thường.”</p>
-<p data-act="msg-out">“Cấp mấy ạ?”</p>
-<p data-act="msg-in">“C. Em đừng lo cho anh, anh quen mấy chuyện này rồi.”</p><p class="msg-note">Một nhịp ngắn, rồi tin nhắn tiếp theo hiện ra.</p><p data-act="msg-in">“Nhưng anh không vào cùng chỗ với em được đâu, nên em cẩn thận đấy. Ảo cảnh cho người mới chắc là riêng một chỗ, theo anh biết thì nó không cho người ngoài vào.”</p>
-<p>Cô biết điều đó, <span class="nm nm-person">Luke</span> đã nói với cô rồi, vậy mà đọc lại lần này vẫn khiến một thứ gì đó khó chịu dâng lên ở đâu đó dưới xương ức.</p>
-<p data-act="msg-out">“Em hiểu rồi.”</p>
-<p data-act="msg-in">“Nghe này”</p><p class="msg-note">anh gõ tiếp.</p><p data-act="msg-in">“Ảo cảnh cho người mới vốn được làm ra để người mới qua được. Không dễ, nhưng không phải là không thể. Em đã biết năng lực của mình, biết sơ sơ luật chơi, thế là hơn khối người ở lần đầu rồi.”</p>
-<p><span class="nm nm-person">Clevia</span> đọc đoạn tin đó hai lần.</p>
-<p data-act="msg-out">“Anh đang an ủi em đấy à?”</p>
-<p data-act="msg-in">“Anh đang nói thật.”</p><p class="msg-note">Rồi một lúc sau:</p><p data-act="msg-in">“Mà chắc cũng có an ủi em một chút. Cả hai đều đúng.”</p>
-<p>Cô nhìn dòng tin ấy, và lần đầu tiên sau mấy ngày liền, cô thấy có cái gì đó trong lồng ngực khẽ nới lỏng ra một chút.</p>
-<p data-act="msg-in">“Hai bên vào cùng một lúc”</p><p class="msg-note">anh nhắn thêm.</p><p data-act="msg-in">“Anh không biết mình sẽ ở đâu, em cũng không biết mình sẽ ở đâu. Nhưng anh tin cả hai sẽ ra được thôi. Anh sẽ đợi.”</p>
-<p><span class="nm nm-person">Clevia</span> nhìn chằm chằm vào hai chữ cuối cùng ấy khá lâu, lâu đến mức màn hình tự tối đi, và cô phải chạm vào để nó sáng lại.</p>
-<p data-act="msg-out">“Vâng”</p><p class="msg-note">cô gõ.</p><p data-act="msg-out">“Em sẽ cố.”</p>
-<p data-act="msg-in">“Anh biết.”</p>
+<p data-pi="3">Còn hai ngày thì <span class="nm nm-person">Luke</span> nhắn tin, lúc cô đang ngồi trong góc thư viện với cuốn tiểu thuyết mở ra trước mặt mà chẳng đọc nổi một chữ.</p>
+<p data-pi="4" data-act="msg-in">“Em thế nào rồi?”</p>
+<p class="msg-note" data-pi="5"><span class="nm nm-person">Clevia</span> nhìn dòng tin ấy một lúc lâu rồi mới gõ lại:</p><p data-pi="5" data-act="msg-out">“Bình thường ạ.”</p>
+<p data-pi="6" data-fx="typing">Dấu ba chấm hiện lên, biến mất, rồi lại hiện lên.</p>
+<p data-pi="7" data-act="msg-in">“Anh vừa nhận được thông báo. Hai ngày nữa anh cũng bị kéo vào một ảo cảnh, đúng lúc với em.”</p>
+<p data-pi="8">Cô đặt điện thoại xuống bàn, ngước nhìn lên trần thư viện một lúc, rồi lại cầm lên.</p>
+<p data-pi="9" data-act="msg-out">“Thông báo? Ai báo cho anh ạ?”</p>
+<p data-pi="10" data-act="msg-in">“Qua được lần đầu thì sẽ hiểu. Em cứ coi như có cái gì đó nói thẳng vào đầu mình đi, nghe thì kỳ, mà quen rồi thì cũng thấy bình thường.”</p>
+<p data-pi="11" data-act="msg-out">“Cấp mấy ạ?”</p>
+<p data-pi="12" data-act="msg-in">“C. Em đừng lo cho anh, anh quen mấy chuyện này rồi.”</p><p class="msg-note" data-pi="12">Một nhịp ngắn, rồi tin nhắn tiếp theo hiện ra.</p><p data-pi="12" data-act="msg-in">“Nhưng anh không vào cùng chỗ với em được đâu, nên em cẩn thận đấy. Ảo cảnh cho người mới chắc là riêng một chỗ, theo anh biết thì nó không cho người ngoài vào.”</p>
+<p data-pi="13">Cô biết điều đó, <span class="nm nm-person">Luke</span> đã nói với cô rồi, vậy mà đọc lại lần này vẫn khiến một thứ gì đó khó chịu dâng lên ở đâu đó dưới xương ức.</p>
+<p data-pi="14" data-act="msg-out">“Em hiểu rồi.”</p>
+<p data-pi="15" data-act="msg-in">“Nghe này”</p><p class="msg-note" data-pi="15">anh gõ tiếp.</p><p data-pi="15" data-act="msg-in">“Ảo cảnh cho người mới vốn được làm ra để người mới qua được. Không dễ, nhưng không phải là không thể. Em đã biết năng lực của mình, biết sơ sơ luật chơi, thế là hơn khối người ở lần đầu rồi.”</p>
+<p data-pi="16"><span class="nm nm-person">Clevia</span> đọc đoạn tin đó hai lần.</p>
+<p data-pi="17" data-act="msg-out">“Anh đang an ủi em đấy à?”</p>
+<p data-pi="18" data-act="msg-in">“Anh đang nói thật.”</p><p class="msg-note" data-pi="18">Rồi một lúc sau:</p><p data-pi="18" data-act="msg-in">“Mà chắc cũng có an ủi em một chút. Cả hai đều đúng.”</p>
+<p data-pi="19">Cô nhìn dòng tin ấy, và lần đầu tiên sau mấy ngày liền, cô thấy có cái gì đó trong lồng ngực khẽ nới lỏng ra một chút.</p>
+<p data-pi="20" data-act="msg-in">“Hai bên vào cùng một lúc”</p><p class="msg-note" data-pi="20">anh nhắn thêm.</p><p data-pi="20" data-act="msg-in">“Anh không biết mình sẽ ở đâu, em cũng không biết mình sẽ ở đâu. Nhưng anh tin cả hai sẽ ra được thôi. Anh sẽ đợi.”</p>
+<p data-pi="21"><span class="nm nm-person">Clevia</span> nhìn chằm chằm vào hai chữ cuối cùng ấy khá lâu, lâu đến mức màn hình tự tối đi, và cô phải chạm vào để nó sáng lại.</p>
+<p data-pi="22" data-act="msg-out">“Vâng”</p><p class="msg-note" data-pi="22">cô gõ.</p><p data-pi="22" data-act="msg-out">“Em sẽ cố.”</p>
+<p data-pi="23" data-act="msg-in">“Anh biết.”</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="room">
 <figure class="plate"><canvas class="art" data-art="room:night" role="img" aria-label="Căn phòng trọ về đêm, cửa sổ còn vài ô đèn"></canvas></figure>
-<p>Đêm trước ngày thứ bảy, <span class="nm nm-person">Clevia</span> không ngủ được.</p>
-<p>Không phải vì lo lắng, hoặc không chỉ vì lo lắng, mà vì cô nằm trên giường và cảm nhận được có thứ gì đó đang thay đổi trong không khí quanh mình, chậm rãi mà chắc chắn, như thể cả thế giới đang từ từ nghiêng về một phía mà mắt thường không nhìn thấy được. Khu trọ vẫn yên tĩnh như mọi đêm, đồng hồ vẫn chạy, ánh đèn đường vẫn lọt qua khe rèm vẽ nên vệt sáng quen thuộc trên nền gạch, mọi thứ vẫn như cũ, chỉ có cô là biết rằng chẳng còn gì như cũ nữa.</p>
-<p data-fx="whiteout">Đêm ấy giấc mơ không có cây cầu, cũng không có <span class="nm nm-person first">Renie</span>, chỉ có một khoảng trắng mênh mông và một tiếng đếm ngược mà cô không nghe bằng tai, mà cảm nhận bằng một thứ gì đó khác, sâu hơn, như một nhịp đập thứ hai đang đập song song với trái tim mình. Có lúc cô tưởng như đã thấy một bóng người đứng ở rìa khoảng trắng ấy, quay lưng lại, nhưng chỉ vừa định nhìn kỹ thì bóng người đã tan mất, nhẹ như hơi thở trên mặt kính.</p>
-<p>Cô thức dậy lúc sáu giờ mười lăm với cảm giác cả đêm qua chẳng hề có giấc ngủ nào, chỉ có chờ đợi.</p>
+<p data-pi="24">Đêm trước ngày thứ bảy, <span class="nm nm-person">Clevia</span> không ngủ được.</p>
+<p data-pi="25">Không phải vì lo lắng, hoặc không chỉ vì lo lắng, mà vì cô nằm trên giường và cảm nhận được có thứ gì đó đang thay đổi trong không khí quanh mình, chậm rãi mà chắc chắn, như thể cả thế giới đang từ từ nghiêng về một phía mà mắt thường không nhìn thấy được. Khu trọ vẫn yên tĩnh như mọi đêm, đồng hồ vẫn chạy, ánh đèn đường vẫn lọt qua khe rèm vẽ nên vệt sáng quen thuộc trên nền gạch, mọi thứ vẫn như cũ, chỉ có cô là biết rằng chẳng còn gì như cũ nữa.</p>
+<p data-pi="26" data-fx="whiteout">Đêm ấy giấc mơ không có cây cầu, cũng không có <span class="nm nm-person first">Renie</span>, chỉ có một khoảng trắng mênh mông và một tiếng đếm ngược mà cô không nghe bằng tai, mà cảm nhận bằng một thứ gì đó khác, sâu hơn, như một nhịp đập thứ hai đang đập song song với trái tim mình. Có lúc cô tưởng như đã thấy một bóng người đứng ở rìa khoảng trắng ấy, quay lưng lại, nhưng chỉ vừa định nhìn kỹ thì bóng người đã tan mất, nhẹ như hơi thở trên mặt kính.</p>
+<p data-pi="27">Cô thức dậy lúc sáu giờ mười lăm với cảm giác cả đêm qua chẳng hề có giấc ngủ nào, chỉ có chờ đợi.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="clock">
 <figure class="plate"><canvas class="art" data-art="clock" role="img" aria-label="Đồng hồ treo tường"></canvas></figure>
-<p>Cả ngày hôm đó trôi qua bình thường đến mức đáng ngờ. Cô đi học, ngồi đúng chỗ quen, chép bài, ăn trưa ở căng tin, chiều ghé quán làm ca ngắn, mọi thứ đều đâu vào đấy, như thể thế giới đang cố tình tỏ ra vô can. Mấy lần cô bắt gặp mình nhìn đồng hồ, rồi lại tự cười mình, vì cô thậm chí còn chẳng biết nó sẽ đến vào giờ nào.</p>
-<p>Rồi nó đến vào buổi chiều, lúc cô vừa về phòng.</p>
-<p>Không có cảnh báo, không một âm thanh, chẳng có thứ gì để cô kịp chuẩn bị hay kịp sợ hãi theo cái cách cô đã tưởng tượng suốt mấy ngày qua. Cô đang ngồi bên bàn học, một tay cầm cốc nước, mắt nhìn vào màn hình điện thoại, nơi tin nhắn cuối cùng của <span class="nm nm-person">Luke</span> vẫn còn nằm đó, và rồi tất cả biến mất. Mọi thứ không tối dần đi, cũng chẳng có cơn lốc nào cuốn cô đi cả, chỉ là khoảnh khắc trước cô còn đang ở đây, khoảnh khắc sau cô đã ở một nơi khác, nhanh như một cái chớp mắt, nhanh đến mức cốc nước có lẽ vẫn còn lơ lửng đâu đó giữa không trung trong căn phòng trọ kia, chờ một bàn tay không bao giờ quay lại đỡ lấy.</p>
+<p data-pi="28">Cả ngày hôm đó trôi qua bình thường đến mức đáng ngờ. Cô đi học, ngồi đúng chỗ quen, chép bài, ăn trưa ở căng tin, chiều ghé quán làm ca ngắn, mọi thứ đều đâu vào đấy, như thể thế giới đang cố tình tỏ ra vô can. Mấy lần cô bắt gặp mình nhìn đồng hồ, rồi lại tự cười mình, vì cô thậm chí còn chẳng biết nó sẽ đến vào giờ nào.</p>
+<p data-pi="29">Rồi nó đến vào buổi chiều, lúc cô vừa về phòng.</p>
+<p data-pi="30">Không có cảnh báo, không một âm thanh, chẳng có thứ gì để cô kịp chuẩn bị hay kịp sợ hãi theo cái cách cô đã tưởng tượng suốt mấy ngày qua. Cô đang ngồi bên bàn học, một tay cầm cốc nước, mắt nhìn vào màn hình điện thoại, nơi tin nhắn cuối cùng của <span class="nm nm-person">Luke</span> vẫn còn nằm đó, và rồi tất cả biến mất. Mọi thứ không tối dần đi, cũng chẳng có cơn lốc nào cuốn cô đi cả, chỉ là khoảnh khắc trước cô còn đang ở đây, khoảnh khắc sau cô đã ở một nơi khác, nhanh như một cái chớp mắt, nhanh đến mức cốc nước có lẽ vẫn còn lơ lửng đâu đó giữa không trung trong căn phòng trọ kia, chờ một bàn tay không bao giờ quay lại đỡ lấy.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="night">
 <figure class="plate"><canvas class="art" data-art="fields:night" role="img" aria-label="Con đường đất giữa những ô ruộng dưới trăng khuyết"></canvas></figure>
-<p>Thứ đầu tiên cô cảm nhận được là cái lạnh dưới đầu gối.</p>
-<p><span class="nm nm-person">Clevia</span> nhận ra mình đang quỳ, hai bàn tay chống xuống nền đất nện chắc, không phải bê tông, không phải gạch, mà là đất thật, còn hằn vết bánh xe lún từ lâu, cỏ dại lơ thơ mọc dọc hai bên lối đi. Quanh người cô, một vòng sáng màu lạnh đang nhạt dần, chậm rãi như sương tan, để lộ ra những gì nằm ở bên ngoài nó.</p>
-<p>Bầu trời trên đầu nhuộm một màu vàng cam thấp và nặng của một ngày sắp tàn, không giống bất kỳ buổi chiều nào cô từng thấy. Trong không khí có mùi đất ẩm, mùi khói bếp, và một mùi gì đó ngòn ngọt thoảng từ đâu xa lắm, ngọt đến mức hơi gợn, như mùi của một mâm cỗ đã bày sẵn từ lâu mà chưa ai động đũa. Xa xa, những mái nhà thấp lè tè nối nhau chạy về phía chân trời, và ở tận cuối tầm mắt, ánh chiều hắt lên một thứ gì đó trong suốt, cao vút, phẳng lặng như mặt nước dựng đứng.</p>
-<p>Hai bên cô có người đứng đó từ lúc nào. Một người đàn ông và một người đàn bà, quần áo nâu bạc, gương mặt bình thản, cứ thế đứng nhìn xuống cô, không hỏi han, không bước tới đỡ, cũng chẳng tỏ vẻ gì là ngạc nhiên, như thể chuyện có người từ đâu hiện ra giữa đường làng là việc vẫn xảy ra mỗi ngày. <span class="nm nm-person">Clevia</span> ngước lên nhìn họ, cổ họng khô khốc, và trong một khoảnh khắc rất dài, cô không nghe thấy gì ngoài tiếng tim mình đập, cùng một ý nghĩ cứ lặp đi lặp lại trong đầu, rằng <span class="nm nm-person">Luke</span> không có ở đây.</p>
-<p data-fx="ripple">Rồi không khí trước mặt cô khẽ gợn lên, như mặt hồ vừa bị ai thả một viên sỏi xuống.</p>
+<p data-pi="31">Thứ đầu tiên cô cảm nhận được là cái lạnh dưới đầu gối.</p>
+<p data-pi="32"><span class="nm nm-person">Clevia</span> nhận ra mình đang quỳ, hai bàn tay chống xuống nền đất nện chắc, không phải bê tông, không phải gạch, mà là đất thật, còn hằn vết bánh xe lún từ lâu, cỏ dại lơ thơ mọc dọc hai bên lối đi. Quanh người cô, một vòng sáng màu lạnh đang nhạt dần, chậm rãi như sương tan, để lộ ra những gì nằm ở bên ngoài nó.</p>
+<p data-pi="33">Bầu trời trên đầu nhuộm một màu vàng cam thấp và nặng của một ngày sắp tàn, không giống bất kỳ buổi chiều nào cô từng thấy. Trong không khí có mùi đất ẩm, mùi khói bếp, và một mùi gì đó ngòn ngọt thoảng từ đâu xa lắm, ngọt đến mức hơi gợn, như mùi của một mâm cỗ đã bày sẵn từ lâu mà chưa ai động đũa. Xa xa, những mái nhà thấp lè tè nối nhau chạy về phía chân trời, và ở tận cuối tầm mắt, ánh chiều hắt lên một thứ gì đó trong suốt, cao vút, phẳng lặng như mặt nước dựng đứng.</p>
+<p data-pi="34">Hai bên cô có người đứng đó từ lúc nào. Một người đàn ông và một người đàn bà, quần áo nâu bạc, gương mặt bình thản, cứ thế đứng nhìn xuống cô, không hỏi han, không bước tới đỡ, cũng chẳng tỏ vẻ gì là ngạc nhiên, như thể chuyện có người từ đâu hiện ra giữa đường làng là việc vẫn xảy ra mỗi ngày. <span class="nm nm-person">Clevia</span> ngước lên nhìn họ, cổ họng khô khốc, và trong một khoảnh khắc rất dài, cô không nghe thấy gì ngoài tiếng tim mình đập, cùng một ý nghĩ cứ lặp đi lặp lại trong đầu, rằng <span class="nm nm-person">Luke</span> không có ở đây.</p>
+<p data-pi="35" data-fx="ripple">Rồi không khí trước mặt cô khẽ gợn lên, như mặt hồ vừa bị ai thả một viên sỏi xuống.</p>
 </section>
   </article>
   <footer class="end">
@@ -1043,6 +1096,7 @@ els.forEach(function(el){io.observe(el)});})();
   function stop(b){var r=b.getBoundingClientRect(),h=r.height,vh=innerHeight;return h<vh-140?r.top+scrollY-(vh-h)/2:r.top+scrollY+h-vh+60}
   var gate=null, pushes=0, lastPush=0, onT=0;
   function find(){
+    if(root.classList.contains('pen-on'))return null; // Bút tác giả đang bật: Clair đọc lướt tự do
     for(var i=0;i<boxes.length;i++){var b=boxes[i];if(b._free)continue;if(ok(b)){keep(b);continue}if(shown(b))return b}
     return null;
   }
@@ -1120,6 +1174,160 @@ els.forEach(function(el){io.observe(el)});})();
     a.addEventListener('click',function(e){if(read()){sfx('flip');return}e.preventDefault();open(a.getAttribute('href'))})});
   var pv=cv.querySelector('.pv'); if(pv)pv.addEventListener('click',function(){sfx('flip')});
 })();
+(function client(URL) {
+  var KEY; try { KEY = localStorage.getItem('a07-pen'); } catch (e) {}
+  if (!KEY || !URL) return;
+  var root = document.documentElement, art = document.querySelector('article');
+  if (!art) return;
+  var CH = String(+((location.pathname.match(/ch(\d+)\.html$/) || [])[1] || 0)); if (CH === '0') return;
+  var SRC = null, EDITS = {}, QK = 'a07-pen-q';
+  function sfx(n) { if (window.a07sfx) window.a07sfx(n); }
+  function call(o) { o.type = 'pen'; o.key = KEY; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function q() { try { return JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch (e) { return []; } }
+  function setQ(l) { try { localStorage.setItem(QK, JSON.stringify(l)); } catch (e) {} }
+  function paras(pi) { return art.querySelectorAll('p[data-pi="' + pi + '"]'); }
+  function srcOf(pi) {
+    if (SRC && SRC[pi] != null) return SRC[pi];
+    return [].map.call(paras(pi), function (p) { return p.textContent; }).join(' ');
+  }
+  function lost() { try { localStorage.removeItem('a07-pen'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
+
+  // nút Bút trên thanh đầu trang
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút tác giả');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z"/><path d="M13.8 6.8l3.4 3.4"/><path d="M4 20h7"/></svg><span class="n"></span>'; document.body.appendChild(btn);
+  var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'pen-pill'; document.body.appendChild(pill);
+  var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
+
+  function count() {
+    var n = Object.keys(EDITS).length; btn.querySelector('.n').textContent = n ? n : '';
+    pill.innerHTML = n ? 'Chạm đoạn để sửa · <b>' + n + ' chỗ</b>' : 'Chạm một đoạn để sửa';
+  }
+  function mark(pi) {
+    var e = EDITS[pi];
+    [].forEach.call(paras(pi), function (p) {
+      p.classList.toggle('pen-has', !!e);
+      p.classList.toggle('pen-note', !!(e && !e.sua));
+      p.classList.toggle('pen-wait', !!(e && e.wait));
+    });
+  }
+  function on(v) {
+    root.classList.toggle('pen-on', v); btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+    try { sessionStorage.setItem('a07-pen-on', v ? '1' : ''); } catch (e) {}
+    dispatchEvent(new Event('scroll')); // trang thôi "giữ chân" ở tương tác khi bút bật
+    if (v) { sfx('glint'); load(); }
+  }
+  btn.onclick = function () { on(!root.classList.contains('pen-on')); };
+
+  var loaded = false;
+  function load() {
+    if (loaded) return; loaded = true;
+    fetch('goc/ch' + ('0' + CH).slice(-2) + '.json').then(function (r) { return r.json(); }).then(function (a) { SRC = a; }).catch(function () {});
+    flush().then(function () { return call({ op: 'list', ch: CH }); }).then(function (r) {
+      if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') lost(); return; }
+      r.list.forEach(function (e) { EDITS[e.pi] = e; });
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; } });
+      Object.keys(EDITS).forEach(mark); count();
+    }).catch(function () {
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; mark(o.pi); } });
+      count(); pill.innerHTML = 'Đang mất mạng · chỗ sửa sẽ được giữ lại';
+    });
+  }
+  // gửi lại những chỗ sửa lúc mất mạng
+  function flush() {
+    var l = q(); if (!l.length) return Promise.resolve();
+    var o = l[0];
+    return call(o).then(function (r) {
+      if (r.ok || r.why === 'trong') { setQ(q().slice(1)); if (o.ch === CH && EDITS[o.pi]) { delete EDITS[o.pi].wait; EDITS[o.pi].id = r.id; mark(o.pi); } return flush(); }
+    });
+  }
+
+  // so chữ cũ / mới theo từng từ
+  function diff(a, b) {
+    var A = a.split(/(\s+)/), B = b.split(/(\s+)/), n = A.length, m = B.length, i, j;
+    if (n * m > 400000) return esc(b);
+    var T = []; for (i = 0; i <= n; i++) { T.push(new Uint16Array(m + 1)); }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) T[i][j] = A[i] === B[j] ? T[i + 1][j + 1] + 1 : Math.max(T[i + 1][j], T[i][j + 1]);
+    var out = '', d = '', s = ''; i = 0; j = 0;
+    function put() { if (d) out += '<del>' + esc(d) + '</del>'; if (s) out += '<ins>' + esc(s) + '</ins>'; d = s = ''; }
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { put(); out += esc(A[i]); i++; j++; }
+      else if (T[i + 1][j] >= T[i][j + 1]) d += A[i++]; else s += B[j++];
+    }
+    while (i < n) d += A[i++]; while (j < m) s += B[j++]; put();
+    return out;
+  }
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function close() { sheet.classList.remove('on'); [].forEach.call(art.querySelectorAll('.pen-cur'), function (p) { p.classList.remove('pen-cur'); }); setTimeout(function () { sheet.hidden = true; sheet.innerHTML = ''; }, 260); document.body.style.overflow = ''; }
+  function openSheet(html) {
+    sheet.innerHTML = '<div class="pen-box" role="dialog" aria-modal="true">' + html + '</div>'; sheet.hidden = false;
+    document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { sheet.classList.add('on'); }); sfx('flip');
+  }
+  sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-x]')) close(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+
+  function edit(pi) {
+    var goc = srcOf(pi), e = EDITS[pi] || {};
+    [].forEach.call(paras(pi), function (p) { p.classList.add('pen-cur'); });
+    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3><p class="sub">Sửa thẳng vào chữ bên dưới. Chữ nghiêng nằm giữa hai dấu *.</p>' +
+      '<textarea class="tx" rows="6"></textarea><div class="pen-diff" hidden></div>' +
+      '<label for="pen-nt">Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2" placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
+      '<div class="pen-row"><button type="button" class="go">Lưu</button><button type="button" class="rm"' + (EDITS[pi] ? '' : ' hidden') + '>Bỏ chỗ sửa này</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
+    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff'), msg = sheet.querySelector('.pen-msg');
+    tx.value = e.sua || goc; nt.value = e.note || '';
+    function grow() { tx.style.height = 'auto'; tx.style.height = Math.min(tx.scrollHeight + 4, innerHeight * 0.45) + 'px'; }
+    function show() { var v = tx.value.trim(); dv.hidden = v === goc.trim(); if (!dv.hidden) dv.innerHTML = diff(goc.trim(), v); grow(); }
+    tx.addEventListener('input', show); setTimeout(show, 0);
+    sheet.querySelector('.go').onclick = function () {
+      var sua = tx.value.trim(), note = nt.value.trim();
+      if (sua === goc.trim()) sua = '';
+      if (!sua && !note) { msg.textContent = 'Chưa có gì đổi cả.'; return; }
+      var o = { op: 'save', ch: CH, pi: +pi, goc: goc, sua: sua, note: note };
+      EDITS[pi] = { pi: +pi, goc: goc, sua: sua, note: note, id: e.id, wait: 1 }; mark(pi); count();
+      msg.textContent = 'Đang gửi…'; this.disabled = true;
+      call(o).then(function (r) {
+        if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') { lost(); msg.textContent = 'Mật mã trên máy này không còn đúng.'; } else msg.textContent = 'Chưa lưu được, cậu thử lại nhé.'; return; }
+        EDITS[pi].id = r.id; delete EDITS[pi].wait; mark(pi); sfx('ink'); flash(pi); close();
+      }).catch(function () {
+        var l = q().filter(function (x) { return !(x.ch === CH && x.pi === +pi && x.op === 'save'); }); l.push(o); setQ(l);
+        sfx('ink'); flash(pi); close(); pill.innerHTML = 'Đang mất mạng · đã giữ chỗ sửa, có mạng sẽ tự gửi';
+      });
+    };
+    sheet.querySelector('.rm').onclick = function () {
+      var id = (EDITS[pi] || {}).id; delete EDITS[pi]; mark(pi); count();
+      setQ(q().filter(function (x) { return !(x.ch === CH && x.pi === +pi); }));
+      if (id) call({ op: 'del', id: id }).catch(function () {});
+      close();
+    };
+  }
+  function flash(pi) { [].forEach.call(paras(pi), function (p) { p.classList.remove('pen-flash'); void p.offsetWidth; p.classList.add('pen-flash'); }); }
+
+  // chạm một đoạn khi bút bật: mở ô sửa (chặn tương tác của đoạn đó)
+  art.addEventListener('click', function (e) {
+    if (!root.classList.contains('pen-on')) return;
+    var p = e.target.closest && e.target.closest('p[data-pi]'); if (!p || !art.contains(p)) return;
+    if (getSelection && String(getSelection()).length > 2) return; // đang bôi chọn chữ thì thôi
+    e.preventDefault(); e.stopPropagation(); edit(p.getAttribute('data-pi'));
+  }, true);
+
+  // viên thuốc dưới đáy: xem danh sách chỗ đã ghi trong chương
+  pill.onclick = function () {
+    var ks = Object.keys(EDITS).sort(function (a, b) { return a - b; });
+    if (!ks.length) return;
+    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".</p><ul class="pen-list">' +
+      ks.map(function (k) { var x = EDITS[k]; return '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>'; }).join('') +
+      '</ul><div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    sheet.querySelector('.pen-list').onclick = function (e) {
+      var li = e.target.closest('li'); if (!li) return; var k = li.getAttribute('data-go'); close();
+      var p = paras(k)[0]; if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { flash(k); }, 500); }
+    };
+  };
+
+  count();
+  var was; try { was = sessionStorage.getItem('a07-pen-on'); } catch (e) {}
+  if (was) on(true); else { load(); }
+})("https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec");
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.

@@ -552,6 +552,59 @@ html.giu-on .cv{opacity:0;pointer-events:none}
 .cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
 @media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
+
+#pen{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;width:46px;height:46px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--soft);border:1px solid color-mix(in srgb,var(--pw-clevia) 45%,transparent);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.7);transition:color .25s,box-shadow .25s,transform .2s}
+#pen:active{transform:scale(.92)}
+#pen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#pen[aria-pressed="true"]{color:#fff;background:var(--pw-clevia);border-color:var(--pw-clevia);box-shadow:0 0 22px -4px var(--pw-clevia)}
+#pen .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--pw-clevia);color:#fff;font:600 10px/16px system-ui,sans-serif;text-align:center}
+#pen .n:empty{display:none}
+html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:background .25s,box-shadow .25s}
+html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
+article p.pen-has{position:relative}
+article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
+article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
+html:not(.pen-on) article p.pen-has::before{opacity:.45}
+.pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
+  padding:.55em 1.1em;border-radius:999px;background:#0b1418;color:#e8eef0;border:1px solid var(--pw-clevia);font:500 13px/1.2 system-ui,sans-serif;letter-spacing:.02em;
+  box-shadow:0 6px 24px -8px #000;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s;white-space:nowrap}
+html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
+.pen-pill b{color:var(--pw-clevia);font-weight:600}
+.pen-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.pen-sheet.on{opacity:1}
+.pen-sheet[hidden]{display:none}
+.pen-box{width:100%;max-width:40em;max-height:88vh;overflow:auto;background:#0d1417;color:#e3e7e6;border-top:2px solid var(--pw-clevia);border-radius:18px 18px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .35s cubic-bezier(.3,1.3,.5,1);font-family:system-ui,sans-serif}
+.pen-sheet.on .pen-box{transform:none}
+:root[data-theme="light"] .pen-box{background:#f3f4f2;color:#1d2526}
+.pen-box h3{margin:0 0 .2em;font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--pw-clevia)}
+.pen-box .sub{margin:0 0 .9em;font-size:13px;opacity:.65}
+.pen-box textarea{display:block;width:100%;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:10px;background:transparent;color:inherit;
+  font:400 17px/1.6 Literata,Georgia,serif;padding:.6em .7em;resize:vertical}
+.pen-box textarea:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
+.pen-box .note{font:400 15px/1.5 system-ui,sans-serif;min-height:3.2em}
+.pen-box label{display:block;margin:1em 0 .35em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
+.pen-diff[hidden]{display:none}
+.pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
+.pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
+.pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
+.pen-row .rm{color:var(--pw-clevia)}
+.pen-row button[hidden]{display:none}
+.pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
+.pen-list{list-style:none;margin:0;padding:0}
+.pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
+.pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
+.pen-list li.nt small{color:var(--pw-luke)}
+@keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
+article p.pen-flash{animation:penflash .8s ease-out}
+@media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -756,110 +809,110 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   <article>
 <section class="scene" data-sound="night">
 <figure class="plate"><canvas class="art" data-art="fields:night" role="img" aria-label="Mây che khuất vầng trăng trên những ô ruộng"></canvas></figure>
-<p>Đêm ở làng tối hơn cô tưởng.</p>
-<p>Mới lúc nãy vầng trăng khuyết còn treo trên rặng núi, vậy mà chỉ sau một quãng đường đất ngắn, mây đã kéo tới che khuất nó, và bóng tối tràn xuống từ bốn phía như nước dâng, nuốt dần những ô ruộng, những hàng rào tre, con bù nhìn đứng giữa đồng, cho đến khi trước mặt <span class="nm nm-person first">Clevia</span> chỉ còn lại mấy đốm đèn vàng lấm tấm của những ô cửa sổ phía xa. Ở đây không có đèn đường, không có ánh sáng hắt lên từ thành phố nào bên kia chân trời, và bầu trời trên đầu đen đặc đến mức những vì sao trông như được ai đó ghim lên một tấm vải, sáng mà không soi được gì xuống mặt đất.</p>
-<p><span class="nm nm-person first">Luke</span> đi trước cô nửa bước, đủ gần để cô nghe được tiếng giày anh nghiến trên sỏi, đủ xa để anh có chỗ quay người nếu cần. Cô để ý anh không bao giờ đi ở giữa đường. Anh luôn đi lệch về một bên, nơi có bờ rào hay gốc cây che một phía lưng, và cứ vài chục bước lại khẽ nghiêng đầu như người đang nghe một thứ tiếng mà chỉ mình anh nghe được. Cô không hỏi. Cô chỉ bắt chước theo, đi lệch về phía có bờ rào, dù cô chẳng biết mình đang đề phòng điều gì.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Trên bản đồ khu này có ba căn nhà,”</span> anh nói, giọng hạ thấp. <span class="q">“Cái chữ trên bảng bảo nhà dân che chở được một thời gian. Anh nghĩ ý nó là nhà dân, chứ chẳng phải nhà nào có mái cũng được. Mình thử căn gần nhất trước.”</span></p>
-<p class="say say-x"><span class="q">“Một thời gian là bao lâu hả anh?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Anh không biết.”</span> Anh nói thật nhanh, không ngập ngừng, như thể câu ấy anh đã quen nói lắm rồi. <span class="q">“Nó không nói thì chắc là nó không muốn mình biết. Vào rồi tính.”</span></p>
-<p>Căn nhà đầu tiên nằm lùi sau một khoảnh sân đất, mái lá thấp, vách đất trát rơm, một ngọn đèn dầu treo dưới hiên lắc lư dù chẳng có gió. Cửa mở sẵn. Bên trong, một bà cụ lưng còng đang ngồi xổm bên bếp, cời than bằng một que tre dài, và khi hai người dừng lại trước bậc cửa, bà ngẩng lên nhìn, mắt đục như nước vo gạo, rồi lại cúi xuống bếp mà không nói gì. <span class="nm nm-person">Luke</span> đứng yên một lúc lâu ở ngưỡng cửa, mắt quét qua căn nhà một lượt, từ cái chõng tre kê sát vách đến cái chum nước ở góc, đến ô cửa sau khép hờ dẫn ra một mảnh vườn tối om.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Cháu vào nhờ một lát được không bà?”</span> anh hỏi.</p>
-<p>Bà cụ không đáp, chỉ khẽ gật đầu một cái rất nhỏ.</p>
-<p data-fx="flare">Họ bước vào, và ngay khoảnh khắc chân <span class="nm nm-person">Clevia</span> chạm xuống nền đất nện trong nhà, ngọn lửa trong bếp bỗng bùng lên, cao vọt, sáng rực, như thể có ai vừa đổ thêm một nắm rơm khô vào. Ánh lửa hắt lên vách đất, lên gương mặt nhăn nheo của bà cụ, lên bóng hai người đổ dài ra tận cửa. Rồi nó dịu xuống, cháy đều, tí tách, ấm áp đến lạ. <span class="nm nm-person">Clevia</span> đứng chết trân. Cô chưa từng thấy một bếp lửa nào chào người lạ như thế.</p>
-<p><span class="nm nm-person">Luke</span> cũng nhìn ngọn lửa ấy, lâu hơn cô một chút.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Em ngồi đây đã,”</span> anh nói, chỉ vào cái chõng tre. <span class="q">“Anh ra sau xem cái vườn thế nào. Nhà mà chỉ có một lối ra thì có chuyện gì cũng khó chạy.”</span></p>
-<p>Cô gật đầu, ngồi xuống mép chõng, nghe tiếng anh đẩy cánh cửa sau, tiếng lá khô lạo xạo dưới chân anh ngoài vườn, rồi im. Bà cụ vẫn cời than. <span class="nm nm-person">Clevia</span> ngồi ôm hai đầu gối, nhìn ngọn lửa, và trong một thoáng ngắn ngủi, cái hơi ấm từ bếp toả ra khiến cô suýt quên mình đang ở đâu.</p><div class="act act-cv act-hearth" data-kind="hearth"><canvas aria-hidden="true"></canvas><span class="act-hint">chạm và giữ tay hơ lửa</span></div>
-<p class="say say-x"><span class="q">“<span class="nm nm-person">Clevia</span>.”</span></p>
-<p>Giọng anh vọng vào từ phía cửa sau, không to, nhưng có gì đó trong giọng ấy khiến cô đứng bật dậy.</p>
-<p><span class="nm nm-person">Luke</span> đứng ngay bên ngoài ngưỡng cửa, một tay giơ lên trước mặt, lòng bàn tay áp vào khoảng không giữa hai cánh cửa gỗ mở toang. Không có gì ở đó cả. Cô nhìn thấy rõ mảnh vườn sau lưng anh, những luống rau đen sẫm, một cái giậu tre, vậy mà tay anh dừng lại giữa không trung như đang chạm vào một tấm kính, giống hệt cái cách tay cô đã dừng lại trên bức tường ở rìa khu lúc mới vào làng.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Anh không vào lại được,”</span> anh nói.</p>
-<p><span class="nm nm-person">Clevia</span> bước tới, đưa tay ra. Bàn tay cô đi xuyên qua khung cửa dễ dàng, chạm vào vai áo anh, ấm và thật. Cô vào được, ra được. Anh thì không.</p>
-<p>Sau lưng cô, bà cụ lên tiếng, lần đầu tiên, giọng khàn và chậm như tiếng cửa gỗ lâu ngày không mở.</p>
-<p class="say say-x"><span class="q">“Ra khỏi cửa rồi thì cửa không nhận lại đâu, cậu.”</span></p>
-<p>Bà nói câu ấy mà không ngẩng lên, vẫn cúi nhìn bếp, như nhắc một điều ai trong làng cũng biết, một điều người ta chẳng buồn dặn trước vì có ai ngờ lại có người không biết.</p>
-<p><span class="nm nm-person">Luke</span> đứng im. <span class="nm nm-person">Clevia</span> nhìn thấy quai hàm anh khẽ siết lại, chỉ một thoáng, rồi anh thở ra, buông tay xuống.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Lỗi anh,”</span> anh nói. <span class="q">“Lẽ ra anh phải hỏi trước. Em cứ ở trong đó đi, ở đó an toàn hơn. Anh đi tìm căn khác rồi…”</span></p>
-<p>Cô bước qua ngưỡng cửa trước khi anh kịp nói hết câu.</p>
-<p>Không khí ngoài vườn lạnh hẳn, cái lạnh ẩm của đất về đêm, và sau lưng cô, ngọn lửa trong bếp chẳng hề lay động gì, cứ cháy đều như thế, như thể chuyện có người vừa bỏ đi chẳng liên quan gì đến nó. Cô biết mà chẳng cần thử, biết ngay từ lúc bước ra, rằng giờ thì cô cũng không vào lại được nữa.</p>
-<p><span class="nm nm-person">Luke</span> nhìn cô như nhìn một người vừa làm điều gì ngốc nghếch lắm.</p>
-<p class="say say-x"><span class="q">“Em làm gì thế?”</span></p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Anh bảo em đi sát anh còn gì.”</span> Cô kéo áo khoác chặt hơn. <span class="q">“Mà anh đi một mình ngoài này thì em ngồi trong đó cũng chẳng yên được.”</span></p>
-<p>Anh không nói gì thêm. Anh nhìn cô thêm một lúc, rồi nhìn lại khung cửa, nơi bà cụ vẫn ngồi đó bên bếp lửa sáng ấm mà hai người không bao giờ chạm vào được nữa, và <span class="nm nm-person">Clevia</span> thấy anh khẽ lắc đầu, cái lắc đầu anh dành cho chính mình.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Ít ra giờ mình biết thêm một điều,”</span> anh nói. <span class="q">“Vào là vào hẳn. Ra là mất chỗ.”</span></p>
+<p data-pi="0">Đêm ở làng tối hơn cô tưởng.</p>
+<p data-pi="1">Mới lúc nãy vầng trăng khuyết còn treo trên rặng núi, vậy mà chỉ sau một quãng đường đất ngắn, mây đã kéo tới che khuất nó, và bóng tối tràn xuống từ bốn phía như nước dâng, nuốt dần những ô ruộng, những hàng rào tre, con bù nhìn đứng giữa đồng, cho đến khi trước mặt <span class="nm nm-person first">Clevia</span> chỉ còn lại mấy đốm đèn vàng lấm tấm của những ô cửa sổ phía xa. Ở đây không có đèn đường, không có ánh sáng hắt lên từ thành phố nào bên kia chân trời, và bầu trời trên đầu đen đặc đến mức những vì sao trông như được ai đó ghim lên một tấm vải, sáng mà không soi được gì xuống mặt đất.</p>
+<p data-pi="2"><span class="nm nm-person first">Luke</span> đi trước cô nửa bước, đủ gần để cô nghe được tiếng giày anh nghiến trên sỏi, đủ xa để anh có chỗ quay người nếu cần. Cô để ý anh không bao giờ đi ở giữa đường. Anh luôn đi lệch về một bên, nơi có bờ rào hay gốc cây che một phía lưng, và cứ vài chục bước lại khẽ nghiêng đầu như người đang nghe một thứ tiếng mà chỉ mình anh nghe được. Cô không hỏi. Cô chỉ bắt chước theo, đi lệch về phía có bờ rào, dù cô chẳng biết mình đang đề phòng điều gì.</p>
+<p data-pi="3" class="say say-luke" data-name="Luke"><span class="q">“Trên bản đồ khu này có ba căn nhà,”</span> anh nói, giọng hạ thấp. <span class="q">“Cái chữ trên bảng bảo nhà dân che chở được một thời gian. Anh nghĩ ý nó là nhà dân, chứ chẳng phải nhà nào có mái cũng được. Mình thử căn gần nhất trước.”</span></p>
+<p data-pi="4" class="say say-x"><span class="q">“Một thời gian là bao lâu hả anh?”</span></p>
+<p data-pi="5" class="say say-luke" data-name="Luke"><span class="q">“Anh không biết.”</span> Anh nói thật nhanh, không ngập ngừng, như thể câu ấy anh đã quen nói lắm rồi. <span class="q">“Nó không nói thì chắc là nó không muốn mình biết. Vào rồi tính.”</span></p>
+<p data-pi="6">Căn nhà đầu tiên nằm lùi sau một khoảnh sân đất, mái lá thấp, vách đất trát rơm, một ngọn đèn dầu treo dưới hiên lắc lư dù chẳng có gió. Cửa mở sẵn. Bên trong, một bà cụ lưng còng đang ngồi xổm bên bếp, cời than bằng một que tre dài, và khi hai người dừng lại trước bậc cửa, bà ngẩng lên nhìn, mắt đục như nước vo gạo, rồi lại cúi xuống bếp mà không nói gì. <span class="nm nm-person">Luke</span> đứng yên một lúc lâu ở ngưỡng cửa, mắt quét qua căn nhà một lượt, từ cái chõng tre kê sát vách đến cái chum nước ở góc, đến ô cửa sau khép hờ dẫn ra một mảnh vườn tối om.</p>
+<p data-pi="7" class="say say-luke" data-name="Luke"><span class="q">“Cháu vào nhờ một lát được không bà?”</span> anh hỏi.</p>
+<p data-pi="8">Bà cụ không đáp, chỉ khẽ gật đầu một cái rất nhỏ.</p>
+<p data-pi="9" data-fx="flare">Họ bước vào, và ngay khoảnh khắc chân <span class="nm nm-person">Clevia</span> chạm xuống nền đất nện trong nhà, ngọn lửa trong bếp bỗng bùng lên, cao vọt, sáng rực, như thể có ai vừa đổ thêm một nắm rơm khô vào. Ánh lửa hắt lên vách đất, lên gương mặt nhăn nheo của bà cụ, lên bóng hai người đổ dài ra tận cửa. Rồi nó dịu xuống, cháy đều, tí tách, ấm áp đến lạ. <span class="nm nm-person">Clevia</span> đứng chết trân. Cô chưa từng thấy một bếp lửa nào chào người lạ như thế.</p>
+<p data-pi="10"><span class="nm nm-person">Luke</span> cũng nhìn ngọn lửa ấy, lâu hơn cô một chút.</p>
+<p data-pi="11" class="say say-luke" data-name="Luke"><span class="q">“Em ngồi đây đã,”</span> anh nói, chỉ vào cái chõng tre. <span class="q">“Anh ra sau xem cái vườn thế nào. Nhà mà chỉ có một lối ra thì có chuyện gì cũng khó chạy.”</span></p>
+<p data-pi="12">Cô gật đầu, ngồi xuống mép chõng, nghe tiếng anh đẩy cánh cửa sau, tiếng lá khô lạo xạo dưới chân anh ngoài vườn, rồi im. Bà cụ vẫn cời than. <span class="nm nm-person">Clevia</span> ngồi ôm hai đầu gối, nhìn ngọn lửa, và trong một thoáng ngắn ngủi, cái hơi ấm từ bếp toả ra khiến cô suýt quên mình đang ở đâu.</p><div class="act act-cv act-hearth" data-kind="hearth"><canvas aria-hidden="true"></canvas><span class="act-hint">chạm và giữ tay hơ lửa</span></div>
+<p data-pi="13" class="say say-x"><span class="q">“<span class="nm nm-person">Clevia</span>.”</span></p>
+<p data-pi="14">Giọng anh vọng vào từ phía cửa sau, không to, nhưng có gì đó trong giọng ấy khiến cô đứng bật dậy.</p>
+<p data-pi="15"><span class="nm nm-person">Luke</span> đứng ngay bên ngoài ngưỡng cửa, một tay giơ lên trước mặt, lòng bàn tay áp vào khoảng không giữa hai cánh cửa gỗ mở toang. Không có gì ở đó cả. Cô nhìn thấy rõ mảnh vườn sau lưng anh, những luống rau đen sẫm, một cái giậu tre, vậy mà tay anh dừng lại giữa không trung như đang chạm vào một tấm kính, giống hệt cái cách tay cô đã dừng lại trên bức tường ở rìa khu lúc mới vào làng.</p>
+<p data-pi="16" class="say say-luke" data-name="Luke"><span class="q">“Anh không vào lại được,”</span> anh nói.</p>
+<p data-pi="17"><span class="nm nm-person">Clevia</span> bước tới, đưa tay ra. Bàn tay cô đi xuyên qua khung cửa dễ dàng, chạm vào vai áo anh, ấm và thật. Cô vào được, ra được. Anh thì không.</p>
+<p data-pi="18">Sau lưng cô, bà cụ lên tiếng, lần đầu tiên, giọng khàn và chậm như tiếng cửa gỗ lâu ngày không mở.</p>
+<p data-pi="19" class="say say-x"><span class="q">“Ra khỏi cửa rồi thì cửa không nhận lại đâu, cậu.”</span></p>
+<p data-pi="20">Bà nói câu ấy mà không ngẩng lên, vẫn cúi nhìn bếp, như nhắc một điều ai trong làng cũng biết, một điều người ta chẳng buồn dặn trước vì có ai ngờ lại có người không biết.</p>
+<p data-pi="21"><span class="nm nm-person">Luke</span> đứng im. <span class="nm nm-person">Clevia</span> nhìn thấy quai hàm anh khẽ siết lại, chỉ một thoáng, rồi anh thở ra, buông tay xuống.</p>
+<p data-pi="22" class="say say-luke" data-name="Luke"><span class="q">“Lỗi anh,”</span> anh nói. <span class="q">“Lẽ ra anh phải hỏi trước. Em cứ ở trong đó đi, ở đó an toàn hơn. Anh đi tìm căn khác rồi…”</span></p>
+<p data-pi="23">Cô bước qua ngưỡng cửa trước khi anh kịp nói hết câu.</p>
+<p data-pi="24">Không khí ngoài vườn lạnh hẳn, cái lạnh ẩm của đất về đêm, và sau lưng cô, ngọn lửa trong bếp chẳng hề lay động gì, cứ cháy đều như thế, như thể chuyện có người vừa bỏ đi chẳng liên quan gì đến nó. Cô biết mà chẳng cần thử, biết ngay từ lúc bước ra, rằng giờ thì cô cũng không vào lại được nữa.</p>
+<p data-pi="25"><span class="nm nm-person">Luke</span> nhìn cô như nhìn một người vừa làm điều gì ngốc nghếch lắm.</p>
+<p data-pi="26" class="say say-x"><span class="q">“Em làm gì thế?”</span></p>
+<p data-pi="27" class="say say-clevia" data-name="Clevia"><span class="q">“Anh bảo em đi sát anh còn gì.”</span> Cô kéo áo khoác chặt hơn. <span class="q">“Mà anh đi một mình ngoài này thì em ngồi trong đó cũng chẳng yên được.”</span></p>
+<p data-pi="28">Anh không nói gì thêm. Anh nhìn cô thêm một lúc, rồi nhìn lại khung cửa, nơi bà cụ vẫn ngồi đó bên bếp lửa sáng ấm mà hai người không bao giờ chạm vào được nữa, và <span class="nm nm-person">Clevia</span> thấy anh khẽ lắc đầu, cái lắc đầu anh dành cho chính mình.</p>
+<p data-pi="29" class="say say-luke" data-name="Luke"><span class="q">“Ít ra giờ mình biết thêm một điều,”</span> anh nói. <span class="q">“Vào là vào hẳn. Ra là mất chỗ.”</span></p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="night">
 <figure class="plate"><canvas class="art" data-art="hut:night" role="img" aria-label="Căn nhà lợp lá cuối lối mòn, ánh lửa hắt qua khe cửa"></canvas></figure>
-<p>Căn nhà thứ hai nằm sâu hơn về phía đồng, nơi con đường đất thu lại thành một lối mòn hẹp giữa hai bờ ruộng. Lần này <span class="nm nm-person">Luke</span> không vội bước vào. Anh dừng lại ở ngoài hiên, gõ lên khung cửa ba tiếng, rồi đợi.</p>
-<p>Người ra mở cửa là một người đàn ông trung niên, gầy, má hóp, mặc áo nâu bạc như mọi người dân làng khác, tay còn cầm cái muôi gỗ. Sau lưng ông, bếp lửa cũng đang cháy, nhưng âm ỉ, lặng lẽ, như thể đang chờ.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Bác cho cháu hỏi,”</span> <span class="nm nm-person">Luke</span> nói, giọng từ tốn, <span class="q">“nhà mình có luật gì mà người lạ cần biết trước không ạ? Lúc nãy bọn cháu vào nhờ nhà bên kia, rồi lỡ bước ra, thế là không vào lại được nữa.”</span></p>
-<p>Người đàn ông nhìn anh, rồi nhìn sang <span class="nm nm-person">Clevia</span>, ánh mắt chậm rãi đến mức cô không đoán được ông đang nghĩ gì, hay có nghĩ gì không. “Người lạ thì cứ ở yên trong nhà,” ông nói. “Lửa còn thì nhà còn giữ người. Ra khỏi cửa rồi thì cửa không nhận lại.”</p>
-<p class="say say-x"><span class="q">“Còn lửa tắt thì sao ạ?”</span></p>
-<p>Ông không trả lời. Ông chỉ đứng tránh sang một bên, để trống lối vào.</p>
-<p><span class="nm nm-person">Luke</span> liếc sang cô. Cô gật đầu. Hai người cùng bước qua ngưỡng cửa, và lần này, khi ngọn lửa trong bếp bùng lên chào họ, <span class="nm nm-person">Clevia</span> không còn giật mình nữa, chỉ thấy lòng mình chùng xuống một chút, như người vừa nghe tiếng khoá cửa sập lại sau lưng.</p>
-<p>Căn nhà nhỏ, chỉ một gian, vách đất, mái lá. Một cái chõng tre, một bộ bàn ghế thấp, một cái chum nước, và ở góc trong cùng, khuất sau một tấm phên, là một cái hòm gỗ cũ có đai sắt, nắp khoá bằng một ổ khoá đồng đã xỉn màu. Cạnh cửa ra vào có một đôi dép cỏ nhỏ xíu, nhỏ đến mức chỉ vừa chân một đứa trẻ, đặt ngay ngắn sát vách. <span class="nm nm-person">Clevia</span> nhìn đôi dép ấy một lúc lâu. Cô nhìn quanh căn nhà, chẳng thấy đứa trẻ nào cả.</p>
-<p>Người đàn ông quay về bên bếp, khuấy cái nồi đang sôi lục bục, rồi ngồi xuống chiếc ghế đẩu, cứ thế ngồi đó, mắt nhìn vào lửa, không nói thêm một lời nào nữa.</p>
+<p data-pi="30">Căn nhà thứ hai nằm sâu hơn về phía đồng, nơi con đường đất thu lại thành một lối mòn hẹp giữa hai bờ ruộng. Lần này <span class="nm nm-person">Luke</span> không vội bước vào. Anh dừng lại ở ngoài hiên, gõ lên khung cửa ba tiếng, rồi đợi.</p>
+<p data-pi="31">Người ra mở cửa là một người đàn ông trung niên, gầy, má hóp, mặc áo nâu bạc như mọi người dân làng khác, tay còn cầm cái muôi gỗ. Sau lưng ông, bếp lửa cũng đang cháy, nhưng âm ỉ, lặng lẽ, như thể đang chờ.</p>
+<p data-pi="32" class="say say-luke" data-name="Luke"><span class="q">“Bác cho cháu hỏi,”</span> <span class="nm nm-person">Luke</span> nói, giọng từ tốn, <span class="q">“nhà mình có luật gì mà người lạ cần biết trước không ạ? Lúc nãy bọn cháu vào nhờ nhà bên kia, rồi lỡ bước ra, thế là không vào lại được nữa.”</span></p>
+<p data-pi="33">Người đàn ông nhìn anh, rồi nhìn sang <span class="nm nm-person">Clevia</span>, ánh mắt chậm rãi đến mức cô không đoán được ông đang nghĩ gì, hay có nghĩ gì không. “Người lạ thì cứ ở yên trong nhà,” ông nói. “Lửa còn thì nhà còn giữ người. Ra khỏi cửa rồi thì cửa không nhận lại.”</p>
+<p data-pi="34" class="say say-x"><span class="q">“Còn lửa tắt thì sao ạ?”</span></p>
+<p data-pi="35">Ông không trả lời. Ông chỉ đứng tránh sang một bên, để trống lối vào.</p>
+<p data-pi="36"><span class="nm nm-person">Luke</span> liếc sang cô. Cô gật đầu. Hai người cùng bước qua ngưỡng cửa, và lần này, khi ngọn lửa trong bếp bùng lên chào họ, <span class="nm nm-person">Clevia</span> không còn giật mình nữa, chỉ thấy lòng mình chùng xuống một chút, như người vừa nghe tiếng khoá cửa sập lại sau lưng.</p>
+<p data-pi="37">Căn nhà nhỏ, chỉ một gian, vách đất, mái lá. Một cái chõng tre, một bộ bàn ghế thấp, một cái chum nước, và ở góc trong cùng, khuất sau một tấm phên, là một cái hòm gỗ cũ có đai sắt, nắp khoá bằng một ổ khoá đồng đã xỉn màu. Cạnh cửa ra vào có một đôi dép cỏ nhỏ xíu, nhỏ đến mức chỉ vừa chân một đứa trẻ, đặt ngay ngắn sát vách. <span class="nm nm-person">Clevia</span> nhìn đôi dép ấy một lúc lâu. Cô nhìn quanh căn nhà, chẳng thấy đứa trẻ nào cả.</p>
+<p data-pi="38">Người đàn ông quay về bên bếp, khuấy cái nồi đang sôi lục bục, rồi ngồi xuống chiếc ghế đẩu, cứ thế ngồi đó, mắt nhìn vào lửa, không nói thêm một lời nào nữa.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="hearth">
 <figure class="plate"><canvas class="art" data-art="hearth:warm" role="img" aria-label="Bếp lửa trong nhà, bóng hai người in lên vách đất"></canvas></figure>
-<p>Dòng chữ hiện ra khi cô vừa ngồi xuống chõng.</p>
-<p class="sys" data-log="ben-kia-buc-tuong:9"><em>[Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng.]</em></p>
-<p>Màu xanh băng ấy lại cắt ngang không khí, ngay trên ngọn lửa, lạnh lẽo đến mức ánh lửa vàng bên dưới trông như cũng nhạt đi. Nó chỉ đứng đó vài giây, rồi tan biến. Không có tên khu. Không có lời nào thêm.</p>
-<p><span class="nm nm-person">Clevia</span> nhìn <span class="nm nm-person">Luke</span>. <span class="nm nm-person">Luke</span> đã đứng dậy, bước tới bên ô cửa sổ nhỏ chắn bằng mấy thanh tre đóng chéo, nghiêng người nhìn ra qua khe hở. Cô bước tới đứng cạnh anh.</p>
-<p>Ngoài kia, cánh đồng đã chìm hẳn vào bóng đêm, chỉ còn lờ mờ những đường bờ ruộng nhờ chút ánh sao. Và trên những ô ruộng ấy, những người dân làng vẫn đang cúi lưng làm việc. Vẫn những chiếc nón lá úp xuống, vẫn những động tác đều đặn ấy, dưới một bầu trời đã tối đến mức chẳng ai còn nhìn thấy mạ mà cấy. <span class="nm nm-person">Clevia</span> không hiểu sao từ lúc mới vào làng đến giờ, cô lại không thấy lạ vì điều đó. Giờ thì cô thấy.</p>
-<p>Rồi một người ngừng tay.</p>
-<p>Người ấy đứng thẳng dậy, chậm, rất chậm, như một cái cây đang được kéo lên khỏi mặt đất, và chiếc nón lá trên đầu trượt xuống, rơi xuống ruộng mà người ấy không hề cúi nhặt. Cô không nhìn rõ mặt. Có lẽ là may. Cô chỉ thấy cái đầu người ấy ngoẹo sang một bên, ngoẹo quá cái góc mà một cái cổ bình thường có thể ngoẹo, rồi giật lại, rồi lại ngoẹo, như đang nghe một thứ âm thanh nào đó từ rất xa vọng tới. Người thứ hai đứng dậy. Người thứ ba. Từng chiếc nón lá một rơi xuống ruộng, trôi lềnh bềnh trên mặt nước tối như những cánh hoa trắng.</p>
-<p>Rồi họ cùng quay đầu, như lúc cô mới vào làng, cùng một lúc, như có ai giật chung một sợi dây. Nhưng lần này họ không nhìn về phía con đường. Họ nhìn về phía những căn nhà.</p>
-<p><span class="nm nm-person">Clevia</span> không nhận ra mình đã lùi lại cho đến khi lưng cô chạm vào vai <span class="nm nm-person">Luke</span>. Anh không lùi. Anh đặt một tay lên vai cô, giữ yên, và cô cảm nhận được bàn tay ấy cũng đang căng như dây đàn.</p>
-<p class="say say-luke" data-name="Luke" data-act="still"><span class="q">“Đừng động,”</span> anh thì thầm. <span class="q">“Cứ để xem chúng làm gì đã.”</span></p>
-<p>Chúng không làm gì cả. Chúng chỉ đứng đó, giữa ruộng, nhìn về phía những ô cửa có ánh lửa, lâu đến mức <span class="nm nm-person">Clevia</span> bắt đầu đếm nhịp thở của mình để không phải nghĩ. Rồi một kẻ bước lên bờ ruộng, đi về phía con đường, bước chân giật cục như người mới tập đi, và những kẻ khác lần lượt theo sau. Chúng đi ngang qua căn nhà, cách hàng rào tre chỉ vài bước chân, gần đến mức <span class="nm nm-person">Clevia</span> nghe được tiếng chân trần lép nhép trên bùn, nghe được một thứ âm thanh ươn ướt như tiếng ai đó đang nhai mà miệng chẳng có gì, và rồi chúng đi qua, không dừng lại, không ngó vào, như thể căn nhà này cùng ánh lửa bên trong nó chưa từng tồn tại.</p>
-<p data-act="still-end">Rất lâu sau, khi tiếng chân đã xa hẳn, <span class="nm nm-person">Luke</span> mới bỏ tay khỏi vai cô.</p>
-<p>Từ đâu đó phía bên kia cánh đồng, có tiếng người hét lên, một tiếng thôi, cao và đứt, rồi im bặt.</p>
-<p><span class="nm nm-person">Clevia</span> nghĩ đến <span class="nm nm-person first">Felix</span>, đến cái mũ bảo hiểm còn cài quai dưới cằm. Cô nghĩ đến bà <span class="nm nm-person first">Mabel</span>, đến bàn tay bà siết nhẹ lấy tay cậu ấy bên bờ giếng. Cô không biết tiếng hét kia là của ai. Cô không cho phép mình đoán.</p>
-<p>Bên bếp lửa, người đàn ông vẫn ngồi khuấy nồi cháo, chưa từng ngẩng lên lấy một lần.</p>
+<p data-pi="39">Dòng chữ hiện ra khi cô vừa ngồi xuống chõng.</p>
+<p data-pi="40" class="sys" data-log="ben-kia-buc-tuong:9"><em>[Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng.]</em></p>
+<p data-pi="41">Màu xanh băng ấy lại cắt ngang không khí, ngay trên ngọn lửa, lạnh lẽo đến mức ánh lửa vàng bên dưới trông như cũng nhạt đi. Nó chỉ đứng đó vài giây, rồi tan biến. Không có tên khu. Không có lời nào thêm.</p>
+<p data-pi="42"><span class="nm nm-person">Clevia</span> nhìn <span class="nm nm-person">Luke</span>. <span class="nm nm-person">Luke</span> đã đứng dậy, bước tới bên ô cửa sổ nhỏ chắn bằng mấy thanh tre đóng chéo, nghiêng người nhìn ra qua khe hở. Cô bước tới đứng cạnh anh.</p>
+<p data-pi="43">Ngoài kia, cánh đồng đã chìm hẳn vào bóng đêm, chỉ còn lờ mờ những đường bờ ruộng nhờ chút ánh sao. Và trên những ô ruộng ấy, những người dân làng vẫn đang cúi lưng làm việc. Vẫn những chiếc nón lá úp xuống, vẫn những động tác đều đặn ấy, dưới một bầu trời đã tối đến mức chẳng ai còn nhìn thấy mạ mà cấy. <span class="nm nm-person">Clevia</span> không hiểu sao từ lúc mới vào làng đến giờ, cô lại không thấy lạ vì điều đó. Giờ thì cô thấy.</p>
+<p data-pi="44">Rồi một người ngừng tay.</p>
+<p data-pi="45">Người ấy đứng thẳng dậy, chậm, rất chậm, như một cái cây đang được kéo lên khỏi mặt đất, và chiếc nón lá trên đầu trượt xuống, rơi xuống ruộng mà người ấy không hề cúi nhặt. Cô không nhìn rõ mặt. Có lẽ là may. Cô chỉ thấy cái đầu người ấy ngoẹo sang một bên, ngoẹo quá cái góc mà một cái cổ bình thường có thể ngoẹo, rồi giật lại, rồi lại ngoẹo, như đang nghe một thứ âm thanh nào đó từ rất xa vọng tới. Người thứ hai đứng dậy. Người thứ ba. Từng chiếc nón lá một rơi xuống ruộng, trôi lềnh bềnh trên mặt nước tối như những cánh hoa trắng.</p>
+<p data-pi="46">Rồi họ cùng quay đầu, như lúc cô mới vào làng, cùng một lúc, như có ai giật chung một sợi dây. Nhưng lần này họ không nhìn về phía con đường. Họ nhìn về phía những căn nhà.</p>
+<p data-pi="47"><span class="nm nm-person">Clevia</span> không nhận ra mình đã lùi lại cho đến khi lưng cô chạm vào vai <span class="nm nm-person">Luke</span>. Anh không lùi. Anh đặt một tay lên vai cô, giữ yên, và cô cảm nhận được bàn tay ấy cũng đang căng như dây đàn.</p>
+<p data-pi="48" class="say say-luke" data-name="Luke" data-act="still"><span class="q">“Đừng động,”</span> anh thì thầm. <span class="q">“Cứ để xem chúng làm gì đã.”</span></p>
+<p data-pi="49">Chúng không làm gì cả. Chúng chỉ đứng đó, giữa ruộng, nhìn về phía những ô cửa có ánh lửa, lâu đến mức <span class="nm nm-person">Clevia</span> bắt đầu đếm nhịp thở của mình để không phải nghĩ. Rồi một kẻ bước lên bờ ruộng, đi về phía con đường, bước chân giật cục như người mới tập đi, và những kẻ khác lần lượt theo sau. Chúng đi ngang qua căn nhà, cách hàng rào tre chỉ vài bước chân, gần đến mức <span class="nm nm-person">Clevia</span> nghe được tiếng chân trần lép nhép trên bùn, nghe được một thứ âm thanh ươn ướt như tiếng ai đó đang nhai mà miệng chẳng có gì, và rồi chúng đi qua, không dừng lại, không ngó vào, như thể căn nhà này cùng ánh lửa bên trong nó chưa từng tồn tại.</p>
+<p data-pi="50" data-act="still-end">Rất lâu sau, khi tiếng chân đã xa hẳn, <span class="nm nm-person">Luke</span> mới bỏ tay khỏi vai cô.</p>
+<p data-pi="51">Từ đâu đó phía bên kia cánh đồng, có tiếng người hét lên, một tiếng thôi, cao và đứt, rồi im bặt.</p>
+<p data-pi="52"><span class="nm nm-person">Clevia</span> nghĩ đến <span class="nm nm-person first">Felix</span>, đến cái mũ bảo hiểm còn cài quai dưới cằm. Cô nghĩ đến bà <span class="nm nm-person first">Mabel</span>, đến bàn tay bà siết nhẹ lấy tay cậu ấy bên bờ giếng. Cô không biết tiếng hét kia là của ai. Cô không cho phép mình đoán.</p>
+<p data-pi="53">Bên bếp lửa, người đàn ông vẫn ngồi khuấy nồi cháo, chưa từng ngẩng lên lấy một lần.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="hearth">
 <figure class="plate"><canvas class="art" data-art="porridge" role="img" aria-label="Nồi cháo trên kiềng, hơi nóng bốc lên trên bếp lửa"></canvas></figure>
-<p>Cô không biết đã bao lâu trôi qua. Có lẽ là một tiếng, có lẽ hơn. Ở đây không có đồng hồ, và thời gian trong căn nhà nhỏ này trôi theo một nhịp riêng, đo bằng tiếng củi tí tách, bằng làn hơi bốc lên từ nồi cháo chẳng ai mời ăn, bằng những lần <span class="nm nm-person">Luke</span> đứng dậy ra ô cửa sổ rồi lại quay về ngồi.</p>
-<p class="say say-x"><span class="q">“Anh ngồi yên một lúc đi,”</span> cuối cùng cô nói. <span class="q">“Anh đi qua đi lại nãy giờ chắc phải hai chục lần rồi.”</span></p>
-<p><span class="nm nm-person">Luke</span> khựng lại giữa chừng, như người bị bắt quả tang, rồi bật ra một tiếng cười ngắn qua mũi và ngồi xuống đầu kia chõng tre.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Thói quen,”</span> anh nói. <span class="q">“Mấy lần trước anh vào ảo cảnh, ngồi yên là toàn bỏ lỡ gì đó.”</span></p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Mấy lần trước,”</span> cô nhắc lại. <span class="q">“Là mấy lần?”</span></p>
-<p>Anh nghĩ một lúc, như đang đếm thật. “Đủ nhiều để không còn sợ cái bảng chữ. Chưa đủ nhiều để không sợ những chuyện như vừa nãy.” Anh hất cằm về phía ô cửa sổ. “Mỗi chỗ một luật, em ạ. Có chỗ nguy hiểm ở cái mình nhìn thấy, có chỗ nguy hiểm ở cái mình không thấy. Chỗ này thì anh nghĩ là cả hai.”</p>
-<p><span class="nm nm-person">Clevia</span> kéo hai đầu gối lên, vòng tay ôm lấy. Ngọn lửa hắt bóng hai người lên vách đất, hai cái bóng lớn hơn người thật, rung rinh theo nhịp lửa.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Lúc nãy,”</span> cô nói, <span class="q">“sao anh lại đứng yên ở cửa sổ? Lỡ chúng nhìn thấy anh thì sao?”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Thì anh cũng muốn biết chúng có thấy không.”</span> Anh nhún vai. <span class="q">“Nếu chúng thấy mà không vào, nghĩa là nhà này giữ được người thật. Nếu chúng không thấy, nghĩa là nhà này giấu được người. Hai cái đó khác nhau, sau này sẽ cần biết.”</span> Anh dừng lại, liếc sang cô. <span class="q">“Mà anh xin lỗi. Lúc nãy anh đứng chắn nên em chẳng còn chỗ nào mà lùi.”</span></p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Em không định lùi đâu,”</span> cô nói, rồi nhận ra đó là một lời nói dối, và thấy anh cũng biết đó là một lời nói dối, nhưng anh chỉ gật đầu, không vạch ra.</p>
-<p>Một lúc lâu, cả hai không ai nói gì. Rồi cô hỏi câu mà cô đã giữ trong đầu từ lúc thấy tên anh trong danh sách.</p>
-<p class="say say-x"><span class="q">“Sao anh lại tìm em?”</span></p>
-<p><span class="nm nm-person">Luke</span> không trả lời ngay. Anh nhìn vào lửa, và trong ánh lửa, gương mặt anh không còn cái vẻ sắc lẹm thường ngày nữa, chỉ có một vẻ mệt mỏi rất cũ, như của một người đã thức nhiều đêm hơn tuổi mình.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Vì em là người mới,”</span> anh nói. <span class="q">“Vì anh đã bảo sẽ đợi em ở ngoài, mà rốt cuộc lại ở đây. Vì…”</span> Anh dừng lại, lựa lời. <span class="q">“Hồi anh mới vào, cũng có một người tìm anh. Không ai bắt người ta phải làm thế cả. Người ta cứ làm thôi.”</span></p>
-<p>Cô đợi anh nói tiếp. Anh không nói tiếp. Cô nhìn bàn tay anh đặt trên đầu gối, những ngón tay khẽ co lại, và hiểu rằng câu chuyện ấy có một cái kết mà anh chưa muốn kể, có lẽ chưa bao giờ muốn kể với ai. Cô không hỏi nữa. Cô chỉ ngồi đó, cùng anh nhìn vào lửa, và cái im lặng giữa hai người lần đầu tiên không làm cô thấy khó chịu.</p>
+<p data-pi="54">Cô không biết đã bao lâu trôi qua. Có lẽ là một tiếng, có lẽ hơn. Ở đây không có đồng hồ, và thời gian trong căn nhà nhỏ này trôi theo một nhịp riêng, đo bằng tiếng củi tí tách, bằng làn hơi bốc lên từ nồi cháo chẳng ai mời ăn, bằng những lần <span class="nm nm-person">Luke</span> đứng dậy ra ô cửa sổ rồi lại quay về ngồi.</p>
+<p data-pi="55" class="say say-x"><span class="q">“Anh ngồi yên một lúc đi,”</span> cuối cùng cô nói. <span class="q">“Anh đi qua đi lại nãy giờ chắc phải hai chục lần rồi.”</span></p>
+<p data-pi="56"><span class="nm nm-person">Luke</span> khựng lại giữa chừng, như người bị bắt quả tang, rồi bật ra một tiếng cười ngắn qua mũi và ngồi xuống đầu kia chõng tre.</p>
+<p data-pi="57" class="say say-luke" data-name="Luke"><span class="q">“Thói quen,”</span> anh nói. <span class="q">“Mấy lần trước anh vào ảo cảnh, ngồi yên là toàn bỏ lỡ gì đó.”</span></p>
+<p data-pi="58" class="say say-clevia" data-name="Clevia"><span class="q">“Mấy lần trước,”</span> cô nhắc lại. <span class="q">“Là mấy lần?”</span></p>
+<p data-pi="59">Anh nghĩ một lúc, như đang đếm thật. “Đủ nhiều để không còn sợ cái bảng chữ. Chưa đủ nhiều để không sợ những chuyện như vừa nãy.” Anh hất cằm về phía ô cửa sổ. “Mỗi chỗ một luật, em ạ. Có chỗ nguy hiểm ở cái mình nhìn thấy, có chỗ nguy hiểm ở cái mình không thấy. Chỗ này thì anh nghĩ là cả hai.”</p>
+<p data-pi="60"><span class="nm nm-person">Clevia</span> kéo hai đầu gối lên, vòng tay ôm lấy. Ngọn lửa hắt bóng hai người lên vách đất, hai cái bóng lớn hơn người thật, rung rinh theo nhịp lửa.</p>
+<p data-pi="61" class="say say-clevia" data-name="Clevia"><span class="q">“Lúc nãy,”</span> cô nói, <span class="q">“sao anh lại đứng yên ở cửa sổ? Lỡ chúng nhìn thấy anh thì sao?”</span></p>
+<p data-pi="62" class="say say-luke" data-name="Luke"><span class="q">“Thì anh cũng muốn biết chúng có thấy không.”</span> Anh nhún vai. <span class="q">“Nếu chúng thấy mà không vào, nghĩa là nhà này giữ được người thật. Nếu chúng không thấy, nghĩa là nhà này giấu được người. Hai cái đó khác nhau, sau này sẽ cần biết.”</span> Anh dừng lại, liếc sang cô. <span class="q">“Mà anh xin lỗi. Lúc nãy anh đứng chắn nên em chẳng còn chỗ nào mà lùi.”</span></p>
+<p data-pi="63" class="say say-clevia" data-name="Clevia"><span class="q">“Em không định lùi đâu,”</span> cô nói, rồi nhận ra đó là một lời nói dối, và thấy anh cũng biết đó là một lời nói dối, nhưng anh chỉ gật đầu, không vạch ra.</p>
+<p data-pi="64">Một lúc lâu, cả hai không ai nói gì. Rồi cô hỏi câu mà cô đã giữ trong đầu từ lúc thấy tên anh trong danh sách.</p>
+<p data-pi="65" class="say say-x"><span class="q">“Sao anh lại tìm em?”</span></p>
+<p data-pi="66"><span class="nm nm-person">Luke</span> không trả lời ngay. Anh nhìn vào lửa, và trong ánh lửa, gương mặt anh không còn cái vẻ sắc lẹm thường ngày nữa, chỉ có một vẻ mệt mỏi rất cũ, như của một người đã thức nhiều đêm hơn tuổi mình.</p>
+<p data-pi="67" class="say say-luke" data-name="Luke"><span class="q">“Vì em là người mới,”</span> anh nói. <span class="q">“Vì anh đã bảo sẽ đợi em ở ngoài, mà rốt cuộc lại ở đây. Vì…”</span> Anh dừng lại, lựa lời. <span class="q">“Hồi anh mới vào, cũng có một người tìm anh. Không ai bắt người ta phải làm thế cả. Người ta cứ làm thôi.”</span></p>
+<p data-pi="68">Cô đợi anh nói tiếp. Anh không nói tiếp. Cô nhìn bàn tay anh đặt trên đầu gối, những ngón tay khẽ co lại, và hiểu rằng câu chuyện ấy có một cái kết mà anh chưa muốn kể, có lẽ chưa bao giờ muốn kể với ai. Cô không hỏi nữa. Cô chỉ ngồi đó, cùng anh nhìn vào lửa, và cái im lặng giữa hai người lần đầu tiên không làm cô thấy khó chịu.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="hearth">
 <figure class="plate"><canvas class="art" data-art="chest" role="img" aria-label="Cái hòm gỗ trong góc nhà, ổ khoá đồng ánh lửa"></canvas></figure>
-<p>Chính <span class="nm nm-person">Luke</span> là người để ý cái hòm trước.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Bác ơi,”</span> anh hỏi người đàn ông bên bếp, <span class="q">“cái hòm trong góc kia là của nhà mình ạ?”</span></p>
-<p>Người đàn ông nhìn theo tay anh chỉ, rồi nhìn lại nồi cháo. “Đồ cũ,” ông nói. “Ai mở được thì là của người ấy.”</p>
-<p><span class="nm nm-person">Luke</span> đứng dậy, bước tới góc nhà, cúi xuống xem xét cái ổ khoá đồng. Anh xoay nó qua lại, thử giật mạnh, rồi lắc đầu. “Không có chìa thì chịu,” anh nói. “Phá thì phải có đồ, mà phá ra tiếng thì cũng chẳng hay ho gì.”</p>
-<p><span class="nm nm-person">Clevia</span> nhìn cái ổ khoá ấy, và cô nhớ lại cái cảm giác hôm ấy ở trường, ổ khoá tủ đồ tự bật mở dưới tay cô, cánh cửa máy bán nước rơi ra lon nước cô chưa hề trả tiền. Hồi ấy cô không biết mình đã làm gì. Bây giờ thì cô vẫn chưa biết rõ lắm, nhưng ít ra cô biết đó là mình.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Để em thử,”</span> cô nói.</p>
-<p><span class="nm nm-person">Luke</span> quay sang nhìn cô, rồi lặng lẽ lùi ra một bước, nhường chỗ.</p>
-<p>Cô quỳ xuống trước cái hòm. Ổ khoá đồng lạnh ngắt, mặt nó sần sùi những vết xỉn xanh. Lúc đầu cô chỉ nhìn nó, cố nghĩ cho ra cách, cố gọi ra cái thứ đã làm ổ khoá tủ đồ mở hôm ấy, và chẳng có gì xảy ra cả. Ổ khoá vẫn nằm đó, câm lặng, dửng dưng. Rồi cô đặt ngón tay lên nó.</p><div class="act act-lock bronze" data-hold="2.8"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 140 150" aria-hidden="true"><path class="shackle" d="M44 72 V48 a26 26 0 0 1 52 0 V72" /><rect class="body" x="16" y="66" width="108" height="64" rx="5"/><g class="rust"><circle cx="30" cy="80" r="7"/><circle cx="108" cy="118" r="9"/><circle cx="74" cy="124" r="5"/><circle cx="116" cy="76" r="4"/><circle cx="52" cy="112" r="6"/></g><g class="pins"><rect x="38" y="84" width="6" height="22" rx="2"/><rect x="52" y="84" width="6" height="22" rx="2"/><rect x="66" y="84" width="6" height="22" rx="2"/><rect x="80" y="84" width="6" height="22" rx="2"/><rect x="94" y="84" width="6" height="22" rx="2"/></g></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">đặt ngón tay lên và giữ yên</span></div>
-<p>Và cô cảm thấy nó.</p>
-<p>Bên dưới lớp đồng xỉn, có những thứ nhỏ xíu đang nằm chờ, những cái lẫy, những cái chốt, những lò xo nén chặt, xếp đặt theo một trật tự mà cô không nhìn thấy nhưng cảm nhận được rõ ràng qua đầu ngón tay, như người mù đọc chữ nổi, như khi người ta nhắm mắt mà vẫn biết bàn tay mình đang để ở đâu. Cô thấy chỗ nào đang kẹt. Cô thấy chỗ nào cần đẩy. Và cô đẩy, bằng một thứ gì đó nằm ngay sau những đầu ngón tay, một thứ cô chưa biết gọi tên là gì.</p>
-<p>Tách.</p>
-<p>Ổ khoá bật mở, rơi xuống sàn đất, nằm im.</p>
-<p><span class="nm nm-person">Clevia</span> rụt tay về, nhìn đầu ngón tay mình như nhìn tay một người khác. Tim cô đập nhanh, mà lạ thay, chẳng giống tim của người đang sợ. Đây là lần đầu tiên cô muốn nó xảy ra, và nó đã xảy ra.</p>
-<p>Sau lưng cô, <span class="nm nm-person">Luke</span> im lặng một lúc lâu.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Em phải chạm vào nó,”</span> anh nói, giọng trầm và chậm, như đang ghi nhớ hơn là hỏi.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Lúc đầu em chỉ nhìn thôi, chẳng có gì cả,”</span> cô đáp. <span class="q">“Phải chạm vào mới thấy được bên trong.”</span></p>
-<p>Anh gật đầu, không nói thêm. Cô biết anh đang cất điều đó vào đâu đó trong đầu, giống như anh cất mọi thứ khác, những ô ruộng, những mái nhà, con bù nhìn, ngọn lửa bùng lên lúc họ bước vào.</p>
-<p>Cô mở nắp hòm. Bên trong toàn đồ cũ, mấy tấm vải gấp vuông, một cái bát sành mẻ miệng, một chùm dây gai, và nằm dưới đáy, giữa những nếp vải, là một tấm thẻ.</p>
-<p data-collect="bamboo-sword" data-log="ben-kia-buc-tuong:8">Nó trông giống tấm thẻ cô từng nhặt được hôm ấy, cùng kích cỡ, cùng cái chất liệu không giống nhựa cũng không giống kim loại, nhưng mặt trước có hình một thanh kiếm tre vẽ bằng những nét đơn giản, và một dòng chữ nhỏ: <em><span class="nm nm-card first">Bamboo-Sword</span></em>. <span class="nm nm-person">Clevia</span> khựng lại, bàn tay lơ lửng ngay trên nó.</p>
+<p data-pi="69">Chính <span class="nm nm-person">Luke</span> là người để ý cái hòm trước.</p>
+<p data-pi="70" class="say say-luke" data-name="Luke"><span class="q">“Bác ơi,”</span> anh hỏi người đàn ông bên bếp, <span class="q">“cái hòm trong góc kia là của nhà mình ạ?”</span></p>
+<p data-pi="71">Người đàn ông nhìn theo tay anh chỉ, rồi nhìn lại nồi cháo. “Đồ cũ,” ông nói. “Ai mở được thì là của người ấy.”</p>
+<p data-pi="72"><span class="nm nm-person">Luke</span> đứng dậy, bước tới góc nhà, cúi xuống xem xét cái ổ khoá đồng. Anh xoay nó qua lại, thử giật mạnh, rồi lắc đầu. “Không có chìa thì chịu,” anh nói. “Phá thì phải có đồ, mà phá ra tiếng thì cũng chẳng hay ho gì.”</p>
+<p data-pi="73"><span class="nm nm-person">Clevia</span> nhìn cái ổ khoá ấy, và cô nhớ lại cái cảm giác hôm ấy ở trường, ổ khoá tủ đồ tự bật mở dưới tay cô, cánh cửa máy bán nước rơi ra lon nước cô chưa hề trả tiền. Hồi ấy cô không biết mình đã làm gì. Bây giờ thì cô vẫn chưa biết rõ lắm, nhưng ít ra cô biết đó là mình.</p>
+<p data-pi="74" class="say say-clevia" data-name="Clevia"><span class="q">“Để em thử,”</span> cô nói.</p>
+<p data-pi="75"><span class="nm nm-person">Luke</span> quay sang nhìn cô, rồi lặng lẽ lùi ra một bước, nhường chỗ.</p>
+<p data-pi="76">Cô quỳ xuống trước cái hòm. Ổ khoá đồng lạnh ngắt, mặt nó sần sùi những vết xỉn xanh. Lúc đầu cô chỉ nhìn nó, cố nghĩ cho ra cách, cố gọi ra cái thứ đã làm ổ khoá tủ đồ mở hôm ấy, và chẳng có gì xảy ra cả. Ổ khoá vẫn nằm đó, câm lặng, dửng dưng. Rồi cô đặt ngón tay lên nó.</p><div class="act act-lock bronze" data-hold="2.8"><button type="button" class="lockbtn" aria-label="Chạm và giữ để mở khoá"><svg viewBox="0 0 140 150" aria-hidden="true"><path class="shackle" d="M44 72 V48 a26 26 0 0 1 52 0 V72" /><rect class="body" x="16" y="66" width="108" height="64" rx="5"/><g class="rust"><circle cx="30" cy="80" r="7"/><circle cx="108" cy="118" r="9"/><circle cx="74" cy="124" r="5"/><circle cx="116" cy="76" r="4"/><circle cx="52" cy="112" r="6"/></g><g class="pins"><rect x="38" y="84" width="6" height="22" rx="2"/><rect x="52" y="84" width="6" height="22" rx="2"/><rect x="66" y="84" width="6" height="22" rx="2"/><rect x="80" y="84" width="6" height="22" rx="2"/><rect x="94" y="84" width="6" height="22" rx="2"/></g></svg><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span></button><span class="act-hint">đặt ngón tay lên và giữ yên</span></div>
+<p data-pi="77">Và cô cảm thấy nó.</p>
+<p data-pi="78">Bên dưới lớp đồng xỉn, có những thứ nhỏ xíu đang nằm chờ, những cái lẫy, những cái chốt, những lò xo nén chặt, xếp đặt theo một trật tự mà cô không nhìn thấy nhưng cảm nhận được rõ ràng qua đầu ngón tay, như người mù đọc chữ nổi, như khi người ta nhắm mắt mà vẫn biết bàn tay mình đang để ở đâu. Cô thấy chỗ nào đang kẹt. Cô thấy chỗ nào cần đẩy. Và cô đẩy, bằng một thứ gì đó nằm ngay sau những đầu ngón tay, một thứ cô chưa biết gọi tên là gì.</p>
+<p data-pi="79">Tách.</p>
+<p data-pi="80">Ổ khoá bật mở, rơi xuống sàn đất, nằm im.</p>
+<p data-pi="81"><span class="nm nm-person">Clevia</span> rụt tay về, nhìn đầu ngón tay mình như nhìn tay một người khác. Tim cô đập nhanh, mà lạ thay, chẳng giống tim của người đang sợ. Đây là lần đầu tiên cô muốn nó xảy ra, và nó đã xảy ra.</p>
+<p data-pi="82">Sau lưng cô, <span class="nm nm-person">Luke</span> im lặng một lúc lâu.</p>
+<p data-pi="83" class="say say-luke" data-name="Luke"><span class="q">“Em phải chạm vào nó,”</span> anh nói, giọng trầm và chậm, như đang ghi nhớ hơn là hỏi.</p>
+<p data-pi="84" class="say say-clevia" data-name="Clevia"><span class="q">“Lúc đầu em chỉ nhìn thôi, chẳng có gì cả,”</span> cô đáp. <span class="q">“Phải chạm vào mới thấy được bên trong.”</span></p>
+<p data-pi="85">Anh gật đầu, không nói thêm. Cô biết anh đang cất điều đó vào đâu đó trong đầu, giống như anh cất mọi thứ khác, những ô ruộng, những mái nhà, con bù nhìn, ngọn lửa bùng lên lúc họ bước vào.</p>
+<p data-pi="86">Cô mở nắp hòm. Bên trong toàn đồ cũ, mấy tấm vải gấp vuông, một cái bát sành mẻ miệng, một chùm dây gai, và nằm dưới đáy, giữa những nếp vải, là một tấm thẻ.</p>
+<p data-pi="87" data-collect="bamboo-sword" data-log="ben-kia-buc-tuong:8">Nó trông giống tấm thẻ cô từng nhặt được hôm ấy, cùng kích cỡ, cùng cái chất liệu không giống nhựa cũng không giống kim loại, nhưng mặt trước có hình một thanh kiếm tre vẽ bằng những nét đơn giản, và một dòng chữ nhỏ: <em><span class="nm nm-card first">Bamboo-Sword</span></em>. <span class="nm nm-person">Clevia</span> khựng lại, bàn tay lơ lửng ngay trên nó.</p>
 <figure class="card-fig" data-dissolve="Tấm thẻ sáng lên một nhịp">
   <button type="button" class="card flipped" aria-label="Tấm thẻ Bamboo-Sword. Chạm để lật">
     <span class="card-inner">
@@ -897,49 +950,49 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   </button>
   <figcaption>Chạm để lật thẻ</figcaption>
 </figure>
-<p class="say say-luke" data-name="Luke"><span class="q">“Không sao đâu,”</span> <span class="nm nm-person">Luke</span> nói, đọc được cái do dự của cô. <span class="q">“Thẻ trong ảo cảnh khác với tấm thẻ em nhặt hôm trước. Cầm không sao. Phải muốn dùng thì nó mới chạy.”</span></p>
-<p>Cô nhặt nó lên. Nó lạnh, nhẹ, và không tan vào tay cô như tấm thẻ kia. Cô lật qua lật lại, nhìn hình thanh kiếm tre, rồi đưa nó cho anh.</p>
-<p class="say say-x"><span class="q">“Anh cầm đi.”</span></p>
-<p><span class="nm nm-person">Luke</span> nhướng mày. “Em mở được thì là của em mà.”</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Em có biết dùng kiếm đâu.”</span> Cô dúi tấm thẻ vào tay anh. <span class="q">“Đưa em thì em cũng chỉ cầm nó như cầm cái gậy phơi đồ thôi. Anh là trưởng câu lạc bộ kiếm đạo còn gì.”</span></p>
-<p>Anh nhìn tấm thẻ trong tay, rồi nhìn cô, và có một thoáng gì đó lướt qua mặt anh, như người vừa nhận một món quà nhỏ mà không biết nên phản ứng ra sao. Rồi anh khẽ siết tay lại. Tấm thẻ sáng lên một nhịp, và trong tay anh là một thanh kiếm tre, đúng loại cô từng thấy anh ôm trên tầng hai nhà câu lạc bộ, chuôi quấn vải, thân tre vàng sẫm, chẳng có gì đặc biệt cả.</p>
-<p><span class="nm nm-person">Luke</span> xoay nhẹ cổ tay, để thanh kiếm vẽ một vòng ngắn trong không khí. Động tác ấy nhẹ nhàng, tự nhiên, như thể anh đã làm nó hàng nghìn lần. Có lẽ là thật.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Nặng y như cái ở câu lạc bộ,”</span> anh nói, và lần đầu tiên từ lúc bước vào làng, cô thấy anh cười, một nụ cười thật, không nhiều, nhưng thật.</p>
-<p class="say say-x"><span class="q">“Cảm ơn em.”</span></p>
+<p data-pi="88" class="say say-luke" data-name="Luke"><span class="q">“Không sao đâu,”</span> <span class="nm nm-person">Luke</span> nói, đọc được cái do dự của cô. <span class="q">“Thẻ trong ảo cảnh khác với tấm thẻ em nhặt hôm trước. Cầm không sao. Phải muốn dùng thì nó mới chạy.”</span></p>
+<p data-pi="89">Cô nhặt nó lên. Nó lạnh, nhẹ, và không tan vào tay cô như tấm thẻ kia. Cô lật qua lật lại, nhìn hình thanh kiếm tre, rồi đưa nó cho anh.</p>
+<p data-pi="90" class="say say-x"><span class="q">“Anh cầm đi.”</span></p>
+<p data-pi="91"><span class="nm nm-person">Luke</span> nhướng mày. “Em mở được thì là của em mà.”</p>
+<p data-pi="92" class="say say-clevia" data-name="Clevia"><span class="q">“Em có biết dùng kiếm đâu.”</span> Cô dúi tấm thẻ vào tay anh. <span class="q">“Đưa em thì em cũng chỉ cầm nó như cầm cái gậy phơi đồ thôi. Anh là trưởng câu lạc bộ kiếm đạo còn gì.”</span></p>
+<p data-pi="93">Anh nhìn tấm thẻ trong tay, rồi nhìn cô, và có một thoáng gì đó lướt qua mặt anh, như người vừa nhận một món quà nhỏ mà không biết nên phản ứng ra sao. Rồi anh khẽ siết tay lại. Tấm thẻ sáng lên một nhịp, và trong tay anh là một thanh kiếm tre, đúng loại cô từng thấy anh ôm trên tầng hai nhà câu lạc bộ, chuôi quấn vải, thân tre vàng sẫm, chẳng có gì đặc biệt cả.</p>
+<p data-pi="94"><span class="nm nm-person">Luke</span> xoay nhẹ cổ tay, để thanh kiếm vẽ một vòng ngắn trong không khí. Động tác ấy nhẹ nhàng, tự nhiên, như thể anh đã làm nó hàng nghìn lần. Có lẽ là thật.</p>
+<p data-pi="95" class="say say-luke" data-name="Luke"><span class="q">“Nặng y như cái ở câu lạc bộ,”</span> anh nói, và lần đầu tiên từ lúc bước vào làng, cô thấy anh cười, một nụ cười thật, không nhiều, nhưng thật.</p>
+<p data-pi="96" class="say say-x"><span class="q">“Cảm ơn em.”</span></p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="bridge">
 <figure class="plate"><canvas class="art" data-art="bridge" role="img" aria-label="Cây cầu trong giấc mơ, gió thổi mạnh"></canvas></figure>
-<p>Cô không định ngủ. Cô tự nhủ sẽ chỉ nhắm mắt một lát thôi, lưng tựa vào vách đất, nghe tiếng củi tí tách, nghe tiếng <span class="nm nm-person">Luke</span> thở đều ở đầu kia chõng tre, thanh kiếm tre dựng ngay bên cạnh anh.</p>
-<p>Rồi cô đứng trên cây cầu.</p>
-<p>Gió thổi rất mạnh, như mọi lần, và nước dưới chân cầu đen ngòm, như mọi lần, và <span class="nm nm-person first">Renie</span> đứng ở đầu kia, như mọi lần, mái tóc bay tung trong gió. Nhưng lần này <span class="nm nm-person">Renie</span> không nhìn cô. <span class="nm nm-person">Renie</span> nhìn qua vai cô, về phía sau lưng cô, và gương mặt <span class="nm nm-person">Renie</span> không buồn, không giận, không cười, chỉ chăm chú, chăm chú như người đang nhìn một thứ gì đó đang tới gần mà cô thì không quay lại được để xem.</p>
-<p><span class="nm nm-person">Clevia</span> giật mình mở mắt.</p>
-<p>Lửa vẫn cháy. <span class="nm nm-person">Luke</span> vẫn ngồi đó, mắt nhắm, nhưng cô không chắc anh đang ngủ thật. Người đàn ông vẫn ngồi bên bếp, như một bức tượng đất. Cô nằm im một lúc, đợi tim mình chậm lại, rồi khẽ đứng dậy, bước tới ô cửa sổ.</p>
-<p>Ngoài kia, cánh đồng tối om. Không có tiếng chân. Không có tiếng nhai ươn ướt nào. Chỉ có ánh sao, những chiếc nón lá vẫn còn trôi trên mặt ruộng, và con đường đất chạy ngang qua trước nhà như một vệt xám mờ.</p>
-<p>Có người đang đi trên con đường ấy.</p>
-<p>Một người, chỉ một. Dáng cao, vai u thịt bắp, bước đi không nhanh không chậm, hai tay buông thõng hai bên người, như một người đang đi dạo một đêm hè. <span class="nm nm-person">Clevia</span> nín thở. Cô nhận ra cái dáng ấy. Cô đã thấy nó dựa lưng vào gốc đa bên bờ giếng, hai tay khoanh trước ngực, nghe nó nói về dòng thứ bảy bằng cái giọng trầm và khô ấy.</p>
-<p>Và rồi cô thấy những cái bóng khác, ở rìa ruộng, ở sau bụi tre, những cái bóng đứng ngoẹo đầu như cô đã thấy lúc nãy. Chúng ở đó. Chúng nhìn thấy ông ta, cô chắc chắn thế. Vậy mà chúng không động đậy. Ông ta đi ngang qua chúng, gần đến mức chỉ cần với tay là chạm, và chúng chỉ đứng im, ngoẹo đầu, như những con chó dữ ngửi thấy mùi một con chó dữ hơn.</p>
-<p>Người đàn ông dừng lại ngay trước căn nhà. Ông ta quay đầu, chậm rãi, và nhìn về phía ô cửa sổ.</p>
-<p><span class="nm nm-person">Clevia</span> lùi lại khỏi khe hở trước khi kịp nghĩ. Tim cô đập thình thịch trong lồng ngực. Cô không biết ông ta có thấy cô không. Cô không biết từ ngoài đó, qua mấy thanh tre đóng chéo, có ai nhìn vào được không.</p>
-<p class="say say-x"><span class="q">“Em thấy gì?”</span></p>
-<p>Giọng <span class="nm nm-person">Luke</span>, rất khẽ, ngay sau lưng cô. Anh đã đứng dậy từ lúc nào, thanh kiếm tre trong tay.</p>
-<p class="say say-clevia" data-name="Clevia"><span class="q">“Cái ông ở giếng,”</span> cô thì thầm. <span class="q">“Ông ấy đi một mình ngoài kia. Chúng đứng ngay cạnh mà không đụng vào ông ấy.”</span></p>
-<p><span class="nm nm-person">Luke</span> bước tới, nghiêng người nhìn qua khe hở. Cô thấy vai anh căng lên, rồi dịu xuống từ từ. Khi anh quay lại, con đường đã vắng tanh.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Đi rồi,”</span> anh nói. Anh im lặng một lúc, như đang xếp những thứ vừa thấy vào chỗ của nó. <span class="q">“Đi một mình giữa lúc này mà không bị gì, thì hoặc là ông ta biết điều gì đó mình chưa biết, hoặc năng lực của ông ta hợp với việc đi một mình.”</span> Anh dừng lại. <span class="q">“Hoặc cả hai. Anh không thích cả hai.”</span></p>
-<p class="say say-x"><span class="q">“Ông ấy nhìn vào đây.”</span></p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Anh biết.”</span> Anh không nói anh biết bằng cách nào, và cô cũng không hỏi. <span class="q">“Ông ta biết có người trong nhà này. Nhà nào sáng lửa thì người ngoài cũng biết có người trong đó thôi. Chỉ là bây giờ ông ta không vào được, còn mình thì không ra được.”</span></p>
-<p>Câu ấy anh nói nhẹ tênh, nhưng <span class="nm nm-person">Clevia</span> nghe thấy cái nửa sau mà anh không nói ra. Bây giờ thì không. Nhưng lửa không cháy mãi được.</p>
+<p data-pi="97">Cô không định ngủ. Cô tự nhủ sẽ chỉ nhắm mắt một lát thôi, lưng tựa vào vách đất, nghe tiếng củi tí tách, nghe tiếng <span class="nm nm-person">Luke</span> thở đều ở đầu kia chõng tre, thanh kiếm tre dựng ngay bên cạnh anh.</p>
+<p data-pi="98">Rồi cô đứng trên cây cầu.</p>
+<p data-pi="99">Gió thổi rất mạnh, như mọi lần, và nước dưới chân cầu đen ngòm, như mọi lần, và <span class="nm nm-person first">Renie</span> đứng ở đầu kia, như mọi lần, mái tóc bay tung trong gió. Nhưng lần này <span class="nm nm-person">Renie</span> không nhìn cô. <span class="nm nm-person">Renie</span> nhìn qua vai cô, về phía sau lưng cô, và gương mặt <span class="nm nm-person">Renie</span> không buồn, không giận, không cười, chỉ chăm chú, chăm chú như người đang nhìn một thứ gì đó đang tới gần mà cô thì không quay lại được để xem.</p>
+<p data-pi="100"><span class="nm nm-person">Clevia</span> giật mình mở mắt.</p>
+<p data-pi="101">Lửa vẫn cháy. <span class="nm nm-person">Luke</span> vẫn ngồi đó, mắt nhắm, nhưng cô không chắc anh đang ngủ thật. Người đàn ông vẫn ngồi bên bếp, như một bức tượng đất. Cô nằm im một lúc, đợi tim mình chậm lại, rồi khẽ đứng dậy, bước tới ô cửa sổ.</p>
+<p data-pi="102">Ngoài kia, cánh đồng tối om. Không có tiếng chân. Không có tiếng nhai ươn ướt nào. Chỉ có ánh sao, những chiếc nón lá vẫn còn trôi trên mặt ruộng, và con đường đất chạy ngang qua trước nhà như một vệt xám mờ.</p>
+<p data-pi="103">Có người đang đi trên con đường ấy.</p>
+<p data-pi="104">Một người, chỉ một. Dáng cao, vai u thịt bắp, bước đi không nhanh không chậm, hai tay buông thõng hai bên người, như một người đang đi dạo một đêm hè. <span class="nm nm-person">Clevia</span> nín thở. Cô nhận ra cái dáng ấy. Cô đã thấy nó dựa lưng vào gốc đa bên bờ giếng, hai tay khoanh trước ngực, nghe nó nói về dòng thứ bảy bằng cái giọng trầm và khô ấy.</p>
+<p data-pi="105">Và rồi cô thấy những cái bóng khác, ở rìa ruộng, ở sau bụi tre, những cái bóng đứng ngoẹo đầu như cô đã thấy lúc nãy. Chúng ở đó. Chúng nhìn thấy ông ta, cô chắc chắn thế. Vậy mà chúng không động đậy. Ông ta đi ngang qua chúng, gần đến mức chỉ cần với tay là chạm, và chúng chỉ đứng im, ngoẹo đầu, như những con chó dữ ngửi thấy mùi một con chó dữ hơn.</p>
+<p data-pi="106">Người đàn ông dừng lại ngay trước căn nhà. Ông ta quay đầu, chậm rãi, và nhìn về phía ô cửa sổ.</p>
+<p data-pi="107"><span class="nm nm-person">Clevia</span> lùi lại khỏi khe hở trước khi kịp nghĩ. Tim cô đập thình thịch trong lồng ngực. Cô không biết ông ta có thấy cô không. Cô không biết từ ngoài đó, qua mấy thanh tre đóng chéo, có ai nhìn vào được không.</p>
+<p data-pi="108" class="say say-x"><span class="q">“Em thấy gì?”</span></p>
+<p data-pi="109">Giọng <span class="nm nm-person">Luke</span>, rất khẽ, ngay sau lưng cô. Anh đã đứng dậy từ lúc nào, thanh kiếm tre trong tay.</p>
+<p data-pi="110" class="say say-clevia" data-name="Clevia"><span class="q">“Cái ông ở giếng,”</span> cô thì thầm. <span class="q">“Ông ấy đi một mình ngoài kia. Chúng đứng ngay cạnh mà không đụng vào ông ấy.”</span></p>
+<p data-pi="111"><span class="nm nm-person">Luke</span> bước tới, nghiêng người nhìn qua khe hở. Cô thấy vai anh căng lên, rồi dịu xuống từ từ. Khi anh quay lại, con đường đã vắng tanh.</p>
+<p data-pi="112" class="say say-luke" data-name="Luke"><span class="q">“Đi rồi,”</span> anh nói. Anh im lặng một lúc, như đang xếp những thứ vừa thấy vào chỗ của nó. <span class="q">“Đi một mình giữa lúc này mà không bị gì, thì hoặc là ông ta biết điều gì đó mình chưa biết, hoặc năng lực của ông ta hợp với việc đi một mình.”</span> Anh dừng lại. <span class="q">“Hoặc cả hai. Anh không thích cả hai.”</span></p>
+<p data-pi="113" class="say say-x"><span class="q">“Ông ấy nhìn vào đây.”</span></p>
+<p data-pi="114" class="say say-luke" data-name="Luke"><span class="q">“Anh biết.”</span> Anh không nói anh biết bằng cách nào, và cô cũng không hỏi. <span class="q">“Ông ta biết có người trong nhà này. Nhà nào sáng lửa thì người ngoài cũng biết có người trong đó thôi. Chỉ là bây giờ ông ta không vào được, còn mình thì không ra được.”</span></p>
+<p data-pi="115">Câu ấy anh nói nhẹ tênh, nhưng <span class="nm nm-person">Clevia</span> nghe thấy cái nửa sau mà anh không nói ra. Bây giờ thì không. Nhưng lửa không cháy mãi được.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
 <section class="scene" data-sound="hearthlow">
 <figure class="plate"><canvas class="art" data-art="hearth:low" role="img" aria-label="Ngọn lửa trong bếp chao đi, bóng trên vách co lại"></canvas></figure>
-<p>Cô nhận ra điều đó không lâu sau.</p>
-<p data-fx="flicker">Ngọn lửa trong bếp, suốt cả đêm cháy đều đặn, tí tách, vàng ấm, bỗng khẽ chao đi. Chỉ một chút thôi, như có ai thở nhẹ vào nó. Rồi nó lại cháy. Rồi lại chao. Mỗi lần chao, bóng hai người trên vách đất lại co lại, giãn ra, như những sinh vật đang thở dốc.</p>
-<p>Người đàn ông bên bếp, lần đầu tiên từ đầu đêm, ngừng khuấy nồi cháo. Ông đặt cái muôi gỗ xuống, nhìn vào ngọn lửa đang chập chờn ấy một lúc lâu, rồi chậm rãi quay đầu, nhìn hai người.</p>
-<p class="say say-other"><span class="q">“Sắp tới giờ rồi,”</span> ông nói.</p>
-<p><span class="nm nm-person">Clevia</span> nhìn đôi dép cỏ nhỏ xíu đặt ngay ngắn bên cửa. Cô nhìn những chiếc nón lá trôi trên ruộng ngoài kia, nhìn con đường đất nơi người đàn ông vai u thịt bắp vừa đi qua. Cô nhìn <span class="nm nm-person">Luke</span>, và <span class="nm nm-person">Luke</span> đã nhìn cô từ trước, thanh kiếm tre trong tay, gương mặt bình thản theo cái kiểu chỉ có ở một người đã quyết định xong một điều gì đó.</p>
-<p class="say say-luke" data-name="Luke"><span class="q">“Mình phải đi thôi em,”</span> anh nói.</p>
-<p>Ngoài kia, trời vẫn còn tối lắm.</p>
+<p data-pi="116">Cô nhận ra điều đó không lâu sau.</p>
+<p data-pi="117" data-fx="flicker">Ngọn lửa trong bếp, suốt cả đêm cháy đều đặn, tí tách, vàng ấm, bỗng khẽ chao đi. Chỉ một chút thôi, như có ai thở nhẹ vào nó. Rồi nó lại cháy. Rồi lại chao. Mỗi lần chao, bóng hai người trên vách đất lại co lại, giãn ra, như những sinh vật đang thở dốc.</p>
+<p data-pi="118">Người đàn ông bên bếp, lần đầu tiên từ đầu đêm, ngừng khuấy nồi cháo. Ông đặt cái muôi gỗ xuống, nhìn vào ngọn lửa đang chập chờn ấy một lúc lâu, rồi chậm rãi quay đầu, nhìn hai người.</p>
+<p data-pi="119" class="say say-other"><span class="q">“Sắp tới giờ rồi,”</span> ông nói.</p>
+<p data-pi="120"><span class="nm nm-person">Clevia</span> nhìn đôi dép cỏ nhỏ xíu đặt ngay ngắn bên cửa. Cô nhìn những chiếc nón lá trôi trên ruộng ngoài kia, nhìn con đường đất nơi người đàn ông vai u thịt bắp vừa đi qua. Cô nhìn <span class="nm nm-person">Luke</span>, và <span class="nm nm-person">Luke</span> đã nhìn cô từ trước, thanh kiếm tre trong tay, gương mặt bình thản theo cái kiểu chỉ có ở một người đã quyết định xong một điều gì đó.</p>
+<p data-pi="121" class="say say-luke" data-name="Luke"><span class="q">“Mình phải đi thôi em,”</span> anh nói.</p>
+<p data-pi="122">Ngoài kia, trời vẫn còn tối lắm.</p>
 </section>
   </article>
   <footer class="end">
@@ -1175,6 +1228,7 @@ els.forEach(function(el){io.observe(el)});})();
   function stop(b){var r=b.getBoundingClientRect(),h=r.height,vh=innerHeight;return h<vh-140?r.top+scrollY-(vh-h)/2:r.top+scrollY+h-vh+60}
   var gate=null, pushes=0, lastPush=0, onT=0;
   function find(){
+    if(root.classList.contains('pen-on'))return null; // Bút tác giả đang bật: Clair đọc lướt tự do
     for(var i=0;i<boxes.length;i++){var b=boxes[i];if(b._free)continue;if(ok(b)){keep(b);continue}if(shown(b))return b}
     return null;
   }
@@ -1252,6 +1306,160 @@ els.forEach(function(el){io.observe(el)});})();
     a.addEventListener('click',function(e){if(read()){sfx('flip');return}e.preventDefault();open(a.getAttribute('href'))})});
   var pv=cv.querySelector('.pv'); if(pv)pv.addEventListener('click',function(){sfx('flip')});
 })();
+(function client(URL) {
+  var KEY; try { KEY = localStorage.getItem('a07-pen'); } catch (e) {}
+  if (!KEY || !URL) return;
+  var root = document.documentElement, art = document.querySelector('article');
+  if (!art) return;
+  var CH = String(+((location.pathname.match(/ch(\d+)\.html$/) || [])[1] || 0)); if (CH === '0') return;
+  var SRC = null, EDITS = {}, QK = 'a07-pen-q';
+  function sfx(n) { if (window.a07sfx) window.a07sfx(n); }
+  function call(o) { o.type = 'pen'; o.key = KEY; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function q() { try { return JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch (e) { return []; } }
+  function setQ(l) { try { localStorage.setItem(QK, JSON.stringify(l)); } catch (e) {} }
+  function paras(pi) { return art.querySelectorAll('p[data-pi="' + pi + '"]'); }
+  function srcOf(pi) {
+    if (SRC && SRC[pi] != null) return SRC[pi];
+    return [].map.call(paras(pi), function (p) { return p.textContent; }).join(' ');
+  }
+  function lost() { try { localStorage.removeItem('a07-pen'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
+
+  // nút Bút trên thanh đầu trang
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút tác giả');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z"/><path d="M13.8 6.8l3.4 3.4"/><path d="M4 20h7"/></svg><span class="n"></span>'; document.body.appendChild(btn);
+  var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'pen-pill'; document.body.appendChild(pill);
+  var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
+
+  function count() {
+    var n = Object.keys(EDITS).length; btn.querySelector('.n').textContent = n ? n : '';
+    pill.innerHTML = n ? 'Chạm đoạn để sửa · <b>' + n + ' chỗ</b>' : 'Chạm một đoạn để sửa';
+  }
+  function mark(pi) {
+    var e = EDITS[pi];
+    [].forEach.call(paras(pi), function (p) {
+      p.classList.toggle('pen-has', !!e);
+      p.classList.toggle('pen-note', !!(e && !e.sua));
+      p.classList.toggle('pen-wait', !!(e && e.wait));
+    });
+  }
+  function on(v) {
+    root.classList.toggle('pen-on', v); btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+    try { sessionStorage.setItem('a07-pen-on', v ? '1' : ''); } catch (e) {}
+    dispatchEvent(new Event('scroll')); // trang thôi "giữ chân" ở tương tác khi bút bật
+    if (v) { sfx('glint'); load(); }
+  }
+  btn.onclick = function () { on(!root.classList.contains('pen-on')); };
+
+  var loaded = false;
+  function load() {
+    if (loaded) return; loaded = true;
+    fetch('goc/ch' + ('0' + CH).slice(-2) + '.json').then(function (r) { return r.json(); }).then(function (a) { SRC = a; }).catch(function () {});
+    flush().then(function () { return call({ op: 'list', ch: CH }); }).then(function (r) {
+      if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') lost(); return; }
+      r.list.forEach(function (e) { EDITS[e.pi] = e; });
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; } });
+      Object.keys(EDITS).forEach(mark); count();
+    }).catch(function () {
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; mark(o.pi); } });
+      count(); pill.innerHTML = 'Đang mất mạng · chỗ sửa sẽ được giữ lại';
+    });
+  }
+  // gửi lại những chỗ sửa lúc mất mạng
+  function flush() {
+    var l = q(); if (!l.length) return Promise.resolve();
+    var o = l[0];
+    return call(o).then(function (r) {
+      if (r.ok || r.why === 'trong') { setQ(q().slice(1)); if (o.ch === CH && EDITS[o.pi]) { delete EDITS[o.pi].wait; EDITS[o.pi].id = r.id; mark(o.pi); } return flush(); }
+    });
+  }
+
+  // so chữ cũ / mới theo từng từ
+  function diff(a, b) {
+    var A = a.split(/(\s+)/), B = b.split(/(\s+)/), n = A.length, m = B.length, i, j;
+    if (n * m > 400000) return esc(b);
+    var T = []; for (i = 0; i <= n; i++) { T.push(new Uint16Array(m + 1)); }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) T[i][j] = A[i] === B[j] ? T[i + 1][j + 1] + 1 : Math.max(T[i + 1][j], T[i][j + 1]);
+    var out = '', d = '', s = ''; i = 0; j = 0;
+    function put() { if (d) out += '<del>' + esc(d) + '</del>'; if (s) out += '<ins>' + esc(s) + '</ins>'; d = s = ''; }
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { put(); out += esc(A[i]); i++; j++; }
+      else if (T[i + 1][j] >= T[i][j + 1]) d += A[i++]; else s += B[j++];
+    }
+    while (i < n) d += A[i++]; while (j < m) s += B[j++]; put();
+    return out;
+  }
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function close() { sheet.classList.remove('on'); [].forEach.call(art.querySelectorAll('.pen-cur'), function (p) { p.classList.remove('pen-cur'); }); setTimeout(function () { sheet.hidden = true; sheet.innerHTML = ''; }, 260); document.body.style.overflow = ''; }
+  function openSheet(html) {
+    sheet.innerHTML = '<div class="pen-box" role="dialog" aria-modal="true">' + html + '</div>'; sheet.hidden = false;
+    document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { sheet.classList.add('on'); }); sfx('flip');
+  }
+  sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-x]')) close(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+
+  function edit(pi) {
+    var goc = srcOf(pi), e = EDITS[pi] || {};
+    [].forEach.call(paras(pi), function (p) { p.classList.add('pen-cur'); });
+    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3><p class="sub">Sửa thẳng vào chữ bên dưới. Chữ nghiêng nằm giữa hai dấu *.</p>' +
+      '<textarea class="tx" rows="6"></textarea><div class="pen-diff" hidden></div>' +
+      '<label for="pen-nt">Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2" placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
+      '<div class="pen-row"><button type="button" class="go">Lưu</button><button type="button" class="rm"' + (EDITS[pi] ? '' : ' hidden') + '>Bỏ chỗ sửa này</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
+    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff'), msg = sheet.querySelector('.pen-msg');
+    tx.value = e.sua || goc; nt.value = e.note || '';
+    function grow() { tx.style.height = 'auto'; tx.style.height = Math.min(tx.scrollHeight + 4, innerHeight * 0.45) + 'px'; }
+    function show() { var v = tx.value.trim(); dv.hidden = v === goc.trim(); if (!dv.hidden) dv.innerHTML = diff(goc.trim(), v); grow(); }
+    tx.addEventListener('input', show); setTimeout(show, 0);
+    sheet.querySelector('.go').onclick = function () {
+      var sua = tx.value.trim(), note = nt.value.trim();
+      if (sua === goc.trim()) sua = '';
+      if (!sua && !note) { msg.textContent = 'Chưa có gì đổi cả.'; return; }
+      var o = { op: 'save', ch: CH, pi: +pi, goc: goc, sua: sua, note: note };
+      EDITS[pi] = { pi: +pi, goc: goc, sua: sua, note: note, id: e.id, wait: 1 }; mark(pi); count();
+      msg.textContent = 'Đang gửi…'; this.disabled = true;
+      call(o).then(function (r) {
+        if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') { lost(); msg.textContent = 'Mật mã trên máy này không còn đúng.'; } else msg.textContent = 'Chưa lưu được, cậu thử lại nhé.'; return; }
+        EDITS[pi].id = r.id; delete EDITS[pi].wait; mark(pi); sfx('ink'); flash(pi); close();
+      }).catch(function () {
+        var l = q().filter(function (x) { return !(x.ch === CH && x.pi === +pi && x.op === 'save'); }); l.push(o); setQ(l);
+        sfx('ink'); flash(pi); close(); pill.innerHTML = 'Đang mất mạng · đã giữ chỗ sửa, có mạng sẽ tự gửi';
+      });
+    };
+    sheet.querySelector('.rm').onclick = function () {
+      var id = (EDITS[pi] || {}).id; delete EDITS[pi]; mark(pi); count();
+      setQ(q().filter(function (x) { return !(x.ch === CH && x.pi === +pi); }));
+      if (id) call({ op: 'del', id: id }).catch(function () {});
+      close();
+    };
+  }
+  function flash(pi) { [].forEach.call(paras(pi), function (p) { p.classList.remove('pen-flash'); void p.offsetWidth; p.classList.add('pen-flash'); }); }
+
+  // chạm một đoạn khi bút bật: mở ô sửa (chặn tương tác của đoạn đó)
+  art.addEventListener('click', function (e) {
+    if (!root.classList.contains('pen-on')) return;
+    var p = e.target.closest && e.target.closest('p[data-pi]'); if (!p || !art.contains(p)) return;
+    if (getSelection && String(getSelection()).length > 2) return; // đang bôi chọn chữ thì thôi
+    e.preventDefault(); e.stopPropagation(); edit(p.getAttribute('data-pi'));
+  }, true);
+
+  // viên thuốc dưới đáy: xem danh sách chỗ đã ghi trong chương
+  pill.onclick = function () {
+    var ks = Object.keys(EDITS).sort(function (a, b) { return a - b; });
+    if (!ks.length) return;
+    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".</p><ul class="pen-list">' +
+      ks.map(function (k) { var x = EDITS[k]; return '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>'; }).join('') +
+      '</ul><div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    sheet.querySelector('.pen-list').onclick = function (e) {
+      var li = e.target.closest('li'); if (!li) return; var k = li.getAttribute('data-go'); close();
+      var p = paras(k)[0]; if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { flash(k); }, 500); }
+    };
+  };
+
+  count();
+  var was; try { was = sessionStorage.getItem('a07-pen-on'); } catch (e) {}
+  if (was) on(true); else { load(); }
+})("https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec");
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.
