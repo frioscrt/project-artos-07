@@ -376,6 +376,7 @@ em .nm{font-style:italic}
 .cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
 .cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
 .cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt .cnt[hidden]{display:none}
 .cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
 .cc{perspective:1200px}
 .cc .ci{position:relative;transform-style:preserve-3d}
@@ -411,18 +412,38 @@ em .nm{font-style:italic}
 .cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
 @media (prefers-reduced-motion: reduce){.cc.flip .ci,.cc.flip .cf::after,.cc .cb{animation:none}}
 .cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
-.bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
-.bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
-.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:.6em .1em;width:100%;box-sizing:border-box}
-.bl-form textarea{min-height:5.5em;resize:vertical;line-height:1.5}
-.bl-form input:focus,.bl-form textarea:focus{outline:none;border-bottom-color:var(--lamp)}
+.bl-form{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:22px 20px 18px;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--pw-clevia) 50%,var(--line));
+  background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--pw-clevia) 16%,transparent),transparent 55%),radial-gradient(90% 80% at 100% 100%,color-mix(in srgb,var(--pw-luke) 13%,transparent),transparent 60%),var(--veil,transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 12%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 38px -18px var(--pw-clevia);transition:box-shadow .4s,border-color .4s}
+.bl-form::before{content:"";position:absolute;left:20px;right:20px;top:0;height:2px;border-radius:0 0 2px 2px;background:linear-gradient(90deg,transparent,var(--pw-clevia) 20%,var(--pw-clevia) 60%,var(--pw-luke) 90%,transparent);opacity:.9}
+.bl-form:focus-within{border-color:color-mix(in srgb,var(--pw-clevia) 80%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 30%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 50px -14px var(--pw-clevia)}
+.bl-form .deco{position:absolute;right:-34px;top:-34px;width:150px;height:150px;z-index:-1;pointer-events:none;opacity:.16;animation:bldeco 40s linear infinite}
+.bl-form .deco svg{width:100%;height:100%;fill:none;stroke:var(--pw-clevia);stroke-width:.9}
+.bl-form .deco .d{fill:var(--pw-clevia);stroke:none}
+@keyframes bldeco{to{transform:rotate(360deg)}}
+.bl-form .k{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--pw-clevia)}
+.bl-form .k::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--pw-clevia);box-shadow:0 0 0 4px color-mix(in srgb,var(--pw-clevia) 18%,transparent),0 0 12px var(--pw-clevia);animation:bldot 2.4s ease-in-out infinite}
+@keyframes bldot{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--pw-clevia) 6%,transparent),0 0 16px var(--pw-clevia)}}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line);border-radius:10px;padding:.7em .85em;width:100%;box-sizing:border-box;transition:border-color .25s,box-shadow .25s,background .25s}
+.bl-form input::placeholder,.bl-form textarea::placeholder{color:var(--soft);opacity:.85}
+.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.55}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--pw-clevia);background:color-mix(in srgb,var(--bg) 75%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 20%,transparent),0 0 18px -6px var(--pw-clevia)}
 .bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px}
-.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
-.bl-form .st.ok{color:var(--lamp)}
-.hold{--p:0;position:relative;flex:0 0 auto;width:86px;height:86px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--pw-clevia);font:inherit;font-size:13px;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 22%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 39px,#000 40px);mask:radial-gradient(circle,transparent 39px,#000 40px)}
-.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;border:1px dashed color-mix(in srgb,var(--pw-clevia) 55%,transparent);transition:transform .2s}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:4px}
+.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1;transition:color .3s}
+.bl-form.ready .st{color:var(--ink)}
+.bl-form .st.ok{color:var(--pw-luke)}
+.hold{--p:0;position:relative;flex:0 0 auto;width:92px;height:92px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--ink);font:inherit;font-size:13px;font-weight:600;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 34%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 41px,#000 42px);mask:radial-gradient(circle,transparent 41px,#000 42px)}
+.hold::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.bl-form.ready .hold::after{animation:blcall 1.8s ease-out infinite}
+@keyframes blcall{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.25)}}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 34%,transparent),color-mix(in srgb,var(--pw-clevia) 12%,transparent) 70%);
+  border:1px dashed color-mix(in srgb,var(--pw-clevia) 70%,transparent);box-shadow:inset 0 0 14px -4px var(--pw-clevia);transition:transform .2s,background .3s,box-shadow .3s}
+.bl-form.ready .hold .in{background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 60%,transparent),color-mix(in srgb,var(--pw-clevia) 24%,transparent) 70%);box-shadow:inset 0 0 16px -2px var(--pw-clevia),0 0 22px -6px var(--pw-clevia)}
+.hold:hover .in{box-shadow:inset 0 0 18px -2px var(--pw-clevia),0 0 18px -6px var(--pw-clevia)}
 .hold.on .in{transform:scale(.92) rotate(20deg)}
 .hold:disabled{opacity:.5;cursor:default}
 .hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
@@ -430,6 +451,8 @@ em .nm{font-style:italic}
 .hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
 .hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
 @keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@media (prefers-reduced-motion: reduce){.bl-form .deco,.bl-form .k::before,.bl-form.ready .hold::after{animation:none}}
+@media (max-width:440px){.bl-form{padding:20px 16px 16px}.hold{width:84px;height:84px}.hold::before{-webkit-mask:radial-gradient(circle,transparent 37px,#000 38px);mask:radial-gradient(circle,transparent 37px,#000 38px)}}
 .tg-msg{margin:2.6em 0 0}
 
 
@@ -490,6 +513,44 @@ main.giu-cut{overflow:hidden;
 .giu-pulse{animation:giu-pulse 1.1s ease-out}
 @keyframes giu-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 50%,transparent)}100%{box-shadow:0 0 0 20px transparent}}
 @media (prefers-reduced-motion: reduce){.giu-pulse{animation:none;outline:2px solid color-mix(in srgb,var(--ice) 60%,transparent);outline-offset:4px}}
+
+
+.cv{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;transform:translate(-50%,24px);opacity:0;pointer-events:none;
+  display:flex;align-items:stretch;border-radius:999px;overflow:hidden;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid color-mix(in srgb,var(--ice) 38%,transparent);box-shadow:0 8px 28px -10px rgba(0,0,0,.65),0 0 18px -8px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:opacity .3s,transform .35s cubic-bezier(.3,1.3,.5,1);font-size:14px;line-height:1}
+.cv.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.cv a,.cv span{display:flex;align-items:center;gap:.45em;padding:0 16px;height:42px;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.cv a:hover,.cv a:focus-visible{color:var(--lamp);background:color-mix(in srgb,var(--lamp) 10%,transparent)}
+.cv span{color:var(--soft);opacity:.55}
+.cv svg{width:15px;height:15px;flex:0 0 auto}
+.cv .mid{width:1px;padding:0;background:color-mix(in srgb,var(--ice) 30%,transparent);margin:9px 0}
+.cv .nx svg{color:var(--lamp)}
+.cv .nx.left::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-left:-2px;box-shadow:0 0 8px var(--lamp)}
+html.giu-on .cv{opacity:0;pointer-events:none}
+.cw{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px}
+.cw[hidden]{display:none}
+.cw .sh{position:absolute;inset:0;background:rgba(4,8,12,.62);opacity:0;transition:opacity .25s}
+.cw.on .sh{opacity:1}
+.cw .bx{position:relative;width:min(100%,380px);padding:26px 22px 20px;border-radius:16px;text-align:center;overflow:hidden;
+  background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--lamp) 22%,transparent),transparent 60%),var(--bg);
+  border:1px solid color-mix(in srgb,var(--lamp) 55%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--lamp) 15%,transparent),0 20px 60px -20px rgba(0,0,0,.8),0 0 40px -14px var(--lamp);
+  transform:translateY(14px) scale(.96);opacity:0;transition:transform .35s cubic-bezier(.3,1.3,.5,1),opacity .25s}
+.cw.on .bx{transform:none;opacity:1}
+.cw .rg{display:block;width:54px;height:54px;margin:0 auto 10px;fill:none;stroke:var(--lamp);stroke-width:1.2}
+.cw .rg .d{fill:var(--lamp);stroke:none}
+.cw.on .rg{animation:cwspin 9s linear infinite}
+@keyframes cwspin{to{transform:rotate(360deg)}}
+.cw .k{margin:0 0 .3em;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--lamp)}
+.cw h3{margin:0 0 .5em;font-weight:400;font-size:21px;line-height:1.3;color:var(--ink)}
+.cw .m{margin:0 0 1.3em;color:var(--soft);font-size:15px;line-height:1.55}
+.cw .bt{display:flex;flex-direction:column;gap:10px}
+.cw button,.cw .bt a{font:inherit;font-size:15px;border-radius:999px;padding:.75em 1em;cursor:pointer;text-decoration:none;line-height:1.2}
+.cw .stay{background:var(--lamp);color:#fff;border:1px solid var(--lamp);box-shadow:0 0 20px -6px var(--lamp)}
+.cw .bt a{color:var(--ink);border:1px solid var(--line);background:transparent}
+.cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
+@media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
 </style>
 <style>
@@ -811,6 +872,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
     <button type="button" class="all" hidden>Lật hết các thẻ</button>
     <p class="cmt-empty">Đang tải bình luận…</p><ol class="cmt-list"></ol>
     <form class="bl-form" data-kind="bl" novalidate>
+  <span class="deco" aria-hidden="true"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" stroke-dasharray="1 4"/><circle cx="30" cy="30" r="21"/><circle cx="30" cy="30" r="14" stroke-dasharray="10 3 2 3"/><circle class="d" cx="30" cy="30" r="2.6"/></svg></span>
   <p class="k">Thẻ của cậu</p>
   <input name="name" maxlength="40" autocomplete="nickname" placeholder="Tên của cậu (bỏ trống = ẩn danh)">
   
@@ -821,6 +883,16 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   </section>
   </footer>
 </main>
+<nav class="cv" aria-label="Chuyển chương nhanh"><a class="pv" href="ch01.html" aria-label="Chương trước: Thứ gì đó đã bị bỏ quên"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Chương 1</a><i class="mid" aria-hidden="true"></i><a class="nx" href="ch03.html" data-next="1" aria-label="Chương sau: Bữa Tiệc Đầu Tiên">Chương 3<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a></nav>
+<div class="cw" id="cw" hidden role="dialog" aria-modal="true" aria-labelledby="cw-h">
+  <div class="sh"></div>
+  <div class="bx"><svg class="rg" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" stroke-dasharray="1 4"/><circle cx="30" cy="30" r="21"/><circle cx="30" cy="30" r="14" stroke-dasharray="10 3 2 3"/><circle class="d" cx="30" cy="30" r="2.6"/></svg>
+    <p class="k">Khoan đã</p>
+    <h3 id="cw-h">Chương 2 chưa đọc xong</h3>
+    <p class="m">Tớ khuyên cậu đọc hết chương này rồi hẵng sang, để khỏi lỡ mạch truyện và mấy chỗ chạm trong chương.</p>
+    <div class="bt"><button type="button" class="stay">Ở lại đọc tiếp</button><a class="go" href="#">Vẫn sang chương sau</a></div>
+  </div>
+</div>
 <script>
 (function(){
   var root=document.documentElement, bar=document.querySelector('header.bar'), prog=document.querySelector('.progress');
@@ -886,6 +958,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   [].forEach.call(document.querySelectorAll('.bl-form'),function(f){
     try{var nm=localStorage.getItem('a07-name');if(nm)E(f,'name').value=nm}catch(e){}
     var btn=f.querySelector('.hold'),busy=false,raf=0,t0=0,NEED=900;
+    function rdy(){f.classList.toggle('ready',E(f,'text').value.trim().length>=2)}E(f,'text').addEventListener('input',rdy);
     function setP(p){btn.style.setProperty('--p',p)}
     function ready(){var text=E(f,'text').value.trim();if(text.length<2){st(f,'Cậu viết vài chữ trước đã nha.');E(f,'text').focus();return false}return true}
     function send(){
@@ -894,7 +967,7 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       busy=true;btn.disabled=true;st(f,'Đang gửi…');
       fetch(U,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(r){
         if(!r.ok){st(f,r.why==='nhieu'?'Đang có nhiều người gửi quá, cậu đợi vài phút rồi gửi lại nha.':'Chưa gửi được, cậu thử lại nha.');return}
-        E(f,'text').value='';if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
+        E(f,'text').value='';rdy();if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
         else{st(f,'Thẻ của cậu đã nằm trên bàn.',1);if(r.item){var ol=sec.querySelector('.cmt-list'),li=card(r.item,1);ol.appendChild(li);watch(li);sec.querySelector('.cmt-empty').hidden=true;count(++total);sfx('deal');setTimeout(function(){flip(li)},450)}}
       }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){busy=false;btn.disabled=false;setP(0);btn.classList.remove('burst')})}
     function done(){cancelAnimationFrame(raf);btn.classList.remove('on');setP(1);btn.classList.add('burst');sfx('keyburst');setTimeout(send,reduce?0:450)}
@@ -1061,6 +1134,34 @@ els.forEach(function(el){io.observe(el)});})();
   }
   var begun=false; function go(){if(begun)return;begun=true;setTimeout(start,1100)}
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go); setTimeout(go,1500);
+})();
+(function(){
+  var cv=document.querySelector('.cv'),cw=document.getElementById('cw'); if(!cv||!cw) return;
+  var cn=+(location.pathname.match(/ch(\d+)\.html$/)||[0,0])[1];
+  var bar=document.querySelector('header.bar'), endNav=document.querySelector('footer .nav');
+  function sfx(n){if(window.a07sfx)window.a07sfx(n)}
+  function read(){try{return cn<=+(localStorage.getItem('a07-done')||0)}catch(e){return true}}
+  // chấm đỏ nhỏ cạnh "Chương sau" khi chương này chưa đọc xong
+  var nx=cv.querySelector('.nx'); function mark(){if(nx)nx.classList.toggle('left',!read())}
+  mark(); setInterval(mark,2000);
+  // hiện cùng thanh đầu trang; ẩn khi đang thấy nút chuyển chương ở cuối, khi mục lục mở, khi có thông báo "đọc tiếp"
+  var endIn=false; if(endNav&&'IntersectionObserver' in window)new IntersectionObserver(function(es){endIn=es[0].isIntersecting;upd()}).observe(endNav);
+  function upd(){var dr=document.querySelector('.drawer.on'),t=document.querySelector('.dc-toast.on');
+    var on=!(bar&&bar.classList.contains('hide'))&&!endIn&&!dr&&!t&&cw.hidden;cv.classList.toggle('on',on)}
+  var q=0; addEventListener('scroll',function(){if(!q){q=1;requestAnimationFrame(function(){q=0;upd()})}},{passive:true});
+  setInterval(upd,600); setTimeout(upd,300);
+  var back=null, lastFocus=null;
+  function open(href){cw.querySelector('.go').setAttribute('href',href);lastFocus=document.activeElement;cw.hidden=false;upd();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){cw.classList.add('on')})});sfx('nudge');setTimeout(function(){cw.querySelector('.stay').focus()},60)}
+  function close(){cw.classList.remove('on');setTimeout(function(){cw.hidden=true;upd();if(lastFocus&&lastFocus.focus)lastFocus.focus()},260)}
+  cw.querySelector('.stay').addEventListener('click',close);
+  cw.querySelector('.sh').addEventListener('click',close);
+  cw.querySelector('.go').addEventListener('click',function(){sfx('flip')});
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!cw.hidden)close()});
+  // mọi nút "Chương sau" (thanh nổi + cuối chương)
+  [].forEach.call(document.querySelectorAll('.cv .nx, footer .nav a.next'),function(a){
+    a.addEventListener('click',function(e){if(read()){sfx('flip');return}e.preventDefault();open(a.getAttribute('href'))})});
+  var pv=cv.querySelector('.pv'); if(pv)pv.addEventListener('click',function(){sfx('flip')});
 })();
 </script>
 <script>
