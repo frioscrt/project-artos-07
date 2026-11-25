@@ -3450,6 +3450,36 @@ addEventListener('pageshow',function(e){if(e.persisted){[].forEach.call(document
     vign(g, w, h, 0.65);
   };
 
+  /* ---------- tranh cho Góc nhìn khác, đợt 3 (25/11): ch13 Luke "Nghe thấy". Không vẽ người, chỉ đồ vật. ---------- */
+  // Gáo nước trên nền đất cạnh chum, mảnh vải xanh bạc màu xé từ vạt áo vắt trên miệng gáo, giọt nước nhỏ xuống thành vòng gợn; vệt nắng mảnh như sợi chỉ.
+  ART.basin = function (g, w, h, t, R) {
+    var floorY = h * 0.5, dk = C.dark; earthRoom(g, w, h, floorY);
+    threadBeam(g, w * 0.2, 0, w * 0.46, h, 3, dk ? 0.15 : 0.3); threadBeam(g, w * 0.66, 0, w * 0.9, h, 2, dk ? 0.1 : 0.22);
+    // chum nước góc trái
+    g.fillStyle = dk ? '#3a2a20' : '#7a5a42'; g.beginPath(); g.ellipse(w * 0.12, h * 0.5, w * 0.08, h * 0.2, 0, 0, 7); g.fill();
+    g.fillStyle = dk ? '#0a0806' : '#2a2218'; g.beginPath(); g.ellipse(w * 0.12, h * 0.33, w * 0.05, h * 0.02, 0, 0, 7); g.fill();
+    // gáo: nửa vỏ tròn, mặt nước trong
+    var cx = w * 0.52, cy = h * 0.72, rx = w * 0.13, ry = h * 0.07;
+    g.fillStyle = dk ? '#4a3626' : '#8a6644'; g.beginPath(); g.ellipse(cx, cy, rx, ry * 2.1, 0, 0, Math.PI); g.fill();
+    g.fillStyle = dk ? '#16222a' : '#9ab8c4'; g.beginPath(); g.ellipse(cx, cy, rx * 0.92, ry * 0.85, 0, 0, 7); g.fill();
+    g.strokeStyle = dk ? '#5a4432' : '#a07a50'; g.lineWidth = 2; g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, 7); g.stroke();
+    g.strokeStyle = dk ? '#5a4432' : '#a07a50'; g.lineWidth = Math.max(3, w * 0.008); g.beginPath(); g.moveTo(cx + rx * 0.95, cy - ry * 0.2); g.lineTo(cx + rx * 2.1, cy - ry * 1.6); g.stroke(); // cán gáo
+    // giọt nước rơi theo chu kỳ, gợn vòng tròn
+    var per = 2.6, ph = (t % per) / per, dxp = cx - rx * 0.35, top = cy - h * 0.2;
+    if (ph < 0.25) { var u = ph / 0.25; g.fillStyle = rgba(dk ? '#bfe2ec' : '#3d7e94', 0.8); g.beginPath(); g.ellipse(dxp, top + (cy - top) * u * u, 1.8, 2.6, 0, 0, 7); g.fill(); }
+    else { var v = (ph - 0.25) / 0.75; for (var k = 0; k < 2; k++) { var vv = v - k * 0.18; if (vv <= 0) continue; g.strokeStyle = rgba(dk ? '#bfe2ec' : '#2f6f84', 0.55 * (1 - vv)); g.lineWidth = 1; g.beginPath(); g.ellipse(dxp, cy, rx * 0.6 * vv, ry * 0.6 * vv, 0, 0, 7); g.stroke(); } }
+    // mảnh vải xanh bạc màu vắt qua miệng gáo, mép tưa sợi, một đầu ngâm trong nước
+    var cl = dk ? '#6f8d9c' : '#5d7c8c', sway = Math.sin(t * 0.6) * h * 0.006;
+    g.fillStyle = cl; g.beginPath(); g.moveTo(cx - rx * 0.2, cy - ry * 0.9); g.quadraticCurveTo(cx + rx * 0.3, cy - ry * 1.4, cx + rx * 0.8, cy - ry * 0.5);
+    g.lineTo(cx + rx * 0.95, cy + ry * 2.4 + sway); g.lineTo(cx + rx * 0.72, cy + ry * 2.5 + sway); g.lineTo(cx + rx * 0.62, cy - ry * 0.3); g.quadraticCurveTo(cx + rx * 0.2, cy - ry * 0.6, cx - rx * 0.1, cy); g.closePath(); g.fill();
+    g.strokeStyle = rgba(dk ? '#c8d8e0' : '#e8f0f4', 0.45); g.lineWidth = 1;
+    for (var i = 0; i < 6; i++) { var fx = cx + rx * (0.72 + i * 0.045); g.beginPath(); g.moveTo(fx, cy + ry * 2.45 + sway); g.lineTo(fx + 1.5, cy + ry * 2.45 + sway + 5 + (i % 2) * 3); g.stroke(); }
+    // mảnh thứ hai nằm sẵn trên nền, gấp đôi, chờ quấn
+    g.fillStyle = rgba(cl, 0.9); g.save(); g.translate(w * 0.8, h * 0.82); g.rotate(-0.12); g.fillRect(-w * 0.07, -h * 0.018, w * 0.14, h * 0.036);
+    g.strokeStyle = rgba(dk ? '#c8d8e0' : '#e8f0f4', 0.4); for (var j = 0; j < 7; j++) { g.beginPath(); g.moveTo(-w * 0.07 + j * w * 0.02, h * 0.018); g.lineTo(-w * 0.07 + j * w * 0.02 + 1, h * 0.018 + 4); g.stroke(); } g.restore();
+    motes(g, w, h, t, R, w * 0.15, w * 0.95, h * 0.05, h * 0.9, 24, '#fff0c8');
+  };
+
   /* ---------- chạy tranh khi thấy ---------- */
   var arts = [];
   document.querySelectorAll('canvas.art').forEach(function (cv, i) {
