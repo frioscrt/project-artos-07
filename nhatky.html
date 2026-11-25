@@ -376,6 +376,7 @@ em .nm{font-style:italic}
 .cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
 .cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
 .cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt .cnt[hidden]{display:none}
 .cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
 .cc{perspective:1200px}
 .cc .ci{position:relative;transform-style:preserve-3d}
@@ -411,18 +412,38 @@ em .nm{font-style:italic}
 .cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
 @media (prefers-reduced-motion: reduce){.cc.flip .ci,.cc.flip .cf::after,.cc .cb{animation:none}}
 .cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
-.bl-form{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:14px}
-.bl-form .k{margin:0 0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp)}
-.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:.6em .1em;width:100%;box-sizing:border-box}
-.bl-form textarea{min-height:5.5em;resize:vertical;line-height:1.5}
-.bl-form input:focus,.bl-form textarea:focus{outline:none;border-bottom-color:var(--lamp)}
+.bl-form{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:22px 20px 18px;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--pw-clevia) 50%,var(--line));
+  background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--pw-clevia) 16%,transparent),transparent 55%),radial-gradient(90% 80% at 100% 100%,color-mix(in srgb,var(--pw-luke) 13%,transparent),transparent 60%),var(--veil,transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 12%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 38px -18px var(--pw-clevia);transition:box-shadow .4s,border-color .4s}
+.bl-form::before{content:"";position:absolute;left:20px;right:20px;top:0;height:2px;border-radius:0 0 2px 2px;background:linear-gradient(90deg,transparent,var(--pw-clevia) 20%,var(--pw-clevia) 60%,var(--pw-luke) 90%,transparent);opacity:.9}
+.bl-form:focus-within{border-color:color-mix(in srgb,var(--pw-clevia) 80%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 30%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 50px -14px var(--pw-clevia)}
+.bl-form .deco{position:absolute;right:-34px;top:-34px;width:150px;height:150px;z-index:-1;pointer-events:none;opacity:.16;animation:bldeco 40s linear infinite}
+.bl-form .deco svg{width:100%;height:100%;fill:none;stroke:var(--pw-clevia);stroke-width:.9}
+.bl-form .deco .d{fill:var(--pw-clevia);stroke:none}
+@keyframes bldeco{to{transform:rotate(360deg)}}
+.bl-form .k{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--pw-clevia)}
+.bl-form .k::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--pw-clevia);box-shadow:0 0 0 4px color-mix(in srgb,var(--pw-clevia) 18%,transparent),0 0 12px var(--pw-clevia);animation:bldot 2.4s ease-in-out infinite}
+@keyframes bldot{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--pw-clevia) 6%,transparent),0 0 16px var(--pw-clevia)}}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line);border-radius:10px;padding:.7em .85em;width:100%;box-sizing:border-box;transition:border-color .25s,box-shadow .25s,background .25s}
+.bl-form input::placeholder,.bl-form textarea::placeholder{color:var(--soft);opacity:.85}
+.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.55}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--pw-clevia);background:color-mix(in srgb,var(--bg) 75%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 20%,transparent),0 0 18px -6px var(--pw-clevia)}
 .bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px}
-.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1}
-.bl-form .st.ok{color:var(--lamp)}
-.hold{--p:0;position:relative;flex:0 0 auto;width:86px;height:86px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--pw-clevia);font:inherit;font-size:13px;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 22%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 39px,#000 40px);mask:radial-gradient(circle,transparent 39px,#000 40px)}
-.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;border:1px dashed color-mix(in srgb,var(--pw-clevia) 55%,transparent);transition:transform .2s}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:4px}
+.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1;transition:color .3s}
+.bl-form.ready .st{color:var(--ink)}
+.bl-form .st.ok{color:var(--pw-luke)}
+.hold{--p:0;position:relative;flex:0 0 auto;width:92px;height:92px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--ink);font:inherit;font-size:13px;font-weight:600;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 34%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 41px,#000 42px);mask:radial-gradient(circle,transparent 41px,#000 42px)}
+.hold::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.bl-form.ready .hold::after{animation:blcall 1.8s ease-out infinite}
+@keyframes blcall{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.25)}}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 34%,transparent),color-mix(in srgb,var(--pw-clevia) 12%,transparent) 70%);
+  border:1px dashed color-mix(in srgb,var(--pw-clevia) 70%,transparent);box-shadow:inset 0 0 14px -4px var(--pw-clevia);transition:transform .2s,background .3s,box-shadow .3s}
+.bl-form.ready .hold .in{background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 60%,transparent),color-mix(in srgb,var(--pw-clevia) 24%,transparent) 70%);box-shadow:inset 0 0 16px -2px var(--pw-clevia),0 0 22px -6px var(--pw-clevia)}
+.hold:hover .in{box-shadow:inset 0 0 18px -2px var(--pw-clevia),0 0 18px -6px var(--pw-clevia)}
 .hold.on .in{transform:scale(.92) rotate(20deg)}
 .hold:disabled{opacity:.5;cursor:default}
 .hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
@@ -430,6 +451,8 @@ em .nm{font-style:italic}
 .hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
 .hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
 @keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@media (prefers-reduced-motion: reduce){.bl-form .deco,.bl-form .k::before,.bl-form.ready .hold::after{animation:none}}
+@media (max-width:440px){.bl-form{padding:20px 16px 16px}.hold{width:84px;height:84px}.hold::before{-webkit-mask:radial-gradient(circle,transparent 37px,#000 38px);mask:radial-gradient(circle,transparent 37px,#000 38px)}}
 .tg-msg{margin:2.6em 0 0}
 
 
@@ -490,6 +513,44 @@ main.giu-cut{overflow:hidden;
 .giu-pulse{animation:giu-pulse 1.1s ease-out}
 @keyframes giu-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 50%,transparent)}100%{box-shadow:0 0 0 20px transparent}}
 @media (prefers-reduced-motion: reduce){.giu-pulse{animation:none;outline:2px solid color-mix(in srgb,var(--ice) 60%,transparent);outline-offset:4px}}
+
+
+.cv{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;transform:translate(-50%,24px);opacity:0;pointer-events:none;
+  display:flex;align-items:stretch;border-radius:999px;overflow:hidden;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid color-mix(in srgb,var(--ice) 38%,transparent);box-shadow:0 8px 28px -10px rgba(0,0,0,.65),0 0 18px -8px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:opacity .3s,transform .35s cubic-bezier(.3,1.3,.5,1);font-size:14px;line-height:1}
+.cv.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.cv a,.cv span{display:flex;align-items:center;gap:.45em;padding:0 16px;height:42px;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.cv a:hover,.cv a:focus-visible{color:var(--lamp);background:color-mix(in srgb,var(--lamp) 10%,transparent)}
+.cv span{color:var(--soft);opacity:.55}
+.cv svg{width:15px;height:15px;flex:0 0 auto}
+.cv .mid{width:1px;padding:0;background:color-mix(in srgb,var(--ice) 30%,transparent);margin:9px 0}
+.cv .nx svg{color:var(--lamp)}
+.cv .nx.left::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-left:-2px;box-shadow:0 0 8px var(--lamp)}
+html.giu-on .cv{opacity:0;pointer-events:none}
+.cw{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px}
+.cw[hidden]{display:none}
+.cw .sh{position:absolute;inset:0;background:rgba(4,8,12,.62);opacity:0;transition:opacity .25s}
+.cw.on .sh{opacity:1}
+.cw .bx{position:relative;width:min(100%,380px);padding:26px 22px 20px;border-radius:16px;text-align:center;overflow:hidden;
+  background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--lamp) 22%,transparent),transparent 60%),var(--bg);
+  border:1px solid color-mix(in srgb,var(--lamp) 55%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--lamp) 15%,transparent),0 20px 60px -20px rgba(0,0,0,.8),0 0 40px -14px var(--lamp);
+  transform:translateY(14px) scale(.96);opacity:0;transition:transform .35s cubic-bezier(.3,1.3,.5,1),opacity .25s}
+.cw.on .bx{transform:none;opacity:1}
+.cw .rg{display:block;width:54px;height:54px;margin:0 auto 10px;fill:none;stroke:var(--lamp);stroke-width:1.2}
+.cw .rg .d{fill:var(--lamp);stroke:none}
+.cw.on .rg{animation:cwspin 9s linear infinite}
+@keyframes cwspin{to{transform:rotate(360deg)}}
+.cw .k{margin:0 0 .3em;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--lamp)}
+.cw h3{margin:0 0 .5em;font-weight:400;font-size:21px;line-height:1.3;color:var(--ink)}
+.cw .m{margin:0 0 1.3em;color:var(--soft);font-size:15px;line-height:1.55}
+.cw .bt{display:flex;flex-direction:column;gap:10px}
+.cw button,.cw .bt a{font:inherit;font-size:15px;border-radius:999px;padding:.75em 1em;cursor:pointer;text-decoration:none;line-height:1.2}
+.cw .stay{background:var(--lamp);color:#fff;border:1px solid var(--lamp);box-shadow:0 0 20px -6px var(--lamp)}
+.cw .bt a{color:var(--ink);border:1px solid var(--line);background:transparent}
+.cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
+@media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
 
 </style>
 <style>
@@ -724,7 +785,7 @@ body > main{position:relative;z-index:1}
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
     <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="nhatky.html">Nhật ký hệ thống</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
-    <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li><li><a href="ch13.html"><span class="n">13</span><span class="t">Chưa hề mở</span></a></li></ol>
+    <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li><li><a href="ch13.html"><span class="n">13</span><span class="t">Chưa hề mở</span></a></li><li><a href="ch14.html"><span class="n">14</span><span class="t">Tiếng chuông cuối ngày</span></a></li></ol>
   </nav>
 </div>
 <main class="nk">
@@ -740,7 +801,7 @@ body > main{position:relative;z-index:1}
   </nav>
 </main>
 <script>
-var D={"ao_canh":[{"id":"ben-kia-buc-tuong","name":"Bên Kia Bức Tường","cap":"Cấp C/R","entries":[{"ch":4,"t":"Ảo cảnh: Bên Kia Bức Tường. Cấp C/R."},{"ch":4,"t":"Người chơi: 20. Thời gian: 24 tiếng."},{"ch":4,"t":"Điều kiện vượt ải: Khám phá toàn bộ các khu vực."},{"ch":4,"t":"Hết thời gian mà chưa đạt điều kiện: bị xoá sổ."},{"ch":4,"t":"Vật phẩm cấp sẵn: Bản đồ ×1."},{"ch":4,"t":"Cảnh báo: Nhiễm Quỷ. Mỗi lúc một khu bị nhiễm, dân làng ở đó hoá quỷ. Ngoài trời nguy hiểm, nhà dân che chở được một thời gian. Sau vài canh giờ, nhiễm chuyển sang khu khác."},{"ch":4,"t":"Hạ người chơi khác: nhận thẻ thưởng, lục túi họ."},{"ch":4,"t":"Danh sách người chơi chỉ hiển thị một lần."},{"ch":5,"t":"Mở hòm: Bamboo-Sword ×1."},{"ch":5,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":7,"t":"Nhận thẻ: Teleport ×1."},{"ch":7,"t":"Bản đồ: Nông trại đã khám phá."},{"ch":8,"t":"Nhận thẻ: Bandage ×1."},{"ch":8,"t":"Nhận thẻ: Smoke Veil ×1."},{"ch":8,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":8,"t":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ."},{"ch":9,"t":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm."},{"ch":9,"t":"Người chơi còn sống: 18."},{"ch":9,"t":"Người chơi còn sống: 17."},{"ch":10,"t":"Bàn Teleport: đã dùng. Rời khu Trung tâm."},{"ch":11,"t":"Người chơi còn sống: 15."},{"ch":11,"t":"Mở rương: Teleport ×1."},{"ch":12,"t":"Mở hòm: Remedy ×1."},{"ch":12,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":13,"t":"Bản đồ: cổng hầm khu Mỏ đã khám phá."},{"ch":13,"t":"Bản đồ: một nhà dân khu Mỏ đã khám phá."},{"ch":13,"t":"Nhận thẻ: Guard ×1."},{"ch":13,"t":"Bản đồ: khu Mỏ đã khám phá toàn bộ."},{"ch":13,"t":"Bản đồ: cả ba khu đã khám phá toàn bộ. Không có thông báo nào."}]}]};
+var D={"ao_canh":[{"id":"ben-kia-buc-tuong","name":"Bên Kia Bức Tường","cap":"Cấp C/R","entries":[{"ch":4,"t":"Ảo cảnh: Bên Kia Bức Tường. Cấp C/R."},{"ch":4,"t":"Người chơi: 20. Thời gian: 24 tiếng."},{"ch":4,"t":"Điều kiện vượt ải: Khám phá toàn bộ các khu vực."},{"ch":4,"t":"Hết thời gian mà chưa đạt điều kiện: bị xoá sổ."},{"ch":4,"t":"Vật phẩm cấp sẵn: Bản đồ ×1."},{"ch":4,"t":"Cảnh báo: Nhiễm Quỷ. Mỗi lúc một khu bị nhiễm, dân làng ở đó hoá quỷ. Ngoài trời nguy hiểm, nhà dân che chở được một thời gian. Sau vài canh giờ, nhiễm chuyển sang khu khác."},{"ch":4,"t":"Hạ người chơi khác: nhận thẻ thưởng, lục túi họ."},{"ch":4,"t":"Danh sách người chơi chỉ hiển thị một lần."},{"ch":5,"t":"Mở hòm: Bamboo-Sword ×1."},{"ch":5,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":7,"t":"Nhận thẻ: Teleport ×1."},{"ch":7,"t":"Bản đồ: Nông trại đã khám phá."},{"ch":8,"t":"Nhận thẻ: Bandage ×1."},{"ch":8,"t":"Nhận thẻ: Smoke Veil ×1."},{"ch":8,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":8,"t":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ."},{"ch":9,"t":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm."},{"ch":9,"t":"Người chơi còn sống: 18."},{"ch":9,"t":"Người chơi còn sống: 17."},{"ch":10,"t":"Bàn Teleport: đã dùng. Rời khu Trung tâm."},{"ch":11,"t":"Người chơi còn sống: 15."},{"ch":11,"t":"Mở rương: Teleport ×1."},{"ch":12,"t":"Mở hòm: Remedy ×1."},{"ch":12,"t":"Ảo cảnh: một đợt Nhiễm Quỷ mới vừa bắt đầu ở đâu đó trong làng."},{"ch":13,"t":"Bản đồ: cổng hầm khu Mỏ đã khám phá."},{"ch":13,"t":"Bản đồ: một nhà dân khu Mỏ đã khám phá."},{"ch":13,"t":"Nhận thẻ: Guard ×1."},{"ch":13,"t":"Bản đồ: khu Mỏ đã khám phá toàn bộ."},{"ch":13,"t":"Bản đồ: cả ba khu đã khám phá toàn bộ. Không có thông báo nào."},{"ch":14,"t":"Dùng thẻ: Teleport ×1."},{"ch":14,"t":"Người chơi còn sống: 11."}]}]};
 
 (function(){
   var root=document.documentElement,tb=document.getElementById('theme');
