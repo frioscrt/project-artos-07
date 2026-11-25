@@ -590,17 +590,35 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
 .pen-diff[hidden]{display:none}
 .pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff del+ins{margin-left:.2em}
 .pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
 .pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
 .pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
 .pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
 .pen-row .rm{color:var(--pw-clevia)}
-.pen-row button[hidden]{display:none}
+.pen-row button[hidden],.pen-box [hidden]{display:none!important}
 .pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
 .pen-list{list-style:none;margin:0;padding:0}
 .pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
 .pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
 .pen-list li.nt small{color:var(--pw-luke)}
+article p.pen-pt{position:relative}
+article p.pen-pt::after{content:"";position:absolute;left:-8px;top:.35em;bottom:.35em;width:2px;background:repeating-linear-gradient(var(--ink) 0 3px,transparent 3px 7px);opacity:.75}
+article p.pen-pt.pen-ok::after{background:var(--pw-luke);opacity:1}
+.pen-sg{border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:12px;padding:.7em .8em;margin:0 0 .8em}
+.pen-sg.ok{border-color:var(--pw-luke)}
+.pen-sg .who{display:block;margin:0 0 .35em;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.pen-sg.ok .who{color:var(--pw-luke);opacity:1}
+.pen-sg .pen-diff{margin:0}
+.pen-sg .nt{margin:.5em 0 0;font:italic 400 14px/1.5 system-ui,sans-serif;opacity:.85}
+.pen-sg .pen-row{margin-top:.7em}
+.pen-sg .pen-row button{padding:.6em .8em;font-size:14px}
+.pen-sg .yes{color:var(--pw-luke);border-color:var(--pw-luke)}
+.pen-sg .no{color:var(--pw-clevia)}
+.pen-mine{margin:1.2em 0 .5em;padding-top:1em;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent)}
+.pen-list li.pt small{color:var(--soft)}
+.pen-list li.pt.ok small{color:var(--pw-luke)}
+.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--pw-luke)}
 @keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
 article p.pen-flash{animation:penflash .8s ease-out}
 @media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
@@ -910,6 +928,19 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .pen-box input{display:block;width:100%;margin:0 0 .6em;padding:.7em .8em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 22%,transparent);background:transparent;color:inherit;font:400 17px/1.3 system-ui,sans-serif}
 .pen-box input:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
 .pen-box .lead{font:400 16px/1.55 Literata,Georgia,serif;margin:.2em 0 1em}
+.pt-list{list-style:none;margin:0 0 1em;padding:0}
+.pt-list li{padding:.8em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent)}
+.pt-list .nm{font:600 16px/1.3 system-ui,sans-serif}
+.pt-list .st{display:block;margin:.2em 0 0;font:400 13px/1.4 system-ui,sans-serif;opacity:.7}
+.pt-list .st b{color:var(--pw-luke);font-weight:600}
+.pt-list li.off .nm{opacity:.5;text-decoration:line-through}
+.pt-list .pen-row{margin-top:.6em}
+.pt-list .pen-row button{padding:.55em .7em;font-size:14px}
+.pt-add{display:flex;gap:8px}
+.pt-add input{margin:0;flex:1}
+.pt-add button{flex:none;padding:0 1em;border-radius:10px;border:1px solid var(--pw-clevia);background:var(--pw-clevia);color:#fff;font:500 15px/1 system-ui,sans-serif}
+.pt-code{margin:.4em 0 .8em;padding:.8em;border-radius:12px;text-align:center;border:1px dashed var(--pw-luke);font:600 28px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--pw-luke);-webkit-user-select:all;user-select:all}
+.pt-none{opacity:.6;font-size:14px;margin:0 0 1em}
 
 </style>
 </head>
@@ -1091,6 +1122,9 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   pr.setAttribute('class', 'penring'); pr.setAttribute('cx', '60'); pr.setAttribute('cy', '60'); pr.setAttribute('r', '56');
   pr.setAttribute('pathLength', '100'); pr.setAttribute('transform', 'rotate(-90 60 60)'); ring.appendChild(pr);
   function key() { try { return localStorage.getItem('a07-pen'); } catch (e) { return null; } }
+  function role() { try { return localStorage.getItem('a07-pen-role') || 'tg'; } catch (e) { return 'tg'; } }
+  function pname() { try { return localStorage.getItem('a07-pen-name') || ''; } catch (e) { return ''; } }
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function S(n) { var s = window.a07tgSnd; if (s && s[n]) s[n](); }
   if (key()) ring.classList.add('penon');
   var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
@@ -1099,20 +1133,21 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
   sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-x]')) close(); });
   function call(o) { o.type = 'pen'; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
   var WHY = { sai: 'Sai mật mã rồi.', nhieu: 'Thử sai nhiều quá, đợi 10 phút rồi thử lại nhé.', ngan: 'Mật mã cần ít nhất 6 ký tự.', 'da-co': 'Mật mã đã được đặt rồi. Cậu gõ mật mã để mở.' };
-  function done(k) {
-    try { localStorage.setItem('a07-pen', k); } catch (e) {}
+  function done(k, r) {
+    try { localStorage.setItem('a07-pen', k); localStorage.setItem('a07-pen-role', r.role || 'tg'); localStorage.setItem('a07-pen-name', r.name || 'Clair'); } catch (e) {}
     ring.classList.add('penon'); ring.classList.remove('penflash'); void ring.getBoundingClientRect(); ring.classList.add('penflash'); S('unlock');
-    open('<h3>Bút tác giả</h3><p class="lead">Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để sửa chữ hoặc ghi chú.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button></div>');
+    if (r.role === 'pt') open('<h3>Bút phụ tá</h3><p class="lead">Chào ' + esc(r.name) + '! Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để đề xuất sửa chữ hoặc ghi chú. Đề xuất của cậu sẽ chờ tác giả duyệt.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button></div>');
+    else open('<h3>Bút tác giả</h3><p class="lead">Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để sửa chữ hoặc ghi chú.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button></div>');
   }
   function login() {
-    open('<h3>Bút tác giả</h3><p class="sub">Chỉ dành cho tác giả.</p><input type="password" class="k1" autocomplete="current-password" placeholder="Mật mã"><div class="pen-row"><button type="button" class="go">Mở</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
+    open('<h3>Bút tác giả</h3><p class="sub">Dành cho tác giả và phụ tá.</p><input type="password" class="k1" autocomplete="current-password" placeholder="Mật mã hoặc mã phụ tá"><div class="pen-row"><button type="button" class="go">Mở</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
     var k1 = sheet.querySelector('.k1'), msg = sheet.querySelector('.pen-msg'), go = sheet.querySelector('.go');
     setTimeout(function () { k1.focus(); }, 300);
     function sub() {
       var k = k1.value; if (!k) return; msg.textContent = 'Đang kiểm tra…'; go.disabled = true;
       call({ op: 'check', key: k }).then(function (r) {
         go.disabled = false;
-        if (r.ok) return done(k);
+        if (r.ok) return done(k, r);
         if (r.why === 'chua-co') return setup();
         msg.textContent = WHY[r.why] || 'Chưa mở được, cậu thử lại nhé.'; S('locked');
       }).catch(function () { go.disabled = false; msg.textContent = 'Đang mất mạng, cậu thử lại sau nhé.'; });
@@ -1126,14 +1161,71 @@ b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data
       if (k1.value.length < 6) { msg.textContent = WHY.ngan; return; }
       if (k1.value !== k2.value) { msg.textContent = 'Hai lần gõ chưa khớp.'; return; }
       go.disabled = true; msg.textContent = 'Đang lưu…';
-      call({ op: 'set', key: k1.value }).then(function (r) { go.disabled = false; if (r.ok) done(k1.value); else msg.textContent = WHY[r.why] || 'Chưa lưu được.'; })
+      call({ op: 'set', key: k1.value }).then(function (r) { go.disabled = false; if (r.ok) done(k1.value, r); else msg.textContent = WHY[r.why] || 'Chưa lưu được.'; })
         .catch(function () { go.disabled = false; msg.textContent = 'Đang mất mạng, cậu thử lại sau nhé.'; });
     };
   }
   function opened() {
-    open('<h3>Bút tác giả</h3><p class="lead">Bút đang mở trên máy này. Vào chương bất kỳ, bấm nút <b>cây bút</b> tròn ở góc phải dưới.</p><div class="pen-row"><button type="button" class="rm">Khoá lại trên máy này</button><button type="button" data-x>Đóng</button></div>');
-    sheet.querySelector('.rm').onclick = function () { try { localStorage.removeItem('a07-pen'); sessionStorage.removeItem('a07-pen-on'); } catch (e) {} ring.classList.remove('penon'); S('locked'); close(); };
+    var tg = role() === 'tg';
+    open('<h3>' + (tg ? 'Bút tác giả' : 'Bút phụ tá · ' + esc(pname())) + '</h3><p class="lead">Bút đang mở trên máy này. Vào chương bất kỳ, bấm nút <b>cây bút</b> tròn ở góc phải dưới.</p>' +
+      (tg ? '<div class="pen-row"><button type="button" class="go tm">Quản lý phụ tá</button></div>' : '') +
+      '<div class="pen-row"><button type="button" class="rm">Khoá lại trên máy này</button><button type="button" data-x>Đóng</button></div>');
+    if (tg) sheet.querySelector('.tm').onclick = team;
+    sheet.querySelector('.rm').onclick = function () { try { localStorage.removeItem('a07-pen'); localStorage.removeItem('a07-pen-role'); localStorage.removeItem('a07-pen-name'); sessionStorage.removeItem('a07-pen-on'); } catch (e) {} ring.classList.remove('penon'); S('locked'); close(); };
   }
+  // Quản lý phụ tá (chỉ tác giả): thêm tên → máy tạo mã; cấp mã mới; khoá mã
+  var TWHY = { ten: 'Cậu gõ tên phụ tá trước nha.', 'ten-trung': 'Tên này có rồi. Muốn cấp lại thì bấm "Cấp mã mới" ở người đó.', quyen: 'Chỉ tác giả mới quản lý phụ tá.' };
+  function team(note) {
+    open('<h3>Quản lý phụ tá</h3><p class="sub">Phụ tá chỉ đề xuất sửa, cậu gật hoặc bỏ từng chỗ ngay trong chương. Mã phụ tá không mở được quyền tác giả.</p><div class="pt-body"><p class="pt-none">Đang tải…</p></div>' +
+      '<label for="pt-nm">Thêm phụ tá</label><div class="pt-add"><input id="pt-nm" class="nm" maxlength="30" placeholder="Tên, ví dụ June" autocomplete="off"><button type="button" class="add">Thêm</button></div>' +
+      '<p class="pen-msg" aria-live="polite">' + (note || '') + '</p><div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    var body = sheet.querySelector('.pt-body'), msg = sheet.querySelector('.pen-msg'), nm = sheet.querySelector('.nm');
+    call({ op: 'pt-list', key: key() }).then(function (r) {
+      if (!r.ok) { body.innerHTML = '<p class="pt-none">' + (TWHY[r.why] || 'Chưa tải được.') + '</p>'; return; }
+      if (!r.list.length) { body.innerHTML = '<p class="pt-none">Chưa có phụ tá nào.</p>'; return; }
+      body.innerHTML = '<ul class="pt-list">' + r.list.map(function (p) {
+        var on = p.st === 'đang dùng';
+        return '<li class="' + (on ? '' : 'off') + '" data-n="' + esc(p.name) + '"><span class="nm">' + esc(p.name) + '</span><span class="st">' + (on ? 'Mã đang dùng' : 'Mã đã khoá') + (p.wait ? ' · <b>' + p.wait + ' đề xuất chờ duyệt</b>' : '') + '</span>' +
+          '<div class="pen-row"><button type="button" class="nw">Cấp mã mới</button>' + (on ? '<button type="button" class="rm lk">Khoá mã</button>' : '') + '</div></li>';
+      }).join('') + '</ul>';
+    }).catch(function () { body.innerHTML = '<p class="pt-none">Đang mất mạng, cậu thử lại sau nhé.</p>'; });
+    body.addEventListener('click', function (e) {
+      var b = e.target.closest('button'), li = e.target.closest('li'); if (!b || !li) return; var n = li.getAttribute('data-n');
+      if (b.classList.contains('lk')) {
+        if (!b.classList.contains('sure')) { b.classList.add('sure'); b.textContent = 'Chạm lần nữa để khoá'; return; }
+        call({ op: 'pt-lock', key: key(), name: n }).then(function () { S('locked'); team('Đã khoá mã của ' + esc(n) + '. Đề xuất cũ của người đó vẫn còn để cậu duyệt.'); });
+      } else if (b.classList.contains('nw')) {
+        if (!b.classList.contains('sure')) { b.classList.add('sure'); b.textContent = 'Chạm lần nữa: mã cũ sẽ hết dùng được'; return; }
+        call({ op: 'pt-new', key: key(), name: n }).then(function (r) { if (r.ok) showCode(r); });
+      }
+    });
+    function add() {
+      var v = nm.value.trim(); if (!v) { msg.textContent = TWHY.ten; return; }
+      msg.textContent = 'Đang tạo mã…';
+      call({ op: 'pt-add', key: key(), name: v }).then(function (r) { if (r.ok) showCode(r); else msg.textContent = TWHY[r.why] || 'Chưa thêm được.'; })
+        .catch(function () { msg.textContent = 'Đang mất mạng, cậu thử lại sau nhé.'; });
+    }
+    sheet.querySelector('.add').onclick = add; nm.addEventListener('keydown', function (e) { if (e.key === 'Enter') add(); });
+  }
+  function showCode(r) {
+    var link = location.href.replace(/[#?].*$/, '') + '#but';
+    var txt = 'Mã phụ tá Project Artos 07 của cậu: ' + r.code + '\nMở ' + link + ' rồi gõ mã này vào là được.';
+    S('unlock');
+    open('<h3>Mã của ' + esc(r.name) + '</h3><p class="lead">Gửi mã này cho ' + esc(r.name) + '. Mã chỉ hiện <b>một lần</b>, đóng lại là không xem lại được (quên thì cấp mã mới).</p><div class="pt-code">' + esc(r.code) + '</div>' +
+      '<div class="pen-row"><button type="button" class="go cp">Chép lời nhắn kèm mã</button></div><p class="pen-msg" aria-live="polite"></p><div class="pen-row"><button type="button" class="bk">Về danh sách</button><button type="button" data-x>Đóng</button></div>');
+    sheet.querySelector('.cp').onclick = function () {
+      var m = sheet.querySelector('.pen-msg');
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { m.textContent = 'Đã chép. Dán vào tin nhắn gửi ' + r.name + ' là xong.'; S('flip'); })
+        .catch(function () { m.textContent = 'Máy chưa cho chép, cậu giữ ngón tay lên mã để chép tay nhé.'; });
+    };
+    sheet.querySelector('.bk').onclick = function () { team(); };
+  }
+  function byHash() {
+    if (location.hash === '#but') setTimeout(function () { if (key()) opened(); else login(); }, 400);
+    if (location.hash === '#phu-ta') setTimeout(function () { if (key() && role() === 'tg') team(); else login(); }, 400);
+  }
+  byHash(); addEventListener('hashchange', byHash);
+
   // chạm và giữ 2 giây: vòng đỏ chạy quanh vòng tròn Artos
   var t0 = 0, raf = 0;
   function set(p) { pr.style.strokeDashoffset = 100 - 100 * p; }

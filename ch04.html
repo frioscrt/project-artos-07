@@ -590,17 +590,35 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
 .pen-diff[hidden]{display:none}
 .pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff del+ins{margin-left:.2em}
 .pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
 .pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
 .pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
 .pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
 .pen-row .rm{color:var(--pw-clevia)}
-.pen-row button[hidden]{display:none}
+.pen-row button[hidden],.pen-box [hidden]{display:none!important}
 .pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
 .pen-list{list-style:none;margin:0;padding:0}
 .pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
 .pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
 .pen-list li.nt small{color:var(--pw-luke)}
+article p.pen-pt{position:relative}
+article p.pen-pt::after{content:"";position:absolute;left:-8px;top:.35em;bottom:.35em;width:2px;background:repeating-linear-gradient(var(--ink) 0 3px,transparent 3px 7px);opacity:.75}
+article p.pen-pt.pen-ok::after{background:var(--pw-luke);opacity:1}
+.pen-sg{border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:12px;padding:.7em .8em;margin:0 0 .8em}
+.pen-sg.ok{border-color:var(--pw-luke)}
+.pen-sg .who{display:block;margin:0 0 .35em;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.pen-sg.ok .who{color:var(--pw-luke);opacity:1}
+.pen-sg .pen-diff{margin:0}
+.pen-sg .nt{margin:.5em 0 0;font:italic 400 14px/1.5 system-ui,sans-serif;opacity:.85}
+.pen-sg .pen-row{margin-top:.7em}
+.pen-sg .pen-row button{padding:.6em .8em;font-size:14px}
+.pen-sg .yes{color:var(--pw-luke);border-color:var(--pw-luke)}
+.pen-sg .no{color:var(--pw-clevia)}
+.pen-mine{margin:1.2em 0 .5em;padding-top:1em;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent)}
+.pen-list li.pt small{color:var(--soft)}
+.pen-list li.pt.ok small{color:var(--pw-luke)}
+.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--pw-luke)}
 @keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
 article p.pen-flash{animation:penflash .8s ease-out}
 @media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
@@ -1229,7 +1247,8 @@ els.forEach(function(el){io.observe(el)});})();
   var root = document.documentElement, art = document.querySelector('article');
   if (!art) return;
   var CH = String(+((location.pathname.match(/ch(\d+)\.html$/) || [])[1] || 0)); if (CH === '0') return;
-  var SRC = null, EDITS = {}, QK = 'a07-pen-q';
+  var SRC = null, EDITS = {}, OTHERS = {}, QK = 'a07-pen-q', ROLE = 'tg', NAME = 'Clair';
+  try { ROLE = localStorage.getItem('a07-pen-role') || 'tg'; NAME = localStorage.getItem('a07-pen-name') || 'Clair'; } catch (e) {}
   function sfx(n) { if (window.a07sfx) window.a07sfx(n); }
   function call(o) { o.type = 'pen'; o.key = KEY; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
   function q() { try { return JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch (e) { return []; } }
@@ -1239,18 +1258,20 @@ els.forEach(function(el){io.observe(el)});})();
     if (SRC && SRC[pi] != null) return SRC[pi];
     return [].map.call(paras(pi), function (p) { return p.textContent; }).join(' ');
   }
-  function lost() { try { localStorage.removeItem('a07-pen'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
+  function lost() { try { localStorage.removeItem('a07-pen'); localStorage.removeItem('a07-pen-role'); localStorage.removeItem('a07-pen-name'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
 
   // nút Bút trên thanh đầu trang
   var btn = document.createElement('button');
-  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút tác giả');
+  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút sửa truyện');
   btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z"/><path d="M13.8 6.8l3.4 3.4"/><path d="M4 20h7"/></svg><span class="n"></span>'; document.body.appendChild(btn);
   var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'pen-pill'; document.body.appendChild(pill);
   var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
 
+  function waiting() { var n = 0; Object.keys(OTHERS).forEach(function (k) { OTHERS[k].forEach(function (x) { if (!x.st) n++; }); }); return n; }
   function count() {
-    var n = Object.keys(EDITS).length; btn.querySelector('.n').textContent = n ? n : '';
-    pill.innerHTML = n ? 'Chạm đoạn để sửa · <b>' + n + ' chỗ</b>' : 'Chạm một đoạn để sửa';
+    var n = Object.keys(EDITS).length, w = waiting(); btn.querySelector('.n').textContent = (n + w) ? n + w : '';
+    var verb = ROLE === 'pt' ? 'Chạm đoạn để đề xuất' : 'Chạm đoạn để sửa';
+    pill.innerHTML = verb + (n ? ' · <b>' + n + ' chỗ</b>' : '') + (w ? ' · <b>' + w + ' chờ duyệt</b>' : '');
   }
   function mark(pi) {
     var e = EDITS[pi];
@@ -1258,6 +1279,9 @@ els.forEach(function(el){io.observe(el)});})();
       p.classList.toggle('pen-has', !!e);
       p.classList.toggle('pen-note', !!(e && !e.sua));
       p.classList.toggle('pen-wait', !!(e && e.wait));
+      var o = OTHERS[pi] || [];
+      p.classList.toggle('pen-pt', o.length > 0);
+      p.classList.toggle('pen-ok', o.length > 0 && o.every(function (x) { return x.st === 'gật'; }));
     });
   }
   function on(v) {
@@ -1274,7 +1298,10 @@ els.forEach(function(el){io.observe(el)});})();
     fetch('goc/ch' + ('0' + CH).slice(-2) + '.json').then(function (r) { return r.json(); }).then(function (a) { SRC = a; }).catch(function () {});
     flush().then(function () { return call({ op: 'list', ch: CH }); }).then(function (r) {
       if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') lost(); return; }
-      r.list.forEach(function (e) { EDITS[e.pi] = e; });
+      ROLE = r.role || 'tg'; NAME = r.name || 'Clair';
+      try { localStorage.setItem('a07-pen-role', ROLE); localStorage.setItem('a07-pen-name', NAME); } catch (e) {}
+      r.list.forEach(function (e) { if (e.by === NAME) EDITS[e.pi] = e; else (OTHERS[e.pi] = OTHERS[e.pi] || []).push(e); });
+      Object.keys(OTHERS).forEach(mark);
       q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; } });
       Object.keys(EDITS).forEach(mark); count();
     }).catch(function () {
@@ -1319,17 +1346,37 @@ els.forEach(function(el){io.observe(el)});})();
   function edit(pi) {
     var goc = srcOf(pi), e = EDITS[pi] || {};
     [].forEach.call(paras(pi), function (p) { p.classList.add('pen-cur'); });
-    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3><p class="sub">Sửa thẳng vào chữ bên dưới. Chữ nghiêng nằm giữa hai dấu *.</p>' +
-      '<textarea class="tx" rows="6"></textarea><div class="pen-diff" hidden></div>' +
-      '<label for="pen-nt">Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2" placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
+    var sg = (OTHERS[pi] || []).map(function (x, i) {
+      return '<div class="pen-sg' + (x.st === 'gật' ? ' ok' : '') + '" data-i="' + i + '"><span class="who">' + esc(x.by) + (x.st === 'gật' ? ' · cậu đã gật' : ' đề xuất') + '</span>' +
+        (x.sua ? '<div class="pen-diff">' + diff(x.goc.trim(), x.sua.trim()) + '</div>' : '') + (x.note ? '<p class="nt">' + esc(x.note) + '</p>' : '') +
+        '<div class="pen-row">' + (x.st === 'gật' ? '<button type="button" class="un">Huỷ gật</button>' : '<button type="button" class="yes">Gật</button>') +
+        '<button type="button" class="no">Bỏ</button>' + (x.sua ? '<button type="button" class="cp">Sửa tiếp từ bản này</button>' : '') + '</div></div>';
+    }).join('');
+    var pt = ROLE === 'pt';
+    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3>' + (sg ? '<p class="sub">Đề xuất của phụ tá: gật thì tớ sửa vào truyện khi cậu bảo "kéo bản Cle".</p>' + sg + '<div class="pen-mine"><h3>Bản của cậu</h3></div>' : '') +
+      '<p class="sub">' + (pt ? 'Sửa thẳng vào chữ bên dưới. Đề xuất của cậu sẽ chờ tác giả duyệt. ' : 'Sửa thẳng vào chữ bên dưới. ') + 'Chữ nghiêng nằm giữa hai dấu *.</p>' +
+      '<textarea class="tx" rows="6"></textarea><div class="pen-diff me" hidden></div>' +
+      '<label for="pen-nt"' + (pt ? ' hidden' : '') + '>Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2"' + (pt ? ' hidden' : '') + ' placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
       '<div class="pen-row"><button type="button" class="go">Lưu</button><button type="button" class="rm"' + (EDITS[pi] ? '' : ' hidden') + '>Bỏ chỗ sửa này</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
-    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff'), msg = sheet.querySelector('.pen-msg');
+    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff.me'), msg = sheet.querySelector('.pen-msg');
     tx.value = e.sua || goc; nt.value = e.note || '';
     function grow() { tx.style.height = 'auto'; tx.style.height = Math.min(tx.scrollHeight + 4, innerHeight * 0.45) + 'px'; }
     function show() { var v = tx.value.trim(); dv.hidden = v === goc.trim(); if (!dv.hidden) dv.innerHTML = diff(goc.trim(), v); grow(); }
     tx.addEventListener('input', show); setTimeout(show, 0);
+    [].forEach.call(sheet.querySelectorAll('.pen-sg'), function (box) {
+      var x = OTHERS[pi][+box.getAttribute('data-i')];
+      function review(o, st) { call(o).catch(function () {}); x.st = st; }
+      box.addEventListener('click', function (ev) {
+        var b = ev.target.closest('button'); if (!b) return;
+        if (b.classList.contains('yes')) { review({ op: 'review', id: x.id, yes: 1 }, 'gật'); sfx('ink'); box.classList.add('ok'); box.querySelector('.who').textContent = x.by + ' · cậu đã gật'; b.outerHTML = '<button type="button" class="un">Huỷ gật</button>'; }
+        else if (b.classList.contains('un')) { review({ op: 'review', id: x.id, undo: 1 }, ''); box.classList.remove('ok'); box.querySelector('.who').textContent = x.by + ' đề xuất'; b.outerHTML = '<button type="button" class="yes">Gật</button>'; }
+        else if (b.classList.contains('no')) { call({ op: 'review', id: x.id }).catch(function () {}); OTHERS[pi] = OTHERS[pi].filter(function (y) { return y !== x; }); if (!OTHERS[pi].length) delete OTHERS[pi]; box.remove(); }
+        else if (b.classList.contains('cp')) { tx.value = x.sua; show(); tx.focus(); return; }
+        mark(pi); count();
+      });
+    });
     sheet.querySelector('.go').onclick = function () {
-      var sua = tx.value.trim(), note = nt.value.trim();
+      var sua = tx.value.trim(), note = pt ? '' : nt.value.trim();
       if (sua === goc.trim()) sua = '';
       if (!sua && !note) { msg.textContent = 'Chưa có gì đổi cả.'; return; }
       var o = { op: 'save', ch: CH, pi: +pi, goc: goc, sua: sua, note: note };
@@ -1362,11 +1409,14 @@ els.forEach(function(el){io.observe(el)});})();
 
   // viên thuốc dưới đáy: xem danh sách chỗ đã ghi trong chương
   pill.onclick = function () {
-    var ks = Object.keys(EDITS).sort(function (a, b) { return a - b; });
-    if (!ks.length) return;
-    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".</p><ul class="pen-list">' +
-      ks.map(function (k) { var x = EDITS[k]; return '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>'; }).join('') +
-      '</ul><div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    var items = [];
+    Object.keys(EDITS).forEach(function (k) { var x = EDITS[k]; items.push({ k: +k, h: '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>' }); });
+    Object.keys(OTHERS).forEach(function (k) { OTHERS[k].forEach(function (x) { items.push({ k: +k, h: '<li data-go="' + k + '" class="pt' + (x.st ? ' ok' : '') + '"><small>Đoạn ' + (+k + 1) + ' · ' + esc(x.by) + (x.st ? ' · đã gật' : ' · chờ duyệt') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>' }); }); });
+    items.sort(function (a, b) { return a.k - b.k; });
+    if (!items.length && ROLE === 'pt') return;
+    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">' + (ROLE === 'pt' ? 'Chạm để nhảy tới đoạn đó. Đề xuất của cậu đang chờ tác giả duyệt.' : 'Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".') + '</p><ul class="pen-list">' +
+      items.map(function (x) { return x.h; }).join('') + '</ul>' + (ROLE === 'tg' ? '<a class="pen-link" href="tacgia.html#phu-ta">Quản lý phụ tá</a>' : '') +
+      '<div class="pen-row"><button type="button" data-x>Đóng</button></div>');
     sheet.querySelector('.pen-list').onclick = function (e) {
       var li = e.target.closest('li'); if (!li) return; var k = li.getAttribute('data-go'); close();
       var p = paras(k)[0]; if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { flash(k); }, 500); }
