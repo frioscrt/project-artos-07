@@ -319,6 +319,16 @@ em .nm{font-style:italic}
 .gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
 .gate .s{font-size:15px;color:var(--soft)}
 .gate:hover .t{color:var(--lamp)}
+.gate .w{display:block;margin-top:.8em;padding-top:.75em;border-top:1px solid var(--line);font-size:13.5px;font-style:italic;color:var(--lamp)}
+.spoil{max-width:26em;margin:0 auto 3.4em;padding:1.5em 1.4em 1.4em;border:1px solid color-mix(in srgb,var(--lamp) 55%,transparent);border-radius:14px;text-align:center;
+  background:color-mix(in srgb,var(--lamp) 7%,transparent);box-shadow:0 0 22px -10px var(--lamp);transition:opacity .6s,transform .6s}
+.spoil .k{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--lamp);margin:0 0 .9em}
+.spoil p.m{font-size:16.5px;line-height:1.6;margin:0 0 1.3em;color:var(--ink);text-indent:0}
+.spoil .bt{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.spoil .bt a,.spoil .bt button{font:inherit;font-size:14.5px;padding:.6em 1.15em;border-radius:999px;cursor:pointer;text-decoration:none;line-height:1.2}
+.spoil .bt a{border:1px solid var(--lamp);color:var(--lamp);background:transparent}
+.spoil .bt button{border:1px solid var(--line);color:var(--soft);background:transparent}
+.spoil.off{opacity:0;transform:translateY(-8px)}
 
 
 /* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */

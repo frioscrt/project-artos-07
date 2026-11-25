@@ -319,6 +319,16 @@ em .nm{font-style:italic}
 .gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
 .gate .s{font-size:15px;color:var(--soft)}
 .gate:hover .t{color:var(--lamp)}
+.gate .w{display:block;margin-top:.8em;padding-top:.75em;border-top:1px solid var(--line);font-size:13.5px;font-style:italic;color:var(--lamp)}
+.spoil{max-width:26em;margin:0 auto 3.4em;padding:1.5em 1.4em 1.4em;border:1px solid color-mix(in srgb,var(--lamp) 55%,transparent);border-radius:14px;text-align:center;
+  background:color-mix(in srgb,var(--lamp) 7%,transparent);box-shadow:0 0 22px -10px var(--lamp);transition:opacity .6s,transform .6s}
+.spoil .k{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--lamp);margin:0 0 .9em}
+.spoil p.m{font-size:16.5px;line-height:1.6;margin:0 0 1.3em;color:var(--ink);text-indent:0}
+.spoil .bt{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.spoil .bt a,.spoil .bt button{font:inherit;font-size:14.5px;padding:.6em 1.15em;border-radius:999px;cursor:pointer;text-decoration:none;line-height:1.2}
+.spoil .bt a{border:1px solid var(--lamp);color:var(--lamp);background:transparent}
+.spoil .bt button{border:1px solid var(--line);color:var(--soft);background:transparent}
+.spoil.off{opacity:0;transform:translateY(-8px)}
 
 
 /* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
@@ -681,6 +691,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
     <h1><span class="w" style="animation-delay:0.15s">Chưa</span> <span class="w" style="animation-delay:0.33s">hề</span> <span class="w" style="animation-delay:0.51s">mở</span></h1>
     <p class="hint">Cuộn xuống để đọc</p>
   </div>
+  
   <article>
 <section class="scene" data-sound="trail13">
 <figure class="plate"><canvas class="art" data-art="trail13" role="img" aria-label="Đường mòn khu Mỏ giữa chiều, sợi xích nằm phục dưới đất, mấy mắt cuối khẽ cựa; trên sườn đồi những cặp đốm đỏ lập loè"></canvas></figure>
@@ -941,6 +952,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
     <a class="gate" href="https://frioscrt.github.io/crvillage/">
       <span class="t">Bên Kia Bức Tường</span>
       <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
+      <span class="w">Nếu định chơi, cậu nên chơi trước khi đọc Chương 14 để giữ trọn bất ngờ.</span>
     </a>
     <section class="cmt" id="binh-luan" data-ch="13" aria-label="Bình luận">
     <h2>Bình luận<span class="cnt" hidden></span></h2>
