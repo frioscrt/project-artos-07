@@ -440,6 +440,39 @@ em .nm{font-style:italic}
 @keyframes bsthit{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 8px #8FD3E0)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion: reduce){.bst-fly{transition:none}.bst-pill{transition:none}.bst-pill.hit svg{animation:none}}
 
+
+/* Nhật ký hệ thống: một dòng xanh băng thoáng hiện dưới thanh đầu trang */
+.nk-line{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));z-index:57;transform:translate(-50%,-8px);opacity:0;pointer-events:none;
+  max-width:calc(100vw - 32px);padding:.45em .9em;border-radius:3px;background:rgba(8,16,20,.9);border:1px solid color-mix(in srgb,var(--ice) 40%,transparent);
+  color:#8FD3E0;font-size:13.5px;line-height:1.4;letter-spacing:.01em;text-align:center;box-shadow:0 0 18px -4px color-mix(in srgb,var(--ice) 45%,transparent);
+  transition:opacity .4s,transform .4s;text-decoration:none}
+.nk-line.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.nk-line small{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5f8f99;margin-bottom:.15em}
+@media (prefers-reduced-motion: reduce){.nk-line{transition:none}}
+
+
+.dc-toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:58;transform:translate(-50%,14px);opacity:0;
+  display:flex;align-items:center;gap:.8em;padding:.5em .6em .5em 1em;border-radius:999px;max-width:calc(100vw - 32px);
+  background:rgba(14,18,22,.94);color:#dcdee0;border:1px solid color-mix(in srgb,var(--ice) 45%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6);font-size:14px;line-height:1.25;transition:opacity .35s,transform .35s;white-space:nowrap}
+.dc-toast.on{opacity:1;transform:translate(-50%,0)}
+.dc-toast i{flex:0 0 auto;width:9px;height:13px;background:var(--lamp);clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%)}
+.dc-toast button{font:inherit;font-size:13px;color:#8FD3E0;background:none;border:1px solid color-mix(in srgb,#8FD3E0 40%,transparent);border-radius:999px;padding:.35em .8em;cursor:pointer}
+.act{position:relative}
+.dc-again{position:absolute;right:2px;top:2px;z-index:3;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--bg) 70%,transparent);
+  border:1px solid var(--line);color:var(--soft);opacity:0;transform:scale(.7) rotate(-60deg);pointer-events:none;
+  transition:opacity .4s,transform .5s cubic-bezier(.3,1.4,.5,1),color .2s,border-color .2s}
+.dc-again svg{width:16px;height:16px}
+.dc-again.on{opacity:.75;transform:none;pointer-events:auto}
+.dc-again:hover,.dc-again:focus-visible{opacity:1;color:var(--ice);border-color:color-mix(in srgb,var(--ice) 60%,transparent)}
+.dc-again.spin svg{animation:dc-spin .5s ease-in}
+@keyframes dc-spin{to{transform:rotate(-360deg)}}
+.act.dc-fresh{animation:dc-fresh 1.6s ease-out}
+@keyframes dc-fresh{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 55%,transparent)}100%{box-shadow:0 0 0 22px transparent}}
+html.dc-wait main{opacity:0}
+@media (prefers-reduced-motion: reduce){.dc-again,.dc-toast{transition:none}.act.dc-fresh,.dc-again.spin svg{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -776,7 +809,7 @@ body > main{position:relative;z-index:1}
   <div class="dr-shade" data-close></div>
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
-    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="nhatky.html">Nhật ký hệ thống</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
     <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
   </nav>
 </div>

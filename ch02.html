@@ -440,6 +440,39 @@ em .nm{font-style:italic}
 @keyframes bsthit{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 8px #8FD3E0)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion: reduce){.bst-fly{transition:none}.bst-pill{transition:none}.bst-pill.hit svg{animation:none}}
 
+
+/* Nhật ký hệ thống: một dòng xanh băng thoáng hiện dưới thanh đầu trang */
+.nk-line{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));z-index:57;transform:translate(-50%,-8px);opacity:0;pointer-events:none;
+  max-width:calc(100vw - 32px);padding:.45em .9em;border-radius:3px;background:rgba(8,16,20,.9);border:1px solid color-mix(in srgb,var(--ice) 40%,transparent);
+  color:#8FD3E0;font-size:13.5px;line-height:1.4;letter-spacing:.01em;text-align:center;box-shadow:0 0 18px -4px color-mix(in srgb,var(--ice) 45%,transparent);
+  transition:opacity .4s,transform .4s;text-decoration:none}
+.nk-line.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.nk-line small{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5f8f99;margin-bottom:.15em}
+@media (prefers-reduced-motion: reduce){.nk-line{transition:none}}
+
+
+.dc-toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:58;transform:translate(-50%,14px);opacity:0;
+  display:flex;align-items:center;gap:.8em;padding:.5em .6em .5em 1em;border-radius:999px;max-width:calc(100vw - 32px);
+  background:rgba(14,18,22,.94);color:#dcdee0;border:1px solid color-mix(in srgb,var(--ice) 45%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6);font-size:14px;line-height:1.25;transition:opacity .35s,transform .35s;white-space:nowrap}
+.dc-toast.on{opacity:1;transform:translate(-50%,0)}
+.dc-toast i{flex:0 0 auto;width:9px;height:13px;background:var(--lamp);clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%)}
+.dc-toast button{font:inherit;font-size:13px;color:#8FD3E0;background:none;border:1px solid color-mix(in srgb,#8FD3E0 40%,transparent);border-radius:999px;padding:.35em .8em;cursor:pointer}
+.act{position:relative}
+.dc-again{position:absolute;right:2px;top:2px;z-index:3;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--bg) 70%,transparent);
+  border:1px solid var(--line);color:var(--soft);opacity:0;transform:scale(.7) rotate(-60deg);pointer-events:none;
+  transition:opacity .4s,transform .5s cubic-bezier(.3,1.4,.5,1),color .2s,border-color .2s}
+.dc-again svg{width:16px;height:16px}
+.dc-again.on{opacity:.75;transform:none;pointer-events:auto}
+.dc-again:hover,.dc-again:focus-visible{opacity:1;color:var(--ice);border-color:color-mix(in srgb,var(--ice) 60%,transparent)}
+.dc-again.spin svg{animation:dc-spin .5s ease-in}
+@keyframes dc-spin{to{transform:rotate(-360deg)}}
+.act.dc-fresh{animation:dc-fresh 1.6s ease-out}
+@keyframes dc-fresh{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 55%,transparent)}100%{box-shadow:0 0 0 22px transparent}}
+html.dc-wait main{opacity:0}
+@media (prefers-reduced-motion: reduce){.dc-again,.dc-toast{transition:none}.act.dc-fresh,.dc-again.spin svg{animation:none}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -611,6 +644,10 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 </script>
 </head>
 <body>
+<script>(function(){try{var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1];if(!cn||location.hash)return;
+var r=sessionStorage.getItem('a07-replay'),p=JSON.parse(localStorage.getItem('a07-pos')||'{}')[cn];
+if((r&&JSON.parse(r).ch===cn)||(p&&p.i>=3)){document.documentElement.classList.add('dc-wait');if('scrollRestoration' in history)history.scrollRestoration='manual';
+setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500)}}catch(e){}})();</script>
 <div class="progress" aria-hidden="true"></div>
 <header class="bar">
   <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương, trang chủ và sổ tay"><span class="ic"></span>Chương 2</button>
@@ -626,7 +663,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
   <div class="dr-shade" data-close></div>
   <nav class="dr-panel" aria-label="Chọn chương">
     <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
-    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
+    <div class="dr-go"><a href="index.html">Trang chủ</a><a href="sotay.html">Sổ tay của Luke</a><a href="bosuutap.html">Bộ sưu tập thẻ</a><a href="bando.html">Bản đồ ảo cảnh</a><a href="nhatky.html">Nhật ký hệ thống</a><a href="gocnhin.html">Góc nhìn khác</a><a href="tacgia.html">Tác giả</a></div>
     <ol class="dr-list"><li><a href="ch01.html"><span class="n">1</span><span class="t">Thứ gì đó đã bị bỏ quên</span></a></li><li><a href="ch02.html" aria-current="page"><span class="n">2</span><span class="t">Bảy ngày</span></a></li><li><a href="ch03.html"><span class="n">3</span><span class="t">Bữa Tiệc Đầu Tiên</span></a></li><li><a href="ch04.html"><span class="n">4</span><span class="t">Hai mươi cái tên</span></a></li><li><a href="ch05.html"><span class="n">5</span><span class="t">Lửa bếp</span></a></li><li><a href="ch06.html"><span class="n">6</span><span class="t">Xích</span></a></li><li><a href="ch07.html"><span class="n">7</span><span class="t">Việc làng</span></a></li><li><a href="ch08.html"><span class="n">8</span><span class="t">Chỗ thứ ba</span></a></li><li><a href="ch09.html"><span class="n">9</span><span class="t">Con số trên bảng</span></a></li><li><a href="ch10.html"><span class="n">10</span><span class="t">Chợ trưa</span></a></li><li><a href="ch11.html"><span class="n">11</span><span class="t">Cổng hầm</span></a></li><li><a href="ch12.html"><span class="n">12</span><span class="t">Bên trong hầm tối</span></a></li></ol>
   </nav>
 </div>
@@ -867,6 +904,77 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInte
   var have=get(),ids=e.target.getAttribute('data-collect').split(' ').filter(function(id){return have.indexOf(id)<0});
   if(!ids.length)return;put(have.concat(ids));fly(e.target,ids)})},{threshold:.6,rootMargin:'0px 0px -12% 0px'});
 els.forEach(function(el){io.observe(el)});})();
+(function(){var T={"ben-kia-buc-tuong:8":"Mở hòm: Bamboo-Sword ×1.","ben-kia-buc-tuong:10":"Nhận thẻ: Teleport ×1.","ben-kia-buc-tuong:11":"Bản đồ: Nông trại đã khám phá.","ben-kia-buc-tuong:12":"Nhận thẻ: Bandage ×1.","ben-kia-buc-tuong:13":"Nhận thẻ: Smoke Veil ×1.","ben-kia-buc-tuong:15":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ.","ben-kia-buc-tuong:16":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm.","ben-kia-buc-tuong:17":"Người chơi còn sống: 18.","ben-kia-buc-tuong:18":"Người chơi còn sống: 17.","ben-kia-buc-tuong:19":"Bàn Teleport: đã dùng. Rời khu Trung tâm.","ben-kia-buc-tuong:20":"Người chơi còn sống: 15.","ben-kia-buc-tuong:21":"Mở rương: Teleport ×1.","ben-kia-buc-tuong:22":"Mở hòm: Remedy ×1."};
+function get(){try{return JSON.parse(localStorage.getItem('a07-log')||'[]')}catch(e){return []}}
+function put(a){try{localStorage.setItem('a07-log',JSON.stringify(a))}catch(e){}}
+var els=[].slice.call(document.querySelectorAll('[data-log]'));if(!els.length||!('IntersectionObserver' in window))return;
+var box=null,q=[],busy=false;
+function next(){if(busy||!q.length)return;busy=true;var t=q.shift();if(!box){box=document.createElement('a');box.className='nk-line';box.href='nhatky.html';box.setAttribute('aria-live','polite');document.body.appendChild(box)}
+  box.innerHTML='<small>Nhật ký hệ thống</small>['+t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+']';box.classList.add('on');if(window.a07sfx)window.a07sfx('log');
+  setTimeout(function(){box.classList.remove('on');setTimeout(function(){busy=false;next()},450)},3200)}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+  var have=get(),ids=e.target.getAttribute('data-log').split(' ').filter(function(id){return have.indexOf(id)<0});if(!ids.length)return;
+  put(have.concat(ids));ids.forEach(function(id){if(T[id])setTimeout(function(){q.push(T[id]);next()},900)})})},{threshold:.6,rootMargin:'0px 0px -15% 0px'});
+els.forEach(function(el){io.observe(el)});})();
+(function(){
+  var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1]; if(!cn) return;
+  var root=document.documentElement, art=document.querySelector('article'); if(!art) return;
+  var els=[].slice.call(art.querySelectorAll('.scene > *'));
+  function get(){try{return JSON.parse(localStorage.getItem('a07-pos')||'{}')}catch(e){return {}}}
+  function put(o){try{localStorage.setItem('a07-pos',JSON.stringify(o))}catch(e){}}
+  var TOP=70; // dưới thanh đầu trang
+  function anchor(){ // đoạn đầu tiên còn thấy ở mép trên màn hình
+    for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.bottom>TOP)return {i:i,off:Math.round(r.top)}}
+    return {i:els.length-1,off:0};
+  }
+  var ready=false;
+  function save(){ if(!ready) return; var o=get(), a=anchor();
+    if(scrollY<innerHeight*0.6||a.i<3) delete o[cn]; else o[cn]={i:a.i,off:a.off,t:Date.now()};
+    put(o); }
+  var tm=0; addEventListener('scroll',function(){clearTimeout(tm);tm=setTimeout(save,400)},{passive:true});
+  addEventListener('pagehide',save); document.addEventListener('visibilitychange',function(){if(document.hidden)save()});
+  // nhảy về chỗ cũ: các chỗ chạm ở phía trên coi như đã nhắc, để khỏi bật nhắc "vừa lướt qua"
+  function jump(a){ var el=els[Math.min(a.i,els.length-1)]; if(!el) return;
+    [].forEach.call(art.querySelectorAll('.act, .card-fig, .type-row'),function(b){if(b.compareDocumentPosition(el)&4||b===el)b._reminded=true});
+    scrollTo(0,el.getBoundingClientRect().top+scrollY-(a.off||TOP)); }
+  function show(){root.classList.remove('dc-wait')}
+  function toast(){
+    var t=document.createElement('div');t.className='dc-toast';t.setAttribute('role','status');
+    t.innerHTML='<i aria-hidden="true"></i><span>Đọc tiếp từ chỗ cậu dừng</span><button type="button">Về đầu chương</button>';
+    document.body.appendChild(t);requestAnimationFrame(function(){requestAnimationFrame(function(){t.classList.add('on')})});
+    var gone=setTimeout(close,6000);function close(){clearTimeout(gone);t.classList.remove('on');setTimeout(function(){t.remove()},400)}
+    t.querySelector('button').onclick=function(){var o=get();delete o[cn];put(o);scrollTo({top:0,behavior:'smooth'});close()};
+    var y0=scrollY;addEventListener('scroll',function f(){if(Math.abs(scrollY-y0)>innerHeight*0.8){close();removeEventListener('scroll',f)}},{passive:true});
+  }
+  var rp=null; try{rp=JSON.parse(sessionStorage.getItem('a07-replay')||'null');sessionStorage.removeItem('a07-replay')}catch(e){}
+  if(rp&&rp.ch!==cn) rp=null;
+  var bm=!rp&&!location.hash&&get()[cn]; if(bm&&bm.i<3) bm=null;
+  function go(){
+    if(rp){ jump(rp); var box=art.querySelectorAll('.act')[rp.box]; if(box){box.classList.add('dc-fresh');setTimeout(function(){box.classList.remove('dc-fresh')},1700)} }
+    else if(bm){ jump(bm); toast(); }
+    show(); setTimeout(function(){ready=true},600);
+  }
+  if(rp||bm){ var done=false; function once(){if(done)return;done=true;go()}
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){requestAnimationFrame(once)}); setTimeout(once,900);
+  } else { show(); ready=true; }
+
+  // nút chơi lại trên mỗi tương tác đã xong
+  var IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 3.5v4.5h4.5"/></svg>';
+  [].forEach.call(art.querySelectorAll('.act'),function(box,k){
+    var b=document.createElement('button');b.type='button';b.className='dc-again';b.innerHTML=IC;b.setAttribute('aria-label','Chơi lại tương tác này');b.tabIndex=-1;
+    box.appendChild(b); var tm=0;
+    function later(){clearTimeout(tm);b.classList.remove('on');b.tabIndex=-1;if(box.classList.contains('done'))tm=setTimeout(function(){b.classList.add('on');b.tabIndex=0},1800)}
+    new MutationObserver(function(){if(box.classList.contains('done')&&!b.classList.contains('on')&&!tm)later()}).observe(box,{attributes:true,attributeFilter:['class']});
+    box.addEventListener('pointerdown',function(e){if(e.target.closest('.dc-again'))return;tm=0;later()},{passive:true});
+    b.addEventListener('pointerdown',function(e){e.stopPropagation()});
+    b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();
+      if(window.a07sfx)window.a07sfx('flip'); b.classList.add('spin');
+      var r=box.getBoundingClientRect(), i=els.indexOf(box);
+      try{sessionStorage.setItem('a07-replay',JSON.stringify({ch:cn,i:i<0?anchor().i:i,off:Math.round(r.top),box:k}))}catch(err){}
+      ready=false; setTimeout(function(){location.reload()},260);
+    });
+  });
+})();
 </script>
 <script>
 /* Tranh động và tiếng nền theo cảnh. Được nhúng thẳng vào trang khi dựng.
@@ -4600,6 +4708,8 @@ els.forEach(function(el){io.observe(el)});})();
     function heavyClank(at, v) { bus(); clank(wet(v), at, 1); boom(at, v * 0.6); }
     var S = {
       flip: function (o, n) { nz(o, 'bandpass', 900, 3400, 1.2, 0.22, 0.2, n); nz(o, 'lowpass', 900, 400, 1, 0.3, 0.06, n + 0.17); },
+      // nhật ký hệ thống ghi thêm một dòng: hai tiếng bíp số cao, khẽ
+      log: function (o, n) { [2349, 3136].forEach(function (f, i) { var x = ac.createOscillator(), g = gain(0), t = n + i * 0.07; x.type = 'sine'; x.frequency.value = f; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18); x.connect(g); g.connect(o); x.start(t); x.stop(t + 0.2); }); },
       deal: function (o, n) { for (var i = 0; i < 3; i++) nz(o, 'bandpass', 700, 2600, 1, 0.18, 0.24, n + i * 0.25); },
       dissolve: function (o, n) { nz(o, 'highpass', 3000, 7000, 0.7, 0.07, 1.8, n); [1568, 1175, 880].forEach(function (f, i) { sine(o, f, 0.03, 1.2, n + i * 0.2); }); },
       // dấu kích hoạt (vòng tròn rối): tiếng dồn lên 0,85 giây rồi loé một cái, nối thẳng vào hiệu ứng năng lực
