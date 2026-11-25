@@ -473,6 +473,14 @@ em .nm{font-style:italic}
 html.dc-wait main{opacity:0}
 @media (prefers-reduced-motion: reduce){.dc-again,.dc-toast{transition:none}.act.dc-fresh,.dc-again.spin svg{animation:none}}
 
+
+.act canvas,.act .dust,.gact canvas,.gact [class$="-stage"]{touch-action:none}
+main.giu-cut{overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent);mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent)}
+.giu-pulse{animation:giu-pulse 1.1s ease-out}
+@keyframes giu-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 50%,transparent)}100%{box-shadow:0 0 0 20px transparent}}
+@media (prefers-reduced-motion: reduce){.giu-pulse{animation:none;outline:2px solid color-mix(in srgb,var(--ice) 60%,transparent);outline-offset:4px}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -890,9 +898,9 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   [].forEach.call(document.querySelectorAll('a.pov'),function(a){a.addEventListener('click',done)});
   var last=0;
   addEventListener('scroll',function(){
-    var y=scrollY, h=document.documentElement.scrollHeight-innerHeight;
-    prog.style.transform='scaleX('+(h>0?y/h:0)+')';
-    if(h>0&&y/h>0.96)done();
+    var y=scrollY, h=(window.a07fullH||document.documentElement.scrollHeight)-innerHeight;
+    prog.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')';
+    if(h>0&&y/h>0.96&&!root.classList.contains('giu-on'))done();
     bar.classList.toggle('hide', y>last && y>200);
     last=y;
   },{passive:true});
@@ -1042,6 +1050,73 @@ els.forEach(function(el){io.observe(el)});})();
       ready=false; setTimeout(function(){location.reload()},260);
     });
   });
+})();
+(function(){
+  var root=document.documentElement, main=document.querySelector('main'); if(!main) return;
+  var boxes=[].slice.call(document.querySelectorAll('.act, .gact')); if(!boxes.length) return;
+  var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1];
+  function rd(){try{return JSON.parse(localStorage.getItem('a07-giu')||'{}')||{}}catch(e){return {}}}
+  function unit(b){if(b.classList.contains('gact')){var p=b.closest('.pv-text');return 'pov:'+(p?p.getAttribute('data-id'):'')}return 'ch'+(cn||'')}
+  boxes.forEach(function(b){var u=unit(b);b._u=u;b._k=boxes.filter(function(x){return unit(x)===u}).indexOf(b)});
+  var saved=rd(); boxes.forEach(function(b){if((saved[b._u]||[]).indexOf(b._k)>=0)b._free=1});
+  function keep(b){b._free=1;var o=rd(),l=o[b._u]||(o[b._u]=[]);if(l.indexOf(b._k)<0){l.push(b._k);try{localStorage.setItem('a07-giu',JSON.stringify(o))}catch(e){}}}
+  // xong một lần: chương có lớp done (tờ giấy gấp thì mở ra là đủ, giu-ok); góc nhìn thì done/sent/land hoặc câu đích đã sáng
+  function ok(b){var c=b.classList;if(c.contains('done')||c.contains('giu-ok')||c.contains('sent')||c.contains('land'))return true;
+    if(c.contains('gact')){var h=b.parentNode&&b.parentNode.querySelector('p.hit');if(h&&h.classList.contains('lit'))return true}return false}
+  function shown(b){return b.getClientRects().length>0}
+  function top(b){return b.getBoundingClientRect().top+scrollY}
+  // vị trí cuộn mà món tương tác nằm giữa màn hình
+  function stop(b){var r=b.getBoundingClientRect(),h=r.height,vh=innerHeight;return h<vh-140?r.top+scrollY-(vh-h)/2:r.top+scrollY+h-vh+60}
+  var gate=null, pushes=0, lastPush=0, onT=0;
+  function find(){
+    for(var i=0;i<boxes.length;i++){var b=boxes[i];if(b._free)continue;if(ok(b)){keep(b);continue}if(shown(b))return b}
+    return null;
+  }
+  function cut(b){
+    var vh=innerHeight, r=b.getBoundingClientRect(), mt=main.getBoundingClientRect().top, h=r.height;
+    var pad=h<vh-140?(vh-h)/2:60; var x=Math.ceil(r.bottom-mt+pad);
+    main.style.setProperty('--giu-fade',Math.max(40,Math.min(130,pad-20))+'px');
+    main.style.maxHeight=x+'px'; main.classList.add('giu-cut'); root.classList.add('giu-on');
+  }
+  function open(){if(!main.classList.contains('giu-cut'))return;main.classList.remove('giu-cut');main.style.maxHeight='';root.classList.remove('giu-on')}
+  function pulse(b){b.classList.remove('giu-pulse');void b.offsetWidth;b.classList.add('giu-pulse');setTimeout(function(){b.classList.remove('giu-pulse')},1200)}
+  function check(){
+    var g=find();
+    if(g!==gate){
+      open(); gate=g; pushes=0; onT=0;
+      if(gate) window.a07fullH=document.documentElement.scrollHeight;
+    }
+    if(gate){
+      cut(gate);
+      // lần đầu món tương tác vào giữa màn hình: loé nhẹ một cái
+      if(!onT){var r=gate.getBoundingClientRect();if(r.top>=0&&r.bottom<=innerHeight){onT=1;pulse(gate)}}
+    } else window.a07fullH=0;
+  }
+  function atEnd(){return scrollY+innerHeight>=document.documentElement.scrollHeight-4}
+  function push(){
+    if(!gate||!atEnd())return; var t=performance.now(); if(t-lastPush<700)return; lastPush=t;
+    pulse(gate); if(pushes===0&&window.a07sfx)window.a07sfx('nudge');
+    // van an toàn: cố lướt mãi (khoảng 10 giây) mà tương tác không chạy được thì thả ra
+    if(++pushes>=15){gate._free=1;open();gate=null;check()}
+  }
+  var ty=0, inBox=false;
+  addEventListener('touchstart',function(e){ty=e.touches[0].clientY;inBox=!!(e.target.closest&&e.target.closest('.act, .gact'))},{passive:true});
+  addEventListener('touchmove',function(e){if(!inBox&&ty-e.touches[0].clientY>24)push()},{passive:true});
+  addEventListener('wheel',function(e){if(e.deltaY>0)push()},{passive:true});
+  addEventListener('keydown',function(e){if(/^(ArrowDown|PageDown|End| )$/.test(e.key))push()});
+  // bắt đầu sau khi trang đã nhảy về chỗ cũ (nếu có); tương tác nằm phía trên chỗ đang đọc coi như đã qua
+  function passAbove(){boxes.forEach(function(b){if(!b._free&&!ok(b)&&shown(b)&&stop(b)<scrollY-8)b._free=1})}
+  function start(){
+    passAbove(); check();
+    var q=0; function soon(){if(!q){q=1;requestAnimationFrame(function(){q=0;check()})}}
+    addEventListener('scroll',soon,{passive:true}); addEventListener('resize',soon);
+    addEventListener('hashchange',function(){open();gate=null;setTimeout(function(){passAbove();check()},400)});
+    document.addEventListener('pointerup',function(){setTimeout(check,60)},true);
+    setInterval(check,500);
+    if(window.ResizeObserver)new ResizeObserver(soon).observe(document.body);
+  }
+  var begun=false; function go(){if(begun)return;begun=true;setTimeout(start,1100)}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go); setTimeout(go,1500);
 })();
 </script>
 <script>
@@ -5882,7 +5957,7 @@ els.forEach(function(el){io.observe(el)});})();
           if (u >= 2) this.open(S, true);
           S.kick(1200);
         },
-        open: function (S, sound) { if (opened) return; opened = performance.now() / 1000; u = 2; if (o.folded) S.say(o.folded); S.kick(3000); if (sound && o.reveal) snd(o.reveal); },
+        open: function (S, sound) { if (opened) return; opened = performance.now() / 1000; S.box.classList.add('giu-ok'); u = 2; if (o.folded) S.say(o.folded); S.kick(3000); if (sound && o.reveal) snd(o.reveal); },
         auto: function (S) { if (opened) { u = 0; } }
       };
     }

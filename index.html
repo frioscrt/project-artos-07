@@ -473,6 +473,14 @@ em .nm{font-style:italic}
 html.dc-wait main{opacity:0}
 @media (prefers-reduced-motion: reduce){.dc-again,.dc-toast{transition:none}.act.dc-fresh,.dc-again.spin svg{animation:none}}
 
+
+.act canvas,.act .dust,.gact canvas,.gact [class$="-stage"]{touch-action:none}
+main.giu-cut{overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent);mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent)}
+.giu-pulse{animation:giu-pulse 1.1s ease-out}
+@keyframes giu-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 50%,transparent)}100%{box-shadow:0 0 0 20px transparent}}
+@media (prefers-reduced-motion: reduce){.giu-pulse{animation:none;outline:2px solid color-mix(in srgb,var(--ice) 60%,transparent);outline-offset:4px}}
+
 </style>
 <style>
 /* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
@@ -5581,7 +5589,7 @@ addEventListener('pageshow',function(e){if(e.persisted){[].forEach.call(document
           if (u >= 2) this.open(S, true);
           S.kick(1200);
         },
-        open: function (S, sound) { if (opened) return; opened = performance.now() / 1000; u = 2; if (o.folded) S.say(o.folded); S.kick(3000); if (sound && o.reveal) snd(o.reveal); },
+        open: function (S, sound) { if (opened) return; opened = performance.now() / 1000; S.box.classList.add('giu-ok'); u = 2; if (o.folded) S.say(o.folded); S.kick(3000); if (sound && o.reveal) snd(o.reveal); },
         auto: function (S) { if (opened) { u = 0; } }
       };
     }
