@@ -761,7 +761,8 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   document.getElementById('spoil-go').addEventListener('click',function(){try{localStorage.setItem(k,'1')}catch(e){}b.classList.add('off');
   setTimeout(function(){b.style.display='none';var a=document.querySelector('article');if(a)a.scrollIntoView({behavior:'smooth',block:'start'})},600)})})();</script>
   <article>
-<section class="scene">
+<section class="scene" data-sound="dusk14">
+<figure class="plate"><canvas class="art" data-art="fork14" role="img" aria-label="Chạng vạng khu Mỏ: con đường chẻ làm hai, hai căn nhà dân tối om không một đốm lửa, trời tím bầm phía tây, ba hàng dấu chân dừng ở chỗ rẽ"></canvas></figure>
 <p>Con đường mòn ra khỏi khu Mỏ dốc xuống, lổn nhổn đá, và trời tối nhanh hơn <span class="nm nm-person first">Clevia</span> tưởng.</p>
 <p>Lúc họ rời lán rèn, mặt trời còn nằm vắt ngang trên đỉnh đồi như một hòn than. Đi chưa được bao lâu thì nó đã chìm hẳn, chỉ còn lại một vệt đỏ sẫm loang ở chân trời phía tây, mỏng dần, tím dần, như vết bầm trên da người ta lúc sắp tan. Những đụn đá hai bên đường hoá thành những khối đen sì không còn hình thù gì. Đâu đó trên sườn đồi, mấy bóng áo nâu vẫn còn lặng lẽ gánh đá đi về phía ống khói gạch, chậm rãi, đều đặn, như thể trời sáng hay trời tối thì với họ cũng chẳng khác gì nhau.</p>
 <p><span class="nm nm-person first">Luke</span> đi chậm lại khi tới chỗ con đường rẽ làm hai. Một ngả quay lên căn nhà dân thứ nhất, nơi buổi trưa cô và anh đã nằm nghỉ. Một ngả vòng ra sau ống khói, về căn nhà của ông lão đầu trọc. Cả hai căn đều đã tối om. Không có lấy một đốm lửa bếp.</p>
@@ -776,13 +777,46 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Anh nói câu cuối hơi nhỏ đi, như người ta vừa nói vừa tự hỏi mình có tin vào điều đó không.</p>
 <p><span class="nm nm-person">Leon</span> nhún vai. “Dùng thì dùng.”</p>
 <p><span class="nm nm-person">Luke</span> chìa tấm thẻ ra. Lần trước, ở bờ sông khu Nông nghiệp, ba ngón tay đặt lên mép thẻ là của cô, của anh, và của chú <span class="nm nm-person first">Oscar</span> run run. Lần này, ngón tay thứ ba là của <span class="nm nm-person">Leon</span>. Anh ta đặt nó lên chậm rãi, như đặt lên một thứ gì đó chẳng mấy quan trọng, nhưng <span class="nm nm-person">Clevia</span> để ý thấy sợi xích dưới chân anh ta đã cuộn tròn lại, nằm gọn sát mắt cá chân, im re.</p>
-<p>Tấm thẻ ấm lên.</p>
+<p>Tấm thẻ ấm lên.</p><div class="act act-press heat" data-hold="2.4" data-fire="teleport"><button type="button" class="card pressbtn" aria-label="Giữ ngón tay lên thẻ Teleport"><span class="card-inner">
+      <svg class="face front" viewBox="0 0 856 540" aria-hidden="true">
+        <defs>
+          <linearGradient id="af-teleport" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c3436"/><stop offset=".6" stop-color="#191f22"/><stop offset="1" stop-color="#101518"/></linearGradient>
+          <linearGradient id="tpg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eadf" stop-opacity=".35"/><stop offset="1" stop-color="#e9eadf" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect width="856" height="540" rx="34" fill="url(#af-teleport)"/>
+        <rect x="6" y="6" width="844" height="528" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke="#c9cfc6" stroke-linecap="round" stroke-linejoin="round"><rect x="350" y="120" width="156" height="250" fill="url(#tpg)" stroke="none"/><path d="M350 370 V120 H506 V370" stroke-width="7"/><path d="M260 370 H596" stroke-width="2" opacity=".5"/></g>
+        <text x="428" y="462" text-anchor="middle" fill="#9aa5a3" font-family="Literata, Georgia, serif" font-style="italic" font-size="38">Teleport</text>
+        
+      </svg>
+      <svg class="face back" viewBox="0 0 856 540" aria-hidden="true">
+        <defs>
+          <linearGradient id="kf-teleport" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a3235"/><stop offset=".55" stop-color="#161c1f"/><stop offset="1" stop-color="#0e1315"/></linearGradient>
+          <filter id="emb-teleport"><feGaussianBlur stdDeviation=".6"/></filter>
+        </defs>
+        <rect width="856" height="540" rx="34" fill="url(#kf-teleport)"/>
+        <rect x="6" y="6" width="844" height="528" rx="30" fill="none" stroke="#3c4649" stroke-width="2"/>
+        <g fill="none" stroke-linecap="round" filter="url(#emb-teleport)">
+          <g transform="translate(1.5 1.5)" stroke="#05080a" stroke-width="3" opacity=".9">
+            <circle cx="428" cy="232" r="150"/><circle cx="428" cy="232" r="138" stroke-width="1.5"/><path d="M536.4 232.0 C492.6 265.9 414.7 280.3 445.5 285.9 C385.2 311.2 345.0 248.3 351.5 287.6 C336.1 243.7 373.1 158.8 347.2 173.3 C407.6 117.1 493.9 151.9 439.6 196.4 C503.0 181.5 491.2 289.5 471.1 232.0"/><path d="M486.2 322.6 C464.7 332.6 399.7 273.8 393.5 333.7 C405.7 272.6 309.6 232.4 385.2 247.4 C408.3 230.2 414.3 190.3 361.0 190.8 C405.1 205.7 452.6 119.5 418.4 153.7 C436.3 144.6 529.5 173.9 454.2 205.2 C462.5 203.1 477.2 254.4 502.7 239.7 C506.4 256.2 433.7 271.0 464.6 289.0"/><path d="M398.7 296.1 C382.4 286.6 358.9 221.5 330.9 268.1 C335.7 223.4 397.6 203.9 346.7 194.8 C378.6 203.4 418.6 130.1 399.7 156.1 C419.4 211.8 480.0 204.5 471.6 136.7 C441.4 196.6 504.1 267.9 470.7 216.1 C456.1 226.4 500.2 323.6 468.7 250.6 C504.0 318.4 394.0 324.6 464.8 330.8 C437.7 251.4 420.1 242.8 404.9 282.5"/><path d="M376.6 239.3 C388.5 226.1 398.6 123.7 359.9 167.8 C413.2 210.0 476.8 184.5 432.3 179.9 C496.6 137.6 443.5 230.7 455.6 213.5 C496.0 196.6 470.0 311.0 529.7 264.3 C497.3 264.5 431.8 250.7 447.6 283.2 C424.4 301.0 412.9 239.6 379.4 314.7 C348.3 274.5 314.7 236.2 386.4 237.9"/><path d="M359.2 152.3 C451.5 135.8 486.2 216.3 481.6 143.5 C484.3 218.6 451.5 263.8 479.9 244.2 C451.0 279.3 398.6 309.5 433.6 297.9 C400.3 286.0 393.1 225.6 342.1 268.1 C356.2 188.0 437.2 121.3 389.8 187.7"/><path d="M442.0 184.7 C447.0 158.7 527.3 222.1 503.4 191.0 C488.0 211.9 456.8 245.5 533.9 263.3 C489.9 264.7 432.8 330.0 469.6 308.6 C435.5 278.1 405.5 302.5 410.2 292.1 C405.4 264.6 343.8 254.8 384.4 255.7 C339.0 288.7 356.5 140.8 362.7 212.7 C414.6 223.2 454.3 136.9 376.7 137.6 C424.9 214.9 452.0 216.8 451.3 153.2"/><path d="M468.2 220.3 C546.9 241.4 431.9 266.5 450.5 265.0 C432.8 272.2 368.0 255.4 401.1 266.7 C332.4 261.7 391.4 187.4 320.4 193.3 C351.2 162.1 454.1 112.3 430.1 165.0 C449.8 216.2 464.5 236.5 471.7 219.3"/>
+          </g>
+          <g stroke="#56636a" stroke-width="2.2" opacity=".75">
+            <circle cx="428" cy="232" r="150"/><circle cx="428" cy="232" r="138" stroke-width="1"/><path d="M536.4 232.0 C492.6 265.9 414.7 280.3 445.5 285.9 C385.2 311.2 345.0 248.3 351.5 287.6 C336.1 243.7 373.1 158.8 347.2 173.3 C407.6 117.1 493.9 151.9 439.6 196.4 C503.0 181.5 491.2 289.5 471.1 232.0"/><path d="M486.2 322.6 C464.7 332.6 399.7 273.8 393.5 333.7 C405.7 272.6 309.6 232.4 385.2 247.4 C408.3 230.2 414.3 190.3 361.0 190.8 C405.1 205.7 452.6 119.5 418.4 153.7 C436.3 144.6 529.5 173.9 454.2 205.2 C462.5 203.1 477.2 254.4 502.7 239.7 C506.4 256.2 433.7 271.0 464.6 289.0"/><path d="M398.7 296.1 C382.4 286.6 358.9 221.5 330.9 268.1 C335.7 223.4 397.6 203.9 346.7 194.8 C378.6 203.4 418.6 130.1 399.7 156.1 C419.4 211.8 480.0 204.5 471.6 136.7 C441.4 196.6 504.1 267.9 470.7 216.1 C456.1 226.4 500.2 323.6 468.7 250.6 C504.0 318.4 394.0 324.6 464.8 330.8 C437.7 251.4 420.1 242.8 404.9 282.5"/><path d="M376.6 239.3 C388.5 226.1 398.6 123.7 359.9 167.8 C413.2 210.0 476.8 184.5 432.3 179.9 C496.6 137.6 443.5 230.7 455.6 213.5 C496.0 196.6 470.0 311.0 529.7 264.3 C497.3 264.5 431.8 250.7 447.6 283.2 C424.4 301.0 412.9 239.6 379.4 314.7 C348.3 274.5 314.7 236.2 386.4 237.9"/><path d="M359.2 152.3 C451.5 135.8 486.2 216.3 481.6 143.5 C484.3 218.6 451.5 263.8 479.9 244.2 C451.0 279.3 398.6 309.5 433.6 297.9 C400.3 286.0 393.1 225.6 342.1 268.1 C356.2 188.0 437.2 121.3 389.8 187.7"/><path d="M442.0 184.7 C447.0 158.7 527.3 222.1 503.4 191.0 C488.0 211.9 456.8 245.5 533.9 263.3 C489.9 264.7 432.8 330.0 469.6 308.6 C435.5 278.1 405.5 302.5 410.2 292.1 C405.4 264.6 343.8 254.8 384.4 255.7 C339.0 288.7 356.5 140.8 362.7 212.7 C414.6 223.2 454.3 136.9 376.7 137.6 C424.9 214.9 452.0 216.8 451.3 153.2"/><path d="M468.2 220.3 C546.9 241.4 431.9 266.5 450.5 265.0 C432.8 272.2 368.0 255.4 401.1 266.7 C332.4 261.7 391.4 187.4 320.4 193.3 C351.2 162.1 454.1 112.3 430.1 165.0 C449.8 216.2 464.5 236.5 471.7 219.3"/>
+          </g>
+        </g>
+        <text x="428" y="456" text-anchor="middle" fill="#6b787d" font-family="Literata, Georgia, serif" font-size="40" letter-spacing="14">PROJECT ARTOS 07</text>
+        <defs><linearGradient id="sh-teleport" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#e8f0ec" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+        <rect class="sheen" x="-300" y="-40" width="300" height="620" fill="url(#sh-teleport)" transform="skewX(-18)"/>
+      </svg>
+    </span>
+  </button><span class="act-hint">đặt ngón tay lên thẻ và giữ</span></div>
 <p>Cái khung cửa sáng dần, từng nét một, như lần trước. <span class="nm nm-person">Clevia</span> nhìn những đường sáng ấy chạy dọc theo nét mực, và cô chợt nghĩ, đây là tấm cuối cùng. Sau tấm này, họ sẽ không còn cách nào để đi từ khu này sang khu khác nữa, ngoài hai bàn chân. Ở nơi nào thì sẽ phải ở lại nơi đó, cho tới khi cái làng này thôi giữ họ lại.</p>
 <p class="say say-luke" data-name="Luke"><span class="q">“Anh đang nghĩ tới Nhà họp làng,”</span> <span class="nm nm-person">Luke</span> nói nhỏ.</p>
 <p data-log="ben-kia-buc-tuong:29">Rồi khung cửa mở ra, ở khắp nơi.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="yard14">
+<figure class="plate"><canvas class="art" data-art="yard14" role="img" aria-label="Sân Nhà họp làng ban đêm: đèn dầu lay lắt trên cột, giếng nhỏ giữa sân, tháp chuông gỗ ở góc trái, sợi dây thừng đã tháo buông chạm đất"></canvas></figure>
 <p>Chân cô chạm xuống một mặt sân gạch.</p>
 <p>Lần này cô không khuỵu xuống. Cô loạng choạng, chới với một bước, rồi có một bàn tay nắm lấy khuỷu tay cô giữ lại, chặt và nhanh, rồi buông ra ngay, nhanh tới mức lúc cô quay lại nhìn thì <span class="nm nm-person">Leon</span> đã đút tay vào túi áo như chưa từng làm gì. <span class="nm nm-person">Luke</span> đứng bên cạnh, cúi xuống nhìn bàn tay mình. Tấm thẻ đã biến mất, chỉ còn lại một chút ấm trên đầu ngón tay, rồi cái ấm ấy cũng tan nốt.</p>
 <p>Họ đang đứng giữa sân Nhà họp làng.</p>
@@ -816,9 +850,10 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p><span class="nm nm-person">Leon</span> không nói gì cả. Nhưng <span class="nm nm-person">Clevia</span> thấy anh ta đã bước lên nửa bước, đúng nửa bước, vừa đủ để vai anh ta che đi một nửa tầm nhìn của cô về phía cái tháp chuông.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="yard14">
+<figure class="plate"><canvas class="art" data-art="bell14" role="img" aria-label="Chiếc chuông đồng xỉn rêu dưới mái ván mục; trong bóng tối dưới tháp, hai ô kính nhỏ hắt ánh đèn"></canvas></figure>
 <p>Người đàn ông dưới tháp chuông quay lại.</p>
-<p>Ngọn đèn dầu ở xa quá, ánh sáng của nó chỉ với tới được chân cái tháp, nên lúc đầu <span class="nm nm-person">Clevia</span> chỉ thấy hai mặt kính loé lên, hai cái ô vuông nhỏ hắt lại ánh lửa vàng vọt. Rồi người ấy bước ra khỏi bóng mái tháp một bước, và cô thấy cái áo khoác xám bạc, mái tóc thưa trán, cặp kính gọng vuông.</p>
+<p data-fx="glint">Ngọn đèn dầu ở xa quá, ánh sáng của nó chỉ với tới được chân cái tháp, nên lúc đầu <span class="nm nm-person">Clevia</span> chỉ thấy hai mặt kính loé lên, hai cái ô vuông nhỏ hắt lại ánh lửa vàng vọt. Rồi người ấy bước ra khỏi bóng mái tháp một bước, và cô thấy cái áo khoác xám bạc, mái tóc thưa trán, cặp kính gọng vuông.</p>
 <p>Người đàn ông ở lán rèn. Người đã ngồi xoay cái ổ khoá cổng hầm trong tay và nói rằng nó chưa hề mở.</p>
 <p class="say say-other" data-name="Joel"><span class="q">“À,”</span> <span class="nm nm-person first">Joel</span> nói. Ông ta mỉm cười, cái mỉm cười ôn hoà, lịch sự, cái mỉm cười của người gặp lại người quen trên phố. <span class="q">“Lại là ba người. Đúng lúc thật.”</span></p>
 <p><span class="nm nm-person">Clevia</span> không biết đúng lúc cho cái gì. Cô thấy tay <span class="nm nm-person">Luke</span> khẽ chạm vào cánh tay cô, không nắm, chỉ chạm, như để nhắc cô rằng anh vẫn ở đây.</p>
@@ -832,13 +867,14 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Rồi ông ta quay người lại, đối mặt với chiếc chuông.</p>
 <p><span class="nm nm-person">Clevia</span> không thấy rõ ông ta làm gì. Tấm lưng áo khoác xám bạc che mất. Cô chỉ thấy hai cánh tay ông ta đưa lên, áp vào sườn chiếc chuông đồng, và có một tiếng gì đó rất khẽ, khẽ như tiếng giấy cọ vào kim loại, rồi im. Ông ta đứng yên như thế một lúc, hai bàn tay vẫn đặt trên chiếc chuông, như một người thợ đang áp tai nghe tiếng máy chạy.</p>
 <p class="say say-luke" data-name="Luke"><span class="q">“Cậu <span class="nm nm-person">Leon</span>,”</span> <span class="nm nm-person">Luke</span> khẽ gọi. Giọng anh căng lên, và <span class="nm nm-person">Clevia</span> quay sang thì thấy anh đang nhìn chằm chằm vào chiếc chuông, đôi mắt mở to, như vừa nghe thấy một âm thanh mà chẳng ai khác nghe được. <span class="q">“Có gì đó vừa thay đổi. Ở cái chuông. Tớ không biết là cái gì…”</span></p>
-<p><span class="nm nm-person">Leon</span> không đợi anh nói hết.</p>
+<p><span class="nm nm-person">Leon</span> không đợi anh nói hết.</p><div class="act act-cv act-lash" data-kind="lash"><canvas aria-hidden="true"></canvas><span class="act-hint">chạm vào chỗ mặt kính loé</span></div>
 <p>Sợi xích bắn đi.</p>
 <p>Nó lao qua sân gạch nhanh đến mức <span class="nm nm-person">Clevia</span> chỉ thấy một vệt đen loang loáng dưới ánh đèn, nghe một tiếng rít như tiếng roi quất vào không khí. Nhưng <span class="nm nm-person">Joel</span> đã nắm lấy sợi dây thừng. Ông ta không vội vàng. Ông ta chỉ nắm lấy nó, như người ta nắm lấy tay nắm cửa nhà mình, rồi kéo xuống.</p>
-<p>Chiếc chuông ngân lên.</p>
+<p data-fx="bellwave">Chiếc chuông ngân lên.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="ring14">
+<figure class="plate"><canvas class="art" data-art="bellring" role="img" aria-label="Những vòng sáng xanh băng lan ra từ tháp chuông, xuyên qua mái nhà và bức tường trong suốt; dây thừng đung đưa; mấy vòng xích quấn vào khoảng không"></canvas></figure>
 <p><span class="nm nm-person">Clevia</span> đã nghe tiếng chuông nhiều lần trong đời. Chuông nhà thờ sáng chủ nhật, vọng qua mấy dãy phố. Chuông chùa lúc chiều muộn, trầm và chậm. Chuông xe đạp leng keng ở đầu ngõ. Chuông trường báo hết giờ, chói tai, vui vẻ. Nhưng chưa có tiếng chuông nào giống như tiếng chuông này.</p>
 <p>Nó không to. Lúc đầu cô còn tưởng nó nhỏ, nhỏ như tiếng một cái thìa gõ vào thành bát. Nhưng nó không dừng lại ở chỗ cái tháp. Nó lan ra. Cô cảm thấy nó đi qua mình, đi qua lồng ngực mình, qua hai bàn tay mình, qua hai chân mình, như một gợn sóng đi qua mặt nước, rồi đi tiếp, ra khỏi sân, ra khỏi khu giữa, đi xuyên qua bức tường trong suốt mà cả ngày hôm nay không ai bước qua nổi, như thể bức tường ấy chưa bao giờ có ở đó. Cô có cảm giác cả cái làng đang rung lên. Từng viên gạch dưới chân. Từng chiếc lá trên cây. Từng mái ngói, từng sợi rơm, từng hòn đá trên sườn đồi khu Mỏ xa tít. Tất cả đều rung lên cùng một lúc, cùng một nhịp, như những sợi dây đàn chung một cây đàn.</p>
 <p>Và giữa tiếng chuông ấy, có ánh sáng.</p>
@@ -850,7 +886,8 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Nó ngân mãi, ngân mãi, nhỏ dần, nhỏ dần, nhưng không chịu tắt hẳn, như thể nó còn phải đi tới tận những góc xa nhất của cái làng này, gõ vào từng cánh cửa, gọi tên từng người. <span class="nm nm-person">Clevia</span> đứng chôn chân giữa sân. Cô không biết mình đã đứng đó bao lâu. Cô chỉ biết rằng khi tiếng chuông cuối cùng cũng tắt, cái im lặng nó để lại còn to hơn cả chính nó.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="still14">
+<figure class="plate"><canvas class="art" data-art="rope14" role="img" aria-label="Dây thừng đã thôi đung đưa dưới chiếc chuông; mặt gạch dưới tháp trơn, không một dấu giày"></canvas></figure>
 <p class="say say-other" data-name="Jasper"><span class="q">“Ông ta…”</span> <span class="nm nm-person">Jasper</span> là người lên tiếng đầu tiên. Gã đã bước hẳn ra khỏi khung cửa, đứng trên bậc thềm cao nhất, mặt trắng bệch dưới ánh đèn dầu. <span class="q">“Ông ta đi đâu rồi? Hả? Ông ta vừa đi đâu rồi?”</span></p>
 <p>Không ai trả lời gã.</p>
 <p><span class="nm nm-person">Leon</span> thu sợi xích về. Nó trườn trên mặt gạch, chậm chạp, như một con vật vừa vồ hụt, rồi cuộn tròn lại dưới chân anh ta. Anh ta không nhìn nó. Anh ta nhìn chằm chằm vào chỗ trống dưới tháp chuông, hàm anh ta bạnh ra, hai bàn tay trong túi áo hoodie siết lại thành nắm đấm, <span class="nm nm-person">Clevia</span> nhìn thấy cả những đốt ngón tay nhô lên dưới lớp vải.</p>
@@ -860,7 +897,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p class="say say-clevia" data-name="Clevia"><span class="q">“Ra khỏi đây?”</span> <span class="nm nm-person">Clevia</span> nghe giọng mình run lên. <span class="q">“Nhưng… chưa đủ hai mươi tư tiếng mà anh…”</span></p>
 <p class="say say-luke" data-name="Luke"><span class="q">“Ừ.”</span> <span class="nm nm-person">Luke</span> khẽ gật. <span class="q">“Chưa đủ.”</span></p>
 <p>Cô nhìn chiếc chuông. Một chiếc chuông đồng cũ kỹ, xỉn màu, đóng rêu, treo trong một cái tháp gỗ xiêu vẹo ở góc sân. Hồi sáng cô đã đi ngang qua nó mà chẳng thèm nhìn lấy một lần. Cô chợt nhớ tới cái hòm gỗ ở chòi câu cá, cái hòm có nắp hé mở và bên trong trống trơn, cái ổ khoá đồng bị bẻ cong hẳn sang một bên. Cô không biết vì sao mình lại nhớ tới nó vào lúc này. Có lẽ là vì cái cảm giác giống nhau đến lạ. Cái cảm giác tới muộn. Cái cảm giác có ai đó đã đi qua nơi này trước, đã nhìn thấy một thứ gì đó mà cô không thấy, đã lấy đi một thứ gì đó mà cô không biết là có.</p>
-<p><span class="nm nm-person">Leon</span> bước tới. Anh ta không đứng cách hai bước như <span class="nm nm-person">Luke</span>. Anh ta đi thẳng tới dưới mái tháp, nắm lấy sợi dây thừng, và giật mạnh.</p>
+<p><span class="nm nm-person">Leon</span> bước tới. Anh ta không đứng cách hai bước như <span class="nm nm-person">Luke</span>. Anh ta đi thẳng tới dưới mái tháp, nắm lấy sợi dây thừng, và giật mạnh.</p><div class="act act-cv act-rope" data-kind="rope"><canvas aria-hidden="true"></canvas><span class="act-hint">chạm và giữ để giật dây</span></div>
 <p>Chiếc chuông không động đậy.</p>
 <p>Anh ta giật lần nữa, mạnh hơn, cả người ngả ra sau, và <span class="nm nm-person">Clevia</span> nghe tiếng sợi dây thừng căng lên kèn kẹt, nghe tiếng mấy cây cột gỗ của cái tháp rên lên một tiếng khô khốc. Nhưng chiếc chuông vẫn treo yên trên cái xà, nặng trịch, im lìm, như thể nó được đúc liền vào cái xà ấy, như thể nó chưa bao giờ biết đung đưa là gì.</p>
 <p><span class="nm nm-person">Leon</span> buông tay. Sợi dây thừng rơi xuống, đập vào cột một tiếng <em>bộp</em> khô khốc.</p>
@@ -868,15 +905,16 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p><span class="nm nm-person">Leon</span> không đáp. Anh ta chỉ đứng dưới mái tháp, ngửa mặt nhìn chiếc chuông thêm một lúc lâu nữa, rồi quay người bỏ đi, ra giữa sân.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="still14">
+<figure class="plate"><canvas class="art" data-art="fieldseyes" role="img" aria-label="Bên kia bức tường trong suốt, ruộng khu Nông nghiệp dưới trăng non; những cặp đốm đỏ tắt dần từng cặp một"></canvas></figure>
 <p>Chính <span class="nm nm-person">Oscar</span> là người nhận ra trước.</p>
 <p class="say say-other"><span class="q">“Nghe này,”</span> ông nói. Ông đã bước xuống hết mấy bậc thềm, đứng ở giữa sân, cái đầu muối tiêu nghiêng nghiêng như người đi biển lâu năm đang nghe tiếng sóng. <span class="q">“Mấy đứa có nghe thấy không?”</span></p>
 <p><span class="nm nm-person">Clevia</span> lắng tai. Cô chẳng nghe thấy gì cả.</p>
 <p>Rồi cô hiểu ra. Chính vì cô chẳng nghe thấy gì cả.</p>
 <p>Cả ngày hôm nay, cái làng này chưa bao giờ im lặng thật sự. Cô đã quen với những âm thanh của nó tới mức không còn để ý tới chúng nữa: tiếng chân dân làng lệt sệt đi qua đi lại, tiếng cuốc đá đều đều vọng sang từ khu Mỏ, tiếng búa rèn, tiếng gió thổi qua ruộng mạ, và đâu đó, bao giờ cũng có, ở xa xa, những tiếng gào rú, những tiếng kêu không ra tiếng người của một khu nào đó đang bị nhiễm. Cô đã nghe những tiếng ấy suốt từ đêm qua, nghe tới mức chúng trở thành một thứ nền, như tiếng quạt trần trong phòng mà người ta chỉ nhận ra khi nó tắt.</p>
-<p>Giờ thì nó tắt rồi.</p>
+<p data-fx="hush">Giờ thì nó tắt rồi.</p>
 <p><span class="nm nm-person">Clevia</span> quay về phía bức tường trong suốt ngăn khu giữa với khu Nông nghiệp. Từ góc sân này, qua mấy mái nhà thấp, cô nhìn được xa tít tới những thửa ruộng ở bên kia, giờ chỉ còn là những mảng tối mờ mờ dưới ánh trăng non vừa nhô lên. Ban chiều, lúc còn ở khu Mỏ, <span class="nm nm-person">Luke</span> đã đoán rằng đợt nhiễm kế tiếp sẽ rơi vào khu Nông nghiệp, rằng nó sẽ không quay lại khu Mỏ ngay. Và cô thấy anh đã đoán đúng: trên những thửa ruộng ấy, rải rác những chấm đỏ nhỏ xíu, như những đốm than lẫn trong tro, những đôi mắt của những thứ đã từng là dân làng.</p>
-<p>Cô nhìn những chấm đỏ ấy. Và cô thấy chúng tắt.</p>
+<p data-fx="eyesout">Cô nhìn những chấm đỏ ấy. Và cô thấy chúng tắt.</p>
 <p>Không phải tắt cùng một lúc. Mà từng đốm một, chập chờn, lụi dần, như những ngọn nến trên một chiếc bánh sinh nhật bị ai thổi từ đầu này sang đầu kia. Một đốm. Rồi hai. Rồi cả một hàng dài. Cho tới khi cả cánh đồng bên kia bức tường chỉ còn là một mảng tối, phẳng lặng, không một chấm đỏ nào.</p>
 <p class="say say-other" data-name="Jasper"><span class="q">“Chúng nó…”</span> <span class="nm nm-person">Jasper</span> há hốc miệng. <span class="q">“Chúng nó dừng lại rồi à?”</span></p>
 <p><span class="nm nm-person">Luke</span> không trả lời ngay. Anh đứng cạnh cô, mắt nhìn đăm đăm về phía cánh đồng, đôi lông mày chau lại, cái vẻ mặt của anh mỗi lần anh nhìn thấy một điều gì đó mà anh không thích. <span class="nm nm-person">Clevia</span> đã quen với vẻ mặt ấy. Nhưng lần này, có một cái gì đó khác. Trán anh lấm tấm mồ hôi, mà gió thì lạnh.</p>
@@ -890,12 +928,13 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Họ đã đi vào nhà hết. Cùng một lúc. Trong khi tiếng chuông còn đang ngân.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
+<section class="scene" data-sound="hall">
+<figure class="plate"><canvas class="art" data-art="board11" role="img" aria-label="Con số mười một trên tấm bảng gỗ"></canvas></figure>
 <p>Họ vào trong gian nhà lớn, vì chẳng ai muốn đứng ngoài sân thêm nữa.</p>
 <p>Bên trong vẫn y như hồi sáng: những dãy ghế gỗ dài kê ngay ngắn, nền gạch đỏ, và tấm bảng gỗ lớn trên bức tường cuối gian. Có mấy chiếc ghế đã bị xô lệch, nằm chỏng chơ, chẳng ai buồn kê lại từ trận cãi nhau hồi sáng. <span class="nm nm-person">Jasper</span> đi thẳng tới góc gian nhà, ngồi phịch xuống một chiếc ghế, chống hai khuỷu tay lên đầu gối, ôm đầu.</p>
 <p><span class="nm nm-person">Clevia</span> đi tới trước tấm bảng.</p>
 <p>Con số vẫn ở đó, ở góc trên cùng, viết bằng thứ mực xanh nhạt như băng ấy, cái thứ mực không phải do tay người viết. Buổi trưa, lúc rời khỏi đây qua khung cửa của bàn <span class="nm nm-card">Teleport</span>, cô đã liếc thấy nó là mười lăm. Cô đã nhớ con số ấy suốt cả buổi chiều, như người ta nhớ một vết cắt trên tay.</p>
-<p data-log="ben-kia-buc-tuong:30">Giờ nó là mười một.</p>
+<p data-act="count" data-n="11" data-log="ben-kia-buc-tuong:30">Giờ nó là mười một.</p>
 <p>Cô đứng nhìn con số ấy rất lâu. Mười lăm. Mười một. Bốn người. Cô biết một người là cô gái tóc nâu đỏ có cái búa tạ, người đã tự tay gỡ sợi xích của <span class="nm nm-person">Leon</span> ra khỏi người mình trong lòng hầm. Một người là chị <span class="nm nm-person">Priya</span>. Còn hai người nữa, cô không biết là ai. Cô không biết tên họ, không biết mặt họ, không biết họ đã chết ở đâu, chết thế nào, có ai ở bên cạnh lúc ấy không. Cô chỉ biết rằng sáng nay họ còn sống, và giờ thì không.</p>
 <p>Và cô còn biết một điều nữa, một điều làm cô thấy lạnh sống lưng hơn cả: con số ấy không hề tụt xuống khi <span class="nm nm-person">Joel</span> biến mất.</p>
 <p class="say say-luke" data-name="Luke"><span class="q">“Vẫn mười một,”</span> <span class="nm nm-person">Luke</span> nói khẽ sau lưng cô. Anh cũng đang nhìn con số. <span class="q">“Lúc chúng ta vừa tới, anh đã liếc thấy nó rồi. Trước khi ông ta kéo chuông.”</span></p>
@@ -924,10 +963,11 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Nhưng giọng ông chẳng có vẻ gì là tin.</p>
 </section>
 <div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
-<section class="scene">
-<p>Gió đổi chiều.</p>
+<section class="scene" data-sound="crown14">
+<figure class="plate"><canvas class="art" data-art="crown14" role="img" aria-label="Đèn đã tắt, sân tối; ở cổng, hàng chục chiếc chuông đồng nhỏ lấp loá, rồi những con mắt đỏ mở ra trong bóng tối"></canvas></figure>
+<p data-act="count-off">Gió đổi chiều.</p>
 <p><span class="nm nm-person">Clevia</span> là người cảm thấy nó trước, vì cô ngồi gần cửa nhất. Một luồng gió lùa qua khung cửa, lạnh buốt, lạnh hơn hẳn những cơn gió trước đó, và mang theo một mùi gì đó mà cô không gọi được tên. Không phải mùi tanh của máu. Không phải mùi hôi của những thứ đã từng là người. Mà là một mùi khô, cũ, như mùi một căn phòng đóng kín đã lâu lắm rồi mới có người mở cửa, như mùi những trang sách đã ngả vàng.</p>
-<p>Ngọn đèn dầu trên cột ngoài bậc thềm chao đi. Một lần. Hai lần. Rồi tắt phụt.</p>
+<p data-fx="lampout">Ngọn đèn dầu trên cột ngoài bậc thềm chao đi. Một lần. Hai lần. Rồi tắt phụt.</p>
 <p>Bóng tối ập xuống khoảng sân như một tấm chăn.</p>
 <p class="say say-other" data-name="Jasper"><span class="q">“Gì đấy?”</span> <span class="nm nm-person">Jasper</span> giật nảy người trong góc gian nhà.</p>
 <p>Không ai trả lời. <span class="nm nm-person">Clevia</span> nghe thấy tiếng <span class="nm nm-person">Luke</span> đứng bật dậy khỏi chiếc ghế phía sau cô. Cô nghe thấy tiếng sợi xích dưới chân <span class="nm nm-person">Leon</span> sột soạt, duỗi ra, căng lên trên mặt gạch. Cô nghe thấy tiếng <span class="nm nm-person">Oscar</span> nín thở bên cạnh mình.</p>
@@ -945,12 +985,12 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p>Hay đúng hơn, là một chỗ đáng lẽ phải có khuôn mặt. Trắng bệch. Phẳng lì. Nhẵn thín như một quả trứng. Không mắt, không mũi, không miệng. Chẳng có gì cả.</p>
 <p>Nó dừng lại ở giữa sân. Ngay cạnh cái giếng nhỏ thành gạch phủ rêu. Cái đầu không mặt của nó từ từ quay sang trái, nhìn về phía cái tháp chuông, đứng nhìn rất lâu, như người ta đứng lặng trước một nấm mồ. Rồi nó từ từ quay lại, về phía gian nhà lớn, về phía khung cửa mở toang.</p>
 <p>Về phía họ.</p>
-<p><span class="nm nm-person">Clevia</span> thấy khuôn mặt trắng phẳng lì ấy nứt ra.</p>
+<p data-fx="manyeyes"><span class="nm nm-person">Clevia</span> thấy khuôn mặt trắng phẳng lì ấy nứt ra.</p>
 <p>Một đường nứt nhỏ, ngang, ở chỗ đáng lẽ phải là mắt. Rồi nó hé ra. Rồi nó mở. Một con mắt. Đỏ. Tròng mắt đỏ như than hồng, đồng tử dọc như mắt mèo. Rồi bên cạnh nó, một đường nứt khác. Rồi một đường nữa, trên trán. Rồi hai đường nữa, trên má. Rồi trên cằm. Rồi khắp nơi.</p>
 <p>Từng con mắt một, từng con mắt một, mở ra trên khuôn mặt trắng phẳng lì ấy, mở ra không một tiếng động, cho tới khi cả khuôn mặt chỉ còn là những con mắt, chen chúc nhau, đỏ rực, chớp chớp, xoay xoay, nhìn khắp mọi hướng.</p>
 <p>Rồi tất cả chúng cùng dừng lại.</p>
 <p>Cùng nhìn về một hướng.</p>
-<p>Và trong khoảnh khắc ấy, <span class="nm nm-person">Clevia</span> biết, biết một cách chắc chắn như người ta biết mình đang thở, rằng tất cả những con mắt ấy đang nhìn thẳng vào cô.</p>
+<p data-fx="darkend">Và trong khoảnh khắc ấy, <span class="nm nm-person">Clevia</span> biết, biết một cách chắc chắn như người ta biết mình đang thở, rằng tất cả những con mắt ấy đang nhìn thẳng vào cô.</p>
 </section>
   </article>
   <footer class="end">
@@ -3123,6 +3163,146 @@ els.forEach(function(el){io.observe(el)});})();
     dust(g, w, h, t, R, h * 0.55, 14);
   };
 
+  /* ---------- chương 14: chạng vạng khu Mỏ, sân Nhà họp làng ban đêm, tháp chuông, tiếng chuông, quỷ đầu đàn (chèn sau art5.js). Không vẽ người, chỉ dấu vết. ---------- */
+  var ICE14 = '#9fd4ea', LAMP14 = '#ffcf7a';
+  // tháp chuông gỗ: bốn cột xiêu, mái ván mục, chuông đồng xỉn rêu; rope: 'tied' | 'hang' | 'sway'
+  function tower14(g, x, base, s, t, o) {
+    o = o || {}; var dk = C.dark, wood = dk ? '#2a2016' : '#5a4430', top = base - s * 2.1;
+    g.strokeStyle = wood; g.lineWidth = Math.max(2, s * 0.07);
+    [[-0.55, -0.5], [0.55, 0.48], [-0.32, -0.3], [0.34, 0.3]].forEach(function (c, i) { g.globalAlpha = i > 1 ? 0.6 : 1; g.beginPath(); g.moveTo(x + c[0] * s, base); g.lineTo(x + c[1] * s + (i % 2 ? 2 : -2), top); g.stroke(); });
+    g.globalAlpha = 1;
+    g.fillStyle = dk ? '#1e1812' : '#4a3a28'; g.beginPath(); g.moveTo(x - s * 0.75, top + s * 0.05); g.lineTo(x, top - s * 0.4); g.lineTo(x + s * 0.78, top + s * 0.08); g.lineTo(x + s * 0.7, top + s * 0.14); g.lineTo(x - s * 0.7, top + s * 0.12); g.fill(); // mái ván mục
+    g.fillRect(x - s * 0.55, top + s * 0.12, s * 1.1, s * 0.06); // xà
+    var sw = o.rope === 'sway' ? Math.sin(t * 2.2) * Math.exp(-((t % 9) * 0.3)) * 0.25 : 0, bx = x, by = top + s * 0.18, bw = s * 0.62, bh = s * 0.62;
+    g.save(); g.translate(bx, by); g.rotate(sw * 0.15);
+    var bg = g.createLinearGradient(-bw / 2, 0, bw / 2, 0); bg.addColorStop(0, dk ? '#2e3a30' : '#5f6a4c'); bg.addColorStop(0.45, dk ? '#5a5a3e' : '#9a8a5a'); bg.addColorStop(1, dk ? '#232a22' : '#4a5238'); g.fillStyle = bg;
+    g.beginPath(); g.moveTo(-bw * 0.22, 0); g.quadraticCurveTo(-bw * 0.3, bh * 0.55, -bw * 0.5, bh); g.lineTo(bw * 0.5, bh); g.quadraticCurveTo(bw * 0.3, bh * 0.55, bw * 0.22, 0); g.fill();
+    g.fillStyle = dk ? '#3f5a3a' : '#6f8a58'; for (var m = 0; m < 9; m++) g.fillRect(-bw * 0.48 + m * bw * 0.11, bh * 0.93, bw * 0.06, bh * 0.05); // rêu ở mép
+    if (o.ice) { var k = o.ice; var ig = g.createRadialGradient(-bw * 0.25, bh * 0.55, 0, -bw * 0.25, bh * 0.55, bw * 0.8); ig.addColorStop(0, rgba(ICE14, 0.7 * k)); ig.addColorStop(1, rgba(ICE14, 0)); g.fillStyle = ig; g.fillRect(-bw, -bh * 0.3, bw * 2, bh * 1.6); g.strokeStyle = rgba(ICE14, 0.8 * k); g.lineWidth = 1.2; for (var q = 0; q < 6; q++) { g.beginPath(); g.moveTo(-bw * 0.3, bh * (0.4 + q * 0.08)); g.quadraticCurveTo(0, bh * (0.35 + q * 0.1), bw * (0.1 + q * 0.06), bh * (0.5 + q * 0.07)); g.stroke(); } }
+    g.restore();
+    // dây thừng
+    g.strokeStyle = dk ? '#6a5a40' : '#8a7450'; g.lineWidth = Math.max(1.5, s * 0.03); g.beginPath(); g.moveTo(bx, by + bh * 0.95);
+    if (o.rope === 'tied') { g.quadraticCurveTo(bx - s * 0.1, base - s * 0.6, x - s * 0.5, base - s * 0.55); g.stroke(); g.lineWidth *= 1.6; for (var w = 0; w < 4; w++) { g.beginPath(); g.moveTo(x - s * 0.58, base - s * (0.62 - w * 0.05)); g.lineTo(x - s * 0.44, base - s * (0.6 - w * 0.05)); g.stroke(); } }
+    else { var rx = bx + Math.sin(t * 1.6) * s * 0.18 * (o.rope === 'sway' ? 1 : 0.04); g.quadraticCurveTo(bx + (rx - bx) * 0.6, base - s * 0.6, rx, base - s * 0.02); g.stroke(); }
+  }
+  // sân gạch ban đêm phối cảnh
+  function yardFloor(g, w, h, hz, lampA) {
+    var dk = C.dark; g.fillStyle = dk ? '#1a1210' : '#7a5446'; g.fillRect(0, hz, w, h - hz);
+    g.strokeStyle = rgba('#000000', 0.25); g.lineWidth = 1; for (var r = 0; r < 11; r++) { var y = hz + (h - hz) * Math.pow(r / 10, 1.4); g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    for (var c = -6; c <= 6; c++) { g.beginPath(); g.moveTo(w / 2 + c * w * 0.04, hz); g.lineTo(w / 2 + c * w * 0.2, h); g.stroke(); }
+  }
+  function lamp14(g, x, y, s, t, a) {
+    if (a <= 0) { // bấc vừa tắt, sợi khói mảnh
+      wisp(g, x, y - s * 0.2, s * 3, t, C.dark ? '#8a8a84' : '#5a5a54', 0.35); g.fillStyle = C.dark ? '#3a3020' : '#2a2016'; g.fillRect(x - s * 0.25, y - s * 0.2, s * 0.5, s * 0.6); return;
+    }
+    var fl = (0.8 + 0.2 * Math.sin(t * 7) * Math.sin(t * 3.1)) * a;
+    glow(g, x, y, s * 9, LAMP14, (C.dark ? 0.28 : 0.35) * fl);
+    g.fillStyle = C.dark ? '#3a3020' : '#2a2016'; g.fillRect(x - s * 0.35, y, s * 0.7, s * 0.7);
+    g.fillStyle = rgba('#fff0c0', 0.9 * fl); g.beginPath(); g.ellipse(x + Math.sin(t * 5) * s * 0.05, y - s * 0.25, s * 0.18, s * 0.42, 0, 0, 7); g.fill();
+  }
+  // 14.1 chạng vạng khu Mỏ: ngã rẽ hai ngả, hai căn nhà dân tối om không một đốm lửa, trời tím bầm phía tây
+  ART.fork14 = function (g, w, h, t, R) {
+    var dk = C.dark, gr = g.createLinearGradient(0, 0, 0, h * 0.6);
+    gr.addColorStop(0, dk ? '#120e18' : '#6a6478'); gr.addColorStop(0.7, dk ? '#3a1e26' : '#b07a7a'); gr.addColorStop(1, dk ? '#4a2a22' : '#c89480'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    glow(g, w * 0.15, h * 0.55, w * 0.4, '#a04040', dk ? 0.18 : 0.22);
+    g.fillStyle = dk ? '#0e0c0c' : '#4a3e3e'; g.beginPath(); g.moveTo(0, h * 0.55); g.lineTo(w * 0.25, h * 0.4); g.lineTo(w * 0.5, h * 0.5); g.lineTo(w * 0.78, h * 0.36); g.lineTo(w, h * 0.48); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    chimney(g, w * 0.62, h * 0.5, w * 0.03, h * 0.2, t);
+    // hai căn nhà dân tối, cửa đen ngòm
+    [[0.24, 0.58, 1], [0.8, 0.54, 0.8]].forEach(function (c) { var x = w * c[0], y = h * c[1], s = h * 0.1 * c[2]; g.fillStyle = dk ? '#1a1614' : '#3a3230'; g.fillRect(x - s, y - s * 0.7, s * 2, s * 0.7); g.beginPath(); g.moveTo(x - s * 1.2, y - s * 0.68); g.lineTo(x, y - s * 1.3); g.lineTo(x + s * 1.2, y - s * 0.68); g.fill(); g.fillStyle = '#050404'; g.fillRect(x - s * 0.2, y - s * 0.5, s * 0.4, s * 0.5); });
+    // con đường chẻ làm hai
+    g.fillStyle = dk ? '#2a2420' : '#8a7a6a'; g.beginPath(); g.moveTo(w * 0.35, h); g.lineTo(w * 0.65, h); g.lineTo(w * 0.52, h * 0.75); g.lineTo(w * 0.82, h * 0.56); g.lineTo(w * 0.78, h * 0.555); g.lineTo(w * 0.5, h * 0.72); g.lineTo(w * 0.27, h * 0.585); g.lineTo(w * 0.23, h * 0.59); g.lineTo(w * 0.47, h * 0.76); g.fill();
+    // ba hàng dấu chân dừng lại ở chỗ rẽ
+    for (var f = 0; f < 7; f++) for (var l = 0; l < 3; l++) { var u = f / 7, x = w * (0.5 + (l - 1) * 0.04) + (f % 2 ? 3 : -3), y = h * (0.98 - u * 0.2); g.fillStyle = rgba('#000000', (dk ? 0.45 : 0.25) * (1 - u * 0.5)); g.beginPath(); g.ellipse(x, y, w * 0.008 * (1 - u * 0.4), h * 0.006, 0, 0, 7); g.fill(); }
+    dust(g, w, h, t, R, h * 0.6, 10);
+  };
+  // 14.2 sân Nhà họp làng ban đêm: đèn dầu trên cột, giếng nhỏ, tháp chuông góc trái, dây thừng đã tháo buông chạm đất; dấu dép tổ ong trên bậc thềm
+  ART.yard14 = function (g, w, h, t, R, o) {
+    var dk = C.dark, v = o && o[0], lampA = v === 'out' ? 0 : 1, hz = h * 0.42;
+    sky(g, w, h * 0.5, 'night', 1); moon(g, w * 0.82, h * 0.12, h * 0.025, t);
+    g.fillStyle = dk ? '#07090a' : '#3a3e3c'; g.beginPath(); g.moveTo(w * 0.35, hz); g.lineTo(w * 0.35, h * 0.24); g.lineTo(w * 0.62, h * 0.12); g.lineTo(w * 0.98, h * 0.24); g.lineTo(w * 0.98, hz); g.fill(); // mái ngói Nhà họp làng
+    g.fillStyle = dk ? '#0d0f0f' : '#4a4a44'; g.fillRect(w * 0.38, h * 0.24, w * 0.58, hz - h * 0.24);
+    g.fillStyle = '#030303'; g.fillRect(w * 0.6, h * 0.29, w * 0.12, hz - h * 0.29); // cửa chính tối om
+    g.fillStyle = dk ? '#050707' : '#2a2620'; [0.42, 0.56, 0.76, 0.92].forEach(function (x) { g.fillRect(w * x, h * 0.24, w * 0.012, hz - h * 0.24); });
+    yardFloor(g, w, h, hz);
+    if (lampA) { var lg = g.createRadialGradient(w * 0.56, hz, 0, w * 0.56, hz, w * 0.45); lg.addColorStop(0, rgba(LAMP14, dk ? 0.18 : 0.22)); lg.addColorStop(1, rgba(LAMP14, 0)); g.fillStyle = lg; g.fillRect(0, hz, w, h - hz); }
+    lamp14(g, w * 0.567, h * 0.3, h * 0.022, t, lampA);
+    // giếng nhỏ giữa sân
+    var wx = w * 0.55, wy = h * 0.7; g.fillStyle = dk ? '#26302d' : '#7d877a'; g.beginPath(); g.ellipse(wx, wy, w * 0.07, h * 0.03, 0, 0, 7); g.fill(); g.fillRect(wx - w * 0.07, wy, w * 0.14, h * 0.06); g.beginPath(); g.ellipse(wx, wy + h * 0.06, w * 0.07, h * 0.026, 0, 0, Math.PI); g.fill();
+    g.fillStyle = '#050707'; g.beginPath(); g.ellipse(wx, wy, w * 0.055, h * 0.02, 0, 0, 7); g.fill();
+    tower14(g, w * 0.17, h * 0.78, h * 0.2, t, { rope: 'hang' });
+    // dấu dép tổ ong trên bậc thềm
+    for (var d = 0; d < 2; d++) { var px = w * (0.63 + d * 0.05), py = hz + h * 0.03; g.fillStyle = rgba('#000000', dk ? 0.4 : 0.25); g.beginPath(); g.ellipse(px, py, w * 0.014, h * 0.008, 0, 0, 7); g.fill(); g.fillStyle = rgba(dk ? '#3a2a22' : '#9a7a6a', 0.6); for (var hh = 0; hh < 5; hh++) g.fillRect(px - w * 0.009 + hh * w * 0.004, py - 1, 1.5, 1.5); }
+    if (lampA) motes(g, w, h, t, R, w * 0.45, w * 0.7, h * 0.15, h * 0.45, 8, LAMP14);
+  };
+  // 14.3 cận cảnh chiếc chuông đồng: rêu ở mép, dây thừng buông thõng; dưới mép chuông, ánh đèn hắt lên hai ô vuông nhỏ như mặt kính
+  ART.bell14 = function (g, w, h, t, R) {
+    var dk = C.dark; g.fillStyle = dk ? '#06080a' : '#2e3436'; g.fillRect(0, 0, w, h);
+    glow(g, w * 0.9, h * 0.9, w * 0.5, LAMP14, dk ? 0.12 : 0.18);
+    tower14(g, w * 0.5, h * 1.25, h * 0.55, t, { rope: 'hang', ice: 0.12 + 0.08 * Math.sin(t * 0.9) });
+    // hai ô kính nhỏ loé ánh đèn trong bóng tối dưới mái tháp
+    var k = 0.5 + 0.5 * Math.sin(t * 0.6); g.fillStyle = rgba(LAMP14, 0.55 * k); g.fillRect(w * 0.63, h * 0.62, w * 0.022, h * 0.014); g.fillRect(w * 0.66, h * 0.62, w * 0.022, h * 0.014);
+    glow(g, w * 0.65, h * 0.627, w * 0.04, LAMP14, 0.15 * k);
+    motes(g, w, h, t, R, w * 0.2, w * 0.8, h * 0.1, h * 0.9, 10, ICE14);
+  };
+  // 14.4 chuông ngân: những vòng sáng xanh băng lan ra xuyên qua mái nhà, xuyên qua bức tường trong suốt; dây thừng đung đưa; mấy vòng xích quấn vào khoảng không
+  ART.bellring = function (g, w, h, t, R) {
+    var dk = C.dark; sky(g, w, h, 'night', 1);
+    var cx = w * 0.3, cy = h * 0.42;
+    for (var i = 0; i < 6; i++) { var ph = ((t * 0.16 + i / 6) % 1), r = ph * Math.max(w, h) * 1.1; g.strokeStyle = rgba(ICE14, (dk ? 0.45 : 0.6) * (1 - ph)); g.lineWidth = 1.5 + (1 - ph) * 2; g.beginPath(); g.ellipse(cx, cy, r, r * 0.55, 0, 0, 7); g.stroke(); }
+    // mái nhà thấp và bức tường trong suốt ở xa: rung theo vòng sóng
+    g.fillStyle = dk ? '#050708' : '#3e4442'; for (var m = 0; m < 7; m++) { var x = w * (0.42 + m * 0.09), y = h * 0.62 + Math.sin(t * 3 + m) * 0.6; g.beginPath(); g.moveTo(x - w * 0.05, y); g.lineTo(x, y - h * 0.06); g.lineTo(x + w * 0.05, y); g.fill(); }
+    g.fillStyle = dk ? '#050708' : '#3e4442'; g.fillRect(0, h * 0.62, w, h * 0.38);
+    var wl = (Math.sin(t * 1.3) * 0.5 + 0.5); g.strokeStyle = rgba(ICE14, 0.18 + 0.2 * wl); g.lineWidth = 2; g.beginPath(); g.moveTo(w * 0.92, h * 0.2); g.lineTo(w * 0.92, h * 0.62); g.stroke();
+    tower14(g, cx, h * 0.64, h * 0.12, t, { rope: 'sway', ice: 0.6 + 0.3 * Math.sin(t * 2) });
+    // mấy vòng xích quấn vào khoảng không, rơi lỏng
+    var col = dk ? '#b8c4c8' : '#2e3638', lk = Math.max(6, h * 0.018); g.strokeStyle = col; g.lineWidth = Math.max(1.3, lk * 0.2);
+    for (var c = 0; c < 26; c++) { var a = c / 26 * 6.283 * 2.4, rr2 = w * 0.06 * (1 - c / 60), x2 = w * 0.52 + Math.cos(a) * rr2, y2 = h * 0.86 + Math.sin(a) * rr2 * 0.3; g.save(); g.translate(x2, y2); g.rotate(a + 1.57); g.beginPath(); g.ellipse(0, 0, lk * (c % 2 ? 0.14 : 0.34), lk * 0.6, 0, 0, 7); g.stroke(); g.restore(); }
+  };
+  // 14.5 sau tiếng chuông: dây thừng đã thôi đung đưa, mặt gạch chỗ ấy không một dấu giày; xích đã thu về
+  ART.rope14 = function (g, w, h, t, R) {
+    var dk = C.dark; g.fillStyle = dk ? '#08090a' : '#3a3c3a'; g.fillRect(0, 0, w, h);
+    yardFloor(g, w, h, h * 0.62);
+    glow(g, w * 0.95, h * 0.5, w * 0.5, LAMP14, dk ? 0.1 : 0.16);
+    tower14(g, w * 0.45, h * 0.92, h * 0.38, t, { rope: 'hang' });
+    // vạch sáng lạnh nhạt dần trên mặt chuông
+    var k = Math.max(0, Math.sin(t * 0.25)) * 0.25; glow(g, w * 0.45, h * 0.3, w * 0.12, ICE14, k);
+    // khoảng gạch trơn dưới tháp: không dấu giày nào
+    g.strokeStyle = rgba(ICE14, 0.08 + 0.05 * Math.sin(t)); g.setLineDash([3, 6]); g.beginPath(); g.ellipse(w * 0.45, h * 0.9, w * 0.12, h * 0.03, 0, 0, 7); g.stroke(); g.setLineDash([]);
+    motes(g, w, h, t, R, w * 0.3, w * 0.6, h * 0.3, h * 0.9, 6, '#d8dcd8');
+  };
+  // 14.6 nhìn qua bức tường trong suốt sang ruộng khu Nông nghiệp dưới trăng non: những cặp đốm đỏ tắt dần từng cặp một
+  ART.fieldseyes = function (g, w, h, t, R) {
+    var dk = C.dark; sky(g, w, h, 'night', 0.6); moon(g, w * 0.2, h * 0.18, h * 0.03, t);
+    for (var s = 0; s < 30; s++) { g.fillStyle = rgba('#ffffff', 0.3 + 0.3 * Math.sin(t + s)); g.fillRect(R[s] * w, R[s + 30] * h * 0.4, 1.2, 1.2); }
+    g.fillStyle = dk ? '#0c1210' : '#4e5a52'; g.fillRect(0, h * 0.5, w, h * 0.5);
+    g.strokeStyle = rgba(dk ? '#2a3a30' : '#6a7a68', 0.6); g.lineWidth = 1; for (var r = 0; r < 9; r++) { var y = h * 0.5 + h * 0.5 * Math.pow(r / 8, 1.6); g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    // bức tường trong suốt: một gợn sáng dọc mờ
+    var wg = g.createLinearGradient(w * 0.08, 0, w * 0.16, 0); wg.addColorStop(0, rgba(ICE14, 0)); wg.addColorStop(0.5, rgba(ICE14, dk ? 0.08 : 0.14)); wg.addColorStop(1, rgba(ICE14, 0)); g.fillStyle = wg; g.fillRect(w * 0.08, 0, w * 0.08, h);
+    // mái nhà thấp gần (khu giữa)
+    g.fillStyle = dk ? '#040506' : '#2e3230'; for (var m = 0; m < 4; m++) { var x = w * (0.1 + m * 0.3); g.beginPath(); g.moveTo(x - w * 0.14, h); g.lineTo(x - w * 0.1, h * 0.84); g.lineTo(x + w * 0.1, h * 0.84); g.lineTo(x + w * 0.14, h); g.fill(); }
+    // đốm đỏ: tắt dần theo chu kỳ, từ trái sang phải, rồi lại lặp sau một khoảng tối dài
+    var cyc = (t % 16) / 16;
+    for (var e = 0; e < 18; e++) { var ex = w * (0.2 + R[e + 60] * 0.75), ey = h * (0.55 + R[e + 80] * 0.25), off = (ex / w - 0.15) * 0.6, a = cyc < off ? 1 : Math.max(0, 1 - (cyc - off) / 0.04); if (cyc > 0.92) a = (cyc - 0.92) / 0.08; if (a <= 0) continue; var sz = Math.max(1.4, h * 0.006 * (ey / h)); g.fillStyle = rgba('#e0322a', 0.85 * a); g.fillRect(ex - sz * 1.6, ey, sz, sz); g.fillRect(ex + sz * 0.6, ey, sz, sz); glow(g, ex, ey, sz * 6, '#e0322a', 0.1 * a); }
+  };
+  // 14.7 con số mười một trên bảng gỗ
+  ART.board11 = function (g, w, h, t, R) { board(g, w, h, t, R, true, '11'); };
+  // 14.8 đèn đã tắt, sân tối; ở cổng, bóng tối dày lên: hàng chục chiếc chuông đồng nhỏ loé ánh trăng, rồi những con mắt đỏ mở ra (không vẽ dáng)
+  ART.crown14 = function (g, w, h, t, R) {
+    var dk = C.dark; g.fillStyle = dk ? '#020303' : '#1e2222'; g.fillRect(0, 0, w, h);
+    yardFloor(g, w, h, h * 0.6); g.fillStyle = rgba('#000000', 0.55); g.fillRect(0, 0, w, h);
+    lamp14(g, w * 0.88, h * 0.34, h * 0.02, t, 0);
+    // cổng: hai trụ, giữa là khoảng tối đặc hơn
+    g.fillStyle = dk ? '#0c0e0e' : '#2a2e2e'; g.fillRect(w * 0.32, h * 0.18, w * 0.03, h * 0.5); g.fillRect(w * 0.65, h * 0.18, w * 0.03, h * 0.5); g.fillRect(w * 0.3, h * 0.16, w * 0.4, h * 0.03);
+    var dg = g.createRadialGradient(w * 0.5, h * 0.42, 0, w * 0.5, h * 0.42, w * 0.25); dg.addColorStop(0, 'rgba(0,0,0,.95)'); dg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = dg; g.fillRect(0, 0, w, h);
+    // vương miện chuông nhỏ: một vòng cung chấm đồng lấp loá, lắc lư
+    var cyc = (t % 12), sway = Math.sin(t * 0.8) * w * 0.006;
+    for (var b = 0; b < 15; b++) { var a = Math.PI * (0.1 + b / 14 * 0.8), x = w * 0.5 + Math.cos(a) * w * 0.07 + sway, y = h * 0.27 - Math.sin(a) * h * 0.04 + Math.sin(t * 6 + b) * 1.2, k = 0.4 + 0.6 * Math.abs(Math.sin(t * 2.3 + b * 1.7)); g.fillStyle = rgba(dk ? '#a89a6a' : '#c8b88a', 0.75 * k); g.beginPath(); g.arc(x, y, Math.max(1.6, h * 0.007), 0, 7); g.fill(); glow(g, x, y, h * 0.02, '#d8d0a8', 0.08 * k); }
+    // mắt đỏ mở dần trong một vùng bầu dục trắng mờ
+    var open = Math.min(1, Math.max(0, (cyc - 0.8) / 5)), n = Math.floor(open * 24), fade = cyc > 10.5 ? 1 - (cyc - 10.5) / 1.5 : 1;
+    g.fillStyle = rgba(dk ? '#d8d8d0' : '#e8e8e0', 0.07 * Math.min(1, cyc / 0.8) * fade); g.beginPath(); g.ellipse(w * 0.5 + sway, h * 0.38, w * 0.05, h * 0.07, 0, 0, 7); g.fill();
+    for (var e = 0; e < n; e++) { var ex = w * 0.5 + sway + (R[e] - 0.5) * w * 0.085, ey = h * 0.38 + (R[e + 30] - 0.5) * h * 0.12, sz = Math.max(1.2, h * 0.004), bl = Math.sin(t * 1.5 + e) > 0.96 ? 0.2 : 1; g.fillStyle = rgba('#ff3a2a', 0.9 * bl * fade); g.beginPath(); g.ellipse(ex, ey, sz * 1.4, sz * 0.8, 0, 0, 7); g.fill(); glow(g, ex, ey, sz * 5, '#ff3a2a', 0.08 * fade); }
+  };
+
   /* ---------- tranh cho Góc nhìn khác (chèn sau art4.js). Không vẽ người, chỉ dấu vết. ---------- */
   function gGlow(g, x, y, r, col, a) { var gl = g.createRadialGradient(x, y, 0, x, y, r); gl.addColorStop(0, rgba(col, a)); gl.addColorStop(1, rgba(col, 0)); g.fillStyle = gl; g.fillRect(x - r, y - r, r * 2, r * 2); }
 
@@ -4686,6 +4866,47 @@ els.forEach(function(el){io.observe(el)});})();
       return false;
     };
 
+    /* chương 14 */
+    // chuông ngân: một chấm sáng xanh băng ở góc trái, rồi từng vòng sóng lan ra khắp trang, chữ khẽ rung theo nhịp
+    MORE.bellwave = function (t) {
+      var ps = MORE._wps;
+      if (!ps) ps = MORE._wps = [].slice.call(document.querySelectorAll('.scene p')).filter(function (p) { var r = p.getBoundingClientRect(); return p.offsetParent !== null && r.bottom > 0 && r.top < H; }).slice(0, 7);
+      if (t > 7) { ps.forEach(function (p) { p.style.transform = ''; }); MORE._wps = null; return true; }
+      var cx = W * 0.22, cy = H * 0.4, m = Math.max(W, H), ice = C.dark ? '#9fd4ea' : '#2a7aa0';
+      edge('#000000', (C.dark ? 0.45 : 0.25) * env(t, 0.5, 5, 1.5), 0.3);
+      glow(cx, cy, m * 0.08, ice, 0.6 * env(t, 0.2, 1, 2));
+      for (var i = 0; i < 6; i++) { var u = t - i * 0.7; if (u < 0 || u > 3.2) continue; var ph = u / 3.2, r = ph * m * 1.3; g.strokeStyle = rgba(ice, (C.dark ? 0.55 : 0.45) * (1 - ph)); g.lineWidth = 1.2 + (1 - ph) * 2.5; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.stroke(); }
+      ps.forEach(function (p, i) { var r = p.getBoundingClientRect(), d = Math.hypot(r.left + r.width / 2 - cx, r.top + r.height / 2 - cy), a = 0; for (var k = 0; k < 6; k++) { var u = t - k * 0.7, front = u / 3.2 * m * 1.3; if (u > 0 && Math.abs(front - d) < 40) a = Math.max(a, (1 - Math.abs(front - d) / 40) * (1 - u / 3.2)); } p.style.transform = a > 0.01 ? 'translateY(' + (Math.sin(t * 40 + i) * 1.4 * a).toFixed(2) + 'px)' : ''; });
+      return false;
+    };
+    // những cặp đốm đỏ ở mép dưới tắt dần từng cặp một, từ trái sang phải
+    MORE.eyesout = function (t, R) {
+      if (t > 6) return true;
+      var a0 = env(t, 0.6, 4.6, 0.8);
+      for (var e = 0; e < 16; e++) { var x = W * (0.06 + e / 16 * 0.9 + (R[e] - 0.5) * 0.04), y = H * (0.78 + R[e + 16] * 0.16), off = 0.8 + e * 0.22, a = t < off ? 1 : Math.max(0, 1 - (t - off) / 0.35), s = Math.max(2, H * 0.006); if (a <= 0) continue; g.fillStyle = rgba('#e0322a', 0.85 * a * a0); g.fillRect(x - s * 1.6, y, s, s); g.fillRect(x + s * 0.6, y, s, s); glow(x, y, s * 7, '#e0322a', 0.12 * a * a0); }
+      return false;
+    };
+    // ngọn đèn chao đi hai lần rồi tắt phụt: trang tối sập xuống, một sợi khói mảnh
+    MORE.lampout = function (t) {
+      if (t > 4) return true;
+      var fl = t < 0.35 ? 1 : t < 0.5 ? 0.3 : t < 0.8 ? 0.9 : t < 0.95 ? 0.2 : t < 1.1 ? 0.7 : 0, x = W * 0.86, y = H * 0.22, lamp = C.dark ? '#ffcf7a' : '#c88a20';
+      if (fl > 0) glow(x, y, Math.min(W, H) * 0.25, lamp, 0.35 * fl);
+      if (t > 1.1) { wash('#000000', (C.dark ? 0.55 : 0.4) * env(t - 1.1, 0.12, 1.6, 1.2)); g.strokeStyle = rgba('#9a9a94', 0.4 * Math.max(0, 1 - (t - 1.1) / 2.8)); g.lineWidth = 1; g.beginPath(); for (var i = 0; i < 30; i++) { var u = i / 29; g.lineTo(x + Math.sin(u * 8 + t * 2) * 6 * u, y - u * H * 0.2 * Math.min(1, (t - 1.1) / 1.5)); } g.stroke(); }
+      return false;
+    };
+    // một bầu dục trắng mờ giữa trang nứt ra, từng con mắt đỏ mở, rồi tất cả cùng nhìn về một phía
+    MORE.manyeyes = function (t, R) {
+      if (t > 7.5) return true;
+      var k = env(t, 0.6, 5.6, 1.3), cx = W / 2, cy = H * 0.45, rx = Math.min(W, H) * 0.16, ry = rx * 1.35;
+      wash('#000000', (C.dark ? 0.6 : 0.45) * k);
+      g.fillStyle = rgba(C.dark ? '#d8d8d0' : '#f0f0ea', 0.12 * k); g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, 7); g.fill();
+      var n = Math.min(26, Math.floor(Math.max(0, t - 0.6) * 7)), look = t > 4.6 ? Math.min(1, (t - 4.6) / 0.4) : 0;
+      for (var e = 0; e < n; e++) { var ex = cx + (R[e] - 0.5) * rx * 1.6, ey = cy + (R[e + 26] - 0.5) * ry * 1.6, o = Math.min(1, (t - 0.6 - e / 7) / 0.25), sz = Math.min(W, H) * 0.012;
+        g.fillStyle = rgba('#ff3a2a', 0.9 * k); g.beginPath(); g.ellipse(ex, ey, sz * 1.5, sz * 0.9 * o, 0, 0, 7); g.fill();
+        var px = look ? 0 : Math.sin(t * 3 + e * 2) * sz * 0.5, py = look ? sz * 0.35 * look : Math.cos(t * 2.4 + e) * sz * 0.3; g.fillStyle = rgba('#120202', 0.95 * k * o); g.fillRect(ex + px - sz * 0.12, ey + py - sz * 0.7 * o, sz * 0.24, sz * 1.4 * o); }
+      return false;
+    };
+
     /* vòng tròn rối của mặt sau thẻ (cùng nét với cards.js): dấu chung mỗi lần dùng năng lực hay dùng thẻ */
     var SIG = (function () {
       var seed = 7; function R() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
@@ -5189,6 +5410,17 @@ els.forEach(function(el){io.observe(el)});})();
   SND.forge = function (out) { return [wind(out, 0.06, 600), crackle(out, 0.035, 0.15, 0.6), hammer(out, 0.035, 0.95)]; };
   SND.forgequiet = function (out) { return [wind(out, 0.06, 600), crackle(out, 0.03, 0.2, 0.8)]; };
 
+  /* chương 14: chạng vạng ở Mỏ, sân Nhà họp làng ban đêm, dư âm chuông, im lặng, chuông nhỏ lanh canh của quỷ đầu đàn (không tiếng trầm kiểu trống) */
+  // tiếng ngân cao, mỏng, dài: các hoạ âm lệch nhau, không có âm trầm
+  function shimmer(out, v, minS, maxS) { return every(minS, maxS, function () { var n = ac.currentTime; [1318, 1975, 2794, 3729].forEach(function (f, i) { var o = ac.createOscillator(), og = gain(0); o.frequency.value = f * (0.995 + Math.random() * 0.01); og.gain.setValueAtTime(0, n); og.gain.linearRampToValueAtTime(v * [1, 0.5, 0.3, 0.15][i], n + 0.4); og.gain.exponentialRampToValueAtTime(0.0001, n + 5 - i * 0.6); o.connect(og); og.connect(out); o.start(n); o.stop(n + 5.2); }); }); }
+  // chuông nhỏ lanh canh, thưa rồi dày dần, tới gần
+  function tinkle(out, v) { var t0 = ac.currentTime; return every(0.25, 1.1, function () { var n = ac.currentTime, near = Math.min(1, (n - t0) / 40), reps = 1 + Math.floor(Math.random() * (2 + near * 3)); for (var i = 0; i < reps; i++) { var st = n + i * (0.05 + Math.random() * 0.09), f = 3200 + Math.random() * 2200, o = ac.createOscillator(), og = gain(0); o.frequency.value = f; og.gain.setValueAtTime(v * (0.4 + near * 0.8), st); og.gain.exponentialRampToValueAtTime(0.0001, st + 0.35); o.connect(og); og.connect(out); o.start(st); o.stop(st + 0.4); var o2 = ac.createOscillator(), g2 = gain(0); o2.frequency.value = f * 2.76; g2.gain.setValueAtTime(v * 0.3 * (0.4 + near), st); g2.gain.exponentialRampToValueAtTime(0.0001, st + 0.2); o2.connect(g2); g2.connect(out); o2.start(st); o2.stop(st + 0.25); } }); }
+  SND.dusk14 = function (out) { return [wind(out, 0.15, 520), wind(out, 0.03, 2200), chainRustle(out, 0.008, 4, 9)]; };
+  SND.yard14 = function (out) { return [crickets(out, 0.012, 4600), wind(out, 0.06, 500), crackle(out, 0.012, 0.6, 2.4)]; };
+  SND.ring14 = function (out) { return [shimmer(out, 0.02, 4, 7), wind(out, 0.03, 900)]; };
+  SND.still14 = function (out) { return [wind(out, 0.04, 380)]; };
+  SND.crown14 = function (out) { return [wind(out, 0.02, 300), tinkle(out, 0.012)]; };
+
   function switchTo(key) {
     if (!playing || !want || key === curKey) return;
     curKey = key;
@@ -5657,6 +5889,11 @@ els.forEach(function(el){io.observe(el)});})();
       glint: function (o, n) { bus(); sine(wet(0.6), 3951, 0.05, 0.5, n); sine(wet(0.6), 5274, 0.03, 0.4, n + 0.03); nz(o, 'highpass', 6000, 9000, 1, 0.06, 0.15, n); },
       ashwind: function (o, n) { nz(o, 'bandpass', 600, 2400, 0.8, 0.22, 2.4, n); nz(o, 'highpass', 3000, 6000, 1, 0.08, 2, n + 0.4); },
       stepin: function (o, n) { nz(o, 'lowpass', 1600, 700, 1, 0.2, 0.12, n); for (var k = 0; k < 6; k++) clink(o, n + 0.08 + k * 0.05, 0.03); },
+      // ch14: tiếng chuông (nhỏ lúc đầu như thìa gõ thành bát, rồi ngân dài, cao, không âm trầm), đốm đỏ tắt, đèn tắt phụt, mắt mở
+      bellwave: function (o, n) { bus(); var w = wet(1); [880, 1397, 2093, 2960, 3951].forEach(function (f, i) { var x = ac.createOscillator(), g2 = gain(0); x.frequency.value = f * (0.997 + Math.random() * 0.006); g2.gain.setValueAtTime(0.0001, n); g2.gain.exponentialRampToValueAtTime([0.05, 0.035, 0.025, 0.015, 0.01][i], n + 0.02); g2.gain.exponentialRampToValueAtTime(0.0001, n + 6.5 - i * 0.9); x.connect(g2); g2.connect(w); x.start(n); x.stop(n + 6.6); }); sine(wet(0.6), 5274, 0.02, 0.3, n); swell(wet(0.5), n + 0.3, 2.4, 0.04, 4000); },
+      eyesout: function (o, n) { for (var k = 0; k < 10; k++) sine(o, 1600 - k * 70, 0.012, 0.25, n + 0.8 + k * 0.35, 'triangle'); },
+      lampout: function (o, n) { nz(o, 'bandpass', 900, 1600, 1, 0.05, 0.3, n); nz(o, 'bandpass', 900, 1600, 1, 0.04, 0.25, n + 0.6); nz(o, 'highpass', 2500, 1200, 1, 0.12, 0.35, n + 1.05); },
+      manyeyes: function (o, n) { bus(); for (var k = 0; k < 18; k++) nz(wet(0.5), 'bandpass', 2600 + Math.random() * 2000, 1800, 6, 0.04, 0.08, n + 0.6 + k * 0.14); sine(wet(0.4), 3136, 0.02, 1.6, n + 4.6); sine(wet(0.4), 3322, 0.02, 1.6, n + 4.6); },
       msg: function (o, n) { sine(o, 1320, 0.04, 0.12, n); sine(o, 1760, 0.035, 0.15, n + 0.06); },
       // Góc nhìn khác ch05: tay bà Mabel làm dịu (mấy tiếng tách nhanh thưa dần, một hợp âm mềm lắng xuống; không tiếng trầm)
       soothe: function (o, n) { bus(); var at = n; for (var k = 0; k < 14; k++) { nz(o, 'bandpass', 2600, 2200, 5, 0.05 * (1 - k / 16), 0.04, at); at += 0.11 + k * 0.035; } [880, 1108.7, 1318.5].forEach(function (f, i) { sine(wet(0.5), f, 0.03, 3.2, n + 0.8 + i * 0.12); }); nz(wet(0.4), 'lowpass', 2400, 800, 0.7, 0.05, 3, n + 0.6); },
@@ -6917,7 +7154,83 @@ els.forEach(function(el){io.observe(el)});})();
       };
     }
 
-    var KINDS = { map: function () { return MAP; }, letter: function () { return LETTER; }, parry: PARRY, chain: CHAIN, hearth: HEARTH, blood: BLOOD, knock: KNOCK, bandage: BANDAGE, chest: CHEST, lamp: LAMP, remedy: REMEDY, wall: WALL, steps: STEPS, split: SPLIT, tear: TEAR, basket: BASKET, forge: FORGE };
+    /* ================= chương 14 ================= */
+    var ICE = '#9fd4ea';
+    // tháp chuông nhỏ dùng chung cho hai tương tác
+    function bellT(g, x, by, s, swing, iceA) {
+      g.strokeStyle = '#2a2016'; g.lineWidth = Math.max(2, s * 0.06);
+      [[-0.6, -0.55], [0.6, 0.55]].forEach(function (c) { g.beginPath(); g.moveTo(x + c[0] * s, by + s * 1.6); g.lineTo(x + c[1] * s, by - s * 0.2); g.stroke(); });
+      g.fillStyle = '#1e1812'; g.beginPath(); g.moveTo(x - s * 0.8, by - s * 0.15); g.lineTo(x, by - s * 0.55); g.lineTo(x + s * 0.8, by - s * 0.15); g.fill(); g.fillRect(x - s * 0.6, by - s * 0.18, s * 1.2, s * 0.06);
+      g.save(); g.translate(x, by - s * 0.12); g.rotate(swing || 0);
+      var bw = s * 0.7, bh = s * 0.7, bg = g.createLinearGradient(-bw / 2, 0, bw / 2, 0); bg.addColorStop(0, '#2e3a30'); bg.addColorStop(0.45, '#5a5a3e'); bg.addColorStop(1, '#232a22'); g.fillStyle = bg;
+      g.beginPath(); g.moveTo(-bw * 0.22, 0); g.quadraticCurveTo(-bw * 0.3, bh * 0.55, -bw * 0.5, bh); g.lineTo(bw * 0.5, bh); g.quadraticCurveTo(bw * 0.3, bh * 0.55, bw * 0.22, 0); g.fill();
+      g.fillStyle = '#3f5a3a'; for (var m = 0; m < 8; m++) g.fillRect(-bw * 0.48 + m * bw * 0.12, bh * 0.93, bw * 0.06, bh * 0.05);
+      if (iceA) { var ig = g.createRadialGradient(0, bh * 0.5, 0, 0, bh * 0.5, bw); ig.addColorStop(0, rgba(ICE, 0.6 * iceA)); ig.addColorStop(1, rgba(ICE, 0)); g.fillStyle = ig; g.fillRect(-bw, -bh * 0.3, bw * 2, bh * 1.8); }
+      g.restore();
+      return [x, by - s * 0.12 + s * 0.7];
+    }
+    function night(g, w, h) { var sk = g.createLinearGradient(0, 0, 0, h); sk.addColorStop(0, '#05080a'); sk.addColorStop(1, '#141210'); g.fillStyle = sk; g.fillRect(0, 0, w, h); g.fillStyle = '#1a1210'; g.fillRect(0, h * 0.78, w, h * 0.22); var lg = g.createRadialGradient(w, h * 0.4, 0, w, h * 0.4, w * 0.7); lg.addColorStop(0, 'rgba(255,207,122,.12)'); lg.addColorStop(1, 'rgba(255,207,122,0)'); g.fillStyle = lg; g.fillRect(0, 0, w, h); }
+    /* ---- ch14 xích quất hụt: chạm vào hai mặt kính loé dưới tháp chuông; xích Leon lao tới quấn ba vòng... vào khoảng không ---- */
+    function LASH() {
+      var hitT = 0, R = seeds(40);
+      return {
+        draw: function (S, t) {
+          var g = S.g, w = S.w, h = S.h; night(g, w, h);
+          var tx = w * 0.36, ty = h * 0.5, u = hitT ? t - hitT : 0, gone = hitT ? Math.min(1, Math.max(0, (u - 0.25) / 0.5)) : 0;
+          bellT(g, w * 0.3, h * 0.22, h * 0.24, hitT ? Math.sin(u * 3) * 0.05 * Math.exp(-u * 0.4) : 0, hitT ? Math.max(0, 1 - u / 3) : 0.1);
+          // hai mặt kính loé, rồi mờ đi như bức tranh nước bị nhỏ thêm nước
+          var ga = (1 - gone) * (0.55 + 0.35 * Math.sin(t * 1.7)), gw = Math.max(5, w * 0.02);
+          if (ga > 0.01) { g.fillStyle = 'rgba(255,207,122,' + ga.toFixed(3) + ')'; g.fillRect(tx - gw * 1.2, ty, gw, gw * 0.6); g.fillRect(tx + gw * 0.2, ty, gw, gw * 0.6); var gl = g.createRadialGradient(tx, ty, 0, tx, ty, gw * 5); gl.addColorStop(0, 'rgba(159,212,234,' + (0.25 * gone * (1 - gone) * 4).toFixed(3) + ')'); gl.addColorStop(1, 'rgba(159,212,234,0)'); g.fillStyle = gl; g.fillRect(tx - gw * 5, ty - gw * 5, gw * 10, gw * 10); }
+          if (!hitT) { g.strokeStyle = 'rgba(232,240,236,' + (0.2 + 0.25 * Math.sin(t * 3)).toFixed(2) + ')'; g.setLineDash([3, 5]); g.beginPath(); g.ellipse(tx, ty + gw * 0.3, gw * 3, gw * 2, 0, 0, 7); g.stroke(); g.setLineDash([]); }
+          // xích lao từ góc phải dưới
+          var ox = w * 0.96, oy = h * 0.98, lk = Math.max(8, h * 0.035), reach = hitT ? Math.min(1, u / 0.22) : 0, wrap = hitT ? Math.min(1, Math.max(0, (u - 0.22) / 0.45)) : 0, drop = hitT ? Math.min(1, Math.max(0, (u - 1.3) / 0.6)) : 0, pts = [];
+          for (var m = 0; m < 24; m++) { var v = m / 23 * reach, x = ox + (tx - ox) * v + Math.sin(v * 6 + t * 3) * w * 0.015 * (1 - v), y = oy + (ty - oy) * v + drop * h * 0.3 * v * v; pts.push([x, y]); }
+          if (wrap > 0) { var loops = Math.floor(wrap * 30); for (var c = 0; c < loops; c++) { var a = c / 10 * 6.283, rr2 = gw * 2.6 * (1 - wrap * 0.85) * (1 - drop) + 2, sag = drop * h * 0.3; pts.push([tx + Math.cos(a) * rr2 * (1 + drop * 2), ty + gw * 0.3 + Math.sin(a) * rr2 * 0.5 + sag + c * drop * 0.5]); } }
+          if (reach > 0) linkPath(g, pts, lk, STEEL, 1);
+          // khối xích phục ở góc
+          var base = []; for (var b = 0; b < 12; b++) { var an = b / 12 * 6.283; base.push([ox - w * 0.04 + Math.cos(an) * w * 0.05, oy - h * 0.03 + Math.sin(an) * h * 0.025]); } linkPath(g, base, lk, STEEL, 0.9);
+          if (hitT && u < 2.2) S.kick(300);
+        },
+        up: function (S, dn, tap) {
+          if (!tap || hitT) return; hitT = performance.now() / 1000; S.finish(); S.say('');
+          snd(function (n) { var o = out(1, -0.3); nz(o, 'bandpass', 1200, 7000, 6, 0.4, 0.22, n); for (var c = 0; c < 10; c++) clinkA(o, n + 0.22 + c * 0.045, 0.05); nz(o, 'bandpass', 3500, 900, 2, 0.25, 0.25, n + 0.55); for (var d = 0; d < 9; d++) clinkA(o, n + 1.35 + d * (0.05 + Math.random() * 0.06), 0.04 * (1 - d / 12)); });
+          S.kick(2400);
+        }
+      };
+    }
+    /* ---- ch14 giật dây chuông: chạm và giữ để giật, dây căng, tháp rên kèn kẹt; chuông không nhúc nhích; buông thì dây đập vào cột "bộp" (2 lần) ---- */
+    function ROPE() {
+      var hold = 0, holding = false, pulls = 0, relT = 0, last = 0, cr = null;
+      return {
+        draw: function (S, t) {
+          var g = S.g, w = S.w, h = S.h, dt = last ? Math.min(0.05, t - last) : 0; last = t; night(g, w, h);
+          if (holding) hold = Math.min(1, hold + dt * 0.8); else hold = Math.max(0, hold - dt * 4);
+          var shake = holding ? Math.sin(t * 40) * hold * 1.2 : 0, bx = w * 0.5 + shake * 0.3, s = h * 0.36;
+          var bt = bellT(g, bx, h * 0.18, s, 0, 0);
+          // dây thừng: căng ra theo lực giật, ngả về phía tay
+          var hx = w * 0.5 + hold * w * 0.12, hy = h * 0.92 + hold * h * 0.05, snap = relT ? Math.max(0, 1 - (t - relT) / 0.8) : 0, sw = Math.sin((t - relT) * 14) * snap * w * 0.05;
+          g.strokeStyle = '#8a7450'; g.lineWidth = Math.max(2.5, h * 0.012); g.beginPath(); g.moveTo(bt[0], bt[1]); g.quadraticCurveTo(bt[0] + (hx - bt[0]) * 0.5 + (1 - hold) * w * 0.03 + sw, (bt[1] + hy) / 2, hx + sw, hy); g.stroke();
+          g.strokeStyle = 'rgba(0,0,0,.35)'; g.lineWidth = 1; for (var k = 0; k < 14; k++) { var u = k / 14, x = bt[0] + (hx + sw - bt[0]) * u, y = bt[1] + (hy - bt[1]) * u; g.beginPath(); g.moveTo(x - 3, y); g.lineTo(x + 3, y + 4); g.stroke(); }
+          // cột tháp rên: vệt bụi rơi khi giật mạnh
+          if (hold > 0.5) for (var d = 0; d < 6; d++) { g.fillStyle = 'rgba(180,160,130,' + (0.5 * (hold - 0.5)).toFixed(2) + ')'; g.fillRect(bx + (d - 3) * s * 0.2, h * 0.1 + ((t * 80 + d * 23) % (h * 0.3)), 1.5, 1.5); }
+          if (!holding && !pulls) { g.strokeStyle = 'rgba(232,240,236,' + (0.2 + 0.25 * Math.sin(t * 3)).toFixed(2) + ')'; g.setLineDash([3, 5]); g.beginPath(); g.ellipse(hx, hy - h * 0.05, w * 0.05, h * 0.08, 0, 0, 7); g.stroke(); g.setLineDash([]); }
+          if (cr) cr.set(0.05 + hold * 0.25, 300 + hold * 900);
+          if (holding || hold > 0 || snap > 0) S.kick(200);
+        },
+        down: function (S) { if (pulls >= 2) return; holding = true; cr = hum('bandpass', 400, 4); S.say(''); },
+        up: function (S) {
+          if (!holding) return; holding = false; if (cr) { cr.stop(); cr = null; }
+          if (hold < 0.35) { S.say('giữ lâu hơn để giật mạnh'); return; }
+          pulls++; relT = performance.now() / 1000;
+          snd(function (n) { var o = out(1); nz(o, 'bandpass', 700, 300, 1.4, 0.35, 0.12, n); nz(o, 'highpass', 2500, 1500, 1, 0.1, 0.08, n + 0.01); });
+          if (pulls === 1) S.say('giật lần nữa'); else { S.say(''); S.finish(); }
+          S.kick(1200);
+        },
+        hide: function () { holding = false; if (cr) { cr.stop(); cr = null; } }
+      };
+    }
+
+    var KINDS = { map: function () { return MAP; }, letter: function () { return LETTER; }, parry: PARRY, chain: CHAIN, hearth: HEARTH, blood: BLOOD, knock: KNOCK, bandage: BANDAGE, chest: CHEST, lamp: LAMP, remedy: REMEDY, wall: WALL, steps: STEPS, split: SPLIT, tear: TEAR, lash: LASH, rope: ROPE, basket: BASKET, forge: FORGE };
     boxes.forEach(function (box) { var f = KINDS[box.getAttribute('data-kind')]; if (f) mk(box, f()); });
   })();
 
