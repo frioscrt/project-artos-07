@@ -1307,7 +1307,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInte
   var have=get(),ids=e.target.getAttribute('data-collect').split(' ').filter(function(id){return have.indexOf(id)<0});
   if(!ids.length)return;put(have.concat(ids));fly(e.target,ids)})},{threshold:.6,rootMargin:'0px 0px -12% 0px'});
 els.forEach(function(el){io.observe(el)});})();
-(function(){var T={"ben-kia-buc-tuong:8":"Mở hòm: Bamboo-Sword ×1.","ben-kia-buc-tuong:10":"Nhận thẻ: Teleport ×1.","ben-kia-buc-tuong:11":"Bản đồ: Nông trại đã khám phá.","ben-kia-buc-tuong:12":"Nhận thẻ: Bandage ×1.","ben-kia-buc-tuong:13":"Nhận thẻ: Smoke Veil ×1.","ben-kia-buc-tuong:15":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ.","ben-kia-buc-tuong:16":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm.","ben-kia-buc-tuong:17":"Người chơi còn sống: 18.","ben-kia-buc-tuong:18":"Người chơi còn sống: 17.","ben-kia-buc-tuong:19":"Bàn Teleport: đã dùng. Rời khu Trung tâm.","ben-kia-buc-tuong:20":"Người chơi còn sống: 15.","ben-kia-buc-tuong:21":"Mở rương: Teleport ×1.","ben-kia-buc-tuong:22":"Mở hòm: Remedy ×1.","ben-kia-buc-tuong:25":"Bản đồ: một nhà dân khu Mỏ đã khám phá.","ben-kia-buc-tuong:26":"Nhận thẻ: Guard ×1.","ben-kia-buc-tuong:27":"Bản đồ: khu Mỏ đã khám phá toàn bộ.","ben-kia-buc-tuong:28":"Bản đồ: cả ba khu đã khám phá toàn bộ. Không có thông báo nào.","ben-kia-buc-tuong:29":"Dùng thẻ: Teleport ×1.","ben-kia-buc-tuong:30":"Người chơi còn sống: 11."};
+(function(){var T={"ben-kia-buc-tuong:8":"Mở hòm: Bamboo-Sword ×1.","ben-kia-buc-tuong:10":"Nhận thẻ: Teleport ×1.","ben-kia-buc-tuong:11":"Bản đồ: Nông trại đã khám phá.","ben-kia-buc-tuong:12":"Nhận thẻ: Bandage ×1.","ben-kia-buc-tuong:13":"Nhận thẻ: Smoke Veil ×1.","ben-kia-buc-tuong:15":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ.","ben-kia-buc-tuong:16":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm.","ben-kia-buc-tuong:17":"Người chơi còn sống: 18.","ben-kia-buc-tuong:18":"Người chơi còn sống: 17.","ben-kia-buc-tuong:19":"Bàn Teleport: đã dùng. Rời khu Trung tâm.","ben-kia-buc-tuong:20":"Người chơi còn sống: 15.","ben-kia-buc-tuong:21":"Mở rương: Teleport ×1.","ben-kia-buc-tuong:22":"Mở hòm: Remedy ×1.","ben-kia-buc-tuong:25":"Bản đồ: một nhà dân khu Mỏ đã khám phá.","ben-kia-buc-tuong:26":"Nhận thẻ: Guard ×1.","ben-kia-buc-tuong:27":"Bản đồ: khu Mỏ đã khám phá toàn bộ.","ben-kia-buc-tuong:28":"Bản đồ: cả ba khu đã khám phá toàn bộ. Không có thông báo nào.","ben-kia-buc-tuong:29":"Dùng thẻ: Teleport ×1.","ben-kia-buc-tuong:30":"Người chơi còn sống: 11.","ben-kia-buc-tuong:31":"Dùng thẻ: Guard ×1."};
 function get(){try{return JSON.parse(localStorage.getItem('a07-log')||'[]')}catch(e){return []}}
 function put(a){try{localStorage.setItem('a07-log',JSON.stringify(a))}catch(e){}}
 var els=[].slice.call(document.querySelectorAll('[data-log]'));if(!els.length||!('IntersectionObserver' in window))return;
@@ -3684,6 +3684,41 @@ els.forEach(function(el){io.observe(el)});})();
     for (var i = 0; i < pts.length; i++) { var p = pts[i], q = pts[Math.min(pts.length - 1, i + 1)], an = Math.atan2(q[1] - p[1], q[0] - p[0]); g.save(); g.translate(p[0], p[1]); g.rotate(an); g.beginPath(); g.ellipse(0, 0, lk * 0.5, lk * (i % 2 ? 0.12 : 0.3), 0, 0, 7); g.stroke(); g.restore(); }
     g.restore();
   }
+  // kén xích kiểu mới (Clair 26/11 thấy cột vòng tròn chồng nhau buồn cười): khối tối chìm vào bóng đêm, các vòng xích quấn xoắn chéo,
+  // chỉ nửa trước sáng (trăng từ bên phải), nửa sau mờ hẳn; mép dưới và mép trên tan vào bóng tối. rows = số vòng đã quấn (0..1)
+  function helixCocoon(g, cx, top, base, rw, lk, rows, t, strain) {
+    // kiểu trói mới (Clair 26/11: kén quấn kín trông như xác ướp): thân tối cao gầy, vai xuôi, chìm vào bóng đêm;
+    // chỉ ba vòng xích ngang giữa thân, ổ khoá ở chỗ hai tay bắt chéo. rows = tiến độ quấn (0..1): vòng hiện dần, ổ khoá sập ở cuối
+    var H2 = base - top, st = strain || 0;
+    function hw(v) { if (v < 0.1) return rw * (0.32 + 0.68 * Math.sin(v / 0.1 * Math.PI / 2)); return rw * (1 - (v - 0.1) * 0.32); }
+    var sg = g.createLinearGradient(0, top, 0, base); sg.addColorStop(0, 'rgba(6,7,8,.96)'); sg.addColorStop(0.8, 'rgba(6,7,8,.96)'); sg.addColorStop(1, 'rgba(6,7,8,0)');
+    g.fillStyle = sg; g.beginPath(); var K = 24, i, v;
+    for (i = 0; i <= K; i++) { v = i / K; g.lineTo(cx - hw(v) - Math.sin(v * 9 + t * 0.7) * rw * 0.015, top + v * H2); }
+    for (i = K; i >= 0; i--) { v = i / K; g.lineTo(cx + hw(v) + Math.sin(v * 8 + t * 0.6) * rw * 0.015, top + v * H2); }
+    g.closePath(); g.fill();
+    // viền trăng mảnh mép phải
+    g.strokeStyle = 'rgba(190,206,214,.18)'; g.lineWidth = 1.2; g.beginPath(); for (i = 1; i <= K - 4; i++) { v = i / K; g.lineTo(cx + hw(v), top + v * H2); } g.stroke();
+    var loops = [0.4, 0.47, 0.54], shown = rows * 3, lockA = Math.max(0, Math.min(1, (rows - 0.9) / 0.1));
+    for (var r = 0; r < 3; r++) {
+      var part = Math.max(0, Math.min(1, shown - r)); if (!part) continue;
+      var y0 = top + loops[r] * H2, rx = hw(loops[r]) * (1.03 - st * 0.03), ry = rx * 0.2, tl = (r - 1) * 0.04, n = 15, m = Math.round(n * part);
+      for (var c = 0; c < m; c++) {
+        var a = (c + 0.5) / n * Math.PI, x = cx - Math.cos(a) * rx, y = y0 + Math.sin(a) * ry + (x - cx) * tl;
+        var lit = 0.45 + 0.55 * Math.max(0, -Math.cos(a - 0.5)) * 0.9 + 0.1;
+        g.strokeStyle = 'rgba(200,214,220,' + Math.min(1, lit).toFixed(3) + ')'; g.lineWidth = Math.max(1.2, lk * 0.2);
+        g.save(); g.translate(x, y); g.rotate(Math.atan2(Math.cos(a) * ry + rx * tl * Math.sin(a), Math.sin(a) * rx)); g.beginPath(); g.ellipse(0, 0, lk * 0.42, lk * (c % 2 ? 0.1 : 0.24), 0, 0, 7); g.stroke(); g.restore();
+      }
+    }
+    if (lockA > 0) {
+      var ly = top + 0.47 * H2 + hw(0.47) * 0.2 + lk * 0.2, s = lk * 1.15, drop = (1 - lockA) * s * 0.8;
+      g.save(); g.globalAlpha = lockA; g.translate(cx, ly + drop);
+      g.strokeStyle = '#aab6bc'; g.lineWidth = Math.max(2, s * 0.22); g.beginPath(); g.arc(0, -s * 0.15, s * 0.42, Math.PI, 0); g.lineTo(s * 0.42, s * 0.15); g.moveTo(-s * 0.42, -s * 0.15); g.lineTo(-s * 0.42, s * 0.15); g.stroke();
+      g.fillStyle = '#8f9ca2'; g.beginPath(); g.rect(-s * 0.62, s * 0.1, s * 1.24, s * 0.95); g.fill();
+      g.fillStyle = 'rgba(230,240,244,.35)'; g.fillRect(s * 0.3, s * 0.14, s * 0.22, s * 0.85);
+      g.fillStyle = '#0b0d0e'; g.beginPath(); g.arc(0, s * 0.45, s * 0.13, 0, 7); g.fill(); g.fillRect(-s * 0.05, s * 0.45, s * 0.1, s * 0.3);
+      g.restore();
+    }
+  }
   // 15.1 từ trong gian nhà nhìn ra: khung cửa tối, sân dưới trăng non, giếng nhỏ, cạnh giếng là vương miện chuông và mấy chục con mắt; trên mép ghế dài trong nhà, một dải vải thấm đỏ
   ART.stare15 = function (g, w, h, t, R) {
     var dk = C.dark; g.fillStyle = dk ? '#050606' : '#26282a'; g.fillRect(0, 0, w, h);
@@ -3709,12 +3744,8 @@ els.forEach(function(el){io.observe(el)});})();
     var dk = C.dark; sky(g, w, h, 'night', 0.7); moon(g, w * 0.86, h * 0.1, h * 0.022, t);
     yardFloor(g, w, h, h * 0.55);
     var cx = w * 0.56, top = h * 0.2, base = h * 0.86, lk = Math.max(6, h * 0.022), strain = 0.5 + 0.5 * Math.sin(t * 0.9), jit = Math.sin(t * 31) * strain * 1.2, col = dk ? '#b8c4c8' : '#2e3638';
-    // bóng kén
-    g.fillStyle = rgba('#000000', 0.5); g.beginPath(); g.ellipse(cx, base, w * 0.08, h * 0.02, 0, 0, 7); g.fill();
-    g.fillStyle = dk ? '#0a0b0c' : '#1e2224'; g.beginPath(); g.ellipse(cx + jit, (top + base) / 2 + h * 0.05, w * 0.055 * (1 + strain * 0.06), (base - top) / 2, 0, 0, 7); g.fill();
-    // vòng xích quấn từ cổ chân lên vai
-    g.strokeStyle = col; g.lineWidth = Math.max(1.2, lk * 0.18);
-    for (var r = 0; r < 14; r++) { var y = base - (r / 13) * (base - top - h * 0.1), rx = w * 0.058 * Math.sin(Math.PI * (0.15 + 0.85 * (1 - r / 16))) * (1 + strain * 0.05); for (var c = 0; c < 12; c++) { var a = c / 12 * Math.PI + (r % 2) * 0.13, x = cx + jit + Math.cos(a) * rx, yy = y + Math.sin(a) * h * 0.012; g.save(); g.translate(x, yy); g.rotate(a + 1.57); g.beginPath(); g.ellipse(0, 0, lk * (c % 2 ? 0.12 : 0.3), lk * 0.5, 0, 0, 7); g.stroke(); g.restore(); } }
+    g.fillStyle = rgba('#000000', 0.5); g.beginPath(); g.ellipse(cx, base, w * 0.09, h * 0.02, 0, 0, 7); g.fill();
+    helixCocoon(g, cx + jit, top, base, w * 0.07, lk, 1, t, strain);
     face15(g, cx + jit, top + h * 0.02, h * 0.07, t, R, { n: 18, down: 1, look: 0 });
     // đoạn xích căng về khung cửa bên trái, rung theo sức kéo
     var pts = []; for (var m = 0; m <= 30; m++) { var u = m / 30; pts.push([cx - w * 0.05 - u * w * 0.5, h * 0.5 + u * h * 0.06 + Math.sin(u * 30 + t * 40) * strain * 1.4]); }
@@ -4873,7 +4904,7 @@ els.forEach(function(el){io.observe(el)});})();
       if (p.dataset.fx === 'flicker') flickFrom = p;
     });
     // tô nổi đoạn chữ của lần kích hoạt năng lực nhân vật chính: loé sáng lúc hiệu ứng chạy, rồi giữ lại vạch màu nhẹ
-    var WHO = { chains: 'leon', rescue: 'leon', rescuehold: 'leon', anomaly: 'luke', protect: 'luke', keysense: 'clevia', keyburst: 'clevia', stoneopen: 'clevia', yank: 'leon', bristle: 'leon' };
+    var WHO = { chains: 'leon', rescue: 'leon', rescuehold: 'leon', anomaly: 'luke', protect: 'luke', keysense: 'clevia', keyburst: 'clevia', stoneopen: 'clevia', yank: 'leon', bristle: 'leon', bind15: 'leon' };
     function power(p, who, delay) {
       who = who || WHO[p && p.dataset.fx]; if (!p || !who) return;
       var list = [p], q = p.nextElementSibling;
@@ -5339,6 +5370,17 @@ els.forEach(function(el){io.observe(el)});})();
       main.style.transform = t > 0.8 && t < 2.4 ? 'translateY(' + (drop * 6 * (1 - es((t - 1.4) / 1))).toFixed(1) + 'px)' : '';
       hugChain({ t: t, reach: es(t / 0.3), hug: 1 - es((t - 0.6) / 0.4), dy: 0, vib: t < 0.6 ? 2.5 : 0, glow: -1, alpha: 1,
         fall: function (u) { return cl((t - 0.7 - (1 - u) * 0.9) / 1.4); } });   // bung từ đầu xích (phía người được cứu) về phía Leon
+      return false;
+    };
+    // ch15 (Clair 26/11 bỏ tranh + tương tác cái kén): hiệu ứng xích riêng của Leon: ba vòng xích quất ra từ mép trái, quấn chồng lên nhau giữa trang,
+    // siết lại, rung căng như có thứ gì gồng bên trong, loé xám thép một nhịp rồi lặng đi
+    MORE.bind15 = function (t) {
+      if (t > 4.6) { main.style.transform = ''; return true; }
+      var strain = es((t - 1.3) / 0.3) * (1 - es((t - 3) / 0.5)), sh = strain * (0.5 + 0.5 * Math.sin(t * 5)), fade = 1 - es((t - 3.7) / 0.8);
+      main.style.transform = sh > 0.05 ? 'translate(' + (Math.sin(t * 90) * 5 * sh).toFixed(1) + 'px,' + (Math.cos(t * 77) * 3 * sh).toFixed(1) + 'px)' : '';
+      edge('#2a3236', 0.55 * fade, 0.25);
+      for (var i = 0; i < 3; i++) hugChain({ t: t, reach: es((t - i * 0.22) / 0.45), hug: es((t - 0.5 - i * 0.18) / 0.35) * 1.15, dy: (i - 1) * Math.min(W, H) * 0.1, vib: sh * 3, glow: -1, alpha: fade });
+      var fl = Math.max(0, 1 - Math.abs(t - 1.25) / 0.18); if (fl > 0) wash('#d6e0e2', 0.22 * fl);
       return false;
     };
     // ch12: thẻ Remedy vỡ thành ánh sáng xanh non, ấm, dịu; những đốm sáng bay lên
@@ -6649,6 +6691,7 @@ els.forEach(function(el){io.observe(el)});})();
       waterhand: function (o, n) { bus(); nz(wet(0.8), 'bandpass', 300, 2600, 0.9, 0.35, 1.2, n); for (var b = 0; b < 30; b++) { var at = n + 0.2 + Math.random() * 1.2, f0 = 500 + Math.random() * 900, x = ac.createOscillator(), g2 = gain(0); x.frequency.setValueAtTime(f0, at); x.frequency.exponentialRampToValueAtTime(f0 * 1.8, at + 0.06); g2.gain.setValueAtTime(0.03, at); g2.gain.exponentialRampToValueAtTime(0.0001, at + 0.08); x.connect(g2); g2.connect(o); x.start(at); x.stop(at + 0.1); } for (var k = 0; k < 8; k++) sine(o, 3400 + Math.random() * 1800, 0.02 * (1 - k / 8), 0.12, n + 1.2 + k * 0.07); nz(wet(0.6), 'lowpass', 2400, 500, 0.8, 0.3, 0.5, n + 1.2); for (var i = 0; i < 3; i++) { var st = n + 1.8 + i * 2.85; nz(wet(0.5), 'bandpass', 500, 1400, 0.8, 0.12, 1.4, st); nz(wet(0.5), 'bandpass', 1400, 500, 0.8, 0.1, 1.4, st + 1.4); } },
       splash: function (o, n) { bus(); nz(wet(1), 'bandpass', 2400, 600, 0.6, 0.6, 0.9, n + 0.35); nz(o, 'highpass', 3000, 6000, 0.8, 0.25, 0.4, n + 0.4); for (var d = 0; d < 20; d++) { var at = n + 0.6 + Math.random() * 0.9, f0 = 900 + Math.random() * 1400, x = ac.createOscillator(), g2 = gain(0); x.frequency.setValueAtTime(f0, at); x.frequency.exponentialRampToValueAtTime(f0 * 0.6, at + 0.08); g2.gain.setValueAtTime(0.025, at); g2.gain.exponentialRampToValueAtTime(0.0001, at + 0.1); x.connect(g2); g2.connect(o); x.start(at); x.stop(at + 0.12); } },
       crackfar: function (o, n) { [0.3, 2.2].forEach(function (d, i) { var v = i ? 0.06 : 0.1; nz(o, 'highpass', 2200, 3000, 0.8, v, 0.1, n + d); for (var k = 0; k < 5; k++) sine(o, 700 + Math.random() * 600, v * 0.25, 0.05, n + d + 0.12 + k * 0.08, 'triangle'); }); },
+      bind15: function (o, n) { bus(); for (var r = 0; r < 3; r++) { whoosh(n + r * 0.22, 0.3, 0.45, r % 2 === 0); nz(wet(0.8), 'bandpass', 1400 + r * 500, 6000, 7, 0.4, 0.3, n + r * 0.22 + 0.02); } for (var c = 0; c < 18; c++) clink(wet(0.7), n + 0.5 + c * 0.04, 0.05); nz(wet(0.5), 'bandpass', 2600, 3400, 8, 0.07, 1.6, n + 1.3); for (var k = 0; k < 10; k++) clink(wet(0.5), n + 1.4 + k * 0.16, 0.03); sparkle(n + 1.22, 0.03, [2093, 2637, 3136]); },
       bristle: function (o, n) { bus(); nz(wet(0.6), 'bandpass', 1500, 5000, 4, 0.25, 0.3, n); for (var k = 0; k < 24; k++) clink(wet(0.6), n + 0.25 + k * 0.1, 0.02 + 0.01 * Math.sin(k)); nz(wet(0.3), 'bandpass', 3000, 3300, 9, 0.05, 2.6, n + 0.3); },
       leaf: function (o, n) { nz(o, 'bandpass', 3000, 4500, 1.5, 0.04, 1.2, n + 0.2); nz(o, 'bandpass', 2600, 3800, 2, 0.05, 0.08, n + 3.6); sine(o, 2637, 0.008, 1.2, n + 3.65); },
       msg: function (o, n) { sine(o, 1320, 0.04, 0.12, n); sine(o, 1760, 0.035, 0.15, n + 0.06); },
@@ -8000,6 +8043,41 @@ els.forEach(function(el){io.observe(el)});})();
     /* ---- ch15 xích Leon trói con quỷ: (1) vuốt ngang qua lại để xích quấn từ cổ chân lên vai thành cái kén;
        (2) chạm và giữ để kéo xích căng; con quỷ gồng lên từng đợt, buông tay lúc nó gồng thì xích tuột bớt;
        giữ đủ thì mấy chục con mắt quay xuống nhìn xích, tiếng "két" dài, xích căng tới rung (xong) ---- */
+    // kén xích kiểu mới (Clair 26/11 thấy cột vòng tròn chồng nhau buồn cười): khối tối chìm vào bóng đêm, các vòng xích quấn xoắn chéo,
+    // chỉ nửa trước sáng (trăng từ bên phải), nửa sau mờ hẳn; mép dưới và mép trên tan vào bóng tối. rows = số vòng đã quấn (0..1)
+    function helixCocoon(g, cx, top, base, rw, lk, rows, t, strain) {
+    // kiểu trói mới (Clair 26/11: kén quấn kín trông như xác ướp): thân tối cao gầy, vai xuôi, chìm vào bóng đêm;
+    // chỉ ba vòng xích ngang giữa thân, ổ khoá ở chỗ hai tay bắt chéo. rows = tiến độ quấn (0..1): vòng hiện dần, ổ khoá sập ở cuối
+    var H2 = base - top, st = strain || 0;
+    function hw(v) { if (v < 0.1) return rw * (0.32 + 0.68 * Math.sin(v / 0.1 * Math.PI / 2)); return rw * (1 - (v - 0.1) * 0.32); }
+    var sg = g.createLinearGradient(0, top, 0, base); sg.addColorStop(0, 'rgba(6,7,8,.96)'); sg.addColorStop(0.8, 'rgba(6,7,8,.96)'); sg.addColorStop(1, 'rgba(6,7,8,0)');
+    g.fillStyle = sg; g.beginPath(); var K = 24, i, v;
+    for (i = 0; i <= K; i++) { v = i / K; g.lineTo(cx - hw(v) - Math.sin(v * 9 + t * 0.7) * rw * 0.015, top + v * H2); }
+    for (i = K; i >= 0; i--) { v = i / K; g.lineTo(cx + hw(v) + Math.sin(v * 8 + t * 0.6) * rw * 0.015, top + v * H2); }
+    g.closePath(); g.fill();
+    // viền trăng mảnh mép phải
+    g.strokeStyle = 'rgba(190,206,214,.18)'; g.lineWidth = 1.2; g.beginPath(); for (i = 1; i <= K - 4; i++) { v = i / K; g.lineTo(cx + hw(v), top + v * H2); } g.stroke();
+    var loops = [0.4, 0.47, 0.54], shown = rows * 3, lockA = Math.max(0, Math.min(1, (rows - 0.9) / 0.1));
+    for (var r = 0; r < 3; r++) {
+      var part = Math.max(0, Math.min(1, shown - r)); if (!part) continue;
+      var y0 = top + loops[r] * H2, rx = hw(loops[r]) * (1.03 - st * 0.03), ry = rx * 0.2, tl = (r - 1) * 0.04, n = 15, m = Math.round(n * part);
+      for (var c = 0; c < m; c++) {
+        var a = (c + 0.5) / n * Math.PI, x = cx - Math.cos(a) * rx, y = y0 + Math.sin(a) * ry + (x - cx) * tl;
+        var lit = 0.45 + 0.55 * Math.max(0, -Math.cos(a - 0.5)) * 0.9 + 0.1;
+        g.strokeStyle = 'rgba(200,214,220,' + Math.min(1, lit).toFixed(3) + ')'; g.lineWidth = Math.max(1.2, lk * 0.2);
+        g.save(); g.translate(x, y); g.rotate(Math.atan2(Math.cos(a) * ry + rx * tl * Math.sin(a), Math.sin(a) * rx)); g.beginPath(); g.ellipse(0, 0, lk * 0.42, lk * (c % 2 ? 0.1 : 0.24), 0, 0, 7); g.stroke(); g.restore();
+      }
+    }
+    if (lockA > 0) {
+      var ly = top + 0.47 * H2 + hw(0.47) * 0.2 + lk * 0.2, s = lk * 1.15, drop = (1 - lockA) * s * 0.8;
+      g.save(); g.globalAlpha = lockA; g.translate(cx, ly + drop);
+      g.strokeStyle = '#aab6bc'; g.lineWidth = Math.max(2, s * 0.22); g.beginPath(); g.arc(0, -s * 0.15, s * 0.42, Math.PI, 0); g.lineTo(s * 0.42, s * 0.15); g.moveTo(-s * 0.42, -s * 0.15); g.lineTo(-s * 0.42, s * 0.15); g.stroke();
+      g.fillStyle = '#8f9ca2'; g.beginPath(); g.rect(-s * 0.62, s * 0.1, s * 1.24, s * 0.95); g.fill();
+      g.fillStyle = 'rgba(230,240,244,.35)'; g.fillRect(s * 0.3, s * 0.14, s * 0.22, s * 0.85);
+      g.fillStyle = '#0b0d0e'; g.beginPath(); g.arc(0, s * 0.45, s * 0.13, 0, 7); g.fill(); g.fillRect(-s * 0.05, s * 0.45, s * 0.1, s * 0.3);
+      g.restore();
+    }
+  }
     function COCOON() {
       var R = seeds(80), wrap = 0, dsp = 0, phase = 0, hold = 0, holding = false, held = false, last = 0, flash = 0, look = 0, endT = 0, lastLoop = 0, strainT = 0, cr = null, slipT = 0;
       return {
@@ -8023,12 +8101,7 @@ els.forEach(function(el){io.observe(el)});})();
           var mg = g.createRadialGradient(w * 0.85, h * 0.1, 0, w * 0.85, h * 0.1, w * 0.5); mg.addColorStop(0, 'rgba(200,212,224,.12)'); mg.addColorStop(1, 'rgba(200,212,224,0)'); g.fillStyle = mg; g.fillRect(0, 0, w, h);
           g.fillStyle = '#1a1410'; g.fillRect(0, 0, w * 0.05, h);
           var cx = w * 0.6, top = h * 0.24, base = h * 0.88, lk = Math.max(7, h * 0.03), bulge = 1 + surge * 0.08;
-          // kén: các vòng xích quấn dần từ chân lên
-          g.fillStyle = '#0a0b0c'; g.beginPath(); g.ellipse(cx, (top + base) / 2 + h * 0.04, w * 0.075 * bulge, (base - top) / 2, 0, 0, 7); g.fill();
-          var rows = Math.floor(dsp * 13 + 0.001);
-          g.strokeStyle = '#c4ced2'; g.lineWidth = Math.max(1.4, lk * 0.2); g.shadowColor = 'rgba(180,205,215,.6)'; g.shadowBlur = 6;
-          for (var r = 0; r < rows; r++) { var y = base - (r / 12) * (base - top - h * 0.08), rx = w * 0.08 * Math.sin(Math.PI * (0.2 + 0.8 * (1 - r / 15))) * bulge; for (var c = 0; c < 12; c++) { var a = c / 12 * Math.PI + (r % 2) * 0.13, x = cx + Math.cos(a) * rx, yy = y + Math.sin(a) * h * 0.015; g.save(); g.translate(x, yy); g.rotate(a + 1.57); g.beginPath(); g.ellipse(0, 0, lk * (c % 2 ? 0.12 : 0.3), lk * 0.5, 0, 0, 7); g.stroke(); g.restore(); } }
-          g.shadowBlur = 0;
+          helixCocoon(g, cx, top, base, w * 0.085, lk, dsp, t, surge);
           // mắt: lúc đầu nhìn ra (về phía người đọc), khi xích đủ căng thì từng con quay xuống nhìn xích
           eyes15a(g, cx, top - h * 0.02, Math.min(w, h) * 0.07, t, R, function (e) { return look ? 0 : Math.sin(t * 2 + e) * 0.4 - 0.4; }, function (e) { return look ? Math.min(1, Math.max(0, look * 2.2 - e / 22)) : 0.6; }, 1);
           // đoạn xích từ đống thép dưới chân (góc trái dưới) căng lên tới kén
