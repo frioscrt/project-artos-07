@@ -1007,8 +1007,10 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
   document.getElementById('smaller').onclick=function(){size(-1)};
   document.getElementById('bigger').onclick=function(){size(1)};
   try{localStorage.setItem('a07-last',location.pathname.split('/').pop()||'')}catch(e){}
-  try{if(localStorage.getItem('a07-done')===null)localStorage.setItem('a07-done',+(localStorage.getItem('a07-max')||0))}catch(e){} // người đọc cũ: coi các chương đã mở là đã đọc
-  try{var cn=+(location.pathname.match(/ch(\d+)\.html$/)||[0,0])[1];if(cn>+(localStorage.getItem('a07-max')||0))localStorage.setItem('a07-max',cn)}catch(e){}
+  var cn=+(location.pathname.match(/ch(\d+)\.html$/)||[0,0])[1];
+  // máy/trình duyệt chưa có tiến độ (người đọc cũ, hoặc mở bằng trình duyệt khác, web app, trình duyệt trong app): coi các chương trước chương đang mở là đã đọc
+  try{if(!+(localStorage.getItem('a07-done')||0))localStorage.setItem('a07-done',Math.max(+(localStorage.getItem('a07-max')||0),cn-1))}catch(e){}
+  try{if(cn>+(localStorage.getItem('a07-max')||0))localStorage.setItem('a07-max',cn)}catch(e){}
   // đọc tới cuối chương thì Sổ tay mở thêm tới chương này (a07-done)
   function done(){try{if(cn>+(localStorage.getItem('a07-done')||0))localStorage.setItem('a07-done',cn)}catch(e){}}
   var nb=document.querySelector('a.notebook'); if(nb) nb.addEventListener('click',done);
