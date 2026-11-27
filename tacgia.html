@@ -920,6 +920,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .tg-go a{flex:1 1 9em;text-align:center;padding:.8em .6em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;line-height:1.3;font-size:16px}
 .tg-go a.tg-main{border-color:var(--lamp)}
 
+.pen-row a.lab{flex:1;min-width:7em;display:flex;align-items:center;justify-content:center;padding:.75em 1em;border-radius:10px;border:1px solid var(--pw-luke);color:var(--pw-luke);text-decoration:none;font:500 15px/1 system-ui,sans-serif}
 .tg-ring{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .tg-ring .penring{fill:none;stroke:var(--pw-clevia);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
 .tg-ring.penon .dot{fill:var(--pw-clevia)}
@@ -1172,7 +1173,7 @@ var nx=d.querySelector('.drc-next');if(nx){var tot=d.querySelectorAll('li[data-n
     try { localStorage.setItem('a07-pen', k); localStorage.setItem('a07-pen-role', r.role || 'tg'); localStorage.setItem('a07-pen-name', r.name || 'Clair'); } catch (e) {}
     ring.classList.add('penon'); ring.classList.remove('penflash'); void ring.getBoundingClientRect(); ring.classList.add('penflash'); S('unlock');
     if (r.role === 'pt') open('<h3>Bút phụ tá</h3><p class="lead">Chào ' + esc(r.name) + '! Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để đề xuất sửa chữ hoặc ghi chú. Đề xuất của cậu sẽ chờ tác giả duyệt.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button></div>');
-    else open('<h3>Bút tác giả</h3><p class="lead">Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để sửa chữ hoặc ghi chú.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button></div>');
+    else open('<h3>Bút tác giả</h3><p class="lead">Đã mở trên máy này. Vào chương nào cũng thấy nút <b>cây bút</b> tròn ở góc phải dưới: bật lên rồi chạm một đoạn để sửa chữ hoặc ghi chú. Skill Lab cũng đã mở.</p><div class="pen-row"><button type="button" class="go" data-x>Ok</button><a class="lab" href="skill-lab.html">Skill Lab</a></div>');
   }
   function login() {
     open('<h3>Bút tác giả</h3><p class="sub">Dành cho tác giả và phụ tá.</p><input type="password" class="k1" autocomplete="current-password" placeholder="Mật mã hoặc mã phụ tá"><div class="pen-row"><button type="button" class="go">Mở</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
@@ -1203,7 +1204,7 @@ var nx=d.querySelector('.drc-next');if(nx){var tot=d.querySelectorAll('li[data-n
   function opened() {
     var tg = role() === 'tg';
     open('<h3>' + (tg ? 'Bút tác giả' : 'Bút phụ tá · ' + esc(pname())) + '</h3><p class="lead">Bút đang mở trên máy này. Vào chương bất kỳ, bấm nút <b>cây bút</b> tròn ở góc phải dưới.</p>' +
-      (tg ? '<div class="pen-row"><button type="button" class="go tm">Quản lý phụ tá</button></div>' : '') +
+      (tg ? '<div class="pen-row"><button type="button" class="go tm">Quản lý phụ tá</button></div><div class="pen-row"><a class="lab" href="skill-lab.html">Skill Lab</a></div>' : '') +
       '<div class="pen-row"><button type="button" class="rm">Khoá lại trên máy này</button><button type="button" data-x>Đóng</button></div>');
     if (tg) sheet.querySelector('.tm').onclick = team;
     sheet.querySelector('.rm').onclick = function () { try { localStorage.removeItem('a07-pen'); localStorage.removeItem('a07-pen-role'); localStorage.removeItem('a07-pen-name'); sessionStorage.removeItem('a07-pen-on'); } catch (e) {} ring.classList.remove('penon'); S('locked'); close(); };
