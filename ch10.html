@@ -886,7 +886,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <figure class="plate"><canvas class="art" data-art="market:noon" role="img" aria-label="Cái chợ trưa vắng hoe, nắng trắng gắt"></canvas></figure>
 <p data-pi="21">Cái chợ vẫn vắng hoe như lúc sáng.</p>
 <p data-pi="22">Vẫn những dãy sạp tre lợp lá chạy dài, vẫn những rổ rau, những thúng gạo, những xâu cá khô treo lủng lẳng. Vẫn lèo tèo mấy người bán ngồi im trên ghế con, tay đặt trên đầu gối, mắt nhìn ra đường. Chỉ có nắng là khác. Nắng trưa xuyên qua những mái lá thưa, rắc xuống mặt đất những đốm sáng loang lổ, và mùi cá khô bị nắng hun lên nồng nặc đến mức <span class="nm nm-person">Clevia</span> phải thở bằng miệng.</p>
-<p data-pi="23" data-fx="anomaly" data-cast="1">Họ đi được nửa chợ thì <span class="nm nm-person">Luke</span> dừng lại.</p>
+<p data-pi="23" data-fx="luke-eye-sense">Họ đi được nửa chợ thì <span class="nm nm-person">Luke</span> dừng lại.</p>
 <p data-pi="24">Anh không nói gì. Anh chỉ dừng lại, đứng im, đầu hơi nghiêng đi một chút, như một người đang cố nghe một tiếng nhạc rất xa. <span class="nm nm-person">Clevia</span> biết cái dáng đứng ấy. Cô đã thấy nó ở ngã ba giếng, ngay trước khi gã đàn ông to con bước ra từ bóng tối.</p>
 <p data-pi="25">Rồi cô cũng nghe thấy.</p>
 <p data-pi="26">Đó là tiếng một con mèo. Không phải tiếng kêu meo meo, mà là tiếng gằn gừ trong cổ họng, khè khè, đứt quãng, cái tiếng một con mèo phát ra khi nó bị dồn vào góc tường. Và lẫn trong đó là tiếng một người con gái, nhỏ, nghẹn, như đang nói qua kẽ răng.</p>
@@ -999,8 +999,8 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p data-pi="125">Bà bán thuốc há miệng. Màu trầu đỏ quạch nhuộm khắp kẽ răng.</p>
 <p data-pi="126">Rồi bà nhảy qua mặt sạp.</p>
 <p data-pi="127"><span class="nm nm-person">Clevia</span> không kịp lùi. Cô không kịp làm gì cả. Cô chỉ thấy hai bàn tay nhăn nheo ấy vươn tới, những móng tay dài, vàng khè, cong như móng chim, nhắm thẳng vào mặt cô. Và cô nghe thấy <span class="nm nm-person">Luke</span> hét lên tên cô, một tiếng thôi, khàn, đứt, như sợi dây đàn bị kéo căng quá mức.</p>
-<p data-pi="128" data-fx="protect" data-cast="1">Không khí quanh người cô bừng sáng.</p>
-<p data-pi="129">Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng cô đã thấy sáng nay bao quanh <span class="nm nm-person">Ruby</span>. Hai bàn tay của bà bán thuốc cào vào đó, và <span class="nm nm-person">Clevia</span> nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên, rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
+<p data-pi="128" data-fx="luke-protect">Không khí quanh người cô bừng sáng.</p>
+<p data-pi="129">Một vòm sáng mờ mờ, hình tròn, ôm trọn lấy cô từ đầu tới chân, như một cái vỏ trứng trong suốt. Giống hệt cái vòm sáng quanh <span class="nm nm-person">Ruby</span> sáng nay. Nhưng ở sát thế này, cô thấy mặt vòm ghép từ những ô sáng nhỏ sáu cạnh, khít nhau như tổ ong. Hai bàn tay của bà bán thuốc cào vào đó, và <span class="nm nm-person">Clevia</span> nghe thấy một tiếng <em>két</em> chói tai, như tiếng móng tay cào lên mặt bảng đen. Vòm sáng gợn lên, rồi bật trở lại. Bà bán thuốc bị đẩy văng ra sau, lưng đập vào cái sạp thuốc, làm những lọ sành đổ vỡ loảng xoảng.</p>
 <p data-pi="130"><span class="nm nm-person">Clevia</span> quay sang <span class="nm nm-person">Luke</span>. Anh đang đứng cách cô hai bước, một tay đặt trên túi áo, chỗ tấm thẻ <span class="nm nm-card">Protect</span> của anh từng nằm. Cái túi áo giờ đã lép kẹp.</p>
 <p data-pi="131">Anh chỉ có một tấm.</p>
 <p data-pi="132" class="say say-x"><span class="q">“Anh…!”</span></p>
@@ -1556,6 +1556,6 @@ els.forEach(function(el){io.observe(el)});})();
   if (was) on(true); else { load(); }
 })("https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec");
 </script>
-<script src="fx-a2d9860ad1.js"></script>
+<script src="fx-05bf6ca093.js"></script>
 </body>
 </html>
