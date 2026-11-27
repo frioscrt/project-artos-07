@@ -835,9 +835,11 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 @keyframes wb{to{clip-path:circle(150vmax at var(--x) var(--y))}}
 body.warping main{transition:transform 1.4s cubic-bezier(.6,0,.3,1),filter 1.4s;transform:scale(1.06);filter:blur(2px)}
 
+.home-tools{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;z-index:4;background:color-mix(in srgb,var(--bg) 70%,transparent);border-radius:999px}
 </style>
 </head>
 <body>
+<div class="tools home-tools"><button type="button" id="sfx" aria-pressed="false" aria-label="Bật hoặc tắt tiếng khi chạm">Tiếng</button></div>
 <main>
   <div class="toc-hero">
     <figure class="plate"><canvas class="art" data-art="bridge" role="img" aria-label="Cây cầu trong sương, soi bóng xuống mặt nước lặng"></canvas></figure>

@@ -923,7 +923,7 @@ body > main{position:relative;z-index:1}
 </g></svg><svg class="na-thread" viewBox="0 0 1000 200" preserveAspectRatio="none"><path pathLength="1" d="M-10 140C180 70 330 190 520 120S820 40 1010 110"/></svg></div>
 <header class="bar">
   <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương và trang chủ"><span class="ic"></span>Mục lục</button>
-  <div class="tools"><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
+  <div class="tools"><button type="button" id="sfx" aria-pressed="false" aria-label="Bật hoặc tắt tiếng khi chạm">Tiếng</button><button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button></div>
 </header>
 <div class="drawer dr-c" id="drawer" hidden>
   <div class="dr-shade" data-close></div>
@@ -1081,7 +1081,7 @@ var D={"traces":[{"pov":"ch05-mabel","place":"ruong","t":"Trong cỏ ven ruộng
   function markSeen(q){seen[q.id]=lastCh(q);store('a07-map-seen',JSON.stringify(seen))}
 
   /* tiếng (theo nút Tiếng ở trang chương). Giấy sột soạt, nếp gấp bật, ngòi bút sột trên giấy. Không tiếng trầm. */
-  var SF=get('a07-sfx')!=='off',ac=null,out=null,nb=null;
+  var SF=get('a07-sfx')!=='off',ac=null,out=null,nb=null;addEventListener('a07-sfx',function(e){SF=e.detail});
   function ctx(){if(!SF)return null;if(!ac){var AC=window.AudioContext||window.webkitAudioContext;if(!AC){SF=false;return null}
     ac=new AC();out=ac.createGain();out.gain.value=.5;out.connect(ac.destination);nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);var d=nb.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1}
     if(ac.state!=='running'&&ac.state!=='closed')ac.resume();return ac}
@@ -1187,6 +1187,25 @@ var last=0,lastT=0;for(var k in pos){if(pos[k].t>lastT){lastT=pos[k].t;last=+k}}
 var nx=d.querySelector('.drc-next');if(nx){var tot=d.querySelectorAll('li[data-n]').length,t=last&&last>dn?last:Math.min(dn+1,tot)||1;
  var li=d.querySelector('li[data-n="'+t+'"]');nx.href='ch'+(t<10?'0':'')+t+'.html';nx.querySelector('b').textContent='Chương '+t;if(li)nx.querySelector('.tt').textContent=li.querySelector('.t').textContent;
  nx.querySelector('.bar i').style.width=Math.round(100*Math.min(dn,tot)/tot)+'%';if(!dn&&!last)nx.querySelector('small').textContent='Bắt đầu đọc'}})();
+
+(function(){
+  var b=document.getElementById('sfx'),on=true;try{on=localStorage.getItem('a07-sfx')!=='off'}catch(e){}
+  function show(){if(b)b.setAttribute('aria-pressed',on)}
+  show();
+  var isIOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),el=null;
+  function wav(){var n=1600,a=new Uint8Array(44+n),v=new DataView(a.buffer);function s(o,t){for(var i=0;i<t.length;i++)a[o+i]=t.charCodeAt(i)}
+    s(0,'RIFF');v.setUint32(4,36+n,true);s(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);s(36,'data');v.setUint32(40,n,true);
+    for(var i=44;i<a.length;i++)a[i]=128;var x='';for(var j=0;j<a.length;j++)x+=String.fromCharCode(a[j]);return 'data:audio/wav;base64,'+btoa(x)}
+  function playback(){if(!on)return;try{if(navigator.audioSession&&navigator.audioSession.type!=='playback')navigator.audioSession.type='playback'}catch(e){}
+    if(!isIOS||(navigator.audioSession&&navigator.audioSession.type==='playback'))return;
+    try{if(!el){el=document.createElement('audio');el.setAttribute('x-webkit-airplay','deny');el.setAttribute('playsinline','');el.loop=true;el.src=wav()}
+      if(el.paused&&!document.hidden){var p=el.play();if(p&&p.catch)p.catch(function(){})}}catch(e){}}
+  ['pointerdown','touchend','keydown'].forEach(function(t){addEventListener(t,playback,true)});
+  document.addEventListener('visibilitychange',function(){if(document.hidden&&el)try{el.pause()}catch(e){}});
+  if(b)b.onclick=function(){on=!on;try{localStorage.setItem('a07-sfx',on?'on':'off')}catch(e){}show();playback();
+    try{dispatchEvent(new CustomEvent('a07-sfx',{detail:on}))}catch(e){}};
+})();
+
 </script>
 </body>
 </html>
