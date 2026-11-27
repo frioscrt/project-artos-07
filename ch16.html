@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-title" content="Artos 07">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Chương 16: Kẻ thực dụng</title>
+<meta name="description" content="Project Artos 07, chương 16: Kẻ thực dụng">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;1,7..72,300;1,7..72,400&display=swap&subset=vietnamese" rel="stylesheet">
+<script>
+  (function(){try{var t=localStorage.getItem('a07-theme');if(t)document.documentElement.setAttribute('data-theme',t);var s=localStorage.getItem('a07-size');if(s)document.documentElement.style.setProperty('--size',s+'px');}catch(e){}})();
+</script>
+<style>
+:root{
+  --bg:#E4E7E2; --veil:#D7DCD6; --ink:#22292A; --soft:#5E6965; --line:#B9C1BC; --lamp:#8A5A2B; --ice:#2E7484;
+  --size:19px; --measure:33em;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131A1C; --veil:#1A2326; --ink:#D5D0C3; --soft:#87918D; --line:#2F3B3E; --lamp:#C9A46A; --ice:#8FD3E0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Literata",Georgia,serif; font-size:var(--size); line-height:1.8;
+  font-optical-sizing:auto; font-kerning:normal;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .4s, color .4s;
+}
+/* sương mờ phía trên và dưới màn hình */
+body::before,body::after{content:"";position:fixed;left:0;right:0;height:9vh;pointer-events:none;z-index:2}
+body::before{top:0;background:linear-gradient(var(--bg) 20%,transparent)}
+body::after{bottom:0;background:linear-gradient(transparent,var(--bg) 80%)}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--lamp);transform-origin:0 50%;transform:scaleX(0);z-index:5;opacity:.75}
+
+header.bar{
+  position:fixed;top:0;left:0;right:0;z-index:4;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  font-size:15px;line-height:1.2;color:var(--soft);
+  transition:transform .35s ease, opacity .35s;
+  background:linear-gradient(var(--bg) 70%,transparent);padding-bottom:22px;
+}
+header.bar.hide{transform:translateY(-110%);opacity:0}
+.book{color:inherit;text-decoration:none;font-style:italic;font-size:16px}
+.tools{display:flex;gap:0}
+.menu-btn{font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:999px;height:40px;padding:0 14px 0 12px;cursor:pointer;display:flex;align-items:center;gap:.5em;white-space:nowrap}
+.menu-btn:hover{color:var(--ink)}
+.menu-btn .ic{display:inline-block;width:14px;height:10px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
+.menu-btn .ic::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid currentColor;transform:translateY(-50%)}
+.drawer{position:fixed;inset:0;z-index:40}
+.dr-shade{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .28s}
+.dr-panel{position:absolute;top:0;left:0;bottom:0;width:min(86vw,360px);background:var(--bg);border-right:1px solid var(--line);
+  padding:calc(14px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .28s cubic-bezier(.3,.7,.2,1);box-shadow:12px 0 40px -20px rgba(0,0,0,.6)}
+.drawer.on .dr-shade{opacity:1}.drawer.on .dr-panel{transform:none}
+.dr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-h{font-style:italic;color:var(--soft);font-size:16px}
+.dr-x{font:inherit;background:none;border:0;color:var(--soft);width:40px;height:40px;font-size:18px;cursor:pointer}
+.dr-go{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.dr-go a{flex:1 1 40%;text-align:center;padding:.65em .4em;border:1px solid var(--line);border-radius:3px;color:var(--lamp);text-decoration:none;font-size:15px;line-height:1.25}
+.dr-list{list-style:none;margin:0;padding:0;overflow:auto;flex:1;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.dr-list li{border-bottom:1px solid var(--line)}
+.dr-list a{display:flex;gap:.9em;align-items:baseline;padding:.75em .2em;color:var(--ink);text-decoration:none;line-height:1.35;font-size:16px}
+.dr-list .n{flex:0 0 1.6em;color:var(--soft);font-variant-numeric:tabular-nums;font-size:.85em}
+.dr-list a[aria-current]{color:var(--lamp)}
+.dr-list a[aria-current] .n::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-right:6px;vertical-align:middle}
+
+.tools button{
+  font:inherit;font-size:15px;color:var(--soft);background:transparent;border:1px solid transparent;
+  border-radius:999px;min-width:40px;height:40px;padding:0 10px;cursor:pointer;
+}
+.tools button:hover{color:var(--ink);border-color:var(--line)}
+@media (max-width:440px){header.bar{padding-left:12px;padding-right:12px;gap:8px}.menu-btn{padding:0 10px;font-size:14px}.tools button{font-size:14px;min-width:32px;padding:0 7px}}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:3px;border-radius:4px}
+
+main{max-width:var(--measure);margin:0 auto;padding:0 16px}
+
+.opening{min-height:88vh;min-height:88svh;display:flex;flex-direction:column;justify-content:center;padding:18vh 0 10vh}
+.chapno{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 .6em}
+h1{
+  font-family:"Literata",serif;font-weight:300;font-style:normal;font-variation-settings:"opsz" 72;
+  font-size:clamp(40px,10.5vw,72px);line-height:1.14;letter-spacing:-.02em;margin:0;
+  text-wrap:balance;
+}
+h1 .w{display:inline-block;animation:surface 2.6s cubic-bezier(.2,.6,.2,1) both}
+@keyframes surface{
+  0%{opacity:0;filter:blur(10px);transform:translateY(.28em) scaleY(1.08)}
+  60%{opacity:.85;filter:blur(1.5px)}
+  100%{opacity:1;filter:blur(0);transform:none}
+}
+.opening .hint{margin-top:auto;padding-top:14vh;font-size:14px;color:var(--soft);letter-spacing:.02em;animation:fadein 2s 2.4s both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+.scene p{margin:0;hyphens:none;text-wrap:pretty}
+.scene p + p{text-indent:1.6em}
+
+.plate{margin:0 -16px 2.2em}
+.plate canvas{display:block;width:100%;aspect-ratio:16/9;
+  -webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
+@media (min-width:720px){.plate{margin-left:-4em;margin-right:-4em}}
+.tools #sound[aria-pressed="true"],.tools #sfx[aria-pressed="true"]{color:var(--lamp);border-color:var(--line)}
+.card-fig{margin:2.4em auto;max-width:300px;text-align:center}
+.card{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.card-inner{display:block;position:relative;aspect-ratio:856/540;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,.7,.2,1);transform:rotateX(8deg) rotateZ(-3deg)}
+.card.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg)}
+.face{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:4%;box-shadow:0 14px 30px -14px rgba(0,0,0,.55)}
+.face.back{transform:rotateY(180deg)}
+.card-fig figcaption{margin-top:1em;font-size:14px;color:var(--soft);font-style:italic;transition:opacity .8s}
+.card-fig .card{transition:opacity 2.4s ease,filter 2.4s ease}
+.face .emb{opacity:0}
+.type-row{display:flex;justify-content:center;gap:18px;margin:2em 0 2.2em;padding:0}
+.tslot{display:flex;flex-direction:column;align-items:center;gap:.6em;width:min(38vw,150px)}
+.tcard{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent}
+.tcard .card-inner{aspect-ratio:540/856;transform:none}
+.tcard.flipped .card-inner{transform:rotateY(180deg)}
+.tcard .face{border-radius:6%}
+.tname{font-size:14px;color:var(--soft);font-style:italic}
+.type-row .tslot{opacity:0;transform:translateY(18px) rotate(-6deg)}
+.type-row.dealt .tslot{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.type-row.dealt .tslot + .tslot{transition-delay:.25s}
+.tcard .pulse{transform-origin:270px 420px;animation:pulse 3.6s ease-in-out infinite}
+.tcard .p2{animation-delay:.4s}.tcard .p3{animation-delay:.8s}
+@keyframes pulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+.tcard .ghost{animation:ghost 4s ease-in-out infinite}
+@keyframes ghost{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-18px,8px);opacity:.7}}
+.tcard.rule .glitch{animation:glitch 2.8s steps(1) infinite}
+@keyframes glitch{0%{opacity:.5}8%{opacity:0}11%{opacity:.6;transform:translateX(14px)}14%{opacity:0}60%{opacity:.3;transform:none}63%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.type-row .tslot{opacity:1;transform:none}.tcard .pulse,.tcard .ghost,.tcard.rule .glitch{animation:none}}
+.card.flipped .back .emb{animation:emb 2.6s .55s ease-in-out both}
+.card.flipped .back .sheen{animation:sheen 2.6s .55s ease-in-out both}
+@keyframes emb{0%,100%{opacity:0}45%{opacity:.42}}
+@keyframes sheen{from{translate:0 0}to{translate:1400px 0}}
+@media (prefers-reduced-motion: reduce){.card.flipped .back .emb{animation:none;opacity:.2}.card.flipped .back .sheen{animation:none}}
+.card-fig.gone .card{opacity:0;filter:blur(8px)}
+.card-fig.gone figcaption{opacity:0}
+.scene p.sys{text-indent:0;margin:1.6em 0;color:var(--ice);text-align:center;font-size:.95em;letter-spacing:.01em}
+.scene p.sys + p{text-indent:0}
+.scene p.sys .ch{opacity:0;transition:opacity .35s ease,text-shadow 1.2s ease}
+.scene p.sys .ch.on{opacity:1}
+.scene p.sys .ch.cur{text-shadow:0 0 .5em var(--ice)}
+.fx-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;
+  background:radial-gradient(ellipse 75% 65% at 50% 55%,rgba(5,7,8,.55),rgba(5,7,8,.97))}
+.fx-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+/* tên riêng: người màu ấm, thẻ và hệ xanh băng, vật phẩm màu đồng; lần đầu trong chương loé sáng một nhịp */
+:root{--nm-person:#94503F;--nm-item:#7D6528}
+:root[data-theme="dark"]{--nm-person:#E2A894;--nm-item:#D2B470}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--nm-person:#E2A894;--nm-item:#D2B470}}
+.nm{font-style:normal}
+em .nm{font-style:italic}
+.nm-person{color:var(--nm-person)}
+.nm-card{color:var(--ice);letter-spacing:.015em}
+.nm-item{color:var(--nm-item);font-weight:600}
+.nm.first.lit{animation:nmlit 2.2s ease-out both}
+.nm-card.first.lit{animation-name:nmlitice}
+@keyframes nmlit{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .7em currentColor,0 0 .2em currentColor}100%{text-shadow:0 0 0 transparent}}
+@keyframes nmlitice{0%{text-shadow:0 0 0 transparent}25%{text-shadow:0 0 .9em currentColor,0 0 .25em currentColor}100%{text-shadow:0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){.nm.first.lit{animation:none}}
+/* chỗ chạm được: nhịp tròn màu đèn đập liên tục tới khi người đọc chạm, chữ gợi ý màu đèn; tranh động không có dấu này */
+.tap-host{position:relative}
+.tapdot{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;pointer-events:none;z-index:2}
+.tapdot::before,.tapdot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--lamp);opacity:0;animation:tapring 2.4s ease-out infinite}
+.tapdot::after{animation-delay:.6s}
+.tapdot i{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--lamp);box-shadow:0 0 14px var(--lamp);opacity:.85;animation:tapcore 2.4s ease-in-out infinite}
+@keyframes tapring{0%{transform:scale(.3);opacity:.95}100%{transform:scale(2.4);opacity:0}}
+@keyframes tapcore{0%,100%{transform:scale(.8)}50%{transform:scale(1.2)}}
+.act-lock .tapdot{top:62%}
+.touched .tapdot{display:none}
+.act .act-hint,.card-fig figcaption,.row-hint{color:var(--lamp);font-style:normal;font-size:13px;letter-spacing:.08em}
+.act-hint::before,.card-fig figcaption::before,.row-hint::before{content:"";display:inline-block;width:7px;height:7px;margin-right:.6em;border-radius:50%;background:var(--lamp);box-shadow:0 0 8px var(--lamp);vertical-align:.1em;animation:tapcore 2.4s ease-in-out infinite}
+.touched .act-hint::before,.touched figcaption::before,.touched .row-hint::before{animation:none;opacity:.4}
+.row-hint{display:block;text-align:center;margin:-1.2em 0 2.2em}
+.nudge{animation:nudge 1.3s ease-out}
+@keyframes nudge{0%{filter:none;transform:none}25%{filter:drop-shadow(0 0 16px var(--lamp));transform:scale(1.035)}100%{filter:none;transform:none}}
+@media (prefers-reduced-motion: reduce){.tapdot::before,.tapdot::after,.tapdot i,.act-hint::before,.card-fig figcaption::before,.row-hint::before{animation:none}.nudge{animation:none}}
+.act-rub{position:relative;margin:2.4em -16px}
+.act-rub canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-rub{margin-left:-4em;margin-right:-4em}}
+/* tin nhắn Luke và Clevia ở ch03: bong bóng như trên màn hình điện thoại */
+.scene p.msg{text-indent:0;max-width:78%;margin:.55em 0;padding:.5em .85em;border-radius:1.1em;font-size:.93em;line-height:1.5;opacity:0;transform:translateY(10px) scale(.96);transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.scene p.msg.in{background:var(--veil);border-bottom-left-radius:.35em}
+.scene p.msg.out{margin-left:auto;background:color-mix(in srgb,var(--ice) 22%,var(--bg));border-bottom-right-radius:.35em}
+.scene p.msg.show{opacity:1;transform:none}
+.scene p.msg-note{text-indent:0;margin:.5em auto;max-width:85%;text-align:center;font-size:.82em;font-style:italic;color:var(--soft);line-height:1.45}
+.scene p.msg-note::first-letter{text-transform:uppercase}
+.scene p.msg + p:not(.msg){text-indent:0;margin-top:.8em}
+.scene .dots{display:block;width:3.4em;margin:.55em 0;padding:.55em .8em;border-radius:1.1em;background:var(--veil);text-indent:0;line-height:1}
+.scene .dots i{display:inline-block;width:.42em;height:.42em;margin:0 .1em;border-radius:50%;background:var(--soft);animation:dot 1.1s infinite}
+.scene .dots i:nth-child(2){animation-delay:.18s}.scene .dots i:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-.2em)}}
+@media (prefers-reduced-motion: reduce){.scene p.msg{opacity:1;transform:none;transition:none}}
+.act-press{max-width:300px}
+.pressbtn{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pressbtn .card-inner{transition:transform .2s,filter .2s,opacity 1.2s;transform:rotateX(8deg) rotateZ(-3deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.pressbtn.flipped .card-inner{transform:rotateX(8deg) rotateZ(-3deg) rotateY(180deg) translate(var(--jx,0),var(--jy,0)) scale(calc(1 - var(--p,0)*.06))}
+.act-press.holding .card-inner{transition:none}
+.act-press.heat .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*22px) rgba(255,150,60,calc(var(--p,0)*.9))) sepia(calc(var(--p,0)*.6)) saturate(calc(1 + var(--p,0)*2))}
+.act-press.smoke .pressbtn .face{filter:drop-shadow(0 0 calc(var(--p,0)*18px) rgba(200,210,205,calc(var(--p,0)*.9)))}
+.act-press.done .card-inner{opacity:0;filter:blur(10px)}
+.act-heat{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 80% 70% at 50% 55%,rgba(255,170,90,.0),rgba(255,120,40,.35) 60%,rgba(170,40,10,.75))}
+.act-missed{position:fixed;z-index:20;opacity:0;pointer-events:none;transition:opacity .8s,transform .8s;border:0;background:none;padding:0;font:inherit;color:var(--lamp);-webkit-tap-highlight-color:transparent}
+.act-missed.on{opacity:1;pointer-events:auto}
+.act-missed.nv-a{left:50%;bottom:calc(26px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,var(--bg) 30%,transparent 70%);transform:translate(-50%,16px)}
+.act-missed.nv-a.on{transform:translate(-50%,0)}
+.act-missed.nv-a::before{content:"";position:absolute;left:50%;top:4px;width:9px;height:9px;margin-left:-6px;border-left:2px solid var(--lamp);border-top:2px solid var(--lamp);transform:rotate(45deg);opacity:1;animation:nvup 1.8s ease-in-out infinite}
+.act-missed.nv-a i{position:absolute;left:50%;top:24px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--lamp);box-shadow:0 0 12px 3px var(--lamp);animation:tapcore 1.8s ease-in-out infinite}
+@keyframes nvup{0%,100%{transform:translateY(3px) rotate(45deg);opacity:.55}50%{transform:translateY(-3px) rotate(45deg);opacity:1}}
+.act-missed.nv-b{left:0;right:0;top:0;height:64px;background:linear-gradient(to bottom,color-mix(in srgb,var(--lamp) 55%,transparent),transparent);transform:none}
+.act-missed.nv-b.on{animation:nvglow 2.2s ease-in-out infinite}
+@keyframes nvglow{0%,100%{opacity:.35}50%{opacity:.9}}
+@media (prefers-reduced-motion: reduce){.act-missed *,.act-missed::before,.act-missed.nv-b.on{animation:none}}
+.act-cv{position:relative;margin:2.4em -16px}
+.act-cv canvas{display:block;width:100%;height:min(44vh,320px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(transparent,#000 6%,#000 94%,transparent)}
+.act-map canvas{height:min(52vh,380px)}.act-letter canvas{height:min(52vh,400px)}.act-knock canvas{cursor:pointer}.act-hearth canvas{cursor:pointer}
+@media (min-width:720px){.act-cv{margin-left:-4em;margin-right:-4em}}
+.act-warm{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;transition:opacity .25s;background:radial-gradient(ellipse 85% 75% at 50% 50%,rgba(255,170,90,0) 45%,rgba(255,140,60,.28) 75%,rgba(220,90,30,.55))}
+.act-ribbon{position:relative;margin:2.4em -16px}
+.act-ribbon canvas{display:block;width:100%;height:min(40vh,300px);touch-action:pan-y;cursor:grab;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+@media (min-width:720px){.act-ribbon{margin-left:-4em;margin-right:-4em}}
+.card-fig[data-dust]{position:relative}
+.dust{position:absolute;left:0;right:0;top:0;width:100%;z-index:3;touch-action:pan-y;cursor:grab;transition:opacity 1s}
+.dust.gone{opacity:0;pointer-events:none}
+.protect-hint{position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:7;text-align:center;font-size:13px;letter-spacing:.08em;color:var(--lamp);opacity:0;transition:opacity .6s;pointer-events:none}
+.protect-hint.on{opacity:1}
+/* tương tác người đọc */
+.act{margin:2.4em auto;text-align:center;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.act-hint{display:block;margin-top:.5em;font-size:13px;color:var(--soft);font-style:italic;letter-spacing:.03em;transition:opacity 1.2s}
+.act.done .act-hint,.act.holding .act-hint{opacity:0}
+.lockbtn{position:relative;display:inline-block;width:150px;height:160px;padding:12px;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lockbtn svg{display:block;width:100%;height:100%;overflow:visible;transform:translate(var(--jx,0),var(--jy,0))}
+.act-lock .shackle{fill:none;stroke-width:11;stroke-linecap:round;transform-box:view-box;transition:transform .55s cubic-bezier(.3,1.7,.4,1)}
+.act-lock.steel .shackle{transform-origin:36px 70px}
+.act-lock.bronze .shackle{transform-origin:44px 72px;stroke-width:9}
+.act-lock.done .shackle{transform:translateY(-16px) rotate(-18deg)}
+.act-lock.quiet .shackle{transition:none}
+.steel .shackle{stroke:#8a9491}.steel .body{fill:#66706d}.steel .hole{fill:#1d2324}
+.bronze .shackle{stroke:#6f6243}.bronze .body{fill:#8b7546;transition:fill-opacity .6s}.bronze .rust circle{fill:#5d8a73;opacity:.6}
+.bronze .pins rect{fill:var(--lamp);opacity:0;transform-box:fill-box;transition:opacity .35s,transform .3s}
+.bronze.sense .body{fill-opacity:.45}
+.bronze.sense .pins rect{opacity:.28}
+.bronze .pins rect.on{opacity:1;transform:translateY(-5px);filter:drop-shadow(0 0 3px var(--lamp))}
+.act-lock.done .pins rect{transform:translateY(-8px)}
+.act-lock .ring{position:absolute;left:50%;top:62%;width:44px;height:44px;margin:-22px;border-radius:50%;border:2px solid var(--lamp);opacity:0;pointer-events:none}
+.act-lock.holding .ring{opacity:calc(var(--p,0)*.7);transform:scale(calc(3.2 - var(--p,0)*2.2));transition:none}
+.act-lock.done .ring{animation:ringout 1.5s ease-out both}
+.act-lock.done .r2{animation-delay:.2s}
+.act-lock.quiet .ring{animation:none}
+@keyframes ringout{0%{opacity:.85;transform:scale(.4)}100%{opacity:0;transform:scale(7)}}
+.act-glass{position:relative;margin:2.4em -16px}
+.act-glass canvas{display:block;width:100%;height:min(46vh,340px);cursor:pointer;-webkit-touch-callout:none;-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
+@media (min-width:720px){.act-glass{margin-left:-4em;margin-right:-4em}}
+.act-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.act-shade{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(3,5,6,0),rgba(3,5,6,.85) 70%,rgba(3,5,6,.98))}
+.act-still-hint{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;text-align:center;font-size:13px;font-style:italic;letter-spacing:.06em;color:var(--soft);opacity:0;transition:opacity 1.6s;pointer-events:none}
+.act-still-hint.on{opacity:.9}
+.act-notify{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top));z-index:7;width:min(calc(100vw - 24px),360px);display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:18px;
+  background:rgba(236,239,236,.78);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 12px 32px -14px rgba(0,0,0,.45);
+  transform:translate(-50%,-150%);opacity:0;transition:transform .6s cubic-bezier(.2,.85,.2,1),opacity .5s;pointer-events:none}
+.act-notify.on{transform:translate(-50%,0);opacity:1}
+.act-notify .ic{flex:0 0 36px;height:36px;border-radius:9px;background:#8d9894}
+.act-notify .tx{flex:1;min-width:0}
+.act-notify .ln{display:block;height:8px;margin:6px 0;border-radius:5px;background:rgba(40,46,46,.5);filter:blur(2.4px)}
+:root[data-theme="dark"] .act-notify{background:rgba(44,52,54,.8)}
+:root[data-theme="dark"] .act-notify .ln{background:rgba(225,230,226,.5)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .act-notify{background:rgba(44,52,54,.8)}:root:not([data-theme="light"]) .act-notify .ln{background:rgba(225,230,226,.5)}}
+.act-count{position:fixed;right:calc(18px + env(safe-area-inset-right));top:calc(70px + env(safe-area-inset-top));z-index:6;font-weight:300;font-size:26px;line-height:1;color:var(--ice);font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  text-shadow:0 0 .5em var(--ice);opacity:0;transform:translateY(-4px);transition:opacity 1.4s,transform 1.4s,filter .45s;pointer-events:none}
+.act-count.on{opacity:.85;transform:none}
+.act-count.swap{filter:blur(6px);opacity:.2}
+.break{display:flex;justify-content:center;margin:2.6em 0}
+.ripple{width:120px;height:24px;fill:none;stroke:var(--soft);stroke-width:1}
+.ripple .far{opacity:.45}
+
+.end{margin:6em 0 0;padding:3em 0 calc(18vh + env(safe-area-inset-bottom));border-top:1px solid var(--line);text-align:center}
+.end .mark{font-style:italic;font-size:18px;color:var(--soft);margin:0 0 2.2em}
+.nav{display:flex;justify-content:space-between;gap:16px;margin:0 0 3.2em;font-size:16px;text-align:left}
+.nav a,.nav span{flex:1;color:var(--ink);text-decoration:none;line-height:1.4}
+.nav small{display:block;color:var(--soft);font-size:13px;margin-bottom:.2em}
+.nav .next{text-align:right}
+.nav span{color:var(--soft)}
+.notebook{display:block;margin:0 auto 2.4em;color:var(--lamp);text-decoration:none;font-size:17px;line-height:1.4}
+.notebook small{display:block;color:var(--soft);font-size:13px;font-style:italic;margin-top:.2em}
+
+.pov-end{margin:0 auto 2.6em;max-width:30em}
+.pov-end .lb{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ice);margin:0 0 .9em}
+.pov{display:flex;gap:16px;align-items:center;padding:14px 16px;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px;color:var(--ink);text-decoration:none;margin-bottom:10px;transition:border-color .25s,box-shadow .25s}
+.pov:hover,.pov:focus-visible{border-color:var(--lamp);box-shadow:0 0 18px color-mix(in srgb,var(--lamp) 22%,transparent)}
+.pov svg{flex:0 0 46px;width:46px;height:64px;color:#9fb6c4;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+.pov svg .bk{fill:#14202b;stroke:#2c3d4a}.pov svg text{fill:#9fb6c4;font-size:15px;letter-spacing:2px;font-family:Literata,Georgia,serif}
+.pov .w{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pv)}
+.pov .t{display:block;font-size:19px;line-height:1.3;font-style:italic}
+.pov.luke{--pv:#4f9fb3}.pov.leon{--pv:#8a959c}.pov.phu{--pv:#8a6fb8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pov.luke{--pv:#8FD3E0}:root:not([data-theme="light"]) .pov.leon{--pv:#b4bec4}:root:not([data-theme="light"]) .pov.phu{--pv:#c3a8ec}}
+:root[data-theme="dark"] .pov.luke{--pv:#8FD3E0}:root[data-theme="dark"] .pov.leon{--pv:#b4bec4}:root[data-theme="dark"] .pov.phu{--pv:#c3a8ec}
+
+.gate{
+  display:block;max-width:24em;margin:0 auto;padding:1.4em 1.4em 1.5em;text-decoration:none;color:var(--ink);
+  background:var(--veil);border-radius:2px;line-height:1.5;
+}
+.gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
+.gate .s{font-size:15px;color:var(--soft)}
+.gate:hover .t{color:var(--lamp)}
+.gate .w{display:block;margin-top:.8em;padding-top:.75em;border-top:1px solid var(--line);font-size:13.5px;font-style:italic;color:var(--lamp)}
+.spoil{max-width:26em;margin:0 auto 3.4em;padding:1.5em 1.4em 1.4em;border:1px solid color-mix(in srgb,var(--lamp) 55%,transparent);border-radius:14px;text-align:center;
+  background:color-mix(in srgb,var(--lamp) 7%,transparent);box-shadow:0 0 22px -10px var(--lamp);transition:opacity .6s,transform .6s}
+.spoil .k{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--lamp);margin:0 0 .9em}
+.spoil p.m{font-size:16.5px;line-height:1.6;margin:0 0 1.3em;color:var(--ink);text-indent:0}
+.spoil .bt{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.spoil .bt a,.spoil .bt button{font:inherit;font-size:14.5px;padding:.6em 1.15em;border-radius:999px;cursor:pointer;text-decoration:none;line-height:1.2}
+.spoil .bt a{border:1px solid var(--lamp);color:var(--lamp);background:transparent}
+.spoil .bt button{border:1px solid var(--line);color:var(--soft);background:transparent}
+.spoil.off{opacity:0;transform:translateY(-8px)}
+
+
+/* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
+:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+.scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
+.scene p.say + p:not(.say){margin-top:.55em}
+.say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
+.say .q{color:var(--ink)}
+.say:not(.say-x) .q{text-shadow:0 0 .01px var(--sp)}
+.scene p.say[data-act~="line"]{position:relative;margin:1.6em -4px 1.6em -14px;padding:1em 1.1em 1em 1.2em;border:1px solid color-mix(in srgb,var(--sp) 45%,transparent);border-left:3px solid var(--sp);
+  border-radius:3px 14px 14px 14px;background:color-mix(in srgb,var(--sp) 9%,var(--bg));box-shadow:0 10px 26px -18px color-mix(in srgb,var(--sp) 80%,#000)}
+.scene p.say[data-act~="line"] .q{font-size:1.18em;line-height:1.45;font-style:italic;color:color-mix(in srgb,var(--sp) 55%,var(--ink))}
+.scene p.say[data-act~="line"].seen{animation:lineIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+
+/* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954;--pw-riina:#2B2528}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}.pw-riina{--pw:var(--pw-riina)}
+.scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
+  background-size:100% 100%;background-repeat:no-repeat}
+.scene p.pw-on.say{border-left-width:3px}
+.scene p.pw-flash{animation:pwSweep 1.4s var(--pwd,0s) cubic-bezier(.2,.7,.2,1) both}
+@keyframes pwSweep{
+  0%{background-size:0% 100%;border-left-color:transparent;text-shadow:none}
+  30%{background-size:100% 100%;border-left-color:var(--pw);text-shadow:0 0 14px color-mix(in srgb,var(--pw) 70%,transparent)}
+  100%{background-size:100% 100%;text-shadow:none}
+}
+.scene p.pw-on b.pw-tag{display:none}
+@media (prefers-reduced-motion: reduce){.scene p.pw-flash,.scene p.say[data-act~="line"].seen{animation:none}}
+@media (min-width:720px){
+  :root{--size:20px}
+  header.bar{padding-left:28px;padding-right:28px}
+}
+@media (prefers-reduced-motion: reduce){
+  h1 .w,.opening .hint{animation:none}
+  header.bar,body{transition:none}
+}
+
+.cmt{margin:3.4em auto 0;max-width:34em;text-align:left}
+.cmt h2,.tg-msg h2{font-weight:300;font-style:italic;font-size:26px;margin:0 0 .2em;text-align:center}
+.cmt .sub,.tg-msg .sub{margin:0 0 1.6em;text-align:center;color:var(--soft);font-size:15px}
+.cmt .cnt{display:block;margin:.5em 0 0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lamp);font-style:normal}
+.cmt .cnt[hidden]{display:none}
+.cmt-list{list-style:none;margin:0 0 2em;padding:0;display:flex;flex-direction:column;gap:14px}
+.cc{perspective:1200px}
+.cc .ci{position:relative;transform-style:preserve-3d}
+.cc.back .ci{transform:rotateY(180deg)}
+.cc.back{cursor:pointer}
+.cc.flip .ci{animation:ccflip .9s cubic-bezier(.3,1.2,.5,1) both}
+@keyframes ccflip{0%{transform:rotateY(180deg)}45%{transform:rotateY(95deg) translateZ(40px) scale(1.06)}100%{transform:none}}
+.cc .cf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--pw-clevia) 35%,transparent) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.cc.flip .cf::after{animation:ccglint 1s ease .5s both}
+@keyframes ccglint{to{transform:translateX(120%)}}
+.cc.back:hover .cb,.cc.back:focus-visible .cb{box-shadow:0 0 0 1px #7FC4D6,0 0 22px -6px #7FC4D6}
+.cc:focus-visible{outline:none}
+.cc .cb .tap{font-size:12px;letter-spacing:.06em;opacity:.55;margin-top:2px}
+.cc .cf,.cc .cb{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px}
+.cc .cf{position:relative;overflow:hidden;padding:14px 16px 16px;border:1px solid color-mix(in srgb,var(--seal) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--seal) 10%,transparent),transparent 65%)}
+.cc .cf::before{content:"";position:absolute;left:16px;right:16px;top:0;height:2px;background:var(--seal);opacity:.8;border-radius:0 0 2px 2px}
+.cc .cf>svg{position:absolute;right:-18px;bottom:-18px;width:96px;height:96px;fill:none;stroke:var(--seal);stroke-width:1;opacity:.13}
+.cc .cf>svg .d{fill:var(--seal);stroke:none}
+.cc .cb{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(circle at 50% 45%,#1d3550,#0b1520 75%);border:1px solid #2a4a66;color:#9fd0de}
+.cc .cb svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2;opacity:.85}
+.cc .cb svg .d{fill:#D4697E;stroke:none}
+.cc .cb span{font-size:10px;letter-spacing:.32em;opacity:.7}
+.cc .cb{animation:ccbreath 3.2s ease-in-out infinite}
+@keyframes ccbreath{50%{border-color:#4f86a8}}
+.cmt .all{display:block;margin:-.6em auto 1.4em;font:inherit;font-size:14px;color:var(--lamp);background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 2px;cursor:pointer}
+.cmt .all[hidden]{display:none}
+.cc .who{display:flex;align-items:center;gap:10px;margin:4px 0 8px;font-size:14px}
+.cc .seal{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--seal);color:var(--seal);font-size:14px;font-weight:600;position:relative}
+.cc .seal::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px dashed var(--seal);opacity:.45}
+.cc .who b{color:var(--ink);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc .who time{color:var(--soft);font-size:13px;font-variant-numeric:tabular-nums}
+.cc .tx{position:relative;margin:0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95em}
+.cc.me .cf{box-shadow:0 0 0 1px var(--pw-clevia),0 0 26px -6px var(--pw-clevia)}
+@media (prefers-reduced-motion: reduce){.cc.flip .ci,.cc.flip .cf::after,.cc .cb{animation:none}}
+.cmt-empty{text-align:center;color:var(--soft);font-style:italic;margin:0 0 1.6em}
+.bl-form{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:22px 20px 18px;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--pw-clevia) 50%,var(--line));
+  background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--pw-clevia) 16%,transparent),transparent 55%),radial-gradient(90% 80% at 100% 100%,color-mix(in srgb,var(--pw-luke) 13%,transparent),transparent 60%),var(--veil,transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 12%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 38px -18px var(--pw-clevia);transition:box-shadow .4s,border-color .4s}
+.bl-form::before{content:"";position:absolute;left:20px;right:20px;top:0;height:2px;border-radius:0 0 2px 2px;background:linear-gradient(90deg,transparent,var(--pw-clevia) 20%,var(--pw-clevia) 60%,var(--pw-luke) 90%,transparent);opacity:.9}
+.bl-form:focus-within{border-color:color-mix(in srgb,var(--pw-clevia) 80%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--pw-clevia) 30%,transparent),0 18px 46px -24px rgba(0,0,0,.75),0 0 50px -14px var(--pw-clevia)}
+.bl-form .deco{position:absolute;right:-34px;top:-34px;width:150px;height:150px;z-index:-1;pointer-events:none;opacity:.16;animation:bldeco 40s linear infinite}
+.bl-form .deco svg{width:100%;height:100%;fill:none;stroke:var(--pw-clevia);stroke-width:.9}
+.bl-form .deco .d{fill:var(--pw-clevia);stroke:none}
+@keyframes bldeco{to{transform:rotate(360deg)}}
+.bl-form .k{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--pw-clevia)}
+.bl-form .k::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--pw-clevia);box-shadow:0 0 0 4px color-mix(in srgb,var(--pw-clevia) 18%,transparent),0 0 12px var(--pw-clevia);animation:bldot 2.4s ease-in-out infinite}
+@keyframes bldot{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--pw-clevia) 6%,transparent),0 0 16px var(--pw-clevia)}}
+.bl-form input,.bl-form textarea{font:inherit;font-size:16px;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line);border-radius:10px;padding:.7em .85em;width:100%;box-sizing:border-box;transition:border-color .25s,box-shadow .25s,background .25s}
+.bl-form input::placeholder,.bl-form textarea::placeholder{color:var(--soft);opacity:.85}
+.bl-form textarea{min-height:6.5em;resize:vertical;line-height:1.55}
+.bl-form input:focus,.bl-form textarea:focus{outline:none;border-color:var(--pw-clevia);background:color-mix(in srgb,var(--bg) 75%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 20%,transparent),0 0 18px -6px var(--pw-clevia)}
+.bl-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.bl-form .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:4px}
+.bl-form .st{margin:0;font-size:14px;color:var(--soft);flex:1;transition:color .3s}
+.bl-form.ready .st{color:var(--ink)}
+.bl-form .st.ok{color:var(--pw-luke)}
+.hold{--p:0;position:relative;flex:0 0 auto;width:92px;height:92px;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;color:var(--ink);font:inherit;font-size:13px;font-weight:600;line-height:1.2;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--pw-clevia) calc(var(--p)*1turn),color-mix(in srgb,var(--pw-clevia) 34%,transparent) 0);-webkit-mask:radial-gradient(circle,transparent 41px,#000 42px);mask:radial-gradient(circle,transparent 41px,#000 42px)}
+.hold::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.bl-form.ready .hold::after{animation:blcall 1.8s ease-out infinite}
+@keyframes blcall{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.25)}}
+.hold .in{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 34%,transparent),color-mix(in srgb,var(--pw-clevia) 12%,transparent) 70%);
+  border:1px dashed color-mix(in srgb,var(--pw-clevia) 70%,transparent);box-shadow:inset 0 0 14px -4px var(--pw-clevia);transition:transform .2s,background .3s,box-shadow .3s}
+.bl-form.ready .hold .in{background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--pw-clevia) 60%,transparent),color-mix(in srgb,var(--pw-clevia) 24%,transparent) 70%);box-shadow:inset 0 0 16px -2px var(--pw-clevia),0 0 22px -6px var(--pw-clevia)}
+.hold:hover .in{box-shadow:inset 0 0 18px -2px var(--pw-clevia),0 0 18px -6px var(--pw-clevia)}
+.hold.on .in{transform:scale(.92) rotate(20deg)}
+.hold:disabled{opacity:.5;cursor:default}
+.hold i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--pw-clevia);opacity:0;pointer-events:none}
+.hold.burst i{animation:hb .9s cubic-bezier(.2,.7,.3,1) forwards}
+.hold.burst i:nth-of-type(2){animation-delay:.1s;border-width:1px}
+.hold.burst i:nth-of-type(3){animation-delay:.2s;border-style:dashed}
+@keyframes hb{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@media (prefers-reduced-motion: reduce){.bl-form .deco,.bl-form .k::before,.bl-form.ready .hold::after{animation:none}}
+@media (max-width:440px){.bl-form{padding:20px 16px 16px}.hold{width:84px;height:84px}.hold::before{-webkit-mask:radial-gradient(circle,transparent 37px,#000 38px);mask:radial-gradient(circle,transparent 37px,#000 38px)}}
+.tg-msg{margin:2.6em 0 0}
+
+
+/* Bộ sưu tập thẻ: thẻ nhỏ bay vào biểu tượng album ở góc dưới phải */
+.bst-fly{position:fixed;z-index:60;width:58px;aspect-ratio:856/540;border-radius:5px;pointer-events:none;
+  background:linear-gradient(135deg,#2c3436,#101518);border:1px solid #56636a;box-shadow:0 0 18px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:transform .85s cubic-bezier(.5,0,.2,1),opacity .85s ease}
+.bst-fly::after{content:"";position:absolute;left:50%;top:44%;width:42%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid #6b787d}
+.bst-pill{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:59;display:flex;align-items:center;gap:.6em;
+  padding:.55em .95em .55em .6em;border-radius:999px;background:rgba(14,22,25,.94);color:#d5d0c3;border:1px solid color-mix(in srgb,var(--ice) 55%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6),0 0 16px color-mix(in srgb,var(--ice) 25%,transparent);font-size:14px;line-height:1.25;text-decoration:none;
+  opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s;max-width:calc(100vw - 32px)}
+.bst-pill.on{opacity:1;transform:none}
+.bst-pill svg{flex:0 0 30px;width:30px;height:30px;color:#8FD3E0}
+.bst-pill b{font-weight:600;color:#8FD3E0}
+.bst-pill small{display:block;font-size:12px;color:#87918d}
+.bst-pill.hit svg{animation:bsthit .6s ease-out}
+@keyframes bsthit{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 8px #8FD3E0)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.bst-fly{transition:none}.bst-pill{transition:none}.bst-pill.hit svg{animation:none}}
+
+
+/* Nhật ký hệ thống: một dòng xanh băng thoáng hiện dưới thanh đầu trang */
+.nk-line{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));z-index:57;transform:translate(-50%,-8px);opacity:0;pointer-events:none;
+  max-width:calc(100vw - 32px);padding:.45em .9em;border-radius:3px;background:rgba(8,16,20,.9);border:1px solid color-mix(in srgb,var(--ice) 40%,transparent);
+  color:#8FD3E0;font-size:13.5px;line-height:1.4;letter-spacing:.01em;text-align:center;box-shadow:0 0 18px -4px color-mix(in srgb,var(--ice) 45%,transparent);
+  transition:opacity .4s,transform .4s;text-decoration:none}
+.nk-line.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.nk-line small{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5f8f99;margin-bottom:.15em}
+@media (prefers-reduced-motion: reduce){.nk-line{transition:none}}
+
+
+.dc-toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:58;transform:translate(-50%,14px);opacity:0;
+  display:flex;align-items:center;gap:.8em;padding:.5em .6em .5em 1em;border-radius:999px;max-width:calc(100vw - 32px);
+  background:rgba(14,18,22,.94);color:#dcdee0;border:1px solid color-mix(in srgb,var(--ice) 45%,transparent);
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.6);font-size:14px;line-height:1.25;transition:opacity .35s,transform .35s;white-space:nowrap}
+.dc-toast.on{opacity:1;transform:translate(-50%,0)}
+.dc-toast i{flex:0 0 auto;width:9px;height:13px;background:var(--lamp);clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%)}
+.dc-toast button{font:inherit;font-size:13px;color:#8FD3E0;background:none;border:1px solid color-mix(in srgb,#8FD3E0 40%,transparent);border-radius:999px;padding:.35em .8em;cursor:pointer}
+.act{position:relative}
+.dc-again{position:absolute;right:2px;top:2px;z-index:3;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--bg) 70%,transparent);
+  border:1px solid var(--line);color:var(--soft);opacity:0;transform:scale(.7) rotate(-60deg);pointer-events:none;
+  transition:opacity .4s,transform .5s cubic-bezier(.3,1.4,.5,1),color .2s,border-color .2s}
+.dc-again svg{width:16px;height:16px}
+.dc-again.on{opacity:.75;transform:none;pointer-events:auto}
+.dc-again:hover,.dc-again:focus-visible{opacity:1;color:var(--ice);border-color:color-mix(in srgb,var(--ice) 60%,transparent)}
+.dc-again.spin svg{animation:dc-spin .5s ease-in}
+@keyframes dc-spin{to{transform:rotate(-360deg)}}
+.act.dc-fresh{animation:dc-fresh 1.6s ease-out}
+@keyframes dc-fresh{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 55%,transparent)}100%{box-shadow:0 0 0 22px transparent}}
+html.dc-wait main{opacity:0}
+@media (prefers-reduced-motion: reduce){.dc-again,.dc-toast{transition:none}.act.dc-fresh,.dc-again.spin svg{animation:none}}
+
+
+.act canvas,.act .dust,.gact canvas,.gact [class$="-stage"]{touch-action:none}
+main.giu-cut{overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent);mask-image:linear-gradient(#000 calc(100% - var(--giu-fade,120px)),transparent)}
+.giu-pulse{animation:giu-pulse 1.1s ease-out}
+@keyframes giu-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ice) 50%,transparent)}100%{box-shadow:0 0 0 20px transparent}}
+@media (prefers-reduced-motion: reduce){.giu-pulse{animation:none;outline:2px solid color-mix(in srgb,var(--ice) 60%,transparent);outline-offset:4px}}
+
+
+.cv{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;transform:translate(-50%,24px);opacity:0;pointer-events:none;
+  display:flex;align-items:stretch;border-radius:999px;overflow:hidden;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid color-mix(in srgb,var(--ice) 38%,transparent);box-shadow:0 8px 28px -10px rgba(0,0,0,.65),0 0 18px -8px color-mix(in srgb,var(--ice) 60%,transparent);
+  transition:opacity .3s,transform .35s cubic-bezier(.3,1.3,.5,1);font-size:14px;line-height:1}
+.cv.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.cv a,.cv span{display:flex;align-items:center;gap:.45em;padding:0 16px;height:42px;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.cv a:hover,.cv a:focus-visible{color:var(--lamp);background:color-mix(in srgb,var(--lamp) 10%,transparent)}
+.cv span{color:var(--soft);opacity:.55}
+.cv svg{width:15px;height:15px;flex:0 0 auto}
+.cv .mid{width:1px;padding:0;background:color-mix(in srgb,var(--ice) 30%,transparent);margin:9px 0}
+.cv .nx svg{color:var(--lamp)}
+.cv .nx.left::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--lamp);margin-left:-2px;box-shadow:0 0 8px var(--lamp)}
+html.giu-on .cv{opacity:0;pointer-events:none}
+.cw{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px}
+.cw[hidden]{display:none}
+.cw .sh{position:absolute;inset:0;background:rgba(4,8,12,.62);opacity:0;transition:opacity .25s}
+.cw.on .sh{opacity:1}
+.cw .bx{position:relative;width:min(100%,380px);padding:26px 22px 20px;border-radius:16px;text-align:center;overflow:hidden;
+  background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--lamp) 22%,transparent),transparent 60%),var(--bg);
+  border:1px solid color-mix(in srgb,var(--lamp) 55%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--lamp) 15%,transparent),0 20px 60px -20px rgba(0,0,0,.8),0 0 40px -14px var(--lamp);
+  transform:translateY(14px) scale(.96);opacity:0;transition:transform .35s cubic-bezier(.3,1.3,.5,1),opacity .25s}
+.cw.on .bx{transform:none;opacity:1}
+.cw .rg{display:block;width:54px;height:54px;margin:0 auto 10px;fill:none;stroke:var(--lamp);stroke-width:1.2}
+.cw .rg .d{fill:var(--lamp);stroke:none}
+.cw.on .rg{animation:cwspin 9s linear infinite}
+@keyframes cwspin{to{transform:rotate(360deg)}}
+.cw .k{margin:0 0 .3em;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--lamp)}
+.cw h3{margin:0 0 .5em;font-weight:400;font-size:21px;line-height:1.3;color:var(--ink)}
+.cw .m{margin:0 0 1.3em;color:var(--soft);font-size:15px;line-height:1.55}
+.cw .bt{display:flex;flex-direction:column;gap:10px}
+.cw button,.cw .bt a{font:inherit;font-size:15px;border-radius:999px;padding:.75em 1em;cursor:pointer;text-decoration:none;line-height:1.2}
+.cw .stay{background:var(--lamp);color:#fff;border:1px solid var(--lamp);box-shadow:0 0 20px -6px var(--lamp)}
+.cw .bt a{color:var(--ink);border:1px solid var(--line);background:transparent}
+.cw .bt a:hover,.cw .bt a:focus-visible{border-color:var(--ice);color:var(--ice)}
+@media (prefers-reduced-motion: reduce){.cv,.cw .bx,.cw .sh{transition:none}.cw.on .rg{animation:none}}
+
+
+#pen{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;width:46px;height:46px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--soft);border:1px solid color-mix(in srgb,var(--pw-clevia) 45%,transparent);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.7);transition:color .25s,box-shadow .25s,transform .2s}
+#pen:active{transform:scale(.92)}
+#pen svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#pen[aria-pressed="true"]{color:#fff;background:var(--pw-clevia);border-color:var(--pw-clevia);box-shadow:0 0 22px -4px var(--pw-clevia)}
+#pen .n{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--pw-clevia);color:#fff;font:600 10px/16px system-ui,sans-serif;text-align:center}
+#pen .n:empty{display:none}
+html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:background .25s,box-shadow .25s}
+html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
+article p.pen-has{position:relative}
+article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
+article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
+html:not(.pen-on) article p.pen-has::before{opacity:.45}
+.pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
+  padding:.55em 1.1em;border-radius:999px;background:#0b1418;color:#e8eef0;border:1px solid var(--pw-clevia);font:500 13px/1.2 system-ui,sans-serif;letter-spacing:.02em;
+  box-shadow:0 6px 24px -8px #000;transition:transform .35s cubic-bezier(.3,1.4,.5,1),opacity .3s;white-space:nowrap}
+html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
+.pen-pill b{color:var(--pw-clevia);font-weight:600}
+.pen-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.pen-sheet.on{opacity:1}
+.pen-sheet[hidden]{display:none}
+.pen-box{width:100%;max-width:40em;max-height:88vh;overflow:auto;background:#0d1417;color:#e3e7e6;border-top:2px solid var(--pw-clevia);border-radius:18px 18px 0 0;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .35s cubic-bezier(.3,1.3,.5,1);font-family:system-ui,sans-serif}
+.pen-sheet.on .pen-box{transform:none}
+:root[data-theme="light"] .pen-box{background:#f3f4f2;color:#1d2526}
+.pen-box h3{margin:0 0 .2em;font:600 12px/1.4 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--pw-clevia)}
+.pen-box .sub{margin:0 0 .9em;font-size:13px;opacity:.65}
+.pen-box textarea{display:block;width:100%;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:10px;background:transparent;color:inherit;
+  font:400 17px/1.6 Literata,Georgia,serif;padding:.6em .7em;resize:vertical}
+.pen-box textarea:focus{outline:none;border-color:var(--pw-clevia);box-shadow:0 0 0 3px color-mix(in srgb,var(--pw-clevia) 25%,transparent)}
+.pen-box .note{font:400 15px/1.5 system-ui,sans-serif;min-height:3.2em}
+.pen-box label{display:block;margin:1em 0 .35em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pen-diff{margin:.7em 0 0;padding:.6em .7em;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);font:400 15px/1.6 Literata,Georgia,serif}
+.pen-diff[hidden]{display:none}
+.pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
+.pen-diff del+ins{margin-left:.2em}
+.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
+.pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
+.pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
+.pen-row .rm{color:var(--pw-clevia)}
+.pen-row button[hidden],.pen-box [hidden]{display:none!important}
+.pen-msg{min-height:1.3em;margin:.8em 0 0;font-size:13px;opacity:.8}
+.pen-list{list-style:none;margin:0;padding:0}
+.pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
+.pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
+.pen-list li.nt small{color:var(--pw-luke)}
+article p.pen-pt{position:relative}
+article p.pen-pt::after{content:"";position:absolute;left:-8px;top:.35em;bottom:.35em;width:2px;background:repeating-linear-gradient(var(--ink) 0 3px,transparent 3px 7px);opacity:.75}
+article p.pen-pt.pen-ok::after{background:var(--pw-luke);opacity:1}
+.pen-sg{border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:12px;padding:.7em .8em;margin:0 0 .8em}
+.pen-sg.ok{border-color:var(--pw-luke)}
+.pen-sg .who{display:block;margin:0 0 .35em;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.pen-sg.ok .who{color:var(--pw-luke);opacity:1}
+.pen-sg .pen-diff{margin:0}
+.pen-sg .nt{margin:.5em 0 0;font:italic 400 14px/1.5 system-ui,sans-serif;opacity:.85}
+.pen-sg .pen-row{margin-top:.7em}
+.pen-sg .pen-row button{padding:.6em .8em;font-size:14px}
+.pen-sg .yes{color:var(--pw-luke);border-color:var(--pw-luke)}
+.pen-sg .no{color:var(--pw-clevia)}
+.pen-mine{margin:1.2em 0 .5em;padding-top:1em;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent)}
+.pen-list li.pt small{color:var(--soft)}
+.pen-list li.pt.ok small{color:var(--pw-luke)}
+.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--pw-luke)}
+@keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
+article p.pen-flash{animation:penflash .8s ease-out}
+@media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
+
+</style>
+<style>
+/* Giao diện chính trang đọc (Clair chốt 24/11): "Đêm Artos dịu + Trang sách" và thoại G (ngoặc màu người nói, sáng lên khi đọc tới).
+   theme.js luôn gắn data-ui="b c soft" và data-say="g" lên <html>. */
+
+/* ================= GIAO DIỆN B: ĐÊM ARTOS ================= */
+@property --tint{syntax:"<color>";inherits:true;initial-value:transparent}
+html[data-ui~="b"]{--tint:transparent;transition:--tint 2.4s ease}
+html[data-ui~="b"] .ui-amb{position:fixed;inset:-10vh 0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 55% at 50% 0%,var(--tint),transparent 70%),radial-gradient(ellipse 100% 45% at 50% 105%,var(--tint),transparent 70%)}
+html[data-ui~="b"] main{position:relative;z-index:1}
+html[data-ui~="b"] .opening{position:relative;align-items:center;text-align:center;justify-content:center;padding:14vh 0 8vh}
+html[data-ui~="b"] .ui-rings{position:absolute;left:50%;top:44%;width:min(118vw,620px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.55}
+html[data-ui~="b"] .ui-rings svg{width:100%;height:100%;overflow:visible}
+html[data-ui~="b"] .ui-rings g{transform-origin:50% 50%;transform-box:view-box;animation:uiSpin 90s linear infinite}
+html[data-ui~="b"] .ui-rings g.r2{animation-duration:140s;animation-direction:reverse}
+html[data-ui~="b"] .ui-rings g.r3{animation-duration:60s}
+html[data-ui~="b"] .ui-rings circle,html[data-ui~="b"] .ui-rings path{fill:none;stroke:var(--ice);stroke-width:.6}
+@keyframes uiSpin{to{transform:rotate(360deg)}}
+html[data-ui~="b"] .chapno{position:relative;font-style:normal;font-size:clamp(64px,22vw,120px);font-weight:300;line-height:1;margin:0 0 .3em;letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--ice) 70%,transparent);font-variant-numeric:lining-nums}
+html[data-ui~="b"] .chapno .lb{display:block;-webkit-text-stroke:0;color:var(--ice);font-size:12px;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1.4em;opacity:.8}
+html[data-ui~="b"] .opening h1{position:relative;text-shadow:0 0 .6em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui~="b"] .opening .hint{position:relative;letter-spacing:.3em;text-transform:uppercase;font-size:11px}
+html[data-ui~="b"] .break .ripple{display:none}
+html[data-ui~="b"] .break::before{content:"";width:22px;height:22px;border-radius:50%;border:1px solid var(--ice);opacity:.6;
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--ice) 8%,transparent),0 0 18px color-mix(in srgb,var(--ice) 40%,transparent);animation:uiBeat 4s ease-in-out infinite}
+@keyframes uiBeat{50%{opacity:.25;transform:scale(.85)}}
+html[data-ui~="b"] .scene .plate canvas{-webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent);mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 55%,transparent)}
+html[data-ui~="b"] .end{border-top:0;position:relative}
+html[data-ui~="b"] .end::before{content:"";position:absolute;top:0;left:15%;right:15%;border-top:1px solid var(--ice);opacity:.4;box-shadow:0 0 12px var(--ice)}
+html[data-ui~="b"] .end .mark{font-style:normal;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--ice)}
+html[data-ui~="b"] .gate{background:transparent;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px}
+/* trang chủ */
+html[data-ui~="b"] .toc-hero{position:relative;text-align:center;padding-top:calc(90px + env(safe-area-inset-top))}
+html[data-ui~="b"] .toc-hero .plate{display:none}
+html[data-ui~="b"] .toc-hero .ui-rings{top:120px}
+html[data-ui~="b"] .toc-title{position:relative;text-shadow:0 0 .5em color-mix(in srgb,var(--ice) 35%,transparent)}
+html[data-ui~="b"] .toc-sub,html[data-ui~="b"] .resume{position:relative}
+html[data-ui~="b"] .toc{border-top:0;display:grid;gap:10px}
+html[data-ui~="b"] .toc li{border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--veil) 60%,transparent);transition:border-color .3s,box-shadow .3s}
+html[data-ui~="b"] .toc li:hover{border-color:var(--ice);box-shadow:0 0 18px -6px var(--ice)}
+html[data-ui~="b"] .toc a{padding:.9em 1em}
+html[data-ui~="b"] .toc .n{color:var(--ice);font-size:1.25em;font-weight:300;flex-basis:1.8em}
+html[data-ui~="b"] .toc li.read{opacity:.7}
+@media (prefers-reduced-motion: reduce){html[data-ui~="b"] .ui-rings g,html[data-ui~="b"] .break::before{animation:none}}
+
+/* ================= GIAO DIỆN C: TRANG SÁCH ================= */
+html[data-ui~="c"]{--disp:"Literata",Georgia,serif}
+html[data-ui~="c"]:not([data-theme="dark"]){--bg:#EDEFF0;--veil:#E1E4E7;--ink:#1D2126;--soft:#626A72;--line:#C8CDD2}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}}
+html[data-ui~="c"][data-theme="dark"]{--bg:#111315;--veil:#1A1D21;--ink:#DCDEE0;--soft:#8A9097;--line:#2B3035}
+html[data-ui~="c"] .opening{align-items:center;text-align:center}
+html[data-ui~="c"] .chapno{font-style:normal;font-variant:small-caps;letter-spacing:.32em;font-size:15px;text-transform:lowercase;color:var(--lamp)}
+html[data-ui~="c"] .chapno::before,html[data-ui~="c"] .chapno::after{content:"—";margin:0 .8em;color:var(--line)}
+html[data-ui~="c"] .opening h1{font-family:var(--disp);font-weight:400;font-style:italic;font-size:clamp(40px,11vw,72px);letter-spacing:-.01em}
+html[data-ui~="c"] .opening h1::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin-top:.6em;opacity:.8}
+html[data-ui~="c"] .scene > p:first-of-type{text-indent:0}
+html[data-ui~="c"] .scene > p:first-of-type::first-letter{font-family:var(--disp);float:left;font-size:4.1em;line-height:.85;padding:.08em .1em 0 0;color:var(--lamp);font-weight:600}
+html[data-ui~="c"] .scene > p:first-of-type::first-line{font-variant:small-caps;letter-spacing:.06em}
+html[data-ui~="c"] .break .ripple{display:none}
+html[data-ui~="c"] .break::before{content:"⁂";font-size:20px;color:var(--soft);letter-spacing:.2em}
+html[data-ui~="c"] .end{border-top:0}
+html[data-ui~="c"] .end .mark{font-family:var(--disp);font-size:24px}
+html[data-ui~="c"] .end .mark::before{content:"◆";display:block;font-style:normal;color:var(--lamp);margin-bottom:.4em}
+html[data-ui~="c"] .toc-hero{text-align:center}
+html[data-ui~="c"] .toc-title{font-family:var(--disp);font-weight:400;font-style:italic;font-size:clamp(42px,12vw,78px);letter-spacing:-.01em}
+html[data-ui~="c"] .toc-title::after{content:"◆";display:block;font-style:normal;font-size:12px;color:var(--lamp);margin:.3em 0 .1em}
+html[data-ui~="c"] .toc{border-top:0}
+html[data-ui~="c"] .toc li{border:0}
+html[data-ui~="c"] .toc a{gap:.6em;padding:.55em 0}
+html[data-ui~="c"] .toc .n{order:3;flex:0 0 auto;font-family:var(--disp);font-size:1.15em}
+html[data-ui~="c"] .toc .t{order:1}
+html[data-ui~="c"] .toc a::after{content:"";order:2;flex:1;border-bottom:1px dotted var(--soft);transform:translateY(-.35em);opacity:.6}
+
+@keyframes uiHeard{0%{text-shadow:0 0 0 transparent}30%{text-shadow:0 0 .55em color-mix(in srgb,var(--sp) 70%,transparent)}100%{text-shadow:0 0 0 transparent}}
+
+/* ================= B DỊU (?giao=d) và B + C (?giao=e): thêm lớp "soft" ================= */
+html[data-ui~="soft"] .ui-rings{width:min(78vw,380px);opacity:.22}
+html[data-ui~="soft"] .ui-rings g{animation-duration:160s}
+html[data-ui~="soft"] .chapno{font-size:13px;letter-spacing:.38em;text-transform:uppercase;color:var(--ice);-webkit-text-stroke:0;margin:0 0 1em;opacity:.85}
+html[data-ui~="soft"] .chapno .lb{display:inline;font-size:inherit;letter-spacing:inherit;margin:0 .5em 0 0;opacity:1}
+html[data-ui~="soft"] .opening h1,html[data-ui~="soft"] .toc-title{text-shadow:none}
+html[data-ui~="soft"] .break::before{width:14px;height:14px;box-shadow:none;opacity:.45;animation:none}
+html[data-ui~="soft"] .toc{display:block;border-top:1px solid var(--line)}
+html[data-ui~="soft"] .toc li{border:0;border-bottom:1px solid var(--line);border-radius:0;background:none}
+html[data-ui~="soft"] .toc li:hover{box-shadow:none}
+html[data-ui~="soft"] .toc a{padding:.85em 0}
+html[data-ui~="soft"] .toc .n{font-size:1em}
+html[data-ui~="soft"] .gate{border-radius:4px}
+/* B + C: chữ và nền của trang sách, vòng tròn và nhuốm màu của đêm Artos, đổi sang màu đồng */
+
+html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--lamp);font-variant:normal;text-transform:uppercase;font-size:13px;letter-spacing:.38em}
+html[data-ui~="c"][data-ui~="b"] .chapno::before,html[data-ui~="c"][data-ui~="b"] .chapno::after{content:none}
+html[data-ui~="c"][data-ui~="b"] .break::before{content:""}
+html[data-ui~="c"][data-ui~="b"] .end::before{box-shadow:none}
+html[data-ui~="c"][data-ui~="b"] .end .mark{color:var(--soft);letter-spacing:0;text-transform:none;font-size:24px}
+html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--lamp)}
+
+/* ================= THOẠI G: ngoặc màu + sáng lên (D gộp F) ================= */
+html[data-say="g"] .scene p.say{border-left:0;margin:.6em 0;padding-left:0;text-indent:0}
+html[data-say="g"] .say .q{transition:color 1.6s ease,text-shadow 2.4s ease;color:var(--ink)}
+html[data-say="g"] .say .qm,html[data-say="g"] .say .qe{color:var(--sp);opacity:.35;transition:opacity 1.2s}
+html[data-say="g"] p.say > .q:first-child .qm{font-size:1.6em;line-height:0;position:relative;top:.26em;margin-left:-.42em;margin-right:.02em;font-weight:300}
+html[data-say="g"] .say.heard .qm,html[data-say="g"] .say.heard .qe{opacity:1}
+html[data-say="g"] .say.heard .q{animation:uiHeard 2.4s ease-out}
+html[data-say="g"] .say-x .qm,html[data-say="g"] .say-x .qe{color:var(--soft)}
+html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
+
+/* ================= BẢNG MÀU (Clair chốt 24/11): đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng =================
+   --lamp đổi ở <body> nên mọi chữ, nút, nhịp chạm, chữ cái đầu cảnh thành đỏ; tranh động vẫn đọc --lamp ở <html> nên ánh đèn trong tranh giữ nguyên. */
+html body{--lamp:#B3263A}
+@media (prefers-color-scheme: dark){html:not([data-theme="light"]) body{--lamp:#E2566C}}
+html[data-theme="dark"] body{--lamp:#E2566C}
+html[data-ui~="c"]{--nm-person:#A3324A;--nm-item:#3A4250;--sp-other:#6C757E}
+@media (prefers-color-scheme: dark){html[data-ui~="c"]:not([data-theme="light"]){--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}}
+html[data-ui~="c"][data-theme="dark"]{--nm-person:#EE8E9D;--nm-item:#E6EAEE;--sp-other:#B4BCC4}
+html[data-ui~="c"][data-ui~="b"] .toc .n{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--ice)}
+html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
+
+</style>
+<script>
+/* Giao diện chính (Clair chốt 24/11): Đêm Artos dịu + Trang sách, thoại G. CSS ở theme.css. */
+(function () {
+  var root = document.documentElement;
+  root.setAttribute('data-ui', 'b c soft');
+  root.setAttribute('data-say', 'g');
+  // màu nhuốm nền theo tiếng nền của cảnh
+  var TINT = { night: '#1d3a52', rivernight: '#1d3a52', nighttense: '#3a1d2a', chains: '#2b3440', void: '#101c26', cave: '#1b2a2a', mine: '#26282c', shaft: '#1e2a2c', anvil: '#262a2e', stillshaft: '#101c26', shuffle: '#2e1a20', dust: '#2a2626',
+    hearth: '#5a1a24', hearthlow: '#40161e', hut: '#3a1e26', whet: '#2e2a30', dusk: '#40243a', dawn: '#40303c',
+    day: '#2a3c48', noon: '#384650', farm: '#2a3c44', paddy: '#26404a', market: '#3a2a34', street: '#33393f', run: '#3f2a2a',
+    river: '#24414a', bridge: '#2a3d44', water: '#24414a', bench: '#36403a', clinic: '#2e3f40', hall: '#33303a', store: '#302e36', room: '#33363a', clock: '#2f3540' };
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    try { var mx = +(localStorage.getItem('a07-max') || 0); document.querySelectorAll('.toc li').forEach(function (li) { var n = +(li.querySelector('.n') || {}).textContent; if (n && n < mx) li.classList.add('read'); }); } catch (e) {}
+
+    var chn = (location.pathname.match(/ch(\d+)\.html$/) || [])[1];
+    var op = document.querySelector('.opening'), cp = op && op.querySelector('.chapno');
+    var amb = document.createElement('div'); amb.className = 'ui-amb'; document.body.prepend(amb);
+    var rings = '<div class="ui-rings" aria-hidden="true"><svg viewBox="0 0 200 200">' +
+      '<g><circle cx="100" cy="100" r="96" stroke-dasharray="1 5"/><circle cx="100" cy="100" r="88"/></g>' +
+      '<g class="r2"><circle cx="100" cy="100" r="74" stroke-dasharray="30 8 4 8"/><path d="M100 22v10M100 168v10M22 100h10M168 100h10"/></g>' +
+      '<g class="r3"><circle cx="100" cy="100" r="56" stroke-dasharray="2 3"/><circle cx="100" cy="100" r="40" opacity=".6"/></g></svg></div>';
+    var hero = op || document.querySelector('.toc-hero');
+    if (hero) hero.insertAdjacentHTML('afterbegin', rings);
+    if (cp && chn) cp.innerHTML = '<span class="lb">Chương</span>' + chn;
+
+    var cur = null;
+    function paint() { var c = cur ? TINT[cur] : null; root.style.setProperty('--tint', c ? 'color-mix(in srgb,' + c + (isDark() ? ' 60%' : ' 16%') + ',transparent)' : 'transparent'); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { cur = e.target.getAttribute('data-sound'); paint(); } }); }, { rootMargin: '-45% 0px -45% 0px' });
+    document.querySelectorAll('.scene[data-sound]').forEach(function (s) { io.observe(s); });
+    addEventListener('a07-theme', paint);
+
+    // thoại: tách dấu ngoặc để tô màu người nói, sáng lên khi đọc tới
+    document.querySelectorAll('.say .q').forEach(function (q) {
+      var h = q.innerHTML; if (h.charAt(0) === '“') h = '<span class="qm">“</span>' + h.slice(1);
+      if (h.slice(-1) === '”') h = h.slice(0, -1) + '<span class="qe">”</span>';
+      q.innerHTML = h;
+    });
+    var says = document.querySelectorAll('.scene p.say');
+    if (!('IntersectionObserver' in window)) { says.forEach(function (p) { p.classList.add('heard'); }); return; }
+    var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('heard'); io2.unobserve(e.target); } }); }, { rootMargin: '0px 0px -38% 0px' });
+    says.forEach(function (p) { io2.observe(p); });
+  });
+})();
+
+</script>
+</head>
+<body>
+<script>(function(){try{var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1];if(!cn||location.hash)return;
+var r=sessionStorage.getItem('a07-replay'),p=JSON.parse(localStorage.getItem('a07-pos')||'{}')[cn];
+if((r&&JSON.parse(r).ch===cn)||(p&&p.i>=3)){document.documentElement.classList.add('dc-wait');if('scrollRestoration' in history)history.scrollRestoration='manual';
+setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500)}}catch(e){}})();</script>
+<div class="progress" aria-hidden="true"></div>
+<header class="bar">
+  <button type="button" class="menu-btn" id="menu" aria-label="Mở danh sách chương, trang chủ và sổ tay"><span class="ic"></span>Chương 16</button>
+  <div class="tools">
+    <button type="button" id="smaller" aria-label="Chữ nhỏ hơn">A−</button>
+    <button type="button" id="bigger" aria-label="Chữ to hơn">A+</button>
+    <button type="button" id="sound" aria-pressed="false" aria-label="Bật hoặc tắt nhạc nền">Nhạc</button>
+    <button type="button" id="sfx" aria-pressed="false" aria-label="Bật hoặc tắt tiếng hiệu ứng khi chạm, lật thẻ, dùng năng lực">Tiếng</button>
+    <button type="button" id="theme" aria-label="Đổi nền sáng hoặc tối">Tối</button>
+  </div>
+</header>
+<div class="drawer dr-c" id="drawer" hidden>
+  <div class="dr-shade" data-close></div>
+  <nav class="dr-panel" aria-label="Chọn chương">
+    <div class="dr-top"><span class="dr-h">Project Artos 07</span><button type="button" class="dr-x" data-close aria-label="Đóng">✕</button></div>
+    <a class="drc-next" href="ch1.html"><span class="ring" aria-hidden="true"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="13"/><path d="M20 7a13 13 0 0 1 11 6" opacity=".45"/><circle cx="20" cy="20" r="7.5" stroke-dasharray="9 4"/><circle cx="20" cy="20" r="2"/></g></svg></span><small>Đọc tiếp</small><b>Chương 1</b><span class="tt"></span><span class="bar"><i></i></span></a>
+    <div class="drc-go"><a href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="13"/><path d="M20 7a13 13 0 0 1 11 6" opacity=".45"/><circle cx="20" cy="20" r="7.5" stroke-dasharray="9 4"/><circle cx="20" cy="20" r="2"/></g></svg><span>Trang chủ</span></a><a href="sotay.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h20a3 3 0 0 1 3 3v25H12a3 3 0 0 1-3-3z"/><path d="M9 31a3 3 0 0 1 3-3h20"/><circle cx="21" cy="16" r="5"/><path d="M21 11v-2M21 23v-2M16 16h-2M28 16h-2"/></g></svg><span>Sổ tay</span></a><a href="bosuutap.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="6" y="9" width="20" height="26" rx="2.5" transform="rotate(-8 16 22)"/><rect x="14" y="6" width="20" height="26" rx="2.5"/><circle cx="24" cy="18" r="5"/></g></svg><span>Thẻ</span></a><a href="bando.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 9l10-3 10 3 10-3v25l-10 3-10-3-10 3z"/><path d="M15 6v25M25 9v25"/><path d="M8 22l3-4 3 3" stroke-width="1.2"/><circle cx="30" cy="19" r="2.2"/></g></svg><span>Bản đồ</span></a><a href="nhatky.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="6" width="26" height="28" rx="2"/><path d="M12 13h3M18 13h10M12 19h3M18 19h8M12 25h3M18 25h10"/></g></svg><span>Nhật ký</span></a><a href="gocnhin.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20s6-9 17-9 17 9 17 9-6 9-17 9S3 20 3 20z"/><circle cx="20" cy="20" r="5"/><path d="M27 6l4-3M13 6L9 3" opacity=".6"/></g></svg><span>Góc nhìn</span></a><a href="tacgia.html"><svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M27 6l7 7-17 17-9 2 2-9z"/><path d="M23 10l7 7"/><path d="M10 23l7 7" opacity=".5"/></g></svg><span>Tác giả</span></a></div>
+    <div class="dr-scroll"><h3 class="drc-part"><small>Phần một</small>Mở đầu</h3><ol class="drc-toc"><li data-n="1"><a href="ch01.html"><span class="t">Thứ gì đó đã bị bỏ quên</span><span class="dots" aria-hidden="true"></span><span class="n">01</span></a></li><li data-n="2"><a href="ch02.html"><span class="t">Bảy ngày</span><span class="dots" aria-hidden="true"></span><span class="n">02</span></a></li><li data-n="3"><a href="ch03.html"><span class="t">Bữa Tiệc Đầu Tiên</span><span class="dots" aria-hidden="true"></span><span class="n">03</span></a></li></ol><h3 class="drc-part"><small>Phần hai</small>Bên Kia Bức Tường</h3><ol class="drc-toc"><li data-n="4"><a href="ch04.html"><span class="t">Hai mươi cái tên</span><span class="dots" aria-hidden="true"></span><span class="n">04</span></a></li><li data-n="5"><a href="ch05.html"><span class="t">Lửa bếp</span><span class="dots" aria-hidden="true"></span><span class="n">05</span></a></li><li data-n="6"><a href="ch06.html"><span class="t">Xích</span><span class="dots" aria-hidden="true"></span><span class="n">06</span></a></li><li data-n="7"><a href="ch07.html"><span class="t">Việc làng</span><span class="dots" aria-hidden="true"></span><span class="n">07</span></a></li><li data-n="8"><a href="ch08.html"><span class="t">Chỗ thứ ba</span><span class="dots" aria-hidden="true"></span><span class="n">08</span></a></li><li data-n="9"><a href="ch09.html"><span class="t">Con số trên bảng</span><span class="dots" aria-hidden="true"></span><span class="n">09</span></a></li><li data-n="10"><a href="ch10.html"><span class="t">Chợ trưa</span><span class="dots" aria-hidden="true"></span><span class="n">10</span></a></li><li data-n="11"><a href="ch11.html"><span class="t">Cổng hầm</span><span class="dots" aria-hidden="true"></span><span class="n">11</span></a></li><li data-n="12"><a href="ch12.html"><span class="t">Bên trong hầm tối</span><span class="dots" aria-hidden="true"></span><span class="n">12</span></a></li><li data-n="13"><a href="ch13.html"><span class="t">Chưa hề mở</span><span class="dots" aria-hidden="true"></span><span class="n">13</span></a></li><li data-n="14"><a href="ch14.html"><span class="t">Tiếng chuông cuối ngày</span><span class="dots" aria-hidden="true"></span><span class="n">14</span></a></li><li data-n="15"><a href="ch15.html"><span class="t">Nước giếng</span><span class="dots" aria-hidden="true"></span><span class="n">15</span></a></li><li data-n="16"><a href="ch16.html" aria-current="page"><span class="t">Kẻ thực dụng</span><span class="dots" aria-hidden="true"></span><span class="n">16</span></a></li></ol></div>
+  </nav>
+</div><style>.dr-c .dr-panel{width:min(88vw,380px)}
+.dr-scroll{overflow:auto;flex:1;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px 20px}
+.drc-next{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:2px;padding:14px 16px 16px;margin-bottom:12px;border:1px solid color-mix(in srgb,var(--lamp) 45%,var(--line));border-radius:12px;text-decoration:none;color:var(--ink);background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,#1E4A7A 30%,transparent),transparent 60%),var(--veil)}
+.drc-next .ring{position:absolute;right:-26px;top:-26px;width:120px;height:120px;color:#4F86C6;opacity:.35}
+.drc-next .ring svg{width:100%;height:100%}
+.drc-next small{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--lamp)}
+.drc-next b{font-weight:400;font-size:13px;color:var(--soft);margin-top:4px}
+.drc-next .tt{font-style:italic;font-size:21px;line-height:1.2;position:relative}
+.drc-next .bar{display:block;height:2px;background:var(--line);margin-top:12px;border-radius:2px;overflow:hidden}
+.drc-next .bar i{display:block;height:100%;background:var(--lamp)}
+.drc-go{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 6px;padding:0 0 12px;border-bottom:1px solid var(--line)}
+.drc-go a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:9px 2px 8px;border:1px solid var(--line);border-radius:10px;color:var(--ink);text-decoration:none;font-size:12px;line-height:1.15;text-align:center;background:var(--veil)}
+.drc-go a:hover{border-color:var(--lamp)}
+.drc-go svg{width:24px;height:24px;color:var(--lamp)}
+.drc-part{margin:18px 0 6px;font-weight:400;font-style:italic;font-size:19px;color:var(--ink);text-align:center}
+.drc-part small{display:block;font-style:normal;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--lamp);margin-bottom:2px}
+.drc-part::after{content:"◆";display:block;font-style:normal;font-size:9px;color:var(--lamp);opacity:.7;margin-top:6px}
+.drc-toc{list-style:none;margin:0;padding:0}
+.drc-toc a{display:flex;align-items:baseline;gap:6px;padding:8px 2px;color:var(--ink);text-decoration:none;font-size:16px;line-height:1.35}
+.drc-toc .t{flex:0 1 auto}
+.drc-toc .dots{flex:1 1 20px;min-width:20px;border-bottom:1px dotted var(--soft);opacity:.55;transform:translateY(-4px)}
+.drc-toc .n{font-variant-numeric:tabular-nums;color:var(--soft);font-size:.85em}
+.drc-toc li.read .n{color:var(--lamp)}
+.drc-toc li.ahead .t{color:var(--soft)}
+.drc-toc li.mid .n::before{content:"";display:inline-block;width:7px;height:10px;margin-right:6px;background:var(--lamp);clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%)}
+.drc-toc a[aria-current]{background:color-mix(in srgb,var(--lamp) 12%,transparent);border-radius:6px;padding-left:8px;padding-right:8px}
+.drc-toc a[aria-current] .t{color:var(--lamp)}
+.drc-toc a[aria-current] .dots{border-color:var(--lamp)}</style>
+<main>
+  <div class="opening">
+    <p class="chapno">Chương 16</p>
+    <h1><span class="w" style="animation-delay:0.15s">Kẻ</span> <span class="w" style="animation-delay:0.33s">thực</span> <span class="w" style="animation-delay:0.51s">dụng</span></h1>
+    <p class="hint">Cuộn xuống để đọc</p>
+  </div>
+  
+  <article>
+<section class="scene">
+<p data-pi="0">Chiếc lá gạo vẫn nằm giữa nền sạp.</p>
+<p data-pi="1">Không ai nhặt nó lên. <span class="nm nm-person first">Clevia</span> ngồi nhìn nó rất lâu, cái cuống khô quăn lại như một ngón tay co, mép lá rách lởm chởm, và cô cứ có cảm giác nếu mình đưa tay ra chạm vào nó thì cô gái kia sẽ biết. Tiếng hát đã tắt từ lâu. Tiếng lanh canh cũng tắt. Chỉ còn tiếng gió lùa qua mấy tấm phên nứa, khe khẽ, đều đều, và tiếng những chùm rễ khô treo trên xà va vào nhau lách cách mỗi lần gió mạnh lên một chút.</p>
+<p data-pi="2"><span class="nm nm-person first">Leon</span> đã ngồi xuống lại chỗ cũ, sát tấm phên. Sợi xích dưới chân anh ta không còn dựng đứng nữa, nhưng nó cũng chẳng chịu nằm cuộn yên như lúc trước. Thỉnh thoảng một đoạn xích lại khẽ nhích lên, ngóc đầu về phía chỗ mái thủng, rồi hạ xuống, như con chó canh nhà cứ chốc chốc lại vểnh tai về phía cổng dù ngoài cổng chẳng có ai.</p>
+<p data-pi="3" class="say say-other"><span class="q">“Cậu chắc là không thấy gì chứ?”</span> anh ta hỏi, không quay lại.</p>
+<p data-pi="4" class="say say-luke" data-name="Luke"><span class="q">“Tớ chắc.”</span> <span class="nm nm-person first">Luke</span> vẫn đứng, thanh kiếm tre cầm thõng bên người. <span class="q">“Lúc cô ấy ngồi trên đấy, tớ không thấy gì. Lúc cô ấy đi, tớ cũng không thấy gì. Cứ như… chỗ cành cây ấy chưa từng có ai ngồi cả.”</span> Anh ngừng lại một chút. <span class="q">“Anh chưa gặp ai như thế bao giờ, <span class="nm nm-person">Clevia</span> ạ. Kể cả những người giấu mình giỏi nhất, lúc họ cử động thì anh vẫn thấy được cái gì đó. Một chút gợn thôi cũng được. Còn cô ấy thì không.”</span></p>
+<p data-pi="5"><span class="nm nm-person">Clevia</span> không biết vì sao anh lại quay sang nói câu ấy với cô. Có lẽ anh chỉ cần nói ra cho một người nghe. Có lẽ anh muốn cô biết rằng từ giờ cô không nên trông cả vào anh nữa chăng?</p>
+<p data-pi="6" class="say say-leon" data-name="Leon"><span class="q">“Không thấy thì nghe,”</span> <span class="nm nm-person">Leon</span> nói. <span class="q">“Lúc nãy cô ta hát đấy thôi.”</span></p>
+<p data-pi="7" class="say say-luke" data-name="Luke"><span class="q">“Ừ.”</span> <span class="nm nm-person">Luke</span> ngồi xuống cạnh <span class="nm nm-person">Clevia</span>, lưng tựa vào cột như ban nãy. <span class="q">“Thế thì chúng ta nghe.”</span></p>
+<p data-pi="8">Họ nghe. <span class="nm nm-person">Clevia</span> cũng nghe, dù cô không biết mình đang nghe cái gì, tiếng hát, tiếng lanh canh, hay tiếng một đôi giày vải trắng đặt xuống mặt đất. Qua khe hở giữa hai tấm phên, vầng trăng non đã lên gần tới cái chỗ mà đêm qua nó treo, lúc cô mới mở mắt ra giữa ruộng lúa. Gần lắm rồi. Chỉ còn chừng một đốt ngón tay nữa thôi, nếu cô giơ tay lên đo. Cô không giơ tay lên. Cô sợ mình đo sai.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="9">Tiếng bước chân đến trước khi <span class="nm nm-person">Luke</span> kịp nói gì.</p>
+<p data-pi="10">Không, <span class="nm nm-person">Luke</span> đã nói, chỉ là anh nói nhỏ quá, và <span class="nm nm-person">Clevia</span> chỉ nghe được chữ cuối. “…hai người.” Rồi anh đứng dậy, rất khẽ, kiếm tre giơ lên. “Từ phía Trung tâm lại. Đi bình thường thôi, không chạy.”</p>
+<p data-pi="11" class="say say-x"><span class="q">“Người hay quỷ?”</span></p>
+<p data-pi="12" class="say say-x"><span class="q">“Người.”</span></p>
+<p data-pi="13"><span class="nm nm-person">Leon</span> không đứng dậy. Anh ta chỉ nghiêng đầu về phía khe hở, và cổ tay anh ta xoay nhẹ một cái, sợi xích dưới chân trườn ra, rất chậm, lặng lẽ, luồn qua chân tấm phên ra ngoài như một con rắn đi kiếm ăn đêm.</p>
+<p data-pi="14">Tiếng bước chân dừng lại ở giữa chợ. Rồi một giọng đàn ông cất lên, không to, không nhỏ, cái giọng của người đã quen nói trong những căn phòng mà ai cũng phải im lặng nghe mình.</p>
+<p data-pi="15" class="say say-x"><span class="q">“Tôi biết trong đấy có người. Lúc nãy tôi thấy ba cái bóng chạy vào, từ trên dốc Trung tâm.”</span> Một quãng ngừng. <span class="q">“Chúng tôi không muốn đánh nhau. Tôi chỉ muốn hỏi mấy câu.”</span></p>
+<p data-pi="16"><span class="nm nm-person">Leon</span> nhìn <span class="nm nm-person">Luke</span>. <span class="nm nm-person">Luke</span> khẽ gật đầu.</p>
+<p data-pi="17" class="say say-leon" data-name="Leon"><span class="q">“Hỏi thì đứng đấy mà hỏi,”</span> <span class="nm nm-person">Leon</span> nói, giọng chẳng buồn cao lên.</p>
+<p data-pi="18">Một tiếng thở ra, nửa như cười. “Thế cũng được.”</p>
+<p data-pi="19"><span class="nm nm-person">Clevia</span> nhích người lại gần khe hở. Ngoài đường, dưới ánh trăng bạc, có hai người đang đứng. Người đàn ông đứng trước, chừng bốn mươi tuổi, dáng gầy, cao, mặc một chiếc sơ mi trắng sơ vin cẩn thận vào quần âu dù vạt áo đã lấm đầy bùn đất, tay áo xắn lên tới khuỷu. Trên cổ tay trái ông ta vẫn đeo một chiếc đồng hồ dây da, mặt kính đã vỡ một góc. Ông ta đứng thẳng lưng, hai tay buông xuôi, y như đang đứng trước một cái bục. Phía sau ông ta nửa bước là một cô gái tóc ngắn ngang cằm, trạc hai mươi lăm, mặc áo khoác gió màu xanh rêu, cánh tay trái co lên trước ngực. <span class="nm nm-person">Clevia</span> nhìn kỹ hơn, và thấy trên cẳng tay cô ấy có một cái gì đó tròn tròn, mờ mờ, như vành một chiếc mâm bằng thuỷ tinh đục, lúc hiện lúc không.</p>
+<p data-pi="20">Một cái khiên. Cô chợt nghĩ tới tấm khiên tròn của mình vỡ vụn ra ở sân Nhà họp làng.</p>
+<p data-pi="21" class="say say-other"><span class="q">“Tên tôi là Gideon,”</span> người đàn ông nói. <span class="q">“Đây là <span class="nm nm-person first">Hana</span>.”</span></p>
+<p data-pi="22"><span class="nm nm-person">Hana</span>. <span class="nm nm-person">Clevia</span> nhớ ra cái tên ấy. Nó đã lướt qua trên bảng danh sách đêm đầu, nằm đâu đó giữa <span class="nm nm-person first">Felix</span> và <span class="nm nm-person">Leon</span>. Giờ thì nó đang đứng đây, ngoài đường chợ, run run, và cô gái mang cái tên ấy đang nhìn chằm chằm vào sợi xích đen nằm vắt ngang lối đi trước mặt mình.</p>
+<p data-pi="23" class="say say-leon" data-name="Leon"><span class="q">“Hỏi đi,”</span> <span class="nm nm-person">Leon</span> nói.</p>
+<p data-pi="24" class="say say-x"><span class="q">“Các người là ba người từ khu Mỏ sang lúc chạng vạng, đúng không? Lúc ở trên dốc tôi thấy có ánh xanh loé lên ở sân Nhà họp làng.”</span> Gideon không chờ ai xác nhận. <span class="q">“Các người sang đây bằng cách nào?”</span></p>
+<p data-pi="25" class="say say-x"><span class="q">“Bằng thẻ.”</span> Lần này là <span class="nm nm-person">Luke</span> trả lời. Anh bước tới sát tấm phên, để Gideon nhìn thấy mặt mình qua khe hở. <span class="q">“Một tấm <span class="nm nm-card first">Teleport</span>. Dùng hết rồi.”</span></p>
+<p data-pi="26">Gideon nhìn anh. Không phải kiểu nhìn bình thường. Ông ta nhìn thẳng vào mắt <span class="nm nm-person">Luke</span>, chăm chú, lâu hơn mức người ta vẫn nhìn nhau khi nói chuyện, lâu tới mức <span class="nm nm-person">Clevia</span> thấy khó chịu thay cho <span class="nm nm-person">Luke</span>. Rồi ông ta khẽ gật đầu, như vừa đánh dấu một ô trong cuốn sổ.</p>
+<p data-pi="27" class="say say-other"><span class="q">“Thật,”</span> ông ta nói. Không phải với <span class="nm nm-person">Luke</span>. Với <span class="nm nm-person">Hana</span>. Cô gái tóc ngắn thở hắt ra một hơi, đôi vai hơi chùng xuống, vẻ thất vọng hiện rõ trên mặt.</p>
+<p data-pi="28"><span class="nm nm-person">Luke</span> nheo mắt lại. <span class="nm nm-person">Clevia</span> thấy anh nhìn Gideon thêm một lúc, rồi khẽ nghiêng đầu về phía <span class="nm nm-person">Leon</span>, nói rất nhỏ, đủ để cô nghe:</p>
+<p data-pi="29" class="say say-x"><span class="q">“<span class="nm nm-card first">Linh cảm</span>. Có lẽ ông ta nhìn mắt người ta là biết người ta có nói thật hay không… Tớ đoán thế.”</span></p>
+<p data-pi="30"><span class="nm nm-person">Leon</span> không đáp. Nhưng <span class="nm nm-person">Clevia</span> thấy cằm anh ta hơi hất lên, cái kiểu hất cằm của người vừa ghi nhớ một điều cần ghi nhớ.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="31" class="say say-other"><span class="q">“Tôi nói thẳng luôn cho đỡ mất thời gian của nhau,”</span> Gideon nói. <span class="q">“Từ lúc tiếng chuông kia kêu, mấy con mắt đỏ bên khu Nông nghiệp tắt hết rồi. Tôi đứng trên dốc Trung tâm nhìn qua tường, cả cánh đồng tối om, không còn một con nào đi lại. Còn bên này thì…”</span> Ông ta không nói hết. Không cần nói hết. <span class="q">“Cái thứ đeo chuông ấy đi qua chỗ chúng tôi trốn ba lần rồi. Lần thứ ba nó dừng lại ngay trước cửa. Chúng tôi phải bỏ chỗ đấy mà chạy.”</span></p>
+<p data-pi="32"><span class="nm nm-person">Hana</span> khẽ rùng mình. Tấm khiên trên tay cô loé lên một cái, rồi mờ đi.</p>
+<p data-pi="33" class="say say-leon" data-name="Leon"><span class="q">“Thế thì liên quan gì tới bọn tôi?”</span> <span class="nm nm-person">Leon</span> hỏi.</p>
+<p data-pi="34" class="say say-x"><span class="q">“Tôi cần qua được bức tường kia. Sang bên Nông nghiệp.”</span> Gideon nói chậm, rành rọt, từng chữ một. <span class="q">“Và tôi nghĩ trong các người có người làm được việc đấy.”</span></p>
+<p data-pi="35" class="say say-x"><span class="q">“Nghĩ thế nào mà ra được thế?”</span></p>
+<p data-pi="36" class="say say-other"><span class="q">“Ba người sống sót qua một đợt nhiễm ở khu Mỏ, ra được khỏi hầm sau khi hầm sập. Tôi nghe tiếng sập từ bên này đấy, cả làng chắc cũng nghe.”</span> Ông ta nhún vai. <span class="q">“Rồi lại còn sống được qua cả cái sân Nhà họp làng lúc nãy. Một cái xích như của cậu thì giỏi lắm cũng chỉ giải thích được một nửa. Tôi muốn biết nửa còn lại.”</span></p>
+<p data-pi="37"><span class="nm nm-person">Leon</span> không nói gì. <span class="nm nm-person">Luke</span> cũng không nói gì. Cái im lặng ấy kéo dài, và <span class="nm nm-person">Clevia</span> biết chính cái im lặng ấy đã trả lời Gideon thay cho họ, vì cô thấy khoé miệng ông ta nhếch lên một chút.</p>
+<p data-pi="38">Rồi ông ta nhìn qua vai <span class="nm nm-person">Leon</span>, qua khe hở trên tấm phên, nhìn thẳng vào cô.</p>
+<p data-pi="39" class="say say-other"><span class="q">“Còn cô bé kia,”</span> ông ta nói. <span class="q">“Năng lực của cô là gì?”</span></p>
+<p data-pi="40"><span class="nm nm-person">Clevia</span> thấy cổ họng mình khô lại.</p>
+<p data-pi="41">Cô nhớ lời <span class="nm nm-person">Leon</span> dặn ngoài cổng hầm. <em>Lúc nãy cô làm gì thì cũng đừng làm trước mặt người khác.</em> Cô nhớ đống đá tự trượt sang hai bên. Cô nhớ cái cảm giác một chỗ nào đó rất sâu trong người mình xoay đi, như một cái chốt cửa được kéo ra mà chính cô không hề chạm tay vào. Cô nhớ ông <span class="nm nm-person first">Joel</span> ngồi trong tiệm rèn, xoay xoay cái ổ khoá trong tay, nói rằng nó chưa hề mở.</p>
+<p data-pi="42" class="say say-clevia" data-name="Clevia"><span class="q">“Em…”</span> Cô nuốt khan. <span class="q">“Em chỉ mở được mấy cái ổ khoá thường thôi ạ.”</span></p>
+<p data-pi="43">Gideon nhìn cô. Ánh trăng rọi thẳng vào mặt ông ta, và cô thấy đôi mắt ấy, xám nhạt, mí mắt hơi sụp xuống vì mệt, nhưng con ngươi thì không hề lay động. Chúng găm vào mắt cô, giữ lấy, như hai cái móc nhỏ móc vào khung cửa sổ. Cô muốn quay đi mà không quay đi được.</p>
+<p data-pi="44" class="say say-x"><span class="q">“Cô vừa nói dối,”</span> Gideon nói.</p>
+<p data-pi="45">Ông ta nói câu ấy nhẹ tênh, không giận, không đắc thắng, như người ta đọc to một con số trên tờ hoá đơn.</p>
+<p data-pi="46"><span class="nm nm-person">Hana</span> ngẩng phắt lên. <span class="nm nm-person">Leon</span> thì không động đậy, nhưng <span class="nm nm-person">Clevia</span> thấy những ngón tay anh ta đang đặt trên đầu gối co lại một chút. Còn <span class="nm nm-person">Luke</span>, <span class="nm nm-person">Luke</span> quay sang nhìn cô, và cô không đọc được gì trên mặt anh cả.</p>
+<p data-pi="47" class="say say-other"><span class="q">“Tôi không biết cô còn mở được những gì khác,”</span> Gideon nói tiếp. <span class="q">“Năng lực của tôi không moi được điều người ta không nói ra. Nhưng ‘chỉ’ mấy cái ổ khoá thường thì không phải.”</span> Ông ta bước lên một bước, đế giày nghiến lên đất. <span class="q">“Cô mở được tường không?”</span></p>
+<p data-pi="48" class="say say-x"><span class="q">“Em không biết.”</span></p>
+<p data-pi="49">Ông ta lại nhìn cô. Lâu hơn lần trước.</p>
+<p data-pi="50" class="say say-other"><span class="q">“…Thật,”</span> ông ta nói, chậm rãi, và lần này thì có gì đó trên mặt ông ta xẹp xuống, như người vừa mở hộp ra thấy bên trong chỉ có một nửa thứ mình cần. Nhưng chỉ một thoáng thôi. <span class="q">“Không biết thì thử. Cô chạm vào tường một lần thôi. Mất của cô có mấy giây.”</span></p>
+<p data-pi="51" class="say say-leon" data-name="Leon"><span class="q">“Không thử gì hết. Ông là ai mà đòi hỏi chúng tôi phải nghe theo?”</span> <span class="nm nm-person">Leon</span> nói.</p>
+<p data-pi="52">Anh ta đứng dậy. Anh ta đứng dậy không nhanh, cũng chẳng có vẻ gì là đe doạ, nhưng khi anh ta vén tấm phên bước ra đứng chắn giữa lối vào sạp, đầu anh ta cao hơn Gideon gần một cái đầu, và sợi xích ngoài đất khẽ cuộn lại một vòng quanh chân anh ta.</p>
+<p data-pi="53" class="say say-x"><span class="q">“Tôi không hỏi cậu,”</span> Gideon nói.</p>
+<p data-pi="54" class="say say-x"><span class="q">“Thì giờ tôi trả lời rồi đấy.”</span></p>
+<p data-pi="55" class="say say-other"><span class="q">“Cậu nghĩ tôi không biết cậu vừa làm gì ở Nhà họp làng à?”</span> Giọng Gideon vẫn đều, nhưng đã lạnh đi. <span class="q">“Đứng từ trên dốc là thấy tất. Gã kia hoá thành gã to con, lao ra cửa, và rồi cậu quăng gã ta vào đúng chỗ con quỷ. Tàn nhẫn như cậu…”</span> Ông ta chợt khựng lại một nhịp rồi nói tiếp. <span class="q">“Tôi chỉ đang cố cứu tôi, cứu con bé này mà thôi.”</span> Ông ta hất đầu về phía <span class="nm nm-person">Hana</span>. <span class="q">“Cách của tôi còn tử tế hơn cách của cậu nhiều đấy.”</span></p>
+<p data-pi="56"><span class="nm nm-person">Leon</span> không đáp.</p>
+<p data-pi="57"><span class="nm nm-person">Clevia</span> ngồi chết lặng trong góc sạp. Cô thấy mặt mình nóng bừng lên. Không phải vì xấu hổ thay cho <span class="nm nm-person">Leon</span>. Mà vì câu ấy, câu cô đã không dám hỏi <span class="nm nm-person">Leon</span> lúc nãy, giờ lại được một người lạ nói ra, giữa đường chợ, rõ ràng, rành rọt, như đọc bản án. Và <span class="nm nm-person">Leon</span> vẫn chỉ đứng đó, hai tay đút trong túi áo hoodie, không biện hộ lấy một câu, y như lúc nãy.</p>
+<p data-pi="58" class="say say-other" data-name="Hana"><span class="q">“Anh Gideon…”</span> <span class="nm nm-person">Hana</span> kéo nhẹ tay áo ông ta. <span class="q">“Anh đừng…”</span></p>
+<p data-pi="59" class="say say-other"><span class="q">“Một lần thôi.”</span> Gideon gạt tay cô ra, không thô bạo, nhưng dứt khoát. Ông ta nhìn qua vai <span class="nm nm-person">Leon</span>, lại nhìn vào trong sạp. <span class="q">“Cô bé. Cô cứ nghĩ đi. Bên kia là cánh đồng không còn con quỷ nào. Bên này là cái thứ có cả trăm con mắt đang đi tìm cô, vì tay cô có máu. Tôi thấy băng trên tay cô rồi.”</span> Ông ta ngừng lại. <span class="q">“Tôi không cần cô tin tôi. Tôi chỉ cần cô thử.”</span></p>
+<p data-pi="60"><span class="nm nm-person">Clevia</span> nhìn xuống hai bàn tay mình. Lớp băng chồng lên lớp băng. Vệt đỏ.</p>
+<p data-pi="61">Có một giây, chỉ một giây thôi, cô đã nghĩ tới việc đứng dậy. Cô đã nghĩ tới cánh đồng lúa tối om không còn một đốm mắt đỏ nào, tới căn nhà dân có lửa bếp chập chờn, tới những thứ mà cô từng ghét cay ghét đắng đêm qua, giờ nghĩ lại thấy chẳng khác nào thiên đường. Có lẽ cô làm được thật chăng? Có lẽ cái chỗ trong người cô từng xoay đi một lần, sẽ xoay đi thêm một lần nữa chăng?</p>
+<p data-pi="62">Rồi một bàn tay đặt lên vai cô.</p>
+<p data-pi="63">Là <span class="nm nm-person">Luke</span>. Anh không nhìn cô. Anh không nói gì. Anh chỉ đặt tay lên vai cô, nặng, ấm, và giữ ở đó, như người ta đặt tay lên nắp một cái hòm để nó khỏi bật ra.</p>
+<p data-pi="64">Cô ngồi yên.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="65">Gideon không đi.</p>
+<p data-pi="66">Ông ta lùi lại hai bước ra giữa đường, đứng dưới trăng, khoanh tay trước ngực, như một người đã quyết định sẽ đứng đó cho tới khi được việc. <span class="nm nm-person">Hana</span> đứng sau lưng ông ta, tấm khiên mờ trên cánh tay lúc hiện lúc tắt. <span class="nm nm-person">Leon</span> vẫn chắn ở lối vào sạp. Hai người đàn ông nhìn nhau, không ai nói gì, và giữa họ là một khoảng đất trống chừng năm bước chân, sáng bạc dưới trăng, lổn nhổn mấy vỏ lạc ai đó cắn bỏ từ ban trưa.</p>
+<p data-pi="67" class="say say-x"><span class="q">“Các người định ngồi đấy cho tới hết đêm à?”</span> Gideon hỏi.</p>
+<p data-pi="68" class="say say-leon" data-name="Leon"><span class="q">“Ừ,”</span> <span class="nm nm-person">Leon</span> nói.</p>
+<p data-pi="69" class="say say-other"><span class="q">“Tôi cũng thế. Tôi cũng có thể đứng đây tới hết đêm.”</span> Ông ta liếc về phía cuối chợ, nơi con đường đất rẽ ra hướng Nhà họp làng. <span class="q">“Nhưng tôi không nghĩ con quỷ kia để yên cho cả tôi lẫn các người tới lúc ấy đâu. Nó nghe được tiếng người nói. Các người biết mà. Càng đứng đây cãi nhau lâu thì…”</span></p>
+<p data-pi="70">Ông ta không nói hết. Ông ta muốn họ tự nói hết.</p>
+<p data-pi="71"><span class="nm nm-person">Clevia</span> ngồi tựa lưng vào vách nứa, ở góc trong cùng của sạp, sau mấy chùm rễ khô treo lủng lẳng trên xà. Từ chỗ cô ngồi, cô không nhìn thấy Gideon nữa. Cô chỉ thấy lưng <span class="nm nm-person">Leon</span> chắn ở lối vào, đen sì trên nền trăng. Và cô thấy <span class="nm nm-person">Luke</span>.</p>
+<p data-pi="72">Anh đứng sát tấm phên, bên cạnh khe hở, chỗ mà ban nãy <span class="nm nm-person">Leon</span> ngồi canh con đường. Vệt trăng lọt qua chỗ mái thủng đổ xuống đúng nửa bên mặt anh, nửa sáng nửa tối. Cô thấy anh nhìn ra ngoài qua khe hở. Rồi cô thấy anh khẽ nghiêng đầu.</p>
+<p data-pi="73">Cái nghiêng đầu ấy cô đã thấy cả chục lần trong một ngày một đêm qua. Ở ngã ba giếng, trước khi gã to con đêm đầu lao ra. Ở Chợ, trước khi <span class="nm nm-person first">Ruby</span> chết. Ở trong hầm, trước khi thợ mỏ quay lại. Cái nghiêng đầu của người đang nghe một thứ tiếng mà chỉ mình anh nghe được.</p>
+<p data-pi="74">Mỗi lần như thế, ngay sau đó, anh đều nói. “<span class="nm nm-person">Clevia</span>, lùi lại.” “Có cái gì đó tới.” “Bên trái.” Mỗi lần như thế, anh đều nói.</p>
+<p data-pi="75">Lần này anh không nói gì cả.</p>
+<p data-pi="76">Cô nhìn anh. Cô thấy trán anh lấm tấm mồ hôi dù gió đêm lạnh buốt. Cô thấy mắt anh liếc về phía cuối chợ, chỗ con đường rẽ ra hướng Nhà họp làng, đúng phía sau lưng Gideon, chỉ một cái liếc rất nhanh. Rồi anh nhìn xuống đất. Ngón tay cái của anh miết miết lên chuôi thanh kiếm tre, đều đều, chậm rãi, như lúc nãy anh ngồi nghe <span class="nm nm-person">Leon</span> im lặng về <span class="nm nm-person first">Jasper</span>.</p>
+<p data-pi="77">Anh không nói gì.</p>
+<p data-pi="78" class="say say-clevia" data-name="Clevia"><span class="q">“<span class="nm nm-person">Luke</span>?”</span> cô thì thầm.</p>
+<p data-pi="79">Anh không quay lại. Có lẽ anh không nghe thấy. Có lẽ anh nghe thấy.</p>
+<p data-pi="80">Ở lối vào sạp, <span class="nm nm-person">Leon</span> khẽ quay đầu. Không quay hẳn, chỉ nghiêng một chút, đủ để liếc thấy <span class="nm nm-person">Luke</span> qua khoé mắt. <span class="nm nm-person">Clevia</span> thấy anh ta nhìn <span class="nm nm-person">Luke</span>. Nhìn cái trán đầy mồ hôi, nhìn ngón tay cái miết lên chuôi kiếm, rồi nhìn theo hướng mắt <span class="nm nm-person">Luke</span> vừa liếc, về phía cuối chợ. Rồi <span class="nm nm-person">Leon</span> lại nhìn <span class="nm nm-person">Luke</span>.</p>
+<p data-pi="81">Anh ta cũng không nói gì.</p>
+<p data-pi="82">Ngoài đường, Gideon vẫn đang nói. <span class="nm nm-person">Clevia</span> không còn nghe ông ta nói gì nữa. Cô chỉ nghe được tiếng máu chảy rần rật trong tai mình, và đâu đó rất xa, rất mờ, mờ tới mức cô không biết có phải mình đang tưởng tượng ra không:</p>
+<p data-pi="83"><em>Lanh canh.</em></p>
+<p data-pi="84">Gideon dừng lại giữa câu.</p>
+<p data-pi="85"><em>Lanh canh.</em></p>
+<p data-pi="86">Lần này thì không phải tưởng tượng. Lần này <span class="nm nm-person">Hana</span> cũng nghe thấy, vì cô ấy quay phắt người lại, tấm khiên trên cánh tay bừng sáng hẳn lên, tròn vành vạnh, đục như mặt trăng mùa sương.</p>
+<p data-pi="87"><em>Lanh canh lanh canh lanh canh.</em></p>
+<p data-pi="88">Nó không còn ở xa nữa. Nó ở ngay cuối chợ. Nó đã ở đó từ lâu rồi.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="89"><span class="nm nm-person">Clevia</span> không nhìn thấy nó.</p>
+<p data-pi="90"><span class="nm nm-person">Luke</span> đã quay lại, nhanh tới mức cô không kịp thấy anh di chuyển, và kéo cô sát vào vách nứa, ở góc tối nhất của sạp, nơi ánh trăng không lọt tới. Anh nắm lấy hai bàn tay quấn băng của cô, gập lại, bọc trọn trong hai lòng bàn tay mình, rồi ép cả hai tay cô vào ngực anh, như người ta che một ngọn đèn trước gió. <span class="nm nm-person">Leon</span> đã lùi vào trong, buông tấm phên xuống. Sợi xích rút về theo anh ta, lặng lẽ, không một tiếng lách cách.</p>
+<p data-pi="91">Bên ngoài, có người hét lên.</p>
+<p data-pi="92" class="say say-x"><span class="q">“Chạy đi!”</span> Đó là giọng Gideon. Lần đầu tiên cái giọng ấy không còn đều nữa. <span class="q">“<span class="nm nm-person">Hana</span>, chạy đi!”</span></p>
+<p data-pi="93">Qua khe hở giữa hai tấm phên, <span class="nm nm-person">Clevia</span> chỉ nhìn thấy được một khoảnh đường chợ, hẹp như một vạch sáng. Cô thấy một vệt xanh rêu vụt qua, là <span class="nm nm-person">Hana</span>. Cô thấy một cái bóng trắng loá vụt qua theo, là cái khiên, giơ cao. Rồi cô nghe một tiếng va chạm, khô, giòn, như tiếng một tấm kính dày bị ai đó đập búa vào, rồi tiếng <span class="nm nm-person">Hana</span> hét lên, đau đớn, và tiếng bước chân lảo đảo chạy xa dần về phía Trung tâm.</p>
+<p data-pi="94">Rồi cái khoảnh đường sáng ấy tối sầm lại.</p>
+<p data-pi="95">Có một cái gì đó vừa đi ngang qua, che hết ánh trăng. Một vạt vải. Sờn rách, xếp thành từng nếp, kéo lê trên mặt đất. Nó đi chậm. Nó đi qua trước khe hở, chậm tới mức <span class="nm nm-person">Clevia</span> đếm được từng nếp vải, và những chiếc chuông nhỏ trên vương miện của nó, ở tít trên cao, quá tầm mắt cô, kêu lên lanh canh từng tiếng một theo mỗi bước chân.</p>
+<p data-pi="96">Cô nín thở. Bàn tay <span class="nm nm-person">Luke</span> siết chặt hai bàn tay cô.</p>
+<p data-pi="97">Rồi cái vạt áo dừng lại.</p>
+<p data-pi="98">Ngay trước sạp thuốc. Ngay trước khe hở. Cô thấy những nếp vải sờn khẽ lay động, như thứ bên trong đang cúi người xuống. Cô thấy trăng lại lọt vào được một chút qua khe hở, vì nó đã cúi thấp, rất thấp, và cô biết, không cần nhìn cô cũng biết, rằng ở phía bên kia tấm phên nứa mỏng manh này, có cả trăm con mắt đang chao đi chao lại, tìm.</p>
+<p data-pi="99">Cô không thở. Cô không dám thở. Cô cảm thấy lồng ngực <span class="nm nm-person">Luke</span> dưới hai bàn tay mình cũng đứng yên, không phập phồng, như ngực một người đã chết.</p>
+<p data-pi="100" class="say say-x"><span class="q">“Đây!”</span></p>
+<p data-pi="101">Giọng Gideon. Không phải ở xa. Ở ngay ngoài đường, cách sạp thuốc chừng mươi bước, phía bên kia.</p>
+<p data-pi="102" class="say say-other"><span class="q">“Đây này!”</span> ông ta gào lên. <span class="q">“Tao ở đây này!”</span></p>
+<p data-pi="103">Cô không biết ông ta làm vậy để kéo con quỷ ra khỏi <span class="nm nm-person">Hana</span>, hay để kéo nó về phía sạp thuốc, về phía ba người đã không chịu giúp ông ta. Có lẽ cả hai. Có lẽ chính ông ta cũng không biết. Cô chỉ thấy những nếp vải sờn trước khe hở khẽ lay, rồi kéo đi, rời khỏi tấm phên, quay về phía tiếng gào.</p>
+<p data-pi="104"><em>Lanh canh.</em></p>
+<p data-pi="105">Gideon không gào nữa.</p>
+<p data-pi="106">Ông ta chạy. Cô nghe tiếng đế giày đập xuống mặt đất, gấp gáp, loạn nhịp, tiếng một người đàn ông bốn mươi tuổi chưa bao giờ phải chạy như thế trong đời. Tiếng chân chạy về phía đầu chợ. Rồi rẽ. Rồi vấp. Rồi lại chạy.</p>
+<p data-pi="107"><em>Lanh canh lanh canh.</em></p>
+<p data-pi="108">Rồi một tiếng động mà <span class="nm nm-person">Clevia</span> sẽ không bao giờ quên được, nhưng cũng sẽ không bao giờ tả lại được cho ai. Nó không to. Nó chẳng giống tiếng hét, cũng chẳng giống tiếng xương gãy hay tiếng thịt rách như cô vẫn sợ. Nó chỉ là một tiếng <em>phựt</em> rất khẽ, như tiếng một sợi dây đàn bị kéo căng quá mức rồi đứt, rồi im.</p>
+<p data-pi="109">Rồi tiếng một chiếc đồng hồ rơi xuống đất.</p>
+<p data-pi="110">Cô biết đó là chiếc đồng hồ. Cô không nhìn thấy, nhưng cô biết. Nó rơi xuống, lăn đi một quãng ngắn trên sỏi, rồi nằm im, và trong cái im lặng sau đó, cô nghe được cả tiếng kim giây của nó, rất nhỏ, tích tắc, tích tắc, vẫn chạy.</p>
+<p data-pi="111"><em>Lanh canh.</em></p>
+<p data-pi="112">Xa hơn một chút.</p>
+<p data-pi="113"><em>Lanh canh.</em></p>
+<p data-pi="114">Xa hơn nữa. Về phía Nhà họp làng.</p>
+<p data-pi="115">Rồi không còn gì nữa.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="116"><span class="nm nm-person">Luke</span> buông tay cô ra.</p>
+<p data-pi="117">Anh buông chậm, từng ngón một, như sợ nếu buông nhanh quá thì cái gì đó sẽ vỡ. Rồi anh đứng dậy, đi ra phía tấm phên, cúi người nhìn qua khe hở. Lưng anh thẳng. Vai anh không run. <span class="nm nm-person">Clevia</span> nhìn tấm lưng ấy và cô không biết mình đang cảm thấy gì nữa.</p>
+<p data-pi="118"><span class="nm nm-person">Leon</span> cũng đứng dậy. Anh ta không ra ngoài. Anh ta bước tới đứng cạnh <span class="nm nm-person">Luke</span>, sát tới mức vai hai người gần như chạm vào nhau, và nói một câu gì đó.</p>
+<p data-pi="119"><span class="nm nm-person">Clevia</span> không nghe được.</p>
+<p data-pi="120">Anh ta nói rất nhỏ, rất ngắn, mặt không quay về phía <span class="nm nm-person">Luke</span> mà vẫn nhìn ra khe hở. Chỉ có môi anh ta mấp máy. Chỉ thế thôi. Nhưng cô thấy <span class="nm nm-person">Luke</span> đứng yên lại. Không phải cái đứng yên của người đang lắng nghe tiếng động bên ngoài. Mà là cái đứng yên của người vừa bị ai đó đặt tay lên một vết thương mà mình tưởng đã giấu kín.</p>
+<p data-pi="121"><span class="nm nm-person">Luke</span> không trả lời ngay.</p>
+<p data-pi="122">Cô thấy anh khẽ cúi đầu xuống. Cô thấy quai hàm anh siết lại. Rồi anh nói, cũng rất nhỏ, cũng rất ngắn, một câu mà cô không nghe được lấy một chữ.</p>
+<p data-pi="123"><span class="nm nm-person">Leon</span> quay sang nhìn anh.</p>
+<p data-pi="124">Đó là lần đầu tiên <span class="nm nm-person">Clevia</span> thấy <span class="nm nm-person">Leon</span> nhìn <span class="nm nm-person">Luke</span> như thế. Không phải cái nhìn khó chịu của người gặp lại một kẻ mình ghét, như lúc ở ngã ba giếng. Không phải cái nhìn bực bội vì <span class="nm nm-person">Luke</span> cầm kiếm sai tư thế, như lúc ở khu Mỏ. Nó là một cái nhìn rất lâu, rất lặng, như người ta nhìn một khuôn mặt quen trong tấm ảnh cũ, rồi chợt nhận ra mình chưa từng thật sự nhìn kỹ khuôn mặt ấy bao giờ.</p>
+<p data-pi="125">Rồi <span class="nm nm-person">Leon</span> khẽ bật cười. Một tiếng thôi, qua mũi, khô khốc.</p>
+<p data-pi="126" class="say say-other"><span class="q">“Thế mà ngày xưa cậu cứ chê tôi,”</span> anh ta nói, lần này đủ to để <span class="nm nm-person">Clevia</span> nghe được.</p>
+<p data-pi="127"><span class="nm nm-person">Luke</span> không đáp.</p>
+<p data-pi="128"><span class="nm nm-person">Clevia</span> ngồi trong góc sạp, nhìn hai người họ, và không hỏi gì. Cô không hỏi <span class="nm nm-person">Luke</span> đã cảm thấy con quỷ từ lúc nào. Cô không hỏi <span class="nm nm-person">Leon</span> vừa nói gì với anh. Cô không hỏi bởi vì cô sợ, nếu cô hỏi, <span class="nm nm-person">Luke</span> sẽ trả lời thật.</p>
+<p data-pi="129">Gideon nhìn ra được lời nói dối của cô chỉ bằng một ánh mắt, nhưng ông ta chẳng thể nhìn ra cái im lặng đầy ý đồ từ ai đó.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="130">Rất lâu sau, <span class="nm nm-person">Luke</span> mới cất tiếng.</p>
+<p data-pi="131" class="say say-x"><span class="q">“Còn một người nữa.”</span> Giọng anh vẫn như mọi khi, nhỏ, đều, không có gì khác. <span class="q">“Ở sau dãy sạp đầu chợ, chỗ sạp thẻ có cái mũ nồi. Ở đấy từ trước cả lúc Gideon tới rồi.”</span></p>
+<p data-pi="132"><span class="nm nm-person">Leon</span> nhướn mày. “Giờ cậu mới nói?”</p>
+<p data-pi="133" class="say say-x"><span class="q">“Giờ người đó mới cử động.”</span></p>
+<p data-pi="134"><span class="nm nm-person">Clevia</span> nhìn qua khe hở. Con đường chợ vẫn sáng bạc dưới trăng, vắng tanh. Ở phía đầu chợ, chỗ sạp thẻ của người đàn ông béo, chiếc mũ nồi vẫn treo trên cái đinh đóng vào cột, vẫn đung đưa nhè nhẹ. Rồi một cái bóng tách ra từ sau cây cột ấy.</p>
+<p data-pi="135">Một cái bóng to lớn, vai u thịt bắp, bước đi không nhanh không chậm, hai tay buông thõng hai bên người, như một người đang đi dạo một đêm hè.</p>
+<p data-pi="136"><span class="nm nm-person">Clevia</span> cảm thấy lòng bàn tay mình lạnh toát dưới lớp băng.</p>
+<p data-pi="137">Cái bóng ấy không đi về phía sạp thuốc. Nó đi về phía đầu chợ bên kia, chỗ con đường rẽ, chỗ mà lúc nãy tiếng chân chạy của Gideon dừng lại. Nó cúi xuống. <span class="nm nm-person">Clevia</span> thấy nó cúi xuống nhặt một cái gì đó từ dưới đất lên, xoay xoay trong tay, rồi nhét vào túi áo. Rồi nó lại cúi xuống, lần này lâu hơn, như đang lục lọi một thứ gì đó nằm trên mặt đường.</p>
+<p data-pi="138" class="say say-luke" data-name="Luke"><span class="q">“Là ông ta,”</span> <span class="nm nm-person">Luke</span> nói. <span class="q">“Người ở ngã ba giếng.”</span></p>
+<p data-pi="139">Anh không cần nói thêm. <span class="nm nm-person">Clevia</span> đã nhận ra cái dáng đi ấy từ lúc nó tách khỏi cây cột. Cô chưa bao giờ biết tên ông ta. Không ai trong ba người biết. Đêm đầu, ông ta chỉ là một cái bóng to lớn đứng chờ ở ngã ba giếng, và đến tận bây giờ, ông ta vẫn chỉ là cái bóng ấy.</p>
+<p data-pi="140" class="say say-clevia" data-name="Clevia"><span class="q">“Ông ta sang được đây kiểu gì?”</span> cô thì thầm. <span class="q">“Ông ta ở bên Nông nghiệp cơ mà…”</span></p>
+<p data-pi="141" class="say say-luke" data-name="Luke"><span class="q">“Anh không biết. Có lẽ ông ta cũng có một tấm <span class="nm nm-card">Teleport</span> như chúng ta, hoặc một tấm thẻ gì đó tương tự.”</span> <span class="nm nm-person">Luke</span> vẫn nhìn ra ngoài. <span class="q">“Anh đoán ông ta sang đây từ trước lúc chuông kêu. Mà sang bằng cách nào thì giờ cũng chẳng quan trọng nữa…”</span></p>
+<p data-pi="142">Ngoài đường, gã to con đã đứng thẳng dậy. Ông ta phủi phủi hai đầu gối quần, rồi quay người lại, nhìn thẳng về phía sạp thuốc. Ông ta không bước tới. Ông ta chỉ đứng đó, cách chừng hai chục bước, dưới trăng, và cất giọng, cái giọng xuề xoà mà <span class="nm nm-person">Clevia</span> đã nghe ở ngã ba giếng:</p>
+<p data-pi="143" class="say say-x"><span class="q">“Đừng nhìn tôi như thế, cậu <span class="nm nm-person">Leon</span>. Người chết rồi thì giữ thẻ làm gì nữa.”</span></p>
+<p data-pi="144"><span class="nm nm-person">Clevia</span> hơi giật mình khi nghe ông ta gọi đúng tên <span class="nm nm-person">Leon</span>. Rồi cô nhớ ra, đêm đầu, lúc ông ta còn treo lơ lửng giữa những vòng xích, chính <span class="nm nm-person">Luke</span> đã gọi cái tên ấy ngay trước mặt ông ta. Ông ta đã nghe, và ông ta nhớ.</p>
+<p data-pi="145"><span class="nm nm-person">Leon</span> không đáp. Anh ta vén tấm phên lên một nửa, đứng ở lối vào, để ông ta thấy rõ mình.</p>
+<p data-pi="146" class="say say-other"><span class="q">“Tôi đợi ở đấy cả buổi rồi,”</span> ông ta nói tiếp, giọng như đang kể chuyện đi chợ. <span class="q">“Đợi xem con quỷ kia làm việc cho xong. Định bụng nó lôi được đứa nào ra khỏi cái sạp đấy thì tôi xuống nhặt. Ai ngờ nó lại lôi được ông thầy cãi nhau kia.”</span> Ông ta lắc đầu, có vẻ tiếc thật. <span class="q">“Ông ta chỉ có hai tấm. Một tấm còn chẳng biết để làm gì.”</span></p>
+<p data-pi="147" class="say say-leon" data-name="Leon"><span class="q">“Thế thì đi đi,”</span> <span class="nm nm-person">Leon</span> nói.</p>
+<p data-pi="148" class="say say-other"><span class="q">“Đi chứ. Đi chứ.”</span> Ông ta giơ hai tay lên, lòng bàn tay hướng ra trước, cái kiểu giơ tay để chứng tỏ mình chẳng cầm gì. <span class="q">“Cậu cứ yên tâm. Tôi chưa ngu tới mức đánh nhau với cậu lần nữa.”</span> Ông ta liếc qua vai <span class="nm nm-person">Leon</span>, về phía góc sạp, về phía <span class="nm nm-person">Clevia</span>. Chỉ một cái nhìn ngắn thôi, nhưng cô cảm thấy nó trượt qua người mình như một bàn tay lạnh, y như đêm đầu. <span class="q">“Con bé vẫn còn sống đấy à. Giỏi thật. Đêm nay vẫn còn dài đấy, con bé ạ, mà cũng chẳng còn dài lắm nữa…”</span></p>
+<p data-pi="149">Ông ta bật cười, quay lưng định đi.</p>
+<p data-pi="150">Và đúng lúc ấy, <span class="nm nm-person">Clevia</span> nghe thấy tiếng hát.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="151">Rất khẽ. Rất gần.</p>
+<p data-pi="152">Không phải ở xa trong bóng tối như lúc nãy. Mà ở ngay đây, ngay trên đầu gã to con, trên mái lá của sạp thẻ đầu chợ, nơi treo chiếc mũ nồi. Một giọng con gái ngân nga một điệu gì đó <span class="nm nm-person">Clevia</span> không biết, trong, nhẹ, hơi lười biếng, như người vừa ngủ trưa dậy hát vu vơ trong lúc chải tóc.</p>
+<p data-pi="153">Gã to con khựng lại.</p>
+<p data-pi="154"><span class="nm nm-person">Clevia</span> thấy ông ta khựng lại, thấy ông ta nghiêng đầu, và cô hiểu ra ông ta cũng vừa nghe thấy. Ông ta, người đã đi giữa cả bầy quỷ đêm đầu mà không con nào chạm được vào mình, người nghe được tiếng lửa bếp tàn từ ngoài ngã ba, giờ mới nghe thấy. Ông ta ngẩng đầu lên, nhìn lên mái sạp thẻ.</p>
+<p data-pi="155"><span class="nm nm-person">Luke</span> thì không ngẩng đầu. Anh đứng chết trân bên khe hở, mặt trắng bệch. <span class="nm nm-person">Clevia</span> biết vì sao. Anh vẫn không cảm thấy gì cả. Tiếng hát ở ngay đó mà anh không cảm thấy gì cả.</p>
+<p data-pi="156">Trên mái sạp thẻ, có một đôi giày vải trắng đang đung đưa.</p>
+<p data-pi="157" class="say say-x"><span class="q">“Chú ơi,”</span> giọng con gái ấy cất lên, thân thiện, gần như là vui vẻ. <span class="q">“Chú đợi người ta chết rồi mới xuống nhặt à? Thế thì chậm quá.”</span></p>
+<p data-pi="158"><em>Phạch.</em></p>
+<p data-pi="159">Một tiếng động khô, gọn, như tiếng một tấm vải căng được giũ mạnh ra trong gió.</p>
+<p data-pi="160"><span class="nm nm-person">Luke</span> giật nảy người như vừa bị ai đó tạt nước đá vào mặt.</p>
+<p data-pi="161" class="say say-x"><span class="q">“Có…”</span> Giọng anh lạc đi. <span class="q">“Có rồi… Tớ thấy rồi. Tớ thấy cô ấy rồi, ngay đấy, <span class="nm nm-person">Leon</span>…!”</span></p>
+<p data-pi="162"><span class="nm nm-person">Clevia</span> nhìn ra. Trên mái sạp thẻ, cái bóng ngồi vắt vẻo lúc nãy đã đứng dậy, và trong tay cái bóng ấy, thứ dài, đen, im lìm từng nằm vắt ngang trên đùi nó ở cành gạo, giờ đã bung ra.</p>
+<p data-pi="163">Một chiếc ô.</p>
+<p data-pi="164">Một chiếc ô đen, to, những nan ô xoè ra như cánh một con dơi khổng lồ, mép vành ô loáng lên dưới ánh trăng một vệt sáng sắc lạnh, mỏng như lưỡi dao cạo. Ở chính giữa đỉnh ô, một cái chóp nhọn hoắt chĩa lên trời, ánh lên một chút vàng nhạt.</p>
+<p data-pi="165">Cái bóng ấy nhảy xuống.</p>
+<p data-pi="166">Gã to con đã kịp xoay người. <span class="nm nm-person">Clevia</span> thấy ông ta xoay người, nhanh, nhanh hơn cả lúc ông ta lao vào <span class="nm nm-person">Luke</span> ở ngã ba giếng, hai cánh tay to bè giơ lên che trước mặt. Cô thấy chiếc ô quét ngang qua, một vòng tròn đen trên nền trăng. Cô thấy vành ô lướt qua hai cánh tay ấy như lưỡi liềm lướt qua một bó rạ.</p>
+<p data-pi="167">Rồi chiếc ô xoay ngược lại, gọn như một cú lật cổ tay, và cái chóp nhọn ở đỉnh ô đâm thẳng tới.</p>
+<p data-pi="168">Ông ta không kêu lên. Ông ta chỉ khựng lại, cúi đầu nhìn xuống ngực mình, ngơ ngác như vừa thấy một vết bẩn dính lên áo. Ông ta nhìn rất lâu. Rồi ông ta ngẩng lên, nhìn cô gái đang đứng ngay trước mặt mình, gần tới mức mái tóc dài của cô ta gần như chạm vào cằm ông ta.</p>
+<p data-pi="169">Môi ông ta mấp máy, như định nói một câu gì đó, nhưng chẳng có tiếng nào thoát ra được.</p>
+<p data-pi="170">Cô gái rút chiếc ô ra.</p>
+<p data-pi="171">Ông ta ngã xuống. Ông ta ngã chậm, như một bao thóc bị rút mất cái cọc chống, khuỵu gối trước rồi mới đổ nghiêng sang một bên, và nằm im trên mặt đường, cách chiếc đồng hồ của Gideon chừng mươi bước.</p>
+</section>
+<div class="break" role="separator"><svg class="ripple" viewBox="0 0 120 24" aria-hidden="true" focusable="false"><ellipse cx="60" cy="12" rx="6" ry="1.6"/><ellipse cx="60" cy="12" rx="22" ry="5"/><ellipse cx="60" cy="12" rx="44" ry="9" class="far"/></svg></div>
+<section class="scene">
+<p data-pi="172">Không ai trong sạp thuốc nói gì.</p>
+<p data-pi="173">Ngoài đường, cô gái đứng nhìn cái xác một lúc. Rồi cô ta xoay chiếc ô trong tay, rất nhẹ, như người ta xoay ô cho rũ nước mưa, và những giọt gì đó sẫm màu văng ra khỏi vành ô, rơi lấm tấm xuống đất. Cô ta cúi xuống. Cái chóp nhọn ở đỉnh ô khẽ móc vào vạt áo ông ta, lật ra, lục lọi, rồi khéo léo hất lên một xấp thẻ nhỏ từ túi áo trong của ông ta. Cô ta đưa tay ra bắt lấy, gọn gàng, như bắt một chiếc lá rơi.</p>
+<p data-pi="174"><span class="nm nm-person">Clevia</span> nhìn cái chóp ô móc vào túi áo ấy, và cô chợt nhớ tới nhánh xích nhỏ mảnh như rễ non của <span class="nm nm-person">Leon</span>, lách qua khe cúc áo của chính người đàn ông này, ở ngã ba giếng, đêm đầu tiên.</p>
+<p data-pi="175">Cô gái lật lật mấy tấm thẻ trong tay, dưới ánh trăng, thong thả như đếm lại tiền thối. Rồi cô ta nhét cả xấp vào dải lụa ngang eo, và ngẩng đầu lên.</p>
+<p data-pi="176">Lần này, <span class="nm nm-person">Clevia</span> thấy được mặt cô ta.</p>
+<p data-pi="177">Một gương mặt còn non, trắng, cằm nhỏ, đôi mắt xám nhạt hình hạt hạnh, bình thản tới mức khó chịu, cái kiểu nhìn người ta như nhìn một món đồ bày trên sạp. Mái tóc đen thẳng dài buông xuống tận thắt lưng, mái bằng cắt ngang trán, hai lọn tóc hai bên má cắt ngang cằm, gọn như tóc búp bê. Cô ta mặc một chiếc váy dài tay màu trắng sữa, cổ thắt một chiếc nơ đen, ngang eo buộc dải lụa trắng, gấu váy lấm tấm mấy vệt sẫm màu. Đôi giày vải trắng buộc nơ thì vẫn sạch tinh. Trông cô ta như một nữ sinh vừa đi học về, tạt qua chợ mua bó rau, chẳng có gì đáng sợ cả.</p>
+<p data-pi="178">Trừ chiếc ô.</p>
+<p data-pi="179">Cô ta nhìn thẳng về phía sạp thuốc, về phía khe hở trên tấm phên, nơi <span class="nm nm-person">Clevia</span> đang nhìn ra, như thể từ đầu tới giờ cô ta vẫn biết chính xác ai đang đứng ở đâu.</p>
+<p data-pi="180" class="say say-other"><span class="q">“Mấy anh chị xem hết rồi đấy à?”</span> cô ta hỏi. Giọng vẫn trong, vẫn nhẹ, vẫn lười biếng. <span class="q">“Thế thì em khỏi phải giấu nữa nhỉ.”</span></p>
+<p data-pi="181">Cô ta nâng chiếc ô lên.</p>
+<p data-pi="182">Không phải để che mưa. Cô ta cầm nó bằng cả hai tay, như cầm một ngọn giáo, và từ từ hạ xuống, cho tới khi cái chóp nhọn ở đỉnh ô chĩa thẳng về phía sạp thuốc. Chiếc ô đen xoè ra trước mặt cô ta như một tấm khiên, những nan ô khẽ rung lên, khẽ cựa mình, như một con vật vừa ngửi thấy mùi mồi.</p>
+<p data-pi="183" class="say say-other"><span class="q">“Ba người đủ cả thế này,”</span> cô ta nói, <span class="q">“chắc trên người cũng có nhiều thẻ hay lắm.”</span></p>
+<p data-pi="184"><span class="nm nm-person">Luke</span> kéo <span class="nm nm-person">Clevia</span> ra sau lưng mình. Cô cảm thấy bàn tay anh lạnh ngắt.</p>
+<p data-pi="185" class="say say-luke" data-name="Luke"><span class="q">“<span class="nm nm-person">Leon</span>,”</span> anh nói. <span class="q">“Cô ấy… mạnh lắm.”</span></p>
+<p data-pi="186" class="say say-x"><span class="q">“Tôi biết.”</span></p>
+<p data-pi="187"><span class="nm nm-person">Leon</span> đã vén hẳn tấm phên lên. Anh ta bước ra ngoài, ra giữa con đường chợ sáng bạc dưới trăng, hai tay vẫn đút trong túi áo hoodie. Sau lưng anh ta, sợi xích tuôn ra khỏi cổ tay áo, đoạn này nối đoạn kia, dài mãi, dài mãi, những mắt xích đen bóng va vào nhau kêu lên một tràng dài, khô khốc, như ai đó đang kéo lê cả một xích sắt nặng trên nền đá. Nó không dựng đứng như lúc nãy nữa. Nó trườn ra, nằm rạp xuống mặt đất, cuộn quanh chân <span class="nm nm-person">Leon</span> thành từng vòng, từng vòng, như một con thú đang hạ thấp người trước khi vồ.</p>
+<p data-pi="188"><span class="nm nm-person">Leon</span> rút một tay ra khỏi túi áo. Anh ta không quay đầu lại.</p>
+<p data-pi="189" class="say say-other"><span class="q">“Lùi vào trong đi,”</span> anh ta nói.</p>
+<p data-pi="190"><span class="nm nm-person">Luke</span> kéo <span class="nm nm-person">Clevia</span> lùi lại, sâu vào góc tối của sạp thuốc. Qua khe hở giữa hai tấm phên, cô chỉ còn thấy tấm lưng <span class="nm nm-person">Leon</span> đen sì trên nền trăng, và phía trước anh ta, chiếc ô đen đang xoè rộng ra.</p>
+</section>
+  </article>
+  <footer class="end">
+    <p class="mark">Hết chương 16</p>
+    <nav class="nav" aria-label="Chuyển chương">
+      <a href="ch15.html"><small>Chương trước</small>Nước giếng</a>
+      <span class="next"><small>Chương sau</small>Sắp lên</span>
+    </nav>
+    <a class="notebook" href="sotay.html#ch16">Sổ tay của Luke<small>Luke đoán gì về những người đã gặp, tới hết chương này</small></a>
+    
+    <a class="gate" href="https://frioscrt.github.io/crvillage/">
+      <span class="t">Bên Kia Bức Tường</span>
+      <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
+      <span class="w">Nếu định chơi, cậu nên chơi trước khi đọc Chương 14 để giữ trọn bất ngờ.</span>
+    </a>
+    <section class="cmt" id="binh-luan" data-ch="16" aria-label="Bình luận">
+    <h2>Bình luận<span class="cnt" hidden></span></h2>
+    <p class="sub">Cậu nghĩ gì về chương này? Lưu ý: bình luận có thể tiết lộ nội dung chương.</p>
+    <button type="button" class="all" hidden>Lật hết các thẻ</button>
+    <p class="cmt-empty">Đang tải bình luận…</p><ol class="cmt-list"></ol>
+    <form class="bl-form" data-kind="bl" novalidate>
+  <span class="deco" aria-hidden="true"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" stroke-dasharray="1 4"/><circle cx="30" cy="30" r="21"/><circle cx="30" cy="30" r="14" stroke-dasharray="10 3 2 3"/><circle class="d" cx="30" cy="30" r="2.6"/></svg></span>
+  <p class="k">Thẻ của cậu</p>
+  <input name="name" maxlength="40" autocomplete="nickname" placeholder="Tên của cậu (bỏ trống = ẩn danh)">
+  
+  <textarea name="text" maxlength="1500" placeholder="Viết bình luận của cậu…"></textarea>
+  <input name="web" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <div class="row"><p class="st" role="status">Chạm và giữ vòng đỏ để gửi.</p><button type="button" class="hold" aria-label="Chạm và giữ để gửi"><span class="in">Giữ để<br>gửi</span><i></i><i></i><i></i></button></div>
+</form>
+  </section>
+  </footer>
+</main>
+<nav class="cv" aria-label="Chuyển chương nhanh"><a class="pv" href="ch15.html" aria-label="Chương trước: Nước giếng"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Chương 15</a><i class="mid" aria-hidden="true"></i><span>Sắp lên<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></span></nav>
+<div class="cw" id="cw" hidden role="dialog" aria-modal="true" aria-labelledby="cw-h">
+  <div class="sh"></div>
+  <div class="bx"><svg class="rg" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" stroke-dasharray="1 4"/><circle cx="30" cy="30" r="21"/><circle cx="30" cy="30" r="14" stroke-dasharray="10 3 2 3"/><circle class="d" cx="30" cy="30" r="2.6"/></svg>
+    <p class="k">Khoan đã</p>
+    <h3 id="cw-h">Chương 16 chưa đọc xong</h3>
+    <p class="m">Tớ khuyên cậu đọc hết chương này rồi hẵng sang, để khỏi lỡ mạch truyện và mấy chỗ chạm trong chương.</p>
+    <div class="bt"><button type="button" class="stay">Ở lại đọc tiếp</button><a class="go" href="#">Vẫn sang chương sau</a></div>
+  </div>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, bar=document.querySelector('header.bar'), prog=document.querySelector('.progress');
+  function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  var tb=document.getElementById('theme');
+  function label(){tb.textContent=isDark()?'Sáng':'Tối'}
+  label();
+  tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label();dispatchEvent(new Event('a07-theme'))};
+  function size(d){var s=parseFloat(getComputedStyle(root).getPropertyValue('--size'))||19;s=Math.min(26,Math.max(15,s+d));root.style.setProperty('--size',s+'px');store('a07-size',s)}
+  document.getElementById('smaller').onclick=function(){size(-1)};
+  document.getElementById('bigger').onclick=function(){size(1)};
+  try{localStorage.setItem('a07-last',location.pathname.split('/').pop()||'')}catch(e){}
+  try{if(localStorage.getItem('a07-done')===null)localStorage.setItem('a07-done',+(localStorage.getItem('a07-max')||0))}catch(e){} // người đọc cũ: coi các chương đã mở là đã đọc
+  try{var cn=+(location.pathname.match(/ch(\d+)\.html$/)||[0,0])[1];if(cn>+(localStorage.getItem('a07-max')||0))localStorage.setItem('a07-max',cn)}catch(e){}
+  // đọc tới cuối chương thì Sổ tay mở thêm tới chương này (a07-done)
+  function done(){try{if(cn>+(localStorage.getItem('a07-done')||0))localStorage.setItem('a07-done',cn)}catch(e){}}
+  var nb=document.querySelector('a.notebook'); if(nb) nb.addEventListener('click',done);
+  [].forEach.call(document.querySelectorAll('a.pov'),function(a){a.addEventListener('click',done)});
+  var last=0;
+  addEventListener('scroll',function(){
+    var y=scrollY, h=(window.a07fullH||document.documentElement.scrollHeight)-innerHeight;
+    prog.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')';
+    if(h>0&&y/h>0.96&&!root.classList.contains('giu-on'))done();
+    bar.classList.toggle('hide', y>last && y>200);
+    last=y;
+  },{passive:true});
+})();
+(function(){var d=document.getElementById('drawer'),b=document.getElementById('menu');if(!d||!b)return;
+function open(){d.hidden=false;requestAnimationFrame(function(){d.classList.add('on')});document.body.style.overflow='hidden';var c=d.querySelector('[aria-current]');if(c)c.scrollIntoView({block:'center'});if(window.a07sfx)window.a07sfx('flip')}
+function close(){d.classList.remove('on');document.body.style.overflow='';setTimeout(function(){d.hidden=true},280)}
+b.onclick=open;d.addEventListener('click',function(e){if(e.target.closest('[data-close]'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)close()});})();(function(){var d=document.getElementById('drawer');if(!d)return;var dn=0,pos={};
+try{dn=+(localStorage.getItem('a07-done')||localStorage.getItem('a07-max')||0);pos=JSON.parse(localStorage.getItem('a07-pos')||'{}')}catch(e){}
+var last=0,lastT=0;for(var k in pos){if(pos[k].t>lastT){lastT=pos[k].t;last=+k}}
+[].forEach.call(d.querySelectorAll('li[data-n]'),function(li){var n=+li.getAttribute('data-n');
+ if(n<=dn)li.classList.add('read');else if(n===dn+1)li.classList.add('next');else li.classList.add('ahead');if(pos[n])li.classList.add('mid')});
+var nx=d.querySelector('.drc-next');if(nx){var tot=d.querySelectorAll('li[data-n]').length,t=last&&last>dn?last:Math.min(dn+1,tot)||1;
+ var li=d.querySelector('li[data-n="'+t+'"]');nx.href='ch'+(t<10?'0':'')+t+'.html';nx.querySelector('b').textContent='Chương '+t;if(li)nx.querySelector('.tt').textContent=li.querySelector('.t').textContent;
+ nx.querySelector('.bar i').style.width=Math.round(100*Math.min(dn,tot)/tot)+'%';if(!dn&&!last)nx.querySelector('small').textContent='Bắt đầu đọc'}})();
+
+(function(){
+  var U="https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec", RING="<svg viewBox=\"0 0 60 60\" aria-hidden=\"true\"><circle cx=\"30\" cy=\"30\" r=\"27\" stroke-dasharray=\"1 4\"/><circle cx=\"30\" cy=\"30\" r=\"21\"/><circle cx=\"30\" cy=\"30\" r=\"14\" stroke-dasharray=\"10 3 2 3\"/><circle class=\"d\" cx=\"30\" cy=\"30\" r=\"2.6\"/></svg>";
+  var SEALS=['var(--pw-clevia)','var(--pw-luke)','var(--pw-leon)','var(--lamp)'];
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function E(f,k){return f.elements.namedItem(k)}
+  function sfx(n){if(window.a07sfx)window.a07sfx(n)}
+  var lastFlip=0;function flipSnd(){var t=Date.now();if(t-lastFlip>140){lastFlip=t;sfx('flip')}}
+  function st(f,t,ok){var s=f.querySelector('.st');s.textContent=t;s.className='st'+(ok?' ok':'')}
+  function when(t){var d=new Date(t),p=function(x){return('0'+x).slice(-2)};return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()}
+  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+  function card(c,me){
+    var li=el('li','cc back'+(me?' me':''));li.tabIndex=0;li.setAttribute('aria-label','Thẻ úp, chạm để lật');li.style.setProperty('--seal',SEALS[hash(c.n)%SEALS.length]);
+    var ci=el('div','ci'),cf=el('div','cf'),cb=el('div','cb');
+    cf.innerHTML=RING;var w=el('p','who');var seal=el('span','seal',(c.n.trim()[0]||'?').toUpperCase());w.appendChild(seal);w.appendChild(el('b','',c.n));w.appendChild(el('time','',when(c.t)));
+    cf.appendChild(w);cf.appendChild(el('p','tx',c.x));
+    cb.innerHTML=RING;cb.appendChild(el('span','','PROJECT ARTOS 07'));cb.appendChild(el('em','tap','chạm để lật'));cb.setAttribute('aria-hidden','true');
+    ci.appendChild(cf);ci.appendChild(cb);li.appendChild(ci);return li}
+  function flip(li,quiet){if(!li.classList.contains('back'))return;li.classList.remove('back');li.classList.add('flip');li.removeAttribute('aria-label');if(!quiet)flipSnd();upd()}
+  function watch(li){li.addEventListener('click',function(){flip(li)});li.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(li)}})}
+  function upd(){var a=sec&&sec.querySelector('.all');if(a)a.hidden=!sec.querySelector('.cc.back')}
+  var sec=document.querySelector('.cmt');
+  function count(n){var c=sec.querySelector('.cnt');c.textContent=n+' tấm thẻ';c.hidden=!n}
+  var total=0;
+  function load(){var ol=sec.querySelector('.cmt-list'),em=sec.querySelector('.cmt-empty');
+    fetch(U+'?ch='+sec.getAttribute('data-ch')).then(function(r){return r.json()}).then(function(d){if(!d.ok)throw 0;ol.innerHTML='';d.list.forEach(function(c){var li=card(c);ol.appendChild(li);watch(li)});total=d.list.length;count(total);upd();em.textContent='Chưa có tấm thẻ nào. Cậu là người đầu tiên nha.';em.hidden=total>0})
+    .catch(function(){em.textContent='Chưa tải được bình luận. Cậu thử tải lại trang sau nha.';em.hidden=false})}
+  if(sec){sec.querySelector('.all').addEventListener('click',function(){[].forEach.call(sec.querySelectorAll('.cc.back'),function(li,i){setTimeout(function(){flip(li,i%2)},i*130)})})}
+  if(sec){if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();load()}},{rootMargin:'600px'});io.observe(sec)}else load()}
+  [].forEach.call(document.querySelectorAll('.bl-form'),function(f){
+    try{var nm=localStorage.getItem('a07-name');if(nm)E(f,'name').value=nm}catch(e){}
+    var btn=f.querySelector('.hold'),busy=false,raf=0,t0=0,NEED=900;
+    function rdy(){f.classList.toggle('ready',E(f,'text').value.trim().length>=2)}E(f,'text').addEventListener('input',rdy);
+    function setP(p){btn.style.setProperty('--p',p)}
+    function ready(){var text=E(f,'text').value.trim();if(text.length<2){st(f,'Cậu viết vài chữ trước đã nha.');E(f,'text').focus();return false}return true}
+    function send(){
+      var kind=f.getAttribute('data-kind'),d={type:kind,name:E(f,'name').value.trim(),text:E(f,'text').value.trim(),web:E(f,'web').value};if(kind==='ln')d.contact=E(f,'contact').value.trim();else d.ch=sec.getAttribute('data-ch');
+      try{localStorage.setItem('a07-name',d.name)}catch(e){}
+      busy=true;btn.disabled=true;st(f,'Đang gửi…');
+      fetch(U,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()}).then(function(r){
+        if(!r.ok){st(f,r.why==='nhieu'?'Đang có nhiều người gửi quá, cậu đợi vài phút rồi gửi lại nha.':'Chưa gửi được, cậu thử lại nha.');return}
+        E(f,'text').value='';rdy();if(kind==='ln'){st(f,'Đã gửi tới Clair. Cảm ơn cậu nha!',1);if(E(f,'contact'))E(f,'contact').value=''}
+        else{st(f,'Thẻ của cậu đã nằm trên bàn.',1);if(r.item){var ol=sec.querySelector('.cmt-list'),li=card(r.item,1);ol.appendChild(li);watch(li);sec.querySelector('.cmt-empty').hidden=true;count(++total);sfx('deal');setTimeout(function(){flip(li)},450)}}
+      }).catch(function(){st(f,'Chưa gửi được (mất mạng?). Cậu thử lại nha.')}).then(function(){busy=false;btn.disabled=false;setP(0);btn.classList.remove('burst')})}
+    function done(){cancelAnimationFrame(raf);btn.classList.remove('on');setP(1);btn.classList.add('burst');sfx('keyburst');setTimeout(send,reduce?0:450)}
+    function tick(){var p=Math.min(1,(performance.now()-t0)/NEED);setP(p);if(p>=1)done();else raf=requestAnimationFrame(tick)}
+    function down(e){if(busy||(e.button&&e.button>0))return;if(!ready())return;e.preventDefault();try{btn.setPointerCapture(e.pointerId)}catch(x){}t0=performance.now();btn.classList.add('on');st(f,'Giữ nữa…');sfx('nudge');raf=requestAnimationFrame(tick)}
+    function up(){if(!btn.classList.contains('on'))return;cancelAnimationFrame(raf);btn.classList.remove('on');setP(0);st(f,'Giữ lâu hơn chút nữa nha.')}
+    btn.addEventListener('pointerdown',down);btn.addEventListener('pointerup',up);btn.addEventListener('pointercancel',up);
+    btn.addEventListener('contextmenu',function(e){e.preventDefault()});
+    btn.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!busy){e.preventDefault();if(ready())done()}});
+  })
+})();
+(function(){var N={"key":"Tấm thẻ trong hẻm","bamboo-sword":"Bamboo-Sword","leon-unknown":"Một tấm thẻ chưa rõ mặt","teleport":"Teleport","bandage":"Bandage","smoke-veil":"Smoke Veil","protect":"Protect","remedy":"Remedy","guard":"Guard","t:arms":"Thẻ hệ Vũ trang","t:element":"Thẻ hệ Nguyên tố","t:enhance":"Thẻ hệ Tăng cường","t:psyche":"Thẻ hệ Linh cảm","t:shift":"Thẻ hệ Chuyển hoá","t:bond":"Thẻ hệ Khế ước","t:rule":"Thẻ hệ Quy tắc"};
+function get(){try{return JSON.parse(localStorage.getItem('a07-cards')||'[]')}catch(e){return []}}
+function put(a){try{localStorage.setItem('a07-cards',JSON.stringify(a))}catch(e){}}
+var els=[].slice.call(document.querySelectorAll('[data-collect]'));if(!els.length||!('IntersectionObserver' in window))return;
+var RED=matchMedia('(prefers-reduced-motion: reduce)').matches,pill=null,tm=0,q=[],busy=false;
+function pillEl(){if(pill)return pill;pill=document.createElement('a');pill.className='bst-pill';pill.href='bosuutap.html#moi';pill.setAttribute('aria-live','polite');document.body.appendChild(pill);return pill}
+function show(ids){var p=pillEl();p.innerHTML='<svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="6" y="9" width="20" height="26" rx="2.5" transform="rotate(-8 16 22)"/><rect x="14" y="6" width="20" height="26" rx="2.5"/><circle cx="24" cy="18" r="5"/></g></svg><span><b>'+(ids.length>1?ids.length+' tấm thẻ mới':N[ids[0]])+'</b><small>đã vào Bộ sưu tập thẻ</small></span>';
+  p.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){p.classList.remove('on')},3600)}
+function fly(el,ids){var r=el.getBoundingClientRect(),p=pillEl();show(ids);var pr=p.getBoundingClientRect(),f=document.createElement('div');f.className='bst-fly';
+  var x0=r.left+r.width/2-29,y0=Math.max(70,Math.min(innerHeight-120,r.top+Math.min(r.height,120)/2)),x1=pr.left+8,y1=pr.top+4;
+  f.style.left=x0+'px';f.style.top=y0+'px';f.style.transform='rotate(-6deg) scale(1.3)';document.body.appendChild(f);
+  if(window.a07sfx)window.a07sfx('deal');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){f.style.transform='translate('+(x1-x0)+'px,'+(y1-y0)+'px) rotate(8deg) scale(.5)';f.style.opacity='.2'})});
+  setTimeout(function(){f.remove();p.classList.remove('hit');void p.offsetWidth;p.classList.add('hit');if(window.a07sfx)window.a07sfx('flip')},RED?50:880)}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+  var have=get(),ids=e.target.getAttribute('data-collect').split(' ').filter(function(id){return have.indexOf(id)<0});
+  if(!ids.length)return;put(have.concat(ids));fly(e.target,ids)})},{threshold:.6,rootMargin:'0px 0px -12% 0px'});
+els.forEach(function(el){io.observe(el)});})();
+(function(){var T={"ben-kia-buc-tuong:8":"Mở hòm: Bamboo-Sword ×1.","ben-kia-buc-tuong:10":"Nhận thẻ: Teleport ×1.","ben-kia-buc-tuong:11":"Bản đồ: Nông trại đã khám phá.","ben-kia-buc-tuong:12":"Nhận thẻ: Bandage ×1.","ben-kia-buc-tuong:13":"Nhận thẻ: Smoke Veil ×1.","ben-kia-buc-tuong:15":"Bản đồ: khu Nông nghiệp đã khám phá toàn bộ.","ben-kia-buc-tuong:16":"Dùng thẻ: Teleport. Điểm đến: khu Trung tâm.","ben-kia-buc-tuong:17":"Người chơi còn sống: 18.","ben-kia-buc-tuong:18":"Người chơi còn sống: 17.","ben-kia-buc-tuong:19":"Bàn Teleport: đã dùng. Rời khu Trung tâm.","ben-kia-buc-tuong:20":"Người chơi còn sống: 15.","ben-kia-buc-tuong:21":"Mở rương: Teleport ×1.","ben-kia-buc-tuong:22":"Mở hòm: Remedy ×1.","ben-kia-buc-tuong:25":"Bản đồ: một nhà dân khu Mỏ đã khám phá.","ben-kia-buc-tuong:26":"Nhận thẻ: Guard ×1.","ben-kia-buc-tuong:27":"Bản đồ: khu Mỏ đã khám phá toàn bộ.","ben-kia-buc-tuong:28":"Bản đồ: cả ba khu đã khám phá toàn bộ. Không có thông báo nào.","ben-kia-buc-tuong:29":"Dùng thẻ: Teleport ×1.","ben-kia-buc-tuong:30":"Người chơi còn sống: 11.","ben-kia-buc-tuong:31":"Dùng thẻ: Guard ×1."};
+function get(){try{return JSON.parse(localStorage.getItem('a07-log')||'[]')}catch(e){return []}}
+function put(a){try{localStorage.setItem('a07-log',JSON.stringify(a))}catch(e){}}
+var els=[].slice.call(document.querySelectorAll('[data-log]'));if(!els.length||!('IntersectionObserver' in window))return;
+var box=null,q=[],busy=false;
+function next(){if(busy||!q.length)return;busy=true;var t=q.shift();if(!box){box=document.createElement('a');box.className='nk-line';box.href='nhatky.html';box.setAttribute('aria-live','polite');document.body.appendChild(box)}
+  box.innerHTML='<small>Nhật ký hệ thống</small>['+t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+']';box.classList.add('on');if(window.a07sfx)window.a07sfx('log');
+  setTimeout(function(){box.classList.remove('on');setTimeout(function(){busy=false;next()},450)},3200)}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+  var have=get(),ids=e.target.getAttribute('data-log').split(' ').filter(function(id){return have.indexOf(id)<0});if(!ids.length)return;
+  put(have.concat(ids));ids.forEach(function(id){if(T[id])setTimeout(function(){q.push(T[id]);next()},900)})})},{threshold:.6,rootMargin:'0px 0px -15% 0px'});
+els.forEach(function(el){io.observe(el)});})();
+(function(){
+  var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1]; if(!cn) return;
+  var root=document.documentElement, art=document.querySelector('article'); if(!art) return;
+  var els=[].slice.call(art.querySelectorAll('.scene > *'));
+  function get(){try{return JSON.parse(localStorage.getItem('a07-pos')||'{}')}catch(e){return {}}}
+  function put(o){try{localStorage.setItem('a07-pos',JSON.stringify(o))}catch(e){}}
+  var TOP=70; // dưới thanh đầu trang
+  function anchor(){ // đoạn đầu tiên còn thấy ở mép trên màn hình
+    for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.bottom>TOP)return {i:i,off:Math.round(r.top)}}
+    return {i:els.length-1,off:0};
+  }
+  var ready=false;
+  function save(){ if(!ready) return; var o=get(), a=anchor();
+    if(scrollY<innerHeight*0.6||a.i<3) delete o[cn]; else o[cn]={i:a.i,off:a.off,t:Date.now()};
+    put(o); }
+  var tm=0; addEventListener('scroll',function(){clearTimeout(tm);tm=setTimeout(save,400)},{passive:true});
+  addEventListener('pagehide',save); document.addEventListener('visibilitychange',function(){if(document.hidden)save()});
+  // nhảy về chỗ cũ: các chỗ chạm ở phía trên coi như đã nhắc, để khỏi bật nhắc "vừa lướt qua"
+  function jump(a){ var el=els[Math.min(a.i,els.length-1)]; if(!el) return;
+    [].forEach.call(art.querySelectorAll('.act, .card-fig, .type-row'),function(b){if(b.compareDocumentPosition(el)&4||b===el)b._reminded=true});
+    scrollTo(0,el.getBoundingClientRect().top+scrollY-(a.off||TOP)); }
+  function show(){root.classList.remove('dc-wait')}
+  function toast(){
+    var t=document.createElement('div');t.className='dc-toast';t.setAttribute('role','status');
+    t.innerHTML='<i aria-hidden="true"></i><span>Đọc tiếp từ chỗ cậu dừng</span><button type="button">Về đầu chương</button>';
+    document.body.appendChild(t);requestAnimationFrame(function(){requestAnimationFrame(function(){t.classList.add('on')})});
+    var gone=setTimeout(close,6000);function close(){clearTimeout(gone);t.classList.remove('on');setTimeout(function(){t.remove()},400)}
+    t.querySelector('button').onclick=function(){var o=get();delete o[cn];put(o);scrollTo({top:0,behavior:'smooth'});close()};
+    var y0=scrollY;addEventListener('scroll',function f(){if(Math.abs(scrollY-y0)>innerHeight*0.8){close();removeEventListener('scroll',f)}},{passive:true});
+  }
+  var rp=null; try{rp=JSON.parse(sessionStorage.getItem('a07-replay')||'null');sessionStorage.removeItem('a07-replay')}catch(e){}
+  if(rp&&rp.ch!==cn) rp=null;
+  var bm=!rp&&!location.hash&&get()[cn]; if(bm&&bm.i<3) bm=null;
+  function go(){
+    if(rp){ jump(rp); var box=art.querySelectorAll('.act')[rp.box]; if(box){box.classList.add('dc-fresh');setTimeout(function(){box.classList.remove('dc-fresh')},1700)} }
+    else if(bm){ jump(bm); toast(); }
+    show(); setTimeout(function(){ready=true},600);
+  }
+  if(rp||bm){ var done=false; function once(){if(done)return;done=true;go()}
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){requestAnimationFrame(once)}); setTimeout(once,900);
+  } else { show(); ready=true; }
+
+  // nút chơi lại trên mỗi tương tác đã xong
+  var IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 3.5v4.5h4.5"/></svg>';
+  [].forEach.call(art.querySelectorAll('.act'),function(box,k){
+    var b=document.createElement('button');b.type='button';b.className='dc-again';b.innerHTML=IC;b.setAttribute('aria-label','Chơi lại tương tác này');b.tabIndex=-1;
+    box.appendChild(b); var tm=0;
+    function later(){clearTimeout(tm);b.classList.remove('on');b.tabIndex=-1;if(box.classList.contains('done'))tm=setTimeout(function(){b.classList.add('on');b.tabIndex=0},1800)}
+    new MutationObserver(function(){if(box.classList.contains('done')&&!b.classList.contains('on')&&!tm)later()}).observe(box,{attributes:true,attributeFilter:['class']});
+    box.addEventListener('pointerdown',function(e){if(e.target.closest('.dc-again'))return;tm=0;later()},{passive:true});
+    b.addEventListener('pointerdown',function(e){e.stopPropagation()});
+    b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();
+      if(window.a07sfx)window.a07sfx('flip'); b.classList.add('spin');
+      var r=box.getBoundingClientRect(), i=els.indexOf(box);
+      try{sessionStorage.setItem('a07-replay',JSON.stringify({ch:cn,i:i<0?anchor().i:i,off:Math.round(r.top),box:k}))}catch(err){}
+      ready=false; setTimeout(function(){location.reload()},260);
+    });
+  });
+})();
+(function(){
+  var root=document.documentElement, main=document.querySelector('main'); if(!main) return;
+  var boxes=[].slice.call(document.querySelectorAll('.act, .gact')); if(!boxes.length) return;
+  var cn=(location.pathname.match(/ch(\d+)\.html$/)||[])[1];
+  function rd(){try{return JSON.parse(localStorage.getItem('a07-giu')||'{}')||{}}catch(e){return {}}}
+  function unit(b){if(b.classList.contains('gact')){var p=b.closest('.pv-text');return 'pov:'+(p?p.getAttribute('data-id'):'')}return 'ch'+(cn||'')}
+  boxes.forEach(function(b){var u=unit(b);b._u=u;b._k=boxes.filter(function(x){return unit(x)===u}).indexOf(b)});
+  var saved=rd(); boxes.forEach(function(b){if((saved[b._u]||[]).indexOf(b._k)>=0)b._free=1});
+  function keep(b){b._free=1;var o=rd(),l=o[b._u]||(o[b._u]=[]);if(l.indexOf(b._k)<0){l.push(b._k);try{localStorage.setItem('a07-giu',JSON.stringify(o))}catch(e){}}}
+  // xong một lần: chương có lớp done (tờ giấy gấp thì mở ra là đủ, giu-ok); góc nhìn thì done/sent/land hoặc câu đích đã sáng
+  function ok(b){var c=b.classList;if(c.contains('done')||c.contains('giu-ok')||c.contains('sent')||c.contains('land'))return true;
+    if(c.contains('gact')){var h=b.parentNode&&b.parentNode.querySelector('p.hit');if(h&&h.classList.contains('lit'))return true}return false}
+  function shown(b){return b.getClientRects().length>0}
+  function top(b){return b.getBoundingClientRect().top+scrollY}
+  // vị trí cuộn mà món tương tác nằm giữa màn hình
+  function stop(b){var r=b.getBoundingClientRect(),h=r.height,vh=innerHeight;return h<vh-140?r.top+scrollY-(vh-h)/2:r.top+scrollY+h-vh+60}
+  var gate=null, pushes=0, lastPush=0, onT=0;
+  function find(){
+    if(root.classList.contains('pen-on'))return null; // Bút tác giả đang bật: Clair đọc lướt tự do
+    for(var i=0;i<boxes.length;i++){var b=boxes[i];if(b._free)continue;if(ok(b)){keep(b);continue}if(shown(b))return b}
+    return null;
+  }
+  function cut(b){
+    var vh=innerHeight, r=b.getBoundingClientRect(), mt=main.getBoundingClientRect().top, h=r.height;
+    var pad=h<vh-140?(vh-h)/2:60; var x=Math.ceil(r.bottom-mt+pad);
+    main.style.setProperty('--giu-fade',Math.max(40,Math.min(130,pad-20))+'px');
+    main.style.maxHeight=x+'px'; main.classList.add('giu-cut'); root.classList.add('giu-on');
+  }
+  function open(){if(!main.classList.contains('giu-cut'))return;main.classList.remove('giu-cut');main.style.maxHeight='';root.classList.remove('giu-on')}
+  function pulse(b){b.classList.remove('giu-pulse');void b.offsetWidth;b.classList.add('giu-pulse');setTimeout(function(){b.classList.remove('giu-pulse')},1200)}
+  function check(){
+    var g=find();
+    if(g!==gate){
+      open(); gate=g; pushes=0; onT=0;
+      if(gate) window.a07fullH=document.documentElement.scrollHeight;
+    }
+    if(gate){
+      cut(gate);
+      // lần đầu món tương tác vào giữa màn hình: loé nhẹ một cái
+      if(!onT){var r=gate.getBoundingClientRect();if(r.top>=0&&r.bottom<=innerHeight){onT=1;pulse(gate)}}
+    } else window.a07fullH=0;
+  }
+  function atEnd(){return scrollY+innerHeight>=document.documentElement.scrollHeight-4}
+  function push(){
+    if(!gate||!atEnd())return; var t=performance.now(); if(t-lastPush<700)return; lastPush=t;
+    pulse(gate); if(pushes===0&&window.a07sfx)window.a07sfx('nudge');
+    // van an toàn: cố lướt mãi (khoảng 10 giây) mà tương tác không chạy được thì thả ra
+    if(++pushes>=15){gate._free=1;open();gate=null;check()}
+  }
+  var ty=0, inBox=false;
+  addEventListener('touchstart',function(e){ty=e.touches[0].clientY;inBox=!!(e.target.closest&&e.target.closest('.act, .gact'))},{passive:true});
+  addEventListener('touchmove',function(e){if(!inBox&&ty-e.touches[0].clientY>24)push()},{passive:true});
+  addEventListener('wheel',function(e){if(e.deltaY>0)push()},{passive:true});
+  addEventListener('keydown',function(e){if(/^(ArrowDown|PageDown|End| )$/.test(e.key))push()});
+  // bắt đầu sau khi trang đã nhảy về chỗ cũ (nếu có); tương tác nằm phía trên chỗ đang đọc coi như đã qua
+  function passAbove(){boxes.forEach(function(b){if(!b._free&&!ok(b)&&shown(b)&&stop(b)<scrollY-8)b._free=1})}
+  function start(){
+    passAbove(); check();
+    var q=0; function soon(){if(!q){q=1;requestAnimationFrame(function(){q=0;check()})}}
+    addEventListener('scroll',soon,{passive:true}); addEventListener('resize',soon);
+    addEventListener('hashchange',function(){open();gate=null;setTimeout(function(){passAbove();check()},400)});
+    document.addEventListener('pointerup',function(){setTimeout(check,60)},true);
+    setInterval(check,500);
+    if(window.ResizeObserver)new ResizeObserver(soon).observe(document.body);
+  }
+  var begun=false; function go(){if(begun)return;begun=true;setTimeout(start,1100)}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go); setTimeout(go,1500);
+})();
+(function(){
+  var cv=document.querySelector('.cv'),cw=document.getElementById('cw'); if(!cv||!cw) return;
+  var cn=+(location.pathname.match(/ch(\d+)\.html$/)||[0,0])[1];
+  var bar=document.querySelector('header.bar'), endNav=document.querySelector('footer .nav');
+  function sfx(n){if(window.a07sfx)window.a07sfx(n)}
+  function read(){try{return cn<=+(localStorage.getItem('a07-done')||0)}catch(e){return true}}
+  // chấm đỏ nhỏ cạnh "Chương sau" khi chương này chưa đọc xong
+  var nx=cv.querySelector('.nx'); function mark(){if(nx)nx.classList.toggle('left',!read())}
+  mark(); setInterval(mark,2000);
+  // hiện cùng thanh đầu trang; ẩn khi đang thấy nút chuyển chương ở cuối, khi mục lục mở, khi có thông báo "đọc tiếp"
+  var endIn=false; if(endNav&&'IntersectionObserver' in window)new IntersectionObserver(function(es){endIn=es[0].isIntersecting;upd()}).observe(endNav);
+  function upd(){var dr=document.querySelector('.drawer.on'),t=document.querySelector('.dc-toast.on');
+    var on=!(bar&&bar.classList.contains('hide'))&&!endIn&&!dr&&!t&&cw.hidden;cv.classList.toggle('on',on)}
+  var q=0; addEventListener('scroll',function(){if(!q){q=1;requestAnimationFrame(function(){q=0;upd()})}},{passive:true});
+  setInterval(upd,600); setTimeout(upd,300);
+  var back=null, lastFocus=null;
+  function open(href){cw.querySelector('.go').setAttribute('href',href);lastFocus=document.activeElement;cw.hidden=false;upd();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){cw.classList.add('on')})});sfx('nudge');setTimeout(function(){cw.querySelector('.stay').focus()},60)}
+  function close(){cw.classList.remove('on');setTimeout(function(){cw.hidden=true;upd();if(lastFocus&&lastFocus.focus)lastFocus.focus()},260)}
+  cw.querySelector('.stay').addEventListener('click',close);
+  cw.querySelector('.sh').addEventListener('click',close);
+  cw.querySelector('.go').addEventListener('click',function(){sfx('flip')});
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!cw.hidden)close()});
+  // mọi nút "Chương sau" (thanh nổi + cuối chương)
+  [].forEach.call(document.querySelectorAll('.cv .nx, footer .nav a.next'),function(a){
+    a.addEventListener('click',function(e){if(read()){sfx('flip');return}e.preventDefault();open(a.getAttribute('href'))})});
+  var pv=cv.querySelector('.pv'); if(pv)pv.addEventListener('click',function(){sfx('flip')});
+})();
+(function client(URL) {
+  var KEY; try { KEY = localStorage.getItem('a07-pen'); } catch (e) {}
+  if (!KEY || !URL) return;
+  var root = document.documentElement, art = document.querySelector('article');
+  if (!art) return;
+  var CH = String(+((location.pathname.match(/ch(\d+)\.html$/) || [])[1] || 0)); if (CH === '0') return;
+  var SRC = null, EDITS = {}, OTHERS = {}, QK = 'a07-pen-q', ROLE = 'tg', NAME = 'Clair';
+  try { ROLE = localStorage.getItem('a07-pen-role') || 'tg'; NAME = localStorage.getItem('a07-pen-name') || 'Clair'; } catch (e) {}
+  function sfx(n) { if (window.a07sfx) window.a07sfx(n); }
+  function call(o) { o.type = 'pen'; o.key = KEY; return fetch(URL, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function q() { try { return JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch (e) { return []; } }
+  function setQ(l) { try { localStorage.setItem(QK, JSON.stringify(l)); } catch (e) {} }
+  function paras(pi) { return art.querySelectorAll('p[data-pi="' + pi + '"]'); }
+  function srcOf(pi) {
+    if (SRC && SRC[pi] != null) return SRC[pi];
+    return [].map.call(paras(pi), function (p) { return p.textContent; }).join(' ');
+  }
+  function lost() { try { localStorage.removeItem('a07-pen'); localStorage.removeItem('a07-pen-role'); localStorage.removeItem('a07-pen-name'); } catch (e) {} pill.innerHTML = 'Mật mã trên máy này không còn đúng. Mở lại ở trang Tác giả.'; }
+
+  // nút Bút trên thanh đầu trang
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.id = 'pen'; btn.setAttribute('aria-pressed', 'false'); btn.setAttribute('aria-label', 'Bật hoặc tắt bút sửa truyện');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z"/><path d="M13.8 6.8l3.4 3.4"/><path d="M4 20h7"/></svg><span class="n"></span>'; document.body.appendChild(btn);
+  var pill = document.createElement('button'); pill.type = 'button'; pill.className = 'pen-pill'; document.body.appendChild(pill);
+  var sheet = document.createElement('div'); sheet.className = 'pen-sheet'; sheet.hidden = true; document.body.appendChild(sheet);
+
+  function waiting() { var n = 0; Object.keys(OTHERS).forEach(function (k) { OTHERS[k].forEach(function (x) { if (!x.st) n++; }); }); return n; }
+  function count() {
+    var n = Object.keys(EDITS).length, w = waiting(); btn.querySelector('.n').textContent = (n + w) ? n + w : '';
+    var verb = ROLE === 'pt' ? 'Chạm đoạn để đề xuất' : 'Chạm đoạn để sửa';
+    pill.innerHTML = verb + (n ? ' · <b>' + n + ' chỗ</b>' : '') + (w ? ' · <b>' + w + ' chờ duyệt</b>' : '');
+  }
+  function mark(pi) {
+    var e = EDITS[pi];
+    [].forEach.call(paras(pi), function (p) {
+      p.classList.toggle('pen-has', !!e);
+      p.classList.toggle('pen-note', !!(e && !e.sua));
+      p.classList.toggle('pen-wait', !!(e && e.wait));
+      var o = OTHERS[pi] || [];
+      p.classList.toggle('pen-pt', o.length > 0);
+      p.classList.toggle('pen-ok', o.length > 0 && o.every(function (x) { return x.st === 'gật'; }));
+    });
+  }
+  function on(v) {
+    root.classList.toggle('pen-on', v); btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+    try { sessionStorage.setItem('a07-pen-on', v ? '1' : ''); } catch (e) {}
+    dispatchEvent(new Event('scroll')); // trang thôi "giữ chân" ở tương tác khi bút bật
+    if (v) { sfx('glint'); load(); }
+  }
+  btn.onclick = function () { on(!root.classList.contains('pen-on')); };
+
+  var loaded = false;
+  function load() {
+    if (loaded) return; loaded = true;
+    fetch('goc/ch' + ('0' + CH).slice(-2) + '.json').then(function (r) { return r.json(); }).then(function (a) { SRC = a; }).catch(function () {});
+    flush().then(function () { return call({ op: 'list', ch: CH }); }).then(function (r) {
+      if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') lost(); return; }
+      ROLE = r.role || 'tg'; NAME = r.name || 'Clair';
+      try { localStorage.setItem('a07-pen-role', ROLE); localStorage.setItem('a07-pen-name', NAME); } catch (e) {}
+      r.list.forEach(function (e) { if (e.by === NAME) EDITS[e.pi] = e; else (OTHERS[e.pi] = OTHERS[e.pi] || []).push(e); });
+      Object.keys(OTHERS).forEach(mark);
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; } });
+      Object.keys(EDITS).forEach(mark); count();
+    }).catch(function () {
+      q().forEach(function (o) { if (o.ch === CH) { EDITS[o.pi] = { pi: o.pi, goc: o.goc, sua: o.sua, note: o.note, wait: 1 }; mark(o.pi); } });
+      count(); pill.innerHTML = 'Đang mất mạng · chỗ sửa sẽ được giữ lại';
+    });
+  }
+  // gửi lại những chỗ sửa lúc mất mạng
+  function flush() {
+    var l = q(); if (!l.length) return Promise.resolve();
+    var o = l[0];
+    return call(o).then(function (r) {
+      if (r.ok || r.why === 'trong') { setQ(q().slice(1)); if (o.ch === CH && EDITS[o.pi]) { delete EDITS[o.pi].wait; EDITS[o.pi].id = r.id; mark(o.pi); } return flush(); }
+    });
+  }
+
+  // so chữ cũ / mới theo từng từ
+  function diff(a, b) {
+    var A = a.split(/(\s+)/), B = b.split(/(\s+)/), n = A.length, m = B.length, i, j;
+    if (n * m > 400000) return esc(b);
+    var T = []; for (i = 0; i <= n; i++) { T.push(new Uint16Array(m + 1)); }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) T[i][j] = A[i] === B[j] ? T[i + 1][j + 1] + 1 : Math.max(T[i + 1][j], T[i][j + 1]);
+    var out = '', d = '', s = ''; i = 0; j = 0;
+    function put() { if (d) out += '<del>' + esc(d) + '</del>'; if (s) out += '<ins>' + esc(s) + '</ins>'; d = s = ''; }
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { put(); out += esc(A[i]); i++; j++; }
+      else if (T[i + 1][j] >= T[i][j + 1]) d += A[i++]; else s += B[j++];
+    }
+    while (i < n) d += A[i++]; while (j < m) s += B[j++]; put();
+    return out;
+  }
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function close() { sheet.classList.remove('on'); [].forEach.call(art.querySelectorAll('.pen-cur'), function (p) { p.classList.remove('pen-cur'); }); setTimeout(function () { sheet.hidden = true; sheet.innerHTML = ''; }, 260); document.body.style.overflow = ''; }
+  function openSheet(html) {
+    sheet.innerHTML = '<div class="pen-box" role="dialog" aria-modal="true">' + html + '</div>'; sheet.hidden = false;
+    document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { sheet.classList.add('on'); }); sfx('flip');
+  }
+  sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-x]')) close(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+
+  function edit(pi) {
+    var goc = srcOf(pi), e = EDITS[pi] || {};
+    [].forEach.call(paras(pi), function (p) { p.classList.add('pen-cur'); });
+    var sg = (OTHERS[pi] || []).map(function (x, i) {
+      return '<div class="pen-sg' + (x.st === 'gật' ? ' ok' : '') + '" data-i="' + i + '"><span class="who">' + esc(x.by) + (x.st === 'gật' ? ' · cậu đã gật' : ' đề xuất') + '</span>' +
+        (x.sua ? '<div class="pen-diff">' + diff(x.goc.trim(), x.sua.trim()) + '</div>' : '') + (x.note ? '<p class="nt">' + esc(x.note) + '</p>' : '') +
+        '<div class="pen-row">' + (x.st === 'gật' ? '<button type="button" class="un">Huỷ gật</button>' : '<button type="button" class="yes">Gật</button>') +
+        '<button type="button" class="no">Bỏ</button>' + (x.sua ? '<button type="button" class="cp">Sửa tiếp từ bản này</button>' : '') + '</div></div>';
+    }).join('');
+    var pt = ROLE === 'pt';
+    openSheet('<h3>Đoạn ' + (+pi + 1) + '</h3>' + (sg ? '<p class="sub">Đề xuất của phụ tá: gật thì tớ sửa vào truyện khi cậu bảo "kéo bản Cle".</p>' + sg + '<div class="pen-mine"><h3>Bản của cậu</h3></div>' : '') +
+      '<p class="sub">' + (pt ? 'Sửa thẳng vào chữ bên dưới. Đề xuất của cậu sẽ chờ tác giả duyệt. ' : 'Sửa thẳng vào chữ bên dưới. ') + 'Chữ nghiêng nằm giữa hai dấu *.</p>' +
+      '<textarea class="tx" rows="6"></textarea><div class="pen-diff me" hidden></div>' +
+      '<label for="pen-nt"' + (pt ? ' hidden' : '') + '>Ghi chú cho Claude (không bắt buộc)</label><textarea id="pen-nt" class="note" rows="2"' + (pt ? ' hidden' : '') + ' placeholder="Ví dụ: câu này cứng quá, đọc lại giúp tớ"></textarea>' +
+      '<div class="pen-row"><button type="button" class="go">Lưu</button><button type="button" class="rm"' + (EDITS[pi] ? '' : ' hidden') + '>Bỏ chỗ sửa này</button><button type="button" data-x>Đóng</button></div><p class="pen-msg" aria-live="polite"></p>');
+    var tx = sheet.querySelector('.tx'), nt = sheet.querySelector('.note'), dv = sheet.querySelector('.pen-diff.me'), msg = sheet.querySelector('.pen-msg');
+    tx.value = e.sua || goc; nt.value = e.note || '';
+    function grow() { tx.style.height = 'auto'; tx.style.height = Math.min(tx.scrollHeight + 4, innerHeight * 0.45) + 'px'; }
+    function show() { var v = tx.value.trim(); dv.hidden = v === goc.trim(); if (!dv.hidden) dv.innerHTML = diff(goc.trim(), v); grow(); }
+    tx.addEventListener('input', show); setTimeout(show, 0);
+    [].forEach.call(sheet.querySelectorAll('.pen-sg'), function (box) {
+      var x = OTHERS[pi][+box.getAttribute('data-i')];
+      function review(o, st) { call(o).catch(function () {}); x.st = st; }
+      box.addEventListener('click', function (ev) {
+        var b = ev.target.closest('button'); if (!b) return;
+        if (b.classList.contains('yes')) { review({ op: 'review', id: x.id, yes: 1 }, 'gật'); sfx('ink'); box.classList.add('ok'); box.querySelector('.who').textContent = x.by + ' · cậu đã gật'; b.outerHTML = '<button type="button" class="un">Huỷ gật</button>'; }
+        else if (b.classList.contains('un')) { review({ op: 'review', id: x.id, undo: 1 }, ''); box.classList.remove('ok'); box.querySelector('.who').textContent = x.by + ' đề xuất'; b.outerHTML = '<button type="button" class="yes">Gật</button>'; }
+        else if (b.classList.contains('no')) { call({ op: 'review', id: x.id }).catch(function () {}); OTHERS[pi] = OTHERS[pi].filter(function (y) { return y !== x; }); if (!OTHERS[pi].length) delete OTHERS[pi]; box.remove(); }
+        else if (b.classList.contains('cp')) { tx.value = x.sua; show(); tx.focus(); return; }
+        mark(pi); count();
+      });
+    });
+    sheet.querySelector('.go').onclick = function () {
+      var sua = tx.value.trim(), note = pt ? '' : nt.value.trim();
+      if (sua === goc.trim()) sua = '';
+      if (!sua && !note) { msg.textContent = 'Chưa có gì đổi cả.'; return; }
+      var o = { op: 'save', ch: CH, pi: +pi, goc: goc, sua: sua, note: note };
+      EDITS[pi] = { pi: +pi, goc: goc, sua: sua, note: note, id: e.id, wait: 1 }; mark(pi); count();
+      msg.textContent = 'Đang gửi…'; this.disabled = true;
+      call(o).then(function (r) {
+        if (!r.ok) { if (r.why === 'sai' || r.why === 'chua-co') { lost(); msg.textContent = 'Mật mã trên máy này không còn đúng.'; } else msg.textContent = 'Chưa lưu được, cậu thử lại nhé.'; return; }
+        EDITS[pi].id = r.id; delete EDITS[pi].wait; mark(pi); sfx('ink'); flash(pi); close();
+      }).catch(function () {
+        var l = q().filter(function (x) { return !(x.ch === CH && x.pi === +pi && x.op === 'save'); }); l.push(o); setQ(l);
+        sfx('ink'); flash(pi); close(); pill.innerHTML = 'Đang mất mạng · đã giữ chỗ sửa, có mạng sẽ tự gửi';
+      });
+    };
+    sheet.querySelector('.rm').onclick = function () {
+      var id = (EDITS[pi] || {}).id; delete EDITS[pi]; mark(pi); count();
+      setQ(q().filter(function (x) { return !(x.ch === CH && x.pi === +pi); }));
+      if (id) call({ op: 'del', id: id }).catch(function () {});
+      close();
+    };
+  }
+  function flash(pi) { [].forEach.call(paras(pi), function (p) { p.classList.remove('pen-flash'); void p.offsetWidth; p.classList.add('pen-flash'); }); }
+
+  // chạm một đoạn khi bút bật: mở ô sửa (chặn tương tác của đoạn đó)
+  art.addEventListener('click', function (e) {
+    if (!root.classList.contains('pen-on')) return;
+    var p = e.target.closest && e.target.closest('p[data-pi]'); if (!p || !art.contains(p)) return;
+    if (getSelection && String(getSelection()).length > 2) return; // đang bôi chọn chữ thì thôi
+    e.preventDefault(); e.stopPropagation(); edit(p.getAttribute('data-pi'));
+  }, true);
+
+  // viên thuốc dưới đáy: xem danh sách chỗ đã ghi trong chương
+  pill.onclick = function () {
+    var items = [];
+    Object.keys(EDITS).forEach(function (k) { var x = EDITS[k]; items.push({ k: +k, h: '<li data-go="' + k + '"' + (x.sua ? '' : ' class="nt"') + '><small>Đoạn ' + (+k + 1) + (x.sua ? ' · sửa chữ' : ' · ghi chú') + (x.wait ? ' · chưa gửi' : '') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>' }); });
+    Object.keys(OTHERS).forEach(function (k) { OTHERS[k].forEach(function (x) { items.push({ k: +k, h: '<li data-go="' + k + '" class="pt' + (x.st ? ' ok' : '') + '"><small>Đoạn ' + (+k + 1) + ' · ' + esc(x.by) + (x.st ? ' · đã gật' : ' · chờ duyệt') + '</small>' + esc((x.note || x.sua).slice(0, 140)) + '</li>' }); }); });
+    items.sort(function (a, b) { return a.k - b.k; });
+    if (!items.length && ROLE === 'pt') return;
+    openSheet('<h3>Chỗ đã ghi · Chương ' + CH + '</h3><p class="sub">' + (ROLE === 'pt' ? 'Chạm để nhảy tới đoạn đó. Đề xuất của cậu đang chờ tác giả duyệt.' : 'Chạm để nhảy tới đoạn đó. Trang chỉ đổi sau khi cậu bảo Claude "kéo bản Cle".') + '</p><ul class="pen-list">' +
+      items.map(function (x) { return x.h; }).join('') + '</ul>' + (ROLE === 'tg' ? '<a class="pen-link" href="tacgia.html#phu-ta">Quản lý phụ tá</a>' : '') +
+      '<div class="pen-row"><button type="button" data-x>Đóng</button></div>');
+    sheet.querySelector('.pen-list').onclick = function (e) {
+      var li = e.target.closest('li'); if (!li) return; var k = li.getAttribute('data-go'); close();
+      var p = paras(k)[0]; if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { flash(k); }, 500); }
+    };
+  };
+
+  count();
+  var was; try { was = sessionStorage.getItem('a07-pen-on'); } catch (e) {}
+  if (was) on(true); else { load(); }
+})("https://script.google.com/macros/s/AKfycbzb6LuML7Rwsq6OhoYN52ZLsMO0tR7ENJvvnOjk5SQRPxBBz_iAIY4PSKOvv5oY1hwu/exec");
+</script>
+<script src="fx-706236cb0d.js"></script>
+</body>
+</html>
