@@ -347,10 +347,10 @@ em .nm{font-style:italic}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
-:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
-:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}}
-.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954;--pw-riina:#2B2528}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}.pw-riina{--pw:var(--pw-riina)}
 .scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
   background-size:100% 100%;background-repeat:no-repeat}
@@ -1117,7 +1117,7 @@ var nx=d.querySelector('.drc-next');if(nx){var tot=d.querySelectorAll('li[data-n
   var ac=null,out=null,nb=null;
   function ctx(){if(!SF)return null;if(!ac){var AC=window.AudioContext||window.webkitAudioContext;if(!AC){SF=false;return null}
     ac=new AC();out=ac.createGain();out.gain.value=.5;out.connect(ac.destination);nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);var d=nb.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1}
-    if(ac.state==='suspended')ac.resume();return ac}
+    if(ac.state!=='running'&&ac.state!=='closed')ac.resume();return ac}
   function noise(t,dur,f,qv,v,f2){var s=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nb;s.loop=true;bp.type='bandpass';bp.frequency.setValueAtTime(f,t);if(f2)bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=qv;
     g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.02,dur/3));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);s.connect(bp);bp.connect(g);g.connect(out);s.start(t,Math.random()*.5);s.stop(t+dur+.02)}
   function tone(t,f,dur,v,type){var o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02)}
