@@ -347,10 +347,10 @@ em .nm{font-style:italic}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
-:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954}
-:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0}}
-.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}
+:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954;--pw-riina:#2B2528}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}}
+.pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}.pw-riina{--pw:var(--pw-riina)}
 .scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
   background-size:100% 100%;background-repeat:no-repeat}
@@ -864,7 +864,7 @@ body.sim-reduce .rm-note{display:block}
 <main class="lab labwrap">
   <h1>Skill Lab</h1>
   <p class="lead">Chiêu của từng nhân vật. Bật Tiếng ở góc trên để nghe.</p>
-  <nav class="tabs" role="tablist" aria-label="Nhân vật"><button type="button" class="tab" role="tab" data-tab="luke" style="--c:var(--pw-luke)"><span class="dot"></span>Luke<span class="n">7</span></button><button type="button" class="tab" role="tab" data-tab="leon" style="--c:var(--pw-leon)"><span class="dot"></span>Leon<span class="n">12</span></button><button type="button" class="tab" role="tab" data-tab="clevia" style="--c:var(--pw-clevia)"><span class="dot"></span>Clevia<span class="n">3</span></button><button type="button" class="tab" role="tab" data-tab="chung" style="--c:var(--soft)"><span class="dot"></span>Chung<span class="n" id="nchung"></span></button><span class="tab soon" title="Nhân vật chính mới sẽ có ngăn riêng">+ Nhân vật sau</span></nav>
+  <nav class="tabs" role="tablist" aria-label="Nhân vật"><button type="button" class="tab" role="tab" data-tab="luke" style="--c:var(--pw-luke)"><span class="dot"></span>Luke<span class="n">7</span></button><button type="button" class="tab" role="tab" data-tab="leon" style="--c:var(--pw-leon)"><span class="dot"></span>Leon<span class="n">12</span></button><button type="button" class="tab" role="tab" data-tab="clevia" style="--c:var(--pw-clevia)"><span class="dot"></span>Clevia<span class="n">3</span></button><button type="button" class="tab" role="tab" data-tab="riina" style="--c:var(--pw-riina)"><span class="dot"></span>Riina<span class="n">4</span></button><button type="button" class="tab" role="tab" data-tab="chung" style="--c:var(--soft)"><span class="dot"></span>Chung<span class="n" id="nchung"></span></button><span class="tab soon" title="Nhân vật chính mới sẽ có ngăn riêng">+ Nhân vật sau</span></nav>
 
   <div class="pane" role="tabpanel" data-pane="luke" style="--c:var(--pw-luke)" hidden>
     <div class="who">
@@ -1034,6 +1034,42 @@ body.sim-reduce .rm-note{display:block}
     <p class="gnote">Chỗ Clevia ra chiêu ở các chương đã đăng, kiểu cũ, để so với bộ mới.</p>
     <div class="grid old" data-who="clevia"></div>
   </div>
+  <div class="pane" role="tabpanel" data-pane="riina" style="--c:var(--pw-riina)" hidden>
+    <div class="who">
+      <p class="eyebrow">Skill Lab · Riina</p>
+      <h2>Riina</h2>
+      <p class="abil">Parasol (Vũ trang, S+) <span>·</span> Cận cảnh: Nan ô</p>
+      <ul class="rules"><li>Cận cảnh riêng: nan ô bung từng nan như mở quạt, nét sáng; lúc kết trang tối sập một nhịp.</li><li>Màu: trắng sữa, đen mực, một chút ánh vàng (ngoại lệ chỉ cho hiệu ứng Riina, giao diện trang vẫn không vàng).</li><li>Tạm hai chiêu: tấn công (vành chém + chóp đâm) và phòng thủ (xoay ô). Ô chưa dùng thì Luke không cảm thấy gì.</li></ul>
+    </div>
+    <h4 class="gh">Cận cảnh</h4>
+      <section class="kit" data-kind="riina-parasol">
+        <div class="kh"><h3>Cận cảnh nan ô Riina</h3><span class="tg">SVG</span></div>
+        <div class="dw"><p class="demo" id="demo22">Cô gái không đứng dậy. Chỉ có cái ô trên đùi cô khẽ mở ra, từng nan một.</p></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-parasol" data-demo="demo22" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="riina-parasol" data-demo="demo22" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <details class="beats"><summary>Từng nhịp</summary><ol><li>Băng tối mở ngang trang (mép dưới lượn múi như vành ô), chiếc ô cụp hiện ra thành một nét đứng, chóp vàng nháy.</li><li>Bảy nan bật lần lượt quanh vòng như mở quạt: tách, tách, tách (mỗi nan khựng nhẹ, chấm vàng đầu nan sáng lên). Múi cuối khép kín vòng: phạch, loé trắng sữa, sao vàng ở chóp, ba vòng nở ra.</li><li>Ánh sáng chạy dọc vành như lưỡi dao, tán xoay chậm; cả trang tối sập một nhịp rồi băng khép.</li></ol></details>
+      </section><h4 class="gh">Chiêu</h4>
+      <section class="kit" data-kind="riina-strike">
+        <div class="kh"><h3>Tấn công (bung ô, vành chém, chóp đâm)</h3><span class="tg">Combat</span></div>
+        <div class="dw"><p class="demo" id="demo23">Cái ô bung ra. Vành ô lướt qua trước, và khi người ta còn chưa kịp nhìn ra đó là lưỡi, cái chóp nhọn đã ở ngay trước ngực.</p></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-strike" data-demo="demo23">Chạy</button><button type="button" class="run alt" data-kind="riina-strike" data-demo="demo23" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: trang tối sập, vệt tốc độ trắng sữa, băng tên chiêu PARASOL viền vàng, chiếc ô cụp đứng giữa trang, chóp vàng nháy.</li><li>Bung: bảy nan bật liền một hơi, phạch. Tán nghiêng thành lưỡi, lùi lấy đà rồi quét một vệt trăng khuyết trắng sữa chéo cả trang (mép lượn múi, viền trong vàng): khựng hình, loé, vết cắt thẳng ở lại. Liền sau đó chóp ô phóng thành mũi nhọn từ góc dưới vào giữa: khựng hình dài hơn, sao vàng bốn cánh, sóng tròn, rung mạnh.</li><li>Dư âm: mũi rút về, vết cắt tách đôi rồi mờ, bụi trắng sữa rơi, vài đốm vàng bay lên.</li></ol></details>
+      </section>
+      <section class="kit" data-kind="riina-guard">
+        <div class="kh"><h3>Phòng thủ (xoay ô)</h3><span class="tg">Đỡ</span></div>
+        <div class="dw"><p class="demo" id="demo24">Cô xoay cán ô giữa hai ngón tay. Mọi đòn đánh vào đều trượt theo vành ô mà văng đi.</p></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-guard" data-demo="demo24">Chạy</button><button type="button" class="run alt" data-kind="riina-guard" data-demo="demo24" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: băng tên chiêu, tán ô bung nhìn thẳng mặt giữa trang.</li><li>Tán quay tít như lưỡi cưa sáng. Ba đòn từ ngoài vồ vào (trên trái, phải, trên); mỗi đòn trúng vành thì khựng hình, tia lửa trắng sữa và vàng văng theo chiều quay, tán lùi nhẹ, rung trang. Đòn thứ ba mạnh nhất.</li><li>Dư âm: quay chậm dần, nan cụp lại thành một nét rồi tan, vài đốm vàng bay lên.</li></ol></details>
+      </section><h4 class="gh">Cận cảnh nối vào chiêu</h4>
+      <section class="kit" data-kind="riina-parasol-strike">
+        <div class="kh"><h3>Nan ô nối vào Tấn công</h3><span class="tg">SVG + chiêu</span></div>
+        <div class="dw"><p class="demo" id="demo25">Cô gái không đứng dậy. Chỉ có cái ô trên đùi cô khẽ mở ra, từng nan một.</p></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-parasol-strike" data-demo="demo25">Chạy</button><button type="button" class="run alt" data-kind="riina-parasol-strike" data-demo="demo25" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <details class="beats"><summary>Từng nhịp</summary><ol><li>Cận cảnh nan ô như trên.</li><li>Trang vừa tối sập thì nối thẳng vào Tấn công: ô bung, vành chém, chóp đâm.</li></ol></details>
+      </section>
+    <h4 class="gh">Hiệu ứng cũ trong chương</h4>
+    <p class="gnote">Chỗ Riina ra chiêu ở các chương đã đăng, kiểu cũ, để so với bộ mới.</p>
+    <div class="grid old" data-who="riina"></div>
+  </div>
   <div class="pane" role="tabpanel" data-pane="chung" style="--c:var(--soft)" hidden>
     <div class="who">
       <p class="eyebrow">Skill Lab · Hiệu ứng chung</p>
@@ -1076,7 +1112,7 @@ body.sim-reduce .rm-note{display:block}
   len.oninput=function(){document.getElementById('lenv').textContent=len.value};
   rm.onchange=function(){document.body.classList.toggle('sim-reduce',rm.checked)};
   function opts(b){return{pow:+pow.value,len:+len.value,ten:ten.checked&&b.dataset.ten!=='0',cast:!!b.dataset.cast}}
-  function reset(p){if(!p)return;p.classList.remove('pw','pw-on','pw-flash','pw-leon','pw-luke','pw-clevia')}
+  function reset(p){if(!p)return;p.classList.remove('pw','pw-on','pw-flash','pw-leon','pw-luke','pw-clevia','pw-riina')}
   [].forEach.call(document.querySelectorAll('button.run'),function(b){b.addEventListener('click',function(){
     var p=document.getElementById(b.dataset.demo),o=opts(b);reset(p);o.p=p;
     if(rm.checked){if(window.a07power)window.a07power(p,(window.a07fxWho||{})[b.dataset.kind]);return}
@@ -1085,7 +1121,7 @@ body.sim-reduce .rm-note{display:block}
   // hiệu ứng cũ: chia theo nhân vật (WHO trong moments.js), còn lại vào ngăn Hiệu ứng chung
   function fill(){
     if(!window.a07fxKinds){setTimeout(fill,100);return}
-    var kits=["leon-strike","leon-rescue","leon-eye2","leon-eye2-trong","leon-eye2-strike","leon-eye","leon-eye-toc","leon-eye-strike","leon-eye-chains","leon-eye-yank","leon-eye-bristle","leon-eye-rescue","luke-sense","luke-eye2","luke-eye2-trong","luke-eye2-sense","luke-eye","luke-eye-sense","luke-protect","clevia-lock","clevia-lock-unlock","clevia-unlock"],skip=['sigil'],who=window.a07fxWho||{},boxes={},n=0;
+    var kits=["leon-strike","leon-rescue","leon-eye2","leon-eye2-trong","leon-eye2-strike","leon-eye","leon-eye-toc","leon-eye-strike","leon-eye-chains","leon-eye-yank","leon-eye-bristle","leon-eye-rescue","luke-sense","luke-eye2","luke-eye2-trong","luke-eye2-sense","luke-eye","luke-eye-sense","luke-protect","clevia-lock","clevia-lock-unlock","clevia-unlock","riina-parasol","riina-strike","riina-guard","riina-parasol-strike"],skip=['sigil'],who=window.a07fxWho||{},boxes={},n=0;
     [].forEach.call(document.querySelectorAll('.old'),function(b){boxes[b.dataset.who]=b});
     window.a07fxKinds.filter(function(k){return kits.indexOf(k)<0&&skip.indexOf(k)<0}).forEach(function(k){
       var w=who[k]||'',box=boxes[w]||boxes[''];if(box===boxes[''])n++;
@@ -1097,6 +1133,6 @@ body.sim-reduce .rm-note{display:block}
   fill();
 })();
 </script>
-<script src="fx-d7d49da9c1.js"></script>
+<script src="fx-f0ae3a1253.js"></script>
 </body>
 </html>
