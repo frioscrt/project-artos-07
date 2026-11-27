@@ -800,53 +800,102 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .lab-gate h1{font-weight:300;font-size:clamp(30px,8vw,44px);margin:0 0 .3em}
 .lab-gate p{color:var(--soft);font-size:.9em;line-height:1.6;margin:0 0 1.4em}
 .lab-gate a.go{display:inline-flex;align-items:center;min-height:44px;padding:0 1.3em;border-radius:12px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:.88em}
-.lab{max-width:42rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(170px + env(safe-area-inset-bottom))}
-.lab h1{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(34px,9vw,56px);line-height:1.05;margin:.1em 0 .15em}
+/* Hướng A "Bảng điều khiển Artos" (Clair chọn 27/11): nền xanh đêm hệ thống, lưới mảnh, thẻ viền sáng màu nhân vật + bốn góc ngắm.
+   Màu: chỉ đỏ, xanh nước biển Artos, đen/trắng, và màu riêng nhân vật. Không vàng/cam/đồng. */
+.lab-ok{--lab-bg:#EAF0F6;--lab-card:rgba(255,255,255,.72);--lab-grid:rgba(31,79,140,.07);--lab-sys:#1F5C99;--lab-red:#C0344D;--lab-glow:rgba(31,92,153,.10)}
+.lab-ok[data-theme="dark"]{--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}
+@media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]){--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}}
+.lab-ok body{background-color:var(--lab-bg);background-image:radial-gradient(120% 60% at 50% -10%,var(--lab-glow),transparent 70%),linear-gradient(var(--lab-grid) 1px,transparent 1px),linear-gradient(90deg,var(--lab-grid) 1px,transparent 1px);background-size:100% 100%,28px 28px,28px 28px;background-attachment:fixed}
+.lab-ok .bar{background:color-mix(in srgb,var(--lab-bg) 88%,transparent)}
+.lab{--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;max-width:42rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(170px + env(safe-area-inset-bottom))}
+.lab .sys{margin:.6em 0 0;font-weight:600;font-size:10px;line-height:1.4;letter-spacing:.22em;text-transform:uppercase;color:var(--lab-sys);display:flex;align-items:center;gap:.7em}
+.lab .sys i{width:7px;height:7px;border-radius:50%;background:var(--lab-red);box-shadow:0 0 8px var(--lab-red);animation:labdot 2.4s ease-in-out infinite}
+.lab .sys::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--lab-sys) 50%,transparent),transparent)}
+@keyframes labdot{50%{opacity:.25}}
+.lab h1{font-weight:300;font-variation-settings:"opsz" 72;font-size:clamp(38px,10vw,60px);line-height:1.05;margin:.12em 0 .15em;letter-spacing:-.01em}
 .lab .lead{color:var(--soft);font-size:.84em;line-height:1.6;margin:0 0 1.1em}
-.tabs{position:sticky;top:calc(52px + env(safe-area-inset-top));z-index:1;display:flex;gap:.4em;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:.55em 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs{position:sticky;top:calc(52px + env(safe-area-inset-top));z-index:1;display:flex;gap:.5em;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:.6em 16px;background:color-mix(in srgb,var(--lab-bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--lab-sys) 22%,transparent)}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;display:inline-flex;align-items:center;gap:.45em;font:inherit;font-size:.84em;color:var(--soft);background:none;border:1px solid var(--line);border-radius:99px;padding:0 .95em;min-height:40px;cursor:pointer}
-.tab .dot{width:.6em;height:.6em;border-radius:50%;background:var(--c)}
-.tab .n{font-size:.78em;opacity:.7}
-.tab[aria-selected="true"]{color:var(--ink);border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c);background:color-mix(in srgb,var(--c) 10%,transparent)}
-.tab.soon{border-style:dashed;cursor:default;opacity:.55}
-.who{margin:1.4em 0 .4em;padding-left:.9em;border-left:3px solid var(--c)}
-.who .eyebrow{margin:0;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
-.who h2{font-weight:300;font-size:clamp(30px,8vw,42px);line-height:1.05;margin:.05em 0 .15em;color:var(--c)}
+.tab{position:relative;flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:.1em;min-width:7.6em;text-align:left;font:inherit;color:var(--soft);background:color-mix(in srgb,var(--c) 5%,var(--lab-card));border:1px solid color-mix(in srgb,var(--c) 28%,transparent);border-radius:6px;padding:.5em .8em .45em;cursor:pointer;transition:background .2s,box-shadow .2s,border-color .2s}
+.tab::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:2px;border-radius:6px 6px 0 0;background:var(--c);opacity:.35}
+.tab .tn{font-size:.95em;color:var(--ink);font-weight:600;line-height:1.2}
+.tab .ta{font-weight:500;font-size:9.5px;line-height:1.3;letter-spacing:.04em;color:var(--soft);max-width:11em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab .n{font-weight:600;font-size:9.5px;line-height:1.3;letter-spacing:.08em;color:var(--c);text-transform:uppercase}
+.tab .n b{font-weight:inherit}
+.tab[aria-selected="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 16%,var(--lab-card));box-shadow:0 0 0 1px var(--c),0 0 22px -4px color-mix(in srgb,var(--c) 60%,transparent)}
+.tab[aria-selected="true"]::before{opacity:1}
+.tab[aria-selected="true"] .tn{color:var(--c)}
+.tab.soon{justify-content:center;border-style:dashed;cursor:default;opacity:.5;font-weight:600;font-size:10px;line-height:1.3;letter-spacing:.06em;--c:var(--soft)}
+.tab.soon::before{display:none}
+.who{margin:1.3em 0 .4em}
+.scr{position:relative;margin:0 0 1em;aspect-ratio:880/330;overflow:hidden;border-radius:4px;background:#020409;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);box-shadow:0 0 28px -8px color-mix(in srgb,var(--c) 55%,transparent),inset 0 0 40px rgba(0,0,0,.6)}
+.scr .sv{position:absolute;left:0;right:0;top:-36%;height:130.3%}
+.scr .scan{position:absolute;left:0;right:0;top:0;height:30%;pointer-events:none;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--c) 14%,transparent) 85%,color-mix(in srgb,var(--c) 40%,transparent));mix-blend-mode:screen;animation:labscan 6.5s linear infinite;opacity:.55}
+@keyframes labscan{from{transform:translateY(-100%)}to{transform:translateY(340%)}}
+.scr .cn,.kit::after{position:absolute;inset:5px;pointer-events:none;--k:var(--c);--a:12px;--w:1.5px;background:
+ linear-gradient(var(--k),var(--k)) left top/var(--a) var(--w) no-repeat,linear-gradient(var(--k),var(--k)) left top/var(--w) var(--a) no-repeat,
+ linear-gradient(var(--k),var(--k)) right top/var(--a) var(--w) no-repeat,linear-gradient(var(--k),var(--k)) right top/var(--w) var(--a) no-repeat,
+ linear-gradient(var(--k),var(--k)) left bottom/var(--a) var(--w) no-repeat,linear-gradient(var(--k),var(--k)) left bottom/var(--w) var(--a) no-repeat,
+ linear-gradient(var(--k),var(--k)) right bottom/var(--a) var(--w) no-repeat,linear-gradient(var(--k),var(--k)) right bottom/var(--w) var(--a) no-repeat}
+.scr .lb{position:absolute;left:24px;bottom:11px;font-weight:600;font-size:9px;line-height:1;letter-spacing:.2em;color:var(--c);opacity:.85;text-shadow:0 0 6px #000}
+.lab-ok:not([data-theme="dark"]) .scr .lb{color:#E8EEF5}
+@media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]) .scr .lb{color:var(--c)}}
+/* chuyển động nhẹ của dải mắt nằm yên (vẽ ở mat2.js a07eyeIdle) */
+.m2idle .cr,.m2idle .lk,.m2idle .rib,.m2idle .stri{transform-box:fill-box;transform-origin:center;animation:labspin 26s linear infinite}
+.m2idle .e1 .cr,.m2idle .e1 .lk,.m2idle .e1 .rib,.m2idle .e1 .stri{animation-direction:reverse}
+.m2idle .sp{animation:labdrift 9s linear infinite}
+.m2idle .sp:nth-child(3n){animation-duration:13s}.m2idle .sp:nth-child(3n+1){animation-duration:7s;animation-delay:-3s}
+@keyframes labspin{to{transform:rotate(360deg)}}
+@keyframes labdrift{from{transform:translateX(-220px)}to{transform:translateX(220px)}}
+.who .eyebrow{margin:0;font-weight:600;font-size:10px;line-height:1.4;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+.who h2{font-weight:300;font-size:clamp(34px,9vw,46px);line-height:1.05;margin:.05em 0 .15em;color:var(--c);text-shadow:0 0 24px color-mix(in srgb,var(--c) 35%,transparent)}
 .who .abil{margin:0;font-size:.86em;color:var(--ink)}
 .who .abil span{color:var(--soft)}
-.rules{margin:.6em 0 0;padding-left:1.1em;color:var(--soft);font-size:.78em;line-height:1.55}
+.rules{margin:.8em 0 0;padding:.7em .9em .7em 1.9em;color:var(--soft);font-size:.78em;line-height:1.55;border-left:2px solid var(--c);background:color-mix(in srgb,var(--c) 5%,transparent);border-radius:0 4px 4px 0}
 .rules li{margin:.15em 0}
-.gh{margin:1.8em 0 .2em;font-size:.7em;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.rules li::marker{color:var(--c)}
+.gh{display:flex;align-items:center;gap:.6em;margin:2em 0 .3em;font-weight:600;font-size:10.5px;line-height:1.3;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.gh span::before{content:"// ";opacity:.55}
+.gh b{font-weight:600;padding:.1em .55em;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:99px;letter-spacing:.04em}
+.gh::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 45%,transparent),transparent)}
 .gnote{margin:0 0 .7em;color:var(--soft);font-size:.78em;line-height:1.5}
-.kit{border:1px solid var(--line);border-radius:14px;padding:.85em .95em .7em;margin:.6em 0;background:color-mix(in srgb,var(--c) 4%,transparent)}
-.kh{display:flex;align-items:center;gap:.55em}
+.kit{position:relative;border:1px solid color-mix(in srgb,var(--c) 32%,transparent);border-radius:4px;padding:.95em 1em .75em;margin:.7em 0;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 8%,transparent),transparent 55%),var(--lab-card);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 6%,transparent),0 10px 30px -18px color-mix(in srgb,var(--c) 50%,transparent)}
+.kit::after{content:"";inset:-1px;--a:11px;--w:2px}
+.kh{display:flex;align-items:flex-start;gap:.55em}
 .kh h3{font-size:1em;font-weight:600;margin:0;flex:1;line-height:1.3}
-.use{margin:.1em 0 .6em;font-size:.72em;color:var(--c);letter-spacing:.02em}.use.wait{color:var(--soft);font-style:italic}
-.lab .old button b{display:block;font-weight:600}.lab .old button small{display:block;color:var(--soft);font-size:.86em;margin-top:.15em}
-.kh .tg{flex:none;font-size:.66em;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);border-radius:99px;padding:.15em .7em}
-.lab .kit p.demo{font-size:.93em;margin:.45em 0 .75em;text-indent:0}
+.kh .tg{flex:none;margin-top:.15em;font:600 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 50%,transparent);border-radius:3px;padding:.35em .55em}
+.use{display:flex;flex-wrap:wrap;align-items:center;gap:.3em;margin:.45em 0 .55em}
+.use .ul{font-weight:600;font-size:9.5px;line-height:1;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-right:.2em}
+.pill{display:inline-flex;align-items:center;font:600 10px/1 var(--mono);letter-spacing:.04em;color:var(--c);background:color-mix(in srgb,var(--c) 13%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent);border-radius:99px;padding:.32em .65em}
+.pill.via{background:none;border-style:dashed}
+.pill.wait{color:var(--soft);background:none;border-color:var(--line);font-style:italic;font-family:inherit;font-weight:400;font-size:11px}
+.lab .old button b{display:block;font:600 11px/1.3 var(--mono);color:var(--ink)}.lab .old button small{display:block;color:var(--c);font:500 9.5px/1.3 var(--mono);margin-top:.3em}
+.lab .kit p.demo{font-size:.93em;margin:.3em 0 .8em;text-indent:0}
 .row{display:flex;gap:.5em;flex-wrap:wrap}
-.lab button.run,.lab .old button{font:inherit;font-size:.82em;color:var(--ink);background:var(--veil);border:1px solid var(--line);border-radius:10px;padding:.55em 1em;min-height:44px;cursor:pointer}
-.lab button.run:not(.alt){background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lab button.run{font:inherit;font-size:.82em;color:var(--c);background:transparent;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);border-radius:4px;padding:.55em 1em;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:.5em}
+.lab button.run:not(.alt){background:var(--c);color:var(--lab-bg);border-color:var(--c);font-weight:600;box-shadow:0 0 18px -6px var(--c)}
+.lab button.run .pl{width:0;height:0;border-left:7px solid currentColor;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
 .lab button:active{transform:translateY(1px)}
-.beats{margin:.6em 0 0;font-size:.78em;color:var(--soft)}
-.beats summary{cursor:pointer;min-height:32px;display:flex;align-items:center}
+.beats{margin:.6em 0 0;font-size:.78em;color:var(--soft);border-top:1px dashed color-mix(in srgb,var(--c) 22%,transparent)}
+.beats summary{cursor:pointer;min-height:36px;display:flex;align-items:center;font-weight:600;font-size:9.5px;line-height:1;letter-spacing:.14em;text-transform:uppercase}
 .beats ol{margin:.2em 0 .3em;padding-left:1.2em;line-height:1.55}
 .beats li{margin:.15em 0}
-.old{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:.45em}
-.lab .old button{font-size:.74em;padding:.5em .4em;min-height:40px;overflow-wrap:anywhere;border-left:3px solid var(--c)}
+.beats li::marker{color:var(--c);font-family:var(--mono)}
+.old{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:.45em}
+.lab .old button{text-align:left;font:inherit;padding:.6em .65em;min-height:44px;overflow-wrap:anywhere;cursor:pointer;color:var(--ink);background:var(--lab-card);border:1px solid color-mix(in srgb,var(--c) 22%,transparent);border-left:2px solid var(--c);border-radius:3px}
+.lab .old button:active{background:color-mix(in srgb,var(--c) 14%,var(--lab-card))}
 .old .none{grid-column:1/-1;color:var(--soft);font-size:.78em;margin:0}
-.later{margin:2.4em 0 0;padding:.9em 1em;border:1px dashed var(--line);border-radius:14px;color:var(--soft);font-size:.78em;line-height:1.55}
-.panel{position:fixed;left:0;right:0;bottom:0;z-index:2;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:.45em 16px calc(.45em + env(safe-area-inset-bottom));font-size:.72em;line-height:1.3}
+.later{margin:2.4em 0 0;padding:.9em 1em;border:1px dashed color-mix(in srgb,var(--lab-sys) 40%,transparent);border-radius:4px;color:var(--soft);font-size:.78em;line-height:1.55}
+.panel{position:fixed;left:0;right:0;bottom:0;z-index:2;background:color-mix(in srgb,var(--lab-bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid color-mix(in srgb,var(--lab-sys) 35%,transparent);padding:.45em 16px calc(.45em + env(safe-area-inset-bottom));font-size:.72em;line-height:1.3}
 .panel .in{max-width:42rem;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:.2em 1em}
-.panel label{display:flex;flex-direction:column;gap:0;color:var(--soft)}
-.panel label b{color:var(--ink);font-weight:600}
-.panel input[type=range]{width:100%;accent-color:var(--ink)}
+.panel label{display:flex;flex-direction:column;gap:0;color:var(--soft);font-size:.92em;letter-spacing:.04em}
+.panel label b{color:var(--lab-sys);font-weight:600}
+.panel input[type=range]{width:100%;accent-color:var(--lab-sys)}
 .panel .tg2{display:flex;align-items:center;gap:.5em;flex-direction:row;min-height:32px}
-.panel .tg2 input{width:20px;height:20px;accent-color:var(--ink)}
+.panel .tg2 input{width:20px;height:20px;accent-color:var(--lab-sys)}
 .rm-note{display:none;grid-column:1/-1;color:var(--soft)}
 body.sim-reduce .rm-note{display:block}
+@media (prefers-reduced-motion: reduce){.lab .sys i,.scr .scan,.m2idle *{animation:none!important}}
 </style>
 </head>
 <body data-lab="1">
@@ -864,222 +913,227 @@ body.sim-reduce .rm-note{display:block}
   <a class="go" href="index.html">Về đọc truyện</a>
 </div>
 <main class="lab labwrap">
+  <p class="sys"><i></i>Artos · Hệ thống · Tác giả</p>
   <h1>Skill Lab</h1>
   <p class="lead">Chiêu của từng nhân vật. Bật Tiếng ở góc trên để nghe.</p>
-  <nav class="tabs" role="tablist" aria-label="Nhân vật"><button type="button" class="tab" role="tab" data-tab="luke" style="--c:var(--pw-luke)"><span class="dot"></span>Luke<span class="n">4</span></button><button type="button" class="tab" role="tab" data-tab="leon" style="--c:var(--pw-leon)"><span class="dot"></span>Leon<span class="n">8</span></button><button type="button" class="tab" role="tab" data-tab="clevia" style="--c:var(--pw-clevia)"><span class="dot"></span>Clevia<span class="n">5</span></button><button type="button" class="tab" role="tab" data-tab="riina" style="--c:var(--pw-riina)"><span class="dot"></span>Riina<span class="n">6</span></button><button type="button" class="tab" role="tab" data-tab="chung" style="--c:var(--soft)"><span class="dot"></span>Chung<span class="n" id="nchung"></span></button><span class="tab soon" title="Nhân vật chính mới sẽ có ngăn riêng">+ Nhân vật sau</span></nav>
+  <nav class="tabs" role="tablist" aria-label="Nhân vật"><button type="button" class="tab" role="tab" data-tab="luke" style="--c:var(--pw-luke)"><span class="tn">Luke</span><span class="ta">Anomaly Sense · Protect</span><span class="n">4 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="leon" style="--c:var(--pw-leon)"><span class="tn">Leon</span><span class="ta">Xích</span><span class="n">8 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="clevia" style="--c:var(--pw-clevia)"><span class="tn">Clevia</span><span class="ta">Unlock</span><span class="n">5 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="riina" style="--c:var(--pw-riina)"><span class="tn">Riina</span><span class="ta">Parasol (Vũ trang, S+)</span><span class="n">6 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="chung" style="--c:var(--lab-sys)"><span class="tn">Chung</span><span class="ta">Không khí</span><span class="n"><b id="nchung"></b> hiệu ứng</span></button><span class="tab soon" title="Nhân vật chính mới sẽ có ngăn riêng">+ Nhân vật sau</span></nav>
 
   <div class="pane" role="tabpanel" data-pane="luke" style="--c:var(--pw-luke)" hidden>
     <div class="who">
-      <p class="eyebrow">Skill Lab · Luke</p>
+      <div class="scr" data-eye="luke" aria-hidden="true"><div class="sv"></div><i class="scan"></i><i class="cn"></i><span class="lb">LUKE · Hai mắt</span></div>
+      <p class="eyebrow">Hồ sơ năng lực</p>
       <h2>Luke</h2>
       <p class="abil">Anomaly Sense · Protect <span>·</span> Cận cảnh: Hai mắt</p>
       <ul class="rules"><li>Cận cảnh riêng: hai mắt, vì Sense dùng thường xuyên. Bản chốt (27/11): hai mắt có tóc mái đồ từ sketch, nét xanh băng.</li><li>Băng tên chiêu giữ nguyên.</li></ul>
     </div>
-    <h4 class="gh">Cận cảnh</h4>
+    <h4 class="gh"><span>Cận cảnh</span><b>1</b></h4>
       <section class="kit" data-kind="luke-eye2">
-        <div class="kh"><h3>Hai mắt Luke theo ảnh</h3></div>
-        <p class="use">Đang dùng: trong combo ch06, ch10</p>
+        <div class="kh"><h3>Hai mắt Luke theo ảnh</h3><span class="tg">SVG</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill via">combo ch06</span><span class="pill via">combo ch10</span></p>
         <div class="dw"><p class="demo" id="demo9">Luke không nói gì. Cậu chỉ nhìn, và trong một khắc, mắt cậu sáng lên một màu không thuộc về chỗ này.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="luke-eye2" data-demo="demo9" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="luke-eye2" data-demo="demo9" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="luke-eye2" data-demo="demo9" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="luke-eye2" data-demo="demo9" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt: mắt dịu hơn Leon, đuôi hơi trĩu, mày cong nhẹ; tóc rối là các lọn viền nét xanh, một lọn rủ giữa hai mắt (theo ảnh).</li><li>Loé: hai mống mắt bừng xanh băng, đồng tử co, khựng hình, vòng sóng bật ra từ mỗi mắt, khung ngắm bốn góc quanh dải.</li><li>Chấm đỏ (chỗ bất thường) phản chiếu trong cả hai mắt, bốn góc ngắm khép vào, mí híp lại, rồi dải khép.</li></ol></details>
-      </section><h4 class="gh">Chiêu</h4>
+      </section><h4 class="gh"><span>Chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="luke-sense">
-        <div class="kh"><h3>Anomaly Sense</h3></div>
-        <p class="use">Đang dùng: trong combo ch06, ch10</p>
+        <div class="kh"><h3>Anomaly Sense</h3><span class="tg">Dò</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill via">combo ch06</span><span class="pill via">combo ch10</span></p>
         <div class="dw"><p class="demo" id="demo8">Luke đứng yên. Mọi thứ quanh cậu chậm đi một nhịp, và ở góc trái, có một thứ không khớp với phần còn lại.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="luke-sense" data-demo="demo8">Chạy</button><button type="button" class="run alt" data-kind="luke-sense" data-demo="demo8" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="luke-sense" data-demo="demo8"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="luke-sense" data-demo="demo8" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: tiếng xung quanh bị hút mất, trang mất màu, viền xanh băng, băng tên chiêu.</li><li>Bung: ba vòng sóng dò toả ra, lưới quét hiện lên; bốn góc ngắm sập vào chỗ bất thường, khựng hình, chữ tách màu.</li><li>Dư âm: sương giá mọc ở bốn góc rồi tan, màu trở lại.</li></ol></details>
       </section>
       <section class="kit" data-kind="luke-protect">
-        <div class="kh"><h3>Protect</h3></div>
-        <p class="use">Đang dùng: ch10</p>
+        <div class="kh"><h3>Protect</h3><span class="tg">Đỡ</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch10</span></p>
         <div class="dw"><p class="demo" id="demo11">Tấm thẻ trong tay Luke vỡ thành ánh sáng. Móng vuốt bổ xuống, và dừng lại cách mặt Clevia một gang tay.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="luke-protect" data-demo="demo11">Chạy</button><button type="button" class="run alt" data-kind="luke-protect" data-demo="demo11" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="luke-protect" data-demo="demo11"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="luke-protect" data-demo="demo11" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: một ô lục giác băng lung linh giữa trang, băng tên chiêu.</li><li>Bung: vỏ lục giác bung ra từng vòng rồi khép kín; một nhát vồ trúng vỏ, khựng hình, vết nứt toả ra.</li><li>Dư âm: vỏ giữ một lúc rồi rã thành mảnh băng bay lên.</li></ol></details>
-      </section><h4 class="gh">Cận cảnh nối vào chiêu</h4>
+      </section><h4 class="gh"><span>Cận cảnh nối vào chiêu</span><b>1</b></h4>
       <section class="kit" data-kind="luke-eye2-sense">
-        <div class="kh"><h3>Hai mắt Luke nối vào Sense</h3></div>
-        <p class="use">Đang dùng: ch06, ch10</p>
+        <div class="kh"><h3>Hai mắt Luke nối vào Sense</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch06</span><span class="pill">ch10</span></p>
         <div class="dw"><p class="demo" id="demo10">Luke đứng yên. Mọi thứ quanh cậu chậm đi một nhịp, và ở góc trái, có một thứ không khớp với phần còn lại.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="luke-eye2-sense" data-demo="demo10">Chạy</button><button type="button" class="run alt" data-kind="luke-eye2-sense" data-demo="demo10" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="luke-eye2-sense" data-demo="demo10"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="luke-eye2-sense" data-demo="demo10" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt.</li><li>Dải vừa khép thì nối vào bộ chiêu Anomaly Sense.</li></ol></details>
       </section>
-    <h4 class="gh">Khoảnh khắc khác trong chương</h4>
+    <h4 class="gh"><span>Khoảnh khắc khác trong chương</span></h4>
     <p class="gnote">Hiệu ứng nhỏ của Luke đang chạy trong chương, xếp theo chương.</p>
     <div class="grid old" data-who="luke"></div>
   </div>
   <div class="pane" role="tabpanel" data-pane="leon" style="--c:var(--pw-leon)" hidden>
     <div class="who">
-      <p class="eyebrow">Skill Lab · Leon</p>
+      <div class="scr" data-eye="leon" aria-hidden="true"><div class="sv"></div><i class="scan"></i><i class="cn"></i><span class="lb">LEON · Hai mắt có mắt xích</span></div>
+      <p class="eyebrow">Hồ sơ năng lực</p>
       <h2>Leon</h2>
       <p class="abil">Xích <span>·</span> Cận cảnh: Hai mắt có mắt xích</p>
       <ul class="rules"><li>Bản chốt (27/11): hai mắt có tóc đồ từ sketch, vòng mắt xích trong mống mắt, xích nằm trên tóc, nét xám thép.</li><li>Mắt hiện mỗi lần Leon dùng xích đánh thật hoặc lúc căng thẳng. Xích nhẹ, cứu người nhẹ giữ hiệu ứng cũ.</li></ul>
     </div>
-    <h4 class="gh">Cận cảnh</h4>
+    <h4 class="gh"><span>Cận cảnh</span><b>1</b></h4>
       <section class="kit" data-kind="leon-eye2">
-        <div class="kh"><h3>Hai mắt Leon theo ảnh</h3></div>
-        <p class="use">Đang dùng: ch14 · trong combo ch06, ch12, ch15</p>
+        <div class="kh"><h3>Hai mắt Leon theo ảnh</h3><span class="tg">SVG</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch14</span><span class="pill via">combo ch06</span><span class="pill via">combo ch12</span><span class="pill via">combo ch15</span></p>
         <div class="dw"><p class="demo" id="demo2">Leon không buồn ngẩng đầu. Rồi xích bắn đi.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2" data-demo="demo2" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2" data-demo="demo2" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2" data-demo="demo2" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2" data-demo="demo2" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt như khung manga: mắt hẹp, mí nặng, lông mày thấp gần như thẳng; tóc đen rối là các lọn viền nét xám, phủ lệch che mắt phải nhiều hơn (theo ảnh).</li><li>Xích bung: hai mí bật mở, mống mắt loé xám thép, vòng mắt xích trong hai mống mắt quay vụt ngược chiều nhau rồi khoá, hai sợi xích quất chéo sau dải, khựng hình.</li><li>Mí sụp lại hờ hững như chưa có gì, xích giật về, dải khép.</li></ol></details>
-      </section><h4 class="gh">Chiêu</h4>
+      </section><h4 class="gh"><span>Chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="leon-strike">
-        <div class="kh"><h3>Xích tấn công</h3></div>
-        <p class="use">Đang dùng: trong combo ch12, ch15</p>
+        <div class="kh"><h3>Xích tấn công</h3><span class="tg">Combat</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill via">combo ch12</span><span class="pill via">combo ch15</span></p>
         <div class="dw"><p class="demo" id="demo0">Xích từ cổ tay áo Leon phóng ra trước khi con quỷ kịp quay đầu. Bốn sợi, năm sợi, quất vào từ bốn phía rồi siết lại thành một tiếng kim loại khô khốc.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-strike" data-demo="demo0">Chạy</button><button type="button" class="run alt" data-kind="leon-strike" data-demo="demo0" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-strike" data-demo="demo0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-strike" data-demo="demo0" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: trang tối sập, vệt tốc độ xám thép dồn vào giữa, băng tên chiêu chém qua, xích lách cách ở hai góc.</li><li>Bung: 4 đến 6 sợi xích quất chéo vào, trúng thì khựng hình, loé trắng thép, rung trang.</li><li>Dư âm: xích căng rung, chùng xuống, giật ngược về; bụi thép rơi.</li></ol></details>
       </section>
       <section class="kit" data-kind="leon-rescue">
-        <div class="kh"><h3>Xích cứu người</h3></div>
-        <p class="use">Đang dùng: ch12</p>
+        <div class="kh"><h3>Xích cứu người</h3><span class="tg">Nhẹ</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch12</span></p>
         <div class="dw"><p class="demo" id="demo1">Một sợi xích vòng qua eo cô, không siết, chỉ đủ chặt để kéo cô lùi ra sau ba bước. Rồi nó tự lỏng ra.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-rescue" data-demo="demo1" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="leon-rescue" data-demo="demo1" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-rescue" data-demo="demo1" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-rescue" data-demo="demo1" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: ánh lạnh chạy dọc mép trái.</li><li>Bung: một sợi xích lướt vào, vòng lỏng ôm lấy giữa trang, khép vòng thì sáng mềm, trang được nhấc lên.</li><li>Dư âm: vòng giữ, đung đưa, đặt xuống rồi tháo về.</li></ol></details>
-      </section><h4 class="gh">Cận cảnh nối vào chiêu</h4>
+      </section><h4 class="gh"><span>Cận cảnh nối vào chiêu</span><b>5</b></h4>
       <section class="kit" data-kind="leon-eye2-strike">
-        <div class="kh"><h3>Hai mắt Leon nối vào Xích tấn công</h3></div>
-        <p class="use">Đang dùng: ch12, ch15</p>
+        <div class="kh"><h3>Hai mắt Leon nối vào Xích tấn công</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch12</span><span class="pill">ch15</span></p>
         <div class="dw"><p class="demo" id="demo3">Leon không buồn ngẩng đầu. Rồi xích bắn đi.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2-strike" data-demo="demo3">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-strike" data-demo="demo3" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2-strike" data-demo="demo3"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-strike" data-demo="demo3" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt.</li><li>Dải vừa khép thì nối thẳng vào bộ chiêu Xích tấn công.</li></ol></details>
       </section>
       <section class="kit" data-kind="leon-eye2-chains">
-        <div class="kh"><h3>Hai mắt Leon nối vào Xích cũ (ch06)</h3></div>
-        <p class="use">Đang dùng: ch06</p>
+        <div class="kh"><h3>Hai mắt Leon nối vào Xích cũ (ch06)</h3><span class="tg">SVG + xích cũ</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch06</span></p>
         <div class="dw"><p class="demo" id="demo4">Một tiếng kim loại rít lên trong không khí, dài và lạnh.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2-chains" data-demo="demo4">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-chains" data-demo="demo4" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2-chains" data-demo="demo4"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-chains" data-demo="demo4" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Leon.</li><li>Dải vừa khép thì xích kiểu cũ ch06 buông từ trên xuống.</li></ol></details>
       </section>
       <section class="kit" data-kind="leon-eye2-yank">
-        <div class="kh"><h3>Hai mắt Leon nối vào Giật người (ch15)</h3></div>
-        <p class="use">Đang dùng: ch15</p>
+        <div class="kh"><h3>Hai mắt Leon nối vào Giật người (ch15)</h3><span class="tg">SVG + xích cũ</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch15</span></p>
         <div class="dw"><p class="demo" id="demo5">Rồi có một sợi xích quấn lấy eo Jasper.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2-yank" data-demo="demo5">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-yank" data-demo="demo5" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2-yank" data-demo="demo5"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-yank" data-demo="demo5" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Leon.</li><li>Nối vào hiệu ứng xích quấn eo giật người của ch15.</li></ol></details>
       </section>
       <section class="kit" data-kind="leon-eye2-bristle">
-        <div class="kh"><h3>Hai mắt Leon nối vào Xích dựng đứng (ch15)</h3></div>
-        <p class="use">Đang dùng: ch15</p>
+        <div class="kh"><h3>Hai mắt Leon nối vào Xích dựng đứng (ch15)</h3><span class="tg">SVG + xích cũ</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch15</span></p>
         <div class="dw"><p class="demo" id="demo6">Sợi xích dưới chân Leon dựng đứng lên.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2-bristle" data-demo="demo6">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-bristle" data-demo="demo6" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2-bristle" data-demo="demo6"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-bristle" data-demo="demo6" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Leon.</li><li>Nối vào hiệu ứng xích dựng đứng như lông gáy mèo của ch15.</li></ol></details>
       </section>
       <section class="kit" data-kind="leon-eye2-rescue">
-        <div class="kh"><h3>Hai mắt Leon nối vào Xích cứu người (ch12 hầm sập)</h3></div>
-        <p class="use">Đang dùng: ch12</p>
+        <div class="kh"><h3>Hai mắt Leon nối vào Xích cứu người (ch12 hầm sập)</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch12</span></p>
         <div class="dw"><p class="demo" id="demo7">Leon đứng sững lại. Sợi xích vụt ngược về.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="leon-eye2-rescue" data-demo="demo7">Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-rescue" data-demo="demo7" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="leon-eye2-rescue" data-demo="demo7"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="leon-eye2-rescue" data-demo="demo7" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Leon.</li><li>Nối vào bộ chiêu Xích cứu người.</li></ol></details>
       </section>
-    <h4 class="gh">Khoảnh khắc khác trong chương</h4>
+    <h4 class="gh"><span>Khoảnh khắc khác trong chương</span></h4>
     <p class="gnote">Hiệu ứng nhỏ của Leon đang chạy trong chương, xếp theo chương.</p>
     <div class="grid old" data-who="leon"></div>
   </div>
   <div class="pane" role="tabpanel" data-pane="clevia" style="--c:var(--pw-clevia)" hidden>
     <div class="who">
-      <p class="eyebrow">Skill Lab · Clevia</p>
+      <div class="scr" data-eye="clevia" aria-hidden="true"><div class="sv"></div><i class="scan"></i><i class="cn"></i><span class="lb">CLEVIA · Ổ khoá · Hai mắt</span></div>
+      <p class="eyebrow">Hồ sơ năng lực</p>
       <h2>Clevia</h2>
       <p class="abil">Unlock <span>·</span> Cận cảnh: Ổ khoá · Hai mắt</p>
       <ul class="rules"><li>Cận cảnh riêng: ổ khoá, bốn chốt bật lên.</li><li>Hai mắt (27/11): tóc đồ từ sketch, nét đỏ rượu, mống mắt vòng ổ khoá. Dùng cho khoảnh khắc nghiêm, quyết định (Clair chốt 27/11); dùng năng lực thì vẫn là ổ khoá. Chưa gắn chương.</li><li>Băng tên chiêu hiện "???". Khi truyện lộ tên năng lực thì đổi thành KEY (chỉ từ chương đó trở đi).</li></ul>
     </div>
-    <h4 class="gh">Cận cảnh</h4>
+    <h4 class="gh"><span>Cận cảnh</span><b>2</b></h4>
       <section class="kit" data-kind="clevia-lock">
-        <div class="kh"><h3>Cận cảnh ổ khoá Clevia</h3></div>
-        <p class="use">Đang dùng: ch12 · trong combo ch11</p>
+        <div class="kh"><h3>Cận cảnh ổ khoá Clevia</h3><span class="tg">SVG</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch12</span><span class="pill via">combo ch11</span></p>
         <div class="dw"><p class="demo" id="demo12">Clevia đặt ngón tay lên ổ khoá. Bên trong có bốn vòng, và từng vòng một, chúng xoay về đúng chỗ của mình.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="clevia-lock" data-demo="demo12" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="clevia-lock" data-demo="demo12" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="clevia-lock" data-demo="demo12" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="clevia-lock" data-demo="demo12" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Băng tối mở ngang trang (mép dưới khía như răng chìa khoá), bản vẽ ổ khoá hiện dần: trái là lỗ khoá nhìn thẳng, phải là mặt cắt với bốn chốt.</li><li>Một sợi sáng đỏ luồn vào rãnh khoá, đẩy từng chốt lên đúng vạch cắt: cạch, cạch, cạch (mỗi cú khựng hình, vòng đỏ nhỏ toả ra); chốt thứ tư gượng, run run rồi mới bật.</li><li>Ổ xoay: lỗ khoá quay một phần tư vòng, loé, ánh sáng tràn ra từ lỗ khoá, bốn vòng đỏ nở ra, rồi băng khép.</li></ol></details>
       </section>
       <section class="kit" data-kind="clevia-eye2">
-        <div class="kh"><h3>Hai mắt Clevia theo sketch</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Hai mắt Clevia theo sketch</h3><span class="tg">SVG</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo14">Clevia ngẩng lên. Lần này cô không hỏi ai nữa.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="clevia-eye2" data-demo="demo14" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="clevia-eye2" data-demo="demo14" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="clevia-eye2" data-demo="demo14" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="clevia-eye2" data-demo="demo14" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt: mắt hạnh nhân mở rõ, mi dày, đuôi kẻ vuốt; tóc mái đồ từ sketch, nét đỏ rượu.</li><li>Loé: bốn vòng có khe trong mống mắt xoay lệch nhau rồi cạch về thẳng hàng từng vòng một, ánh sáng tràn ra từ đồng tử hình lỗ khoá, lông mày hơi cau.</li><li>Mắt hơi nheo lại (đã quyết), dải khép.</li></ol></details>
-      </section><h4 class="gh">Chiêu</h4>
+      </section><h4 class="gh"><span>Chiêu</span><b>1</b></h4>
       <section class="kit" data-kind="clevia-unlock">
-        <div class="kh"><h3>Unlock</h3></div>
-        <p class="use">Đang dùng: trong combo ch11</p>
+        <div class="kh"><h3>Unlock</h3><span class="tg">Kiểu A3</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill via">combo ch11</span></p>
         <div class="dw"><p class="demo" id="demo16">Clevia đặt ngón tay lên ổ khoá. Bên trong có bốn vòng, và từng vòng một, chúng xoay về đúng chỗ của mình.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="clevia-unlock" data-demo="demo16">Chạy</button><button type="button" class="run alt" data-kind="clevia-unlock" data-demo="demo16" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="clevia-unlock" data-demo="demo16"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="clevia-unlock" data-demo="demo16" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: bốn vòng đỏ rượu quay lệch nhau, lỗ khoá mờ giữa trang , băng tên chiêu hiện "???" (năng lực thật là Key, đổi thành KEY khi truyện lộ tên).</li><li>Bung: từng vòng "cạch" khớp (mỗi cú cạch khựng một nhịp), cả trang là ổ khoá; khớp đủ thì lỗ khoá đầy ánh sáng.</li><li>Dư âm: tia sáng xuyên dọc, vòng nở tung, lấp lánh đỏ hồng bay lên.</li></ol></details>
-      </section><h4 class="gh">Cận cảnh nối vào chiêu</h4>
+      </section><h4 class="gh"><span>Cận cảnh nối vào chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="clevia-lock-unlock">
-        <div class="kh"><h3>Ổ khoá nối vào Unlock</h3></div>
-        <p class="use">Đang dùng: ch11</p>
+        <div class="kh"><h3>Ổ khoá nối vào Unlock</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch11</span></p>
         <div class="dw"><p class="demo" id="demo13">Clevia đặt ngón tay lên ổ khoá. Bên trong có bốn vòng, và từng vòng một, chúng xoay về đúng chỗ của mình.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="clevia-lock-unlock" data-demo="demo13">Chạy</button><button type="button" class="run alt" data-kind="clevia-lock-unlock" data-demo="demo13" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="clevia-lock-unlock" data-demo="demo13"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="clevia-lock-unlock" data-demo="demo13" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Cận cảnh ổ khoá như trên.</li><li>Băng vừa khép thì băng tên chiêu "???" chém qua, ánh sáng lỗ khoá tràn ra cả trang: tia sáng xuyên dọc, vòng đỏ nở tung.</li><li>Đoạn chữ trên trang cạch về hàng, lấp lánh đỏ hồng bay lên.</li></ol></details>
       </section>
       <section class="kit" data-kind="clevia-eye2-unlock">
-        <div class="kh"><h3>Hai mắt Clevia nối vào Unlock</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Hai mắt Clevia nối vào Unlock</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo15">Clevia ngẩng lên. Rồi cô đặt tay lên ổ khoá.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="clevia-eye2-unlock" data-demo="demo15">Chạy</button><button type="button" class="run alt" data-kind="clevia-eye2-unlock" data-demo="demo15" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="clevia-eye2-unlock" data-demo="demo15"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="clevia-eye2-unlock" data-demo="demo15" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Clevia.</li><li>Dải vừa khép thì nối vào bộ chiêu Unlock.</li></ol></details>
       </section>
-    <h4 class="gh">Khoảnh khắc khác trong chương</h4>
+    <h4 class="gh"><span>Khoảnh khắc khác trong chương</span></h4>
     <p class="gnote">Hiệu ứng nhỏ của Clevia đang chạy trong chương, xếp theo chương.</p>
     <div class="grid old" data-who="clevia"></div>
   </div>
   <div class="pane" role="tabpanel" data-pane="riina" style="--c:var(--pw-riina)" hidden>
     <div class="who">
-      <p class="eyebrow">Skill Lab · Riina</p>
+      <div class="scr" data-eye="riina" aria-hidden="true"><div class="sv"></div><i class="scan"></i><i class="cn"></i><span class="lb">RIINA · Nan ô · Hai mắt</span></div>
+      <p class="eyebrow">Hồ sơ năng lực</p>
       <h2>Riina</h2>
       <p class="abil">Parasol (Vũ trang, S+) <span>·</span> Cận cảnh: Nan ô · Hai mắt</p>
       <ul class="rules"><li>Cận cảnh riêng: nan ô bung từng nan như mở quạt, nét sáng; lúc kết trang tối sập một nhịp.</li><li>Hai mắt (27/11): tóc đồ từ sketch, nét trắng sữa, đồng tử dọc chấm vàng, bảy nan trong mống mắt. Dùng cho khoảnh khắc nghiêm, quyết định (Clair chốt 27/11); dùng năng lực thì vẫn là nan ô. Chưa gắn chương.</li><li>Màu: trắng sữa, đen mực, một chút ánh vàng (ngoại lệ chỉ cho hiệu ứng Riina, giao diện trang vẫn không vàng).</li><li>Tạm hai chiêu: tấn công (vành chém + chóp đâm) và phòng thủ (xoay ô). Ô chưa dùng thì Luke không cảm thấy gì.</li></ul>
     </div>
-    <h4 class="gh">Cận cảnh</h4>
+    <h4 class="gh"><span>Cận cảnh</span><b>2</b></h4>
       <section class="kit" data-kind="riina-parasol">
-        <div class="kh"><h3>Cận cảnh nan ô Riina</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Cận cảnh nan ô Riina</h3><span class="tg">SVG</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo17">Cô gái không đứng dậy. Chỉ có cái ô trên đùi cô khẽ mở ra, từng nan một.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-parasol" data-demo="demo17" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="riina-parasol" data-demo="demo17" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-parasol" data-demo="demo17" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-parasol" data-demo="demo17" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Băng tối mở ngang trang (mép dưới lượn múi như vành ô), chiếc ô cụp hiện ra thành một nét đứng, chóp vàng nháy.</li><li>Bảy nan bật lần lượt quanh vòng như mở quạt: tách, tách, tách (mỗi nan khựng nhẹ, chấm vàng đầu nan sáng lên). Múi cuối khép kín vòng: phạch, loé trắng sữa, sao vàng ở chóp, ba vòng nở ra.</li><li>Ánh sáng chạy dọc vành như lưỡi dao, tán xoay chậm; cả trang tối sập một nhịp rồi băng khép.</li></ol></details>
       </section>
       <section class="kit" data-kind="riina-eye2">
-        <div class="kh"><h3>Hai mắt Riina theo sketch</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Hai mắt Riina theo sketch</h3><span class="tg">SVG</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo18">Cô gái ngước mắt lên, chậm như thể việc đó cũng phiền.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-eye2" data-demo="demo18" data-ten="0">Chạy</button><button type="button" class="run alt" data-kind="riina-eye2" data-demo="demo18" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-eye2" data-demo="demo18" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-eye2" data-demo="demo18" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt: mí trên nặng, nhìn lười mà lạnh, mống mắt to, đồng tử dọc như giọt có chấm vàng nhỏ; tóc mái thẳng dày đồ từ sketch, nét trắng sữa.</li><li>Loé: bảy nan mảnh trong mống mắt bật dài ra lần lượt như ô bung, đồng tử co hẹp, sao vàng nhỏ loé ở chấm sáng. Mí chỉ nhướng lên một chút.</li><li>Mí sụp lại hờ hững như chán, dải khép.</li></ol></details>
-      </section><h4 class="gh">Chiêu</h4>
+      </section><h4 class="gh"><span>Chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="riina-strike">
-        <div class="kh"><h3>Tấn công (bung ô, vành chém, chóp đâm)</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Tấn công (bung ô, vành chém, chóp đâm)</h3><span class="tg">Combat</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo20">Cái ô bung ra. Vành ô lướt qua trước, và khi người ta còn chưa kịp nhìn ra đó là lưỡi, cái chóp nhọn đã ở ngay trước ngực.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-strike" data-demo="demo20">Chạy</button><button type="button" class="run alt" data-kind="riina-strike" data-demo="demo20" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-strike" data-demo="demo20"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-strike" data-demo="demo20" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: trang tối sập, vệt tốc độ trắng sữa, băng tên chiêu PARASOL viền vàng, chiếc ô cụp đứng giữa trang, chóp vàng nháy.</li><li>Bung: bảy nan bật liền một hơi, phạch. Tán nghiêng thành lưỡi, lùi lấy đà rồi quét một vệt trăng khuyết trắng sữa chéo cả trang (mép lượn múi, viền trong vàng): khựng hình, loé, vết cắt thẳng ở lại. Liền sau đó chóp ô phóng thành mũi nhọn từ góc dưới vào giữa: khựng hình dài hơn, sao vàng bốn cánh, sóng tròn, rung mạnh.</li><li>Dư âm: mũi rút về, vết cắt tách đôi rồi mờ, bụi trắng sữa rơi, vài đốm vàng bay lên.</li></ol></details>
       </section>
       <section class="kit" data-kind="riina-guard">
-        <div class="kh"><h3>Phòng thủ (xoay ô)</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Phòng thủ (xoay ô)</h3><span class="tg">Đỡ</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo21">Cô xoay cán ô giữa hai ngón tay. Mọi đòn đánh vào đều trượt theo vành ô mà văng đi.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-guard" data-demo="demo21">Chạy</button><button type="button" class="run alt" data-kind="riina-guard" data-demo="demo21" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-guard" data-demo="demo21"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-guard" data-demo="demo21" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Báo hiệu: băng tên chiêu, tán ô bung nhìn thẳng mặt giữa trang.</li><li>Tán quay tít như lưỡi cưa sáng. Ba đòn từ ngoài vồ vào (trên trái, phải, trên); mỗi đòn trúng vành thì khựng hình, tia lửa trắng sữa và vàng văng theo chiều quay, tán lùi nhẹ, rung trang. Đòn thứ ba mạnh nhất.</li><li>Dư âm: quay chậm dần, nan cụp lại thành một nét rồi tan, vài đốm vàng bay lên.</li></ol></details>
-      </section><h4 class="gh">Cận cảnh nối vào chiêu</h4>
+      </section><h4 class="gh"><span>Cận cảnh nối vào chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="riina-eye2-strike">
-        <div class="kh"><h3>Hai mắt Riina nối vào Tấn công</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Hai mắt Riina nối vào Tấn công</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo19">Cô gái ngước mắt lên, chậm như thể việc đó cũng phiền. Cái ô bung ra.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-eye2-strike" data-demo="demo19">Chạy</button><button type="button" class="run alt" data-kind="riina-eye2-strike" data-demo="demo19" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-eye2-strike" data-demo="demo19"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-eye2-strike" data-demo="demo19" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Hai mắt Riina.</li><li>Dải vừa khép thì nối thẳng vào Tấn công: ô bung, vành chém, chóp đâm.</li></ol></details>
       </section>
       <section class="kit" data-kind="riina-parasol-strike">
-        <div class="kh"><h3>Nan ô nối vào Tấn công</h3></div>
-        <p class="use wait">Đã duyệt, chưa gắn vào chương</p>
+        <div class="kh"><h3>Nan ô nối vào Tấn công</h3><span class="tg">SVG + chiêu</span></div>
+        <p class="use wait"><span class="pill wait">Đã duyệt, chưa gắn vào chương</span></p>
         <div class="dw"><p class="demo" id="demo22">Cô gái không đứng dậy. Chỉ có cái ô trên đùi cô khẽ mở ra, từng nan một.</p></div>
-        <div class="row"><button type="button" class="run" data-kind="riina-parasol-strike" data-demo="demo22">Chạy</button><button type="button" class="run alt" data-kind="riina-parasol-strike" data-demo="demo22" data-cast="1">Kèm vòng kích hoạt</button></div>
+        <div class="row"><button type="button" class="run" data-kind="riina-parasol-strike" data-demo="demo22"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-parasol-strike" data-demo="demo22" data-cast="1">Kèm vòng kích hoạt</button></div>
         <details class="beats"><summary>Từng nhịp</summary><ol><li>Cận cảnh nan ô như trên.</li><li>Trang vừa tối sập thì nối thẳng vào Tấn công: ô bung, vành chém, chóp đâm.</li></ol></details>
       </section>
-    <h4 class="gh">Khoảnh khắc khác trong chương</h4>
+    <h4 class="gh"><span>Khoảnh khắc khác trong chương</span></h4>
     <p class="gnote">Hiệu ứng nhỏ của Riina đang chạy trong chương, xếp theo chương.</p>
     <div class="grid old" data-who="riina"></div>
   </div>
-  <div class="pane" role="tabpanel" data-pane="chung" style="--c:var(--soft)" hidden>
+  <div class="pane" role="tabpanel" data-pane="chung" style="--c:var(--lab-sys)" hidden>
     <div class="who">
-      <p class="eyebrow">Skill Lab · Hiệu ứng chung</p>
+      <p class="eyebrow">Hiệu ứng chung</p>
       <h2>Không khí</h2>
       <p class="abil">Hiệu ứng khoảnh khắc không thuộc riêng nhân vật nào (quỷ, nhiễm, thời tiết, âm thanh, đồ vật), chỉ những cái đang dùng, xếp theo chương.</p>
     </div>
@@ -1105,9 +1159,14 @@ body.sim-reduce .rm-note{display:block}
   tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label();dispatchEvent(new Event('a07-theme'))};
   if(!root.classList.contains('lab-ok'))return;
   // ngăn nhân vật: nhớ ngăn đang mở; #leon, #luke… mở thẳng ngăn đó
+  // dải hai mắt đầu ngăn: dựng lúc ngăn mở lần đầu, chớp mắt thỉnh thoảng (chỉ ngăn đang mở)
+  var eyes={},cur_='',calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function wake(id){var h=document.querySelector('.pane[data-pane="'+id+'"] .scr');if(!h||eyes[id])return;if(!window.a07eyeIdle){setTimeout(function(){wake(id)},150);return}
+    try{eyes[id]=window.a07eyeIdle(h.dataset.eye,h.querySelector('.sv'))||0}catch(e){eyes[id]=0}}
+  if(!calm)(function tick(){setTimeout(function(){var e=eyes[cur_];if(e&&!document.hidden)e.blink();tick()},3200+Math.random()*3800)})();
   var tabs=[].slice.call(document.querySelectorAll('.tab[data-tab]')),panes=[].slice.call(document.querySelectorAll('.pane'));
   function show(id,scroll){var hit=false;tabs.forEach(function(t){var on=t.dataset.tab===id;if(on)hit=true;t.setAttribute('aria-selected',on?'true':'false')});if(!hit)return show(tabs[0].dataset.tab);
-    panes.forEach(function(p){p.hidden=p.dataset.pane!==id});store('a07-lab-tab',id);
+    panes.forEach(function(p){p.hidden=p.dataset.pane!==id});store('a07-lab-tab',id);cur_=id;wake(id);
     var cur=tabs.filter(function(t){return t.dataset.tab===id})[0];if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest',inline:'nearest'});
     if(scroll){var nav=document.querySelector('.tabs');if(nav.getBoundingClientRect().top<=nav.offsetTop)scrollTo(0,0)}}
   tabs.forEach(function(t){t.onclick=function(){show(t.dataset.tab,true);if(window.a07sfx)window.a07sfx('flip')}});
@@ -1141,6 +1200,6 @@ body.sim-reduce .rm-note{display:block}
   fill();
 })();
 </script>
-<script src="mat2-toc-lab-a7e81121b9.js"></script><script src="fx-cbc67bfe34.js"></script>
+<script src="mat2-toc-lab-a7e81121b9.js"></script><script src="fx-706236cb0d.js"></script>
 </body>
 </html>
