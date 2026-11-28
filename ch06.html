@@ -332,9 +332,9 @@ em .nm{font-style:italic}
 
 
 /* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
-:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
-:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+:root{--sp-clevia:#8E2238;--sp-luke:#2F4E82;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#8EAEE3;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#8EAEE3;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
 .scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
 .scene p.say + p:not(.say){margin-top:.55em}
 .say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
@@ -347,9 +347,9 @@ em .nm{font-style:italic}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
-:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954;--pw-riina:#2B2528}
-:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}}
+:root{--pw-clevia:#8E2238;--pw-luke:#2F4E82;--pw-leon:#3E4954;--pw-riina:#7A6224}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#8EAEE3;--pw-leon:#B4C2D0;--pw-riina:#F0DCA8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#8EAEE3;--pw-leon:#B4C2D0;--pw-riina:#F0DCA8}}
 .pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}.pw-riina{--pw:var(--pw-riina)}
 .scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
@@ -565,7 +565,7 @@ html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:backgrou
 html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
 article p.pen-has{position:relative}
 article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
-article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-note::before{background:var(--ice)}
 article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
 html:not(.pen-on) article p.pen-has::before{opacity:.45}
 .pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
@@ -591,7 +591,7 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-diff[hidden]{display:none}
 .pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
 .pen-diff del+ins{margin-left:.2em}
-.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-diff ins{color:var(--ice);text-decoration:none;border-bottom:2px solid var(--ice)}
 .pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
 .pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
 .pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
@@ -601,24 +601,24 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-list{list-style:none;margin:0;padding:0}
 .pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
 .pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
-.pen-list li.nt small{color:var(--pw-luke)}
+.pen-list li.nt small{color:var(--ice)}
 article p.pen-pt{position:relative}
 article p.pen-pt::after{content:"";position:absolute;left:-8px;top:.35em;bottom:.35em;width:2px;background:repeating-linear-gradient(var(--ink) 0 3px,transparent 3px 7px);opacity:.75}
-article p.pen-pt.pen-ok::after{background:var(--pw-luke);opacity:1}
+article p.pen-pt.pen-ok::after{background:var(--ice);opacity:1}
 .pen-sg{border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:12px;padding:.7em .8em;margin:0 0 .8em}
-.pen-sg.ok{border-color:var(--pw-luke)}
+.pen-sg.ok{border-color:var(--ice)}
 .pen-sg .who{display:block;margin:0 0 .35em;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-.pen-sg.ok .who{color:var(--pw-luke);opacity:1}
+.pen-sg.ok .who{color:var(--ice);opacity:1}
 .pen-sg .pen-diff{margin:0}
 .pen-sg .nt{margin:.5em 0 0;font:italic 400 14px/1.5 system-ui,sans-serif;opacity:.85}
 .pen-sg .pen-row{margin-top:.7em}
 .pen-sg .pen-row button{padding:.6em .8em;font-size:14px}
-.pen-sg .yes{color:var(--pw-luke);border-color:var(--pw-luke)}
+.pen-sg .yes{color:var(--ice);border-color:var(--ice)}
 .pen-sg .no{color:var(--pw-clevia)}
 .pen-mine{margin:1.2em 0 .5em;padding-top:1em;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent)}
 .pen-list li.pt small{color:var(--soft)}
-.pen-list li.pt.ok small{color:var(--pw-luke)}
-.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--pw-luke)}
+.pen-list li.pt.ok small{color:var(--ice)}
+.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--ice)}
 @keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
 article p.pen-flash{animation:penflash .8s ease-out}
 @media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
@@ -732,7 +732,8 @@ html[data-say="g"] .say.heard .q{animation:uiHeard 2.4s ease-out}
 html[data-say="g"] .say-x .qm,html[data-say="g"] .say-x .qe{color:var(--soft)}
 html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 
-/* ================= BẢNG MÀU (Clair chốt 24/11): đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng =================
+/* ================= BẢNG MÀU (Clair chốt 24/11, sửa 28/11): giao diện trang đọc chỉ đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng.
+   Luật này CHỈ cho giao diện (nút, link, khung, nền, thanh). Chữ, màu riêng nhân vật, hiệu ứng, tranh: tự do mọi màu. =================
    --lamp đổi ở <body> nên mọi chữ, nút, nhịp chạm, chữ cái đầu cảnh thành đỏ; tranh động vẫn đọc --lamp ở <html> nên ánh đèn trong tranh giữ nguyên. */
 html body{--lamp:#B3263A}
 @media (prefers-color-scheme: dark){html:not([data-theme="light"]) body{--lamp:#E2566C}}
@@ -1572,6 +1573,6 @@ els.forEach(function(el){io.observe(el)});})();
   var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -12% 0px'});
   [].forEach.call(ws,function(w){io.observe(w)});
 })();</script>
-<script src="fx-82e12f2d35.js"></script>
+<script src="fx-b6c2785398.js"></script>
 </body>
 </html>

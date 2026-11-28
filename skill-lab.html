@@ -332,9 +332,9 @@ em .nm{font-style:italic}
 
 
 /* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
-:root{--sp-clevia:#8E2238;--sp-luke:#2E7484;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
-:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#7FC4D6;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
+:root{--sp-clevia:#8E2238;--sp-luke:#2F4E82;--sp-leon:#4F5B68;--sp-other:#94503F;--sp-x:#9AA49F}
+:root[data-theme="dark"]{--sp-clevia:#D4697E;--sp-luke:#8EAEE3;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sp-clevia:#D4697E;--sp-luke:#8EAEE3;--sp-leon:#A9B6C4;--sp-other:#E2A894;--sp-x:#56605C}}
 .scene p.say{--sp:var(--sp-x);text-indent:0;margin:.55em 0 .55em -14px;padding-left:12px;border-left:2px solid var(--sp)}
 .scene p.say + p:not(.say){margin-top:.55em}
 .say-clevia{--sp:var(--sp-clevia)!important}.say-luke{--sp:var(--sp-luke)!important}.say-leon{--sp:var(--sp-leon)!important}.say-other{--sp:var(--sp-other)!important}
@@ -347,9 +347,9 @@ em .nm{font-style:italic}
 @keyframes lineIn{from{opacity:.2;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 
 /* năng lực nhân vật chính kích hoạt: đoạn chữ liên quan loé lên rồi giữ vạch màu */
-:root{--pw-clevia:#8E2238;--pw-luke:#2E7484;--pw-leon:#3E4954;--pw-riina:#2B2528}
-:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#7FC4D6;--pw-leon:#B4C2D0;--pw-riina:#EDE4D3}}
+:root{--pw-clevia:#8E2238;--pw-luke:#2F4E82;--pw-leon:#3E4954;--pw-riina:#7A6224}
+:root[data-theme="dark"]{--pw-clevia:#D4697E;--pw-luke:#8EAEE3;--pw-leon:#B4C2D0;--pw-riina:#F0DCA8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pw-clevia:#D4697E;--pw-luke:#8EAEE3;--pw-leon:#B4C2D0;--pw-riina:#F0DCA8}}
 .pw-clevia{--pw:var(--pw-clevia)}.pw-luke{--pw:var(--pw-luke)}.pw-leon{--pw:var(--pw-leon)}.pw-riina{--pw:var(--pw-riina)}
 .scene p.pw-on{position:relative;text-indent:0;margin:.7em -10px .7em -14px;padding:.35em 10px .35em 12px;border-left:3px solid var(--pw);border-radius:2px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--pw) 13%,transparent),color-mix(in srgb,var(--pw) 4%,transparent) 70%,transparent);
@@ -565,7 +565,7 @@ html.pen-on article p[data-pi]{cursor:text;border-radius:6px;transition:backgrou
 html.pen-on article p[data-pi]:active,html.pen-on article p.pen-cur{background:color-mix(in srgb,var(--pw-clevia) 9%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--pw-clevia) 9%,transparent)}
 article p.pen-has{position:relative}
 article p.pen-has::before{content:"";position:absolute;left:-14px;top:.35em;bottom:.35em;width:3px;border-radius:2px;background:var(--pw-clevia)}
-article p.pen-has.pen-note::before{background:var(--pw-luke)}
+article p.pen-has.pen-note::before{background:var(--ice)}
 article p.pen-has.pen-wait::before{background:repeating-linear-gradient(var(--pw-clevia) 0 4px,transparent 4px 8px)}
 html:not(.pen-on) article p.pen-has::before{opacity:.45}
 .pen-pill{position:fixed;right:68px;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(16px);opacity:0;pointer-events:none;z-index:60;
@@ -591,7 +591,7 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-diff[hidden]{display:none}
 .pen-diff del{color:var(--pw-clevia);text-decoration:line-through;text-decoration-thickness:2px}
 .pen-diff del+ins{margin-left:.2em}
-.pen-diff ins{color:var(--pw-luke);text-decoration:none;border-bottom:2px solid var(--pw-luke)}
+.pen-diff ins{color:var(--ice);text-decoration:none;border-bottom:2px solid var(--ice)}
 .pen-row{display:flex;gap:10px;margin-top:1.1em;flex-wrap:wrap}
 .pen-row button{flex:1;min-width:7em;padding:.75em 1em;border-radius:10px;border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:transparent;color:inherit;font:500 15px/1 system-ui,sans-serif}
 .pen-row .go{background:var(--pw-clevia);border-color:var(--pw-clevia);color:#fff}
@@ -601,24 +601,24 @@ html.pen-on .pen-pill{transform:none;opacity:1;pointer-events:auto}
 .pen-list{list-style:none;margin:0;padding:0}
 .pen-list li{padding:.7em 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent);font:400 14px/1.45 Literata,Georgia,serif;cursor:pointer}
 .pen-list li small{display:block;font:500 11px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--pw-clevia);margin-bottom:.2em}
-.pen-list li.nt small{color:var(--pw-luke)}
+.pen-list li.nt small{color:var(--ice)}
 article p.pen-pt{position:relative}
 article p.pen-pt::after{content:"";position:absolute;left:-8px;top:.35em;bottom:.35em;width:2px;background:repeating-linear-gradient(var(--ink) 0 3px,transparent 3px 7px);opacity:.75}
-article p.pen-pt.pen-ok::after{background:var(--pw-luke);opacity:1}
+article p.pen-pt.pen-ok::after{background:var(--ice);opacity:1}
 .pen-sg{border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:12px;padding:.7em .8em;margin:0 0 .8em}
-.pen-sg.ok{border-color:var(--pw-luke)}
+.pen-sg.ok{border-color:var(--ice)}
 .pen-sg .who{display:block;margin:0 0 .35em;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-.pen-sg.ok .who{color:var(--pw-luke);opacity:1}
+.pen-sg.ok .who{color:var(--ice);opacity:1}
 .pen-sg .pen-diff{margin:0}
 .pen-sg .nt{margin:.5em 0 0;font:italic 400 14px/1.5 system-ui,sans-serif;opacity:.85}
 .pen-sg .pen-row{margin-top:.7em}
 .pen-sg .pen-row button{padding:.6em .8em;font-size:14px}
-.pen-sg .yes{color:var(--pw-luke);border-color:var(--pw-luke)}
+.pen-sg .yes{color:var(--ice);border-color:var(--ice)}
 .pen-sg .no{color:var(--pw-clevia)}
 .pen-mine{margin:1.2em 0 .5em;padding-top:1em;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent)}
 .pen-list li.pt small{color:var(--soft)}
-.pen-list li.pt.ok small{color:var(--pw-luke)}
-.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--pw-luke)}
+.pen-list li.pt.ok small{color:var(--ice)}
+.pen-link{display:block;margin:1em 0 0;text-align:center;font:500 14px/1.4 system-ui,sans-serif;color:var(--ice)}
 @keyframes penflash{0%{box-shadow:0 0 0 0 var(--pw-clevia)}100%{box-shadow:0 0 0 14px transparent}}
 article p.pen-flash{animation:penflash .8s ease-out}
 @media (prefers-reduced-motion: reduce){.pen-sheet,.pen-box,.pen-pill{transition:none}article p.pen-flash{animation:none}}
@@ -732,7 +732,8 @@ html[data-say="g"] .say.heard .q{animation:uiHeard 2.4s ease-out}
 html[data-say="g"] .say-x .qm,html[data-say="g"] .say-x .qe{color:var(--soft)}
 html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 
-/* ================= BẢNG MÀU (Clair chốt 24/11): đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng =================
+/* ================= BẢNG MÀU (Clair chốt 24/11, sửa 28/11): giao diện trang đọc chỉ đỏ, xanh nước biển của Artos, trắng đen; không vàng, cam, đồng.
+   Luật này CHỈ cho giao diện (nút, link, khung, nền, thanh). Chữ, màu riêng nhân vật, hiệu ứng, tranh: tự do mọi màu. =================
    --lamp đổi ở <body> nên mọi chữ, nút, nhịp chạm, chữ cái đầu cảnh thành đỏ; tranh động vẫn đọc --lamp ở <html> nên ánh đèn trong tranh giữ nguyên. */
 html body{--lamp:#B3263A}
 @media (prefers-color-scheme: dark){html:not([data-theme="light"]) body{--lamp:#E2566C}}
@@ -801,7 +802,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .lab-gate p{color:var(--soft);font-size:.9em;line-height:1.6;margin:0 0 1.4em}
 .lab-gate a.go{display:inline-flex;align-items:center;min-height:44px;padding:0 1.3em;border-radius:12px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:.88em}
 /* Hướng A "Bảng điều khiển Artos" (Clair chọn 27/11): nền xanh đêm hệ thống, lưới mảnh, thẻ viền sáng màu nhân vật + bốn góc ngắm.
-   Màu: chỉ đỏ, xanh nước biển Artos, đen/trắng, và màu riêng nhân vật. Không vàng/cam/đồng. */
+   Màu giao diện: chỉ đỏ, xanh nước biển Artos, đen/trắng. Màu riêng nhân vật (thẻ, băng tên, viền) theo nhân vật, không bị cấm màu (Clair 28/11). */
 .lab-ok{--lab-bg:#EAF0F6;--lab-card:rgba(255,255,255,.72);--lab-grid:rgba(31,79,140,.07);--lab-sys:#1F5C99;--lab-red:#C0344D;--lab-glow:rgba(31,92,153,.10)}
 .lab-ok[data-theme="dark"]{--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}
 @media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]){--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}}
@@ -1082,7 +1083,7 @@ body.sim-reduce .rm-note{display:block}
       <p class="eyebrow">Hồ sơ năng lực</p>
       <h2>Riina</h2>
       <p class="abil">Parasol (Vũ trang, S+) <span>·</span> Cận cảnh: Nan ô · Hai mắt</p>
-      <ul class="rules"><li>Cận cảnh riêng: nan ô bung từng nan như mở quạt, nét sáng; lúc kết trang tối sập một nhịp.</li><li>Hai mắt (27/11): tóc đồ từ sketch, nét trắng sữa, đồng tử dọc chấm vàng, bảy nan trong mống mắt. Dùng cho khoảnh khắc nghiêm, quyết định (Clair chốt 27/11); dùng năng lực thì vẫn là nan ô. Chưa gắn chương.</li><li>Màu: trắng sữa, đen mực, một chút ánh vàng (ngoại lệ chỉ cho hiệu ứng Riina, giao diện trang vẫn không vàng).</li><li>Tạm hai chiêu: tấn công (vành chém + chóp đâm) và phòng thủ (xoay ô). Ô chưa dùng thì Luke không cảm thấy gì.</li></ul>
+      <ul class="rules"><li>Cận cảnh riêng: nan ô bung từng nan như mở quạt, nét sáng; lúc kết trang tối sập một nhịp.</li><li>Hai mắt (27/11): tóc đồ từ sketch, nét vàng kem (28/11), đồng tử dọc chấm vàng, bảy nan trong mống mắt. Dùng cho khoảnh khắc nghiêm, quyết định (Clair chốt 27/11); dùng năng lực thì vẫn là nan ô. Chưa gắn chương.</li><li>Màu: trắng sữa, đen mực, một chút ánh vàng (ngoại lệ chỉ cho hiệu ứng Riina, giao diện trang vẫn không vàng).</li><li>Tạm hai chiêu: tấn công (vành chém + chóp đâm) và phòng thủ (xoay ô). Ô chưa dùng thì Luke không cảm thấy gì.</li></ul>
     </div>
     <h4 class="gh"><span>Cận cảnh</span><b>2</b></h4>
       <section class="kit" data-kind="riina-parasol">
@@ -1097,7 +1098,7 @@ body.sim-reduce .rm-note{display:block}
         <p class="use"><span class="ul">Đang dùng</span><span class="pill">ch16</span></p>
         <div class="dw"><p class="demo" id="demo18">Cô gái ngước mắt lên, chậm như thể việc đó cũng phiền.</p></div>
         <div class="row"><button type="button" class="run" data-kind="riina-eye2" data-demo="demo18" data-ten="0"><i class="pl"></i>Chạy</button><button type="button" class="run alt" data-kind="riina-eye2" data-demo="demo18" data-cast="1" data-ten="0">Kèm vòng kích hoạt</button></div>
-        <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt: mí trên nặng, nhìn lười mà lạnh, mống mắt to, đồng tử dọc như giọt có chấm vàng nhỏ; tóc mái thẳng dày đồ từ sketch, nét trắng sữa.</li><li>Loé: bảy nan mảnh trong mống mắt bật dài ra lần lượt như ô bung, đồng tử co hẹp, sao vàng nhỏ loé ở chấm sáng. Mí chỉ nhướng lên một chút.</li><li>Mí sụp lại hờ hững như chán, dải khép.</li></ol></details>
+        <details class="beats"><summary>Từng nhịp</summary><ol><li>Dải tối cắt ngang trang, zoom vào hai mắt: mí trên nặng, nhìn lười mà lạnh, mống mắt to, đồng tử dọc như giọt có chấm vàng nhỏ; tóc mái thẳng dày đồ từ sketch, nét vàng kem (28/11).</li><li>Loé: bảy nan mảnh trong mống mắt bật dài ra lần lượt như ô bung, đồng tử co hẹp, sao vàng nhỏ loé ở chấm sáng. Mí chỉ nhướng lên một chút.</li><li>Mí sụp lại hờ hững như chán, dải khép.</li></ol></details>
       </section><h4 class="gh"><span>Chiêu</span><b>2</b></h4>
       <section class="kit" data-kind="riina-strike">
         <div class="kh"><h3>Tấn công (bung ô, vành chém, chóp đâm)</h3><span class="tg">Combat</span></div>
@@ -1200,6 +1201,6 @@ body.sim-reduce .rm-note{display:block}
   fill();
 })();
 </script>
-<script src="mat2-toc-lab-e5a5009661.js"></script><script src="fx-82e12f2d35.js"></script>
+<script src="mat2-toc-lab-e5a5009661.js"></script><script src="fx-b6c2785398.js"></script>
 </body>
 </html>
