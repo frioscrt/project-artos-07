@@ -312,23 +312,6 @@ em .nm{font-style:italic}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pov.luke{--pv:#8FD3E0}:root:not([data-theme="light"]) .pov.leon{--pv:#b4bec4}:root:not([data-theme="light"]) .pov.phu{--pv:#c3a8ec}}
 :root[data-theme="dark"] .pov.luke{--pv:#8FD3E0}:root[data-theme="dark"] .pov.leon{--pv:#b4bec4}:root[data-theme="dark"] .pov.phu{--pv:#c3a8ec}
 
-.gate{
-  display:block;max-width:24em;margin:0 auto;padding:1.4em 1.4em 1.5em;text-decoration:none;color:var(--ink);
-  background:var(--veil);border-radius:2px;line-height:1.5;
-}
-.gate .t{font-size:24px;font-weight:300;font-variation-settings:"opsz" 60;display:block;margin-bottom:.25em}
-.gate .s{font-size:15px;color:var(--soft)}
-.gate:hover .t{color:var(--lamp)}
-.gate .w{display:block;margin-top:.8em;padding-top:.75em;border-top:1px solid var(--line);font-size:13.5px;font-style:italic;color:var(--lamp)}
-.spoil{max-width:26em;margin:0 auto 3.4em;padding:1.5em 1.4em 1.4em;border:1px solid color-mix(in srgb,var(--lamp) 55%,transparent);border-radius:14px;text-align:center;
-  background:color-mix(in srgb,var(--lamp) 7%,transparent);box-shadow:0 0 22px -10px var(--lamp);transition:opacity .6s,transform .6s}
-.spoil .k{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--lamp);margin:0 0 .9em}
-.spoil p.m{font-size:16.5px;line-height:1.6;margin:0 0 1.3em;color:var(--ink);text-indent:0}
-.spoil .bt{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.spoil .bt a,.spoil .bt button{font:inherit;font-size:14.5px;padding:.6em 1.15em;border-radius:999px;cursor:pointer;text-decoration:none;line-height:1.2}
-.spoil .bt a{border:1px solid var(--lamp);color:var(--lamp);background:transparent}
-.spoil .bt button{border:1px solid var(--line);color:var(--soft);background:transparent}
-.spoil.off{opacity:0;transform:translateY(-8px)}
 
 
 /* lời thoại: vạch màu theo người nói, câu đắt đóng khung riêng */
@@ -655,7 +638,6 @@ html[data-ui~="b"] .scene .plate canvas{-webkit-mask-image:radial-gradient(ellip
 html[data-ui~="b"] .end{border-top:0;position:relative}
 html[data-ui~="b"] .end::before{content:"";position:absolute;top:0;left:15%;right:15%;border-top:1px solid var(--ice);opacity:.4;box-shadow:0 0 12px var(--ice)}
 html[data-ui~="b"] .end .mark{font-style:normal;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--ice)}
-html[data-ui~="b"] .gate{background:transparent;border:1px solid color-mix(in srgb,var(--ice) 35%,transparent);border-radius:14px}
 /* trang chủ */
 html[data-ui~="b"] .toc-hero{position:relative;text-align:center;padding-top:calc(90px + env(safe-area-inset-top))}
 html[data-ui~="b"] .toc-hero .plate{display:none}
@@ -712,7 +694,6 @@ html[data-ui~="soft"] .toc li{border:0;border-bottom:1px solid var(--line);borde
 html[data-ui~="soft"] .toc li:hover{box-shadow:none}
 html[data-ui~="soft"] .toc a{padding:.85em 0}
 html[data-ui~="soft"] .toc .n{font-size:1em}
-html[data-ui~="soft"] .gate{border-radius:4px}
 /* B + C: chữ và nền của trang sách, vòng tròn và nhuốm màu của đêm Artos, đổi sang màu đồng */
 
 html[data-ui~="c"][data-ui~="b"] .chapno{color:var(--lamp);font-variant:normal;text-transform:uppercase;font-size:13px;letter-spacing:.38em}
@@ -852,7 +833,6 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
     <h1><span class="w" style="animation-delay:0.15s">Chưa</span> <span class="w" style="animation-delay:0.33s">hề</span> <span class="w" style="animation-delay:0.51s">mở</span></h1>
     <p class="hint">Cuộn xuống để đọc</p>
   </div>
-  
   <article>
 <section class="scene" data-sound="trail13">
 <figure class="plate"><canvas class="art" data-art="trail13" role="img" aria-label="Đường mòn khu Mỏ giữa chiều, sợi xích nằm phục dưới đất, mấy mắt cuối khẽ cựa; trên sườn đồi những cặp đốm đỏ lập loè"></canvas></figure>
@@ -1116,11 +1096,6 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
     </nav>
     <a class="notebook" href="sotay.html#ch13">Sổ tay của Luke<small>Luke đoán gì về những người đã gặp, tới hết chương này</small></a>
     <div class="pov-end"><span class="lb">Góc nhìn khác</span><a class="pov luke" href="gocnhin.html#ch13-luke"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="54"/><circle cx="100" cy="128" r="46" stroke-width=".8"/><path d="M134.5 128.0 C120.6 138.8 95.8 143.4 105.6 145.1 C86.4 153.2 73.6 133.2 75.7 145.7 C70.8 131.7 82.5 104.7 74.3 109.3 C93.5 91.4 121.0 102.5 103.7 116.7 C123.9 111.9 120.1 146.3 113.7 128.0"/><path d="M118.5 156.8 C111.7 160.0 91.0 141.3 89.0 160.3 C92.9 140.9 62.3 128.1 86.4 132.9 C93.7 127.4 95.6 114.7 78.7 114.9 C92.7 119.6 107.8 92.2 96.9 103.1 C102.6 100.2 132.3 109.5 108.4 119.5 C111.0 118.8 115.7 135.1 123.8 130.4 C125.0 135.7 101.8 140.4 111.6 146.1"/><path d="M90.7 148.4 C85.5 145.4 78.0 124.7 69.1 139.5 C70.6 125.3 90.3 119.1 74.1 116.2 C84.3 118.9 97.0 95.6 91.0 103.8 C97.3 121.6 116.6 119.3 113.9 97.7 C104.3 116.7 124.2 139.4 113.6 122.9 C108.9 126.2 123.0 157.2 113.0 133.9 C124.2 155.5 89.2 157.4 111.7 159.4 C103.1 134.2 97.5 131.4 92.6 144.1"/><path d="M83.6 130.3 C87.4 126.1 90.7 93.6 78.3 107.6 C95.3 121.0 115.5 112.9 101.4 111.4 C121.8 98.0 104.9 127.6 108.8 122.1 C121.6 116.7 113.4 153.1 132.3 138.3 C122.0 138.3 101.2 133.9 106.2 144.3 C98.9 150.0 95.2 130.4 84.5 154.3 C74.6 141.5 63.9 129.3 86.8 129.9"/><path d="M78.1 102.6 C107.5 97.4 118.5 123.0 117.1 99.8 C117.9 123.7 107.5 138.1 116.5 131.9 C107.3 143.1 90.6 152.7 101.8 149.0 C91.2 145.2 88.9 126.0 72.7 139.5 C77.2 114.0 102.9 92.8 87.8 113.9"/><path d="M104.5 112.9 C106.1 104.7 131.6 124.8 124.0 115.0 C119.1 121.6 109.2 132.3 133.7 138.0 C119.7 138.4 101.5 159.2 113.3 152.4 C102.4 142.7 92.9 150.4 94.3 147.1 C92.8 138.4 73.2 135.3 86.1 135.5 C71.7 146.0 77.2 99.0 79.2 121.9 C95.7 125.2 108.4 97.7 83.7 98.0 C99.0 122.6 107.6 123.2 107.4 102.9"/><path d="M112.8 124.3 C137.8 131.0 101.2 139.0 107.1 138.5 C101.5 140.8 80.9 135.4 91.4 139.1 C69.6 137.5 88.4 113.8 65.8 115.7 C75.6 105.8 108.3 89.9 100.7 106.7 C106.9 123.0 111.6 129.4 113.9 124.0"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span><span class="w">Luke</span><span class="t">Nghe thấy</span></span></a><a class="pov leon" href="gocnhin.html#ch13-leon"><svg viewBox="0 0 200 280" aria-hidden="true"><rect x="1" y="1" width="198" height="278" rx="14" class="bk"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><circle cx="100" cy="128" r="54"/><circle cx="100" cy="128" r="46" stroke-width=".8"/><path d="M134.5 128.0 C120.6 138.8 95.8 143.4 105.6 145.1 C86.4 153.2 73.6 133.2 75.7 145.7 C70.8 131.7 82.5 104.7 74.3 109.3 C93.5 91.4 121.0 102.5 103.7 116.7 C123.9 111.9 120.1 146.3 113.7 128.0"/><path d="M118.5 156.8 C111.7 160.0 91.0 141.3 89.0 160.3 C92.9 140.9 62.3 128.1 86.4 132.9 C93.7 127.4 95.6 114.7 78.7 114.9 C92.7 119.6 107.8 92.2 96.9 103.1 C102.6 100.2 132.3 109.5 108.4 119.5 C111.0 118.8 115.7 135.1 123.8 130.4 C125.0 135.7 101.8 140.4 111.6 146.1"/><path d="M90.7 148.4 C85.5 145.4 78.0 124.7 69.1 139.5 C70.6 125.3 90.3 119.1 74.1 116.2 C84.3 118.9 97.0 95.6 91.0 103.8 C97.3 121.6 116.6 119.3 113.9 97.7 C104.3 116.7 124.2 139.4 113.6 122.9 C108.9 126.2 123.0 157.2 113.0 133.9 C124.2 155.5 89.2 157.4 111.7 159.4 C103.1 134.2 97.5 131.4 92.6 144.1"/><path d="M83.6 130.3 C87.4 126.1 90.7 93.6 78.3 107.6 C95.3 121.0 115.5 112.9 101.4 111.4 C121.8 98.0 104.9 127.6 108.8 122.1 C121.6 116.7 113.4 153.1 132.3 138.3 C122.0 138.3 101.2 133.9 106.2 144.3 C98.9 150.0 95.2 130.4 84.5 154.3 C74.6 141.5 63.9 129.3 86.8 129.9"/><path d="M78.1 102.6 C107.5 97.4 118.5 123.0 117.1 99.8 C117.9 123.7 107.5 138.1 116.5 131.9 C107.3 143.1 90.6 152.7 101.8 149.0 C91.2 145.2 88.9 126.0 72.7 139.5 C77.2 114.0 102.9 92.8 87.8 113.9"/><path d="M104.5 112.9 C106.1 104.7 131.6 124.8 124.0 115.0 C119.1 121.6 109.2 132.3 133.7 138.0 C119.7 138.4 101.5 159.2 113.3 152.4 C102.4 142.7 92.9 150.4 94.3 147.1 C92.8 138.4 73.2 135.3 86.1 135.5 C71.7 146.0 77.2 99.0 79.2 121.9 C95.7 125.2 108.4 97.7 83.7 98.0 C99.0 122.6 107.6 123.2 107.4 102.9"/><path d="M112.8 124.3 C137.8 131.0 101.2 139.0 107.1 138.5 C101.5 140.8 80.9 135.4 91.4 139.1 C69.6 137.5 88.4 113.8 65.8 115.7 C75.6 105.8 108.3 89.9 100.7 106.7 C106.9 123.0 111.6 129.4 113.9 124.0"/></g><text x="100" y="250" text-anchor="middle">PROJECT ARTOS 07</text></svg><span><span class="w">Leon</span><span class="t">Một bước sang ngang</span></span></a></div>
-    <a class="gate" href="https://frioscrt.github.io/crvillage/">
-      <span class="t">Bên Kia Bức Tường</span>
-      <span class="s">Tự mình bước vào ngôi làng, trong bản game của truyện.</span>
-      <span class="w">Nếu định chơi, cậu nên chơi trước khi đọc Chương 14 để giữ trọn bất ngờ.</span>
-    </a>
     <section class="cmt" id="binh-luan" data-ch="13" aria-label="Bình luận">
     <h2>Bình luận<span class="cnt" hidden></span></h2>
     <p class="sub">Cậu nghĩ gì về chương này? Lưu ý: bình luận có thể tiết lộ nội dung chương.</p>
