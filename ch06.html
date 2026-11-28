@@ -925,7 +925,7 @@ setTimeout(function(){document.documentElement.classList.remove('dc-wait')},2500
 <p data-pi="74">Anh ta dừng lại trước mặt <span class="nm nm-person">Luke</span>, hơi ngẩng lên, như để nhìn cho rõ món đồ mình vừa nhặt được.</p>
 <p data-pi="75">Và anh ta khựng lại.</p>
 <p data-pi="76"><span class="nm nm-person">Clevia</span> thấy điều ấy rõ ràng, dù chỉ dưới ánh sao. Cái dáng thả lỏng kia bỗng cứng lại trong một nhịp, như một người đang đi bỗng giẫm hụt một bậc thang. Bàn tay trong túi áo khẽ động. Rồi anh ta đưa một tay lên, kéo mũ trùm xuống, và lần đầu tiên <span class="nm nm-person">Clevia</span> nhìn thấy gương mặt ấy.</p>
-<p data-pi="77">Anh ta đẹp trai, cái đẹp mà ngay cả trong lúc này, bị xích quấn ngang người, tim còn đập loạn vì sợ, cô vẫn không thể không nhận ra. Những đường nét gọn gàng, sắc sảo, mái tóc đen hơi rối vì vừa bị mũ trùm đè xuống, đôi mắt dài và tối, có cái vẻ lạnh lẽo của người chẳng mấy khi để ai đọc được mình đang nghĩ gì. Ngay dưới cằm có một vết sẹo nhỏ, mảnh như một sợi chỉ trắng, chỉ hiện ra khi anh ta hơi ngẩng mặt lên. Và gương mặt ấy, lúc này, đang nhìn <span class="nm nm-person">Luke</span> với một vẻ mà <span class="nm nm-person">Clevia</span> đoán là hiếm khi xuất hiện trên đó. Anh ta đang ngạc nhiên, thật sự ngạc nhiên.</p>
+<p data-pi="77">Anh ta đẹp trai, cái đẹp mà ngay cả trong lúc này, bị xích quấn ngang người, tim còn đập loạn vì sợ, cô vẫn không thể không nhận ra. Những đường nét gọn gàng, sắc sảo, mái tóc đen hơi rối vì vừa bị mũ trùm đè xuống, đôi mắt dài và tối, có cái vẻ lạnh lẽo của người chẳng mấy khi để ai đọc được mình đang nghĩ gì. Và gương mặt ấy, lúc này, đang nhìn <span class="nm nm-person">Luke</span> với một vẻ mà <span class="nm nm-person">Clevia</span> đoán là hiếm khi xuất hiện trên đó. Anh ta đang ngạc nhiên, thật sự ngạc nhiên.</p>
 <p data-pi="78" class="say say-x"><span class="q">“<span class="nm nm-person">Luke</span>?”</span></p>
 <p data-pi="79"><span class="nm nm-person">Luke</span> nhìn lại anh ta. <span class="nm nm-person">Clevia</span> không thấy được mặt <span class="nm nm-person">Luke</span>, chỉ thấy gáy anh, thấy quai hàm anh khẽ siết lại.</p>
 <p data-pi="80" class="say say-x"><span class="q">“<span class="nm nm-person first">Leon</span>.”</span></p>
@@ -1523,6 +1523,9 @@ els.forEach(function(el){io.observe(el)});})();
 .pc.flipped .pc-in{transform:rotateY(180deg)}
 .pc-f{position:absolute;inset:0;border-radius:14px;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .pc-f img{display:block;width:100%;height:100%;object-fit:cover}
+.pc-nhoe .pc-f img{filter:blur(var(--nb,.5px))}
+.pc-nhoe .pc-f img.pc-mo{position:absolute;inset:0;pointer-events:none;opacity:var(--no,.4);filter:blur(var(--nb2,1.5px));transform:translate(var(--nx,3px),var(--ny,-2px)) rotate(var(--nr,.4deg)) scale(var(--ns,1.01));mix-blend-mode:screen}
+.pc-nhoe .pc-back img.pc-mo{mix-blend-mode:multiply}
 .pc-front{background:#0D1214;border:1px solid color-mix(in srgb,var(--pc) 55%,transparent);
   box-shadow:0 0 0 1px rgba(0,0,0,.6),0 0 28px -4px color-mix(in srgb,var(--pc) 45%,transparent),0 22px 44px -22px rgba(0,0,0,.9);animation:pcglow 4.5s ease-in-out infinite}
 .pc-gl{position:absolute;inset:0;pointer-events:none;border-radius:14px;box-shadow:inset 0 0 0 5px #0D1214,inset 0 0 0 6px color-mix(in srgb,var(--pc) 30%,transparent);
@@ -1535,10 +1538,16 @@ els.forEach(function(el){io.observe(el)});})();
 .pc.flipped .pc-name{opacity:1;letter-spacing:.06em;filter:none;transition-delay:.75s}
 .pc-hint{font-size:13px;letter-spacing:.14em;color:var(--soft);font-style:italic;transition:opacity .5s}
 .pc-wrap.seen .pc-hint{opacity:0}
+.pc-wrap.bb-ch{width:100%;max-width:40rem;transition:opacity 2.8s ease,transform 2.8s cubic-bezier(.2,.7,.2,1)}
+.bb-ch img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.05),0 24px 48px -24px rgba(0,0,0,.9)}
 @media (prefers-reduced-motion: reduce){.pc-wrap{transition:opacity .4s;transform:none}.pc-front{animation:none}
   .pc-in{transition:none;transform:none!important}.pc-back{transform:none;opacity:0;transition:opacity .5s}.pc.flipped .pc-back{opacity:1}.pc.flipped .pc-front{opacity:0}.pc-name{transition:opacity .6s .3s;letter-spacing:.06em;filter:none}}
 </style>
 <script>(function(){
+  /* nét nhoè (Renie): mỗi lần mở trang lệch, nhoè một kiểu khác */
+  [].forEach.call(document.querySelectorAll('.pc-nhoe'),function(b){function r(a,c){return (a+Math.random()*(c-a)).toFixed(2)}var sx=Math.random()<.5?-1:1,sy=Math.random()<.5?-1:1;
+    b.style.setProperty('--nb',r(.2,.9)+'px');b.style.setProperty('--nb2',r(.8,2.6)+'px');b.style.setProperty('--no',r(.28,.6));
+    b.style.setProperty('--nx',(sx*r(2,7))+'px');b.style.setProperty('--ny',(sy*r(1,5))+'px');b.style.setProperty('--nr',(sx*r(.1,.9))+'deg');b.style.setProperty('--ns',r(1,1.025))});
   function flip(b){var on=!b.classList.contains('flipped');b.classList.toggle('flipped',on);b.setAttribute('aria-pressed',on);
     var w=b.closest('[data-pc]');if(w)w.classList.add('seen');if(window.a07sfx)try{a07sfx('flip')}catch(e){}
     try{b.dispatchEvent(new CustomEvent('pc-flip',{bubbles:true,detail:on}))}catch(e){}}

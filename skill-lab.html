@@ -811,6 +811,19 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .aka-cap{position:relative;margin:-.8em 16px 0}
 .aka-cap .hint{margin:.2em 0 0;font-size:.72em;letter-spacing:.06em;color:var(--soft)}
 .aka-cap .hint b{color:var(--aka-red);font-weight:600}
+/* card Aka (Clair 28/11: bỏ khỏi Hồ sơ vì Aka không có trong truyện, đặt ở Lab để ngắm): chạm để lật hai mặt, như kệ card Hồ sơ */
+.akc{margin:2.4em auto 1em;display:flex;flex-direction:column;align-items:center;gap:12px}
+.akc-sep{display:flex;align-items:center;gap:12px;width:100%;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--aka-red)}
+.akc-sep::before,.akc-sep::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--aka-red) 45%,transparent),transparent)}
+.akc-b{all:unset;box-sizing:border-box;display:block;width:min(56vw,230px);aspect-ratio:5/7;perspective:1100px;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:7%/5%}
+.akc-b:focus-visible{outline:2px solid var(--aka-red);outline-offset:4px}
+.akc-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.3,.7,.2,1)}
+.akc-b.flipped .akc-in{transform:rotateY(180deg)}
+.akc-f{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.akc-f img{display:block;width:100%;height:100%;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--aka-red) 35%,transparent)) drop-shadow(0 10px 12px rgba(0,0,0,.6))}
+.akc-ls{transform:rotateY(180deg)}
+.akc-h{margin:0;font-size:.72em;letter-spacing:.06em;color:var(--soft)}
+@media (prefers-reduced-motion: reduce){.akc-in{transition:none;transform:none!important}.akc-ls{transform:none;opacity:0;transition:opacity .4s}.akc-b.flipped .akc-ls{opacity:1}.akc-b.flipped .akc-tr{opacity:0}}
 .lab-ok body{background-color:var(--lab-bg);background-image:radial-gradient(120% 60% at 50% -10%,var(--lab-glow),transparent 70%),linear-gradient(var(--lab-grid) 1px,transparent 1px),linear-gradient(90deg,var(--lab-grid) 1px,transparent 1px);background-size:100% 100%,28px 28px,28px 28px;background-attachment:fixed}
 .lab-ok .bar{background:color-mix(in srgb,var(--lab-bg) 88%,transparent)}
 .lab{--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;max-width:42rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(170px + env(safe-area-inset-bottom))}
@@ -1151,6 +1164,11 @@ body.sim-reduce .rm-note{display:block}
     </div>
     <div class="grid old" data-who=""></div>
   </div>
+  <section class="akc" aria-label="Card Aka">
+    <p class="akc-sep">Card thưởng · Tác giả</p>
+    <button type="button" class="akc-b" id="akc" aria-pressed="false" aria-label="Lật card Aka"><span class="akc-in"><span class="akc-f akc-tr"><img src="the-bai/aka-truoc.webp" alt="Card Aka" width="600" height="840" loading="lazy" decoding="async"></span><span class="akc-f akc-ls"><img src="the-bai/aka-lung.webp" alt="Mặt lưng card Aka" width="600" height="840" loading="lazy" decoding="async"></span></span></button>
+    <p class="akc-h">Chạm card để lật.</p>
+  </section>
   <p class="later">Nhân vật chính mới sau này có ngăn riêng như trên, với một cận cảnh theo cách năng lực của người đó vận hành.</p>
 </main>
 <div class="panel" role="group" aria-label="Chỉnh hiệu ứng">
@@ -1214,6 +1232,7 @@ body.sim-reduce .rm-note{display:block}
     panes.forEach(function(p){p.hidden=p.dataset.pane!==id});store('a07-lab-tab',id);cur_=id;wake(id);
     var cur=tabs.filter(function(t){return t.dataset.tab===id})[0];if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest',inline:'nearest'});
     if(scroll){var nav=document.querySelector('.tabs');if(nav.getBoundingClientRect().top<=nav.offsetTop)scrollTo(0,0)}}
+  (function(){var c=document.getElementById('akc');if(!c)return;c.onclick=function(){var on=!c.classList.contains('flipped');c.classList.toggle('flipped',on);c.setAttribute('aria-pressed',on);if(window.a07sfx)try{window.a07sfx('flip')}catch(e){}}})();
   tabs.forEach(function(t){t.onclick=function(){show(t.dataset.tab,true);if(window.a07sfx)window.a07sfx('flip')}});
   var first=(location.hash||'').slice(1);if(!first){try{first=localStorage.getItem('a07-lab-tab')}catch(e){}}
   show(first||tabs[0].dataset.tab);
