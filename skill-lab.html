@@ -803,9 +803,33 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .lab-gate a.go{display:inline-flex;align-items:center;min-height:44px;padding:0 1.3em;border-radius:12px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:.88em}
 /* Hướng A "Bảng điều khiển Artos" (Clair chọn 27/11): nền xanh đêm hệ thống, lưới mảnh, thẻ viền sáng màu nhân vật + bốn góc ngắm.
    Màu giao diện: chỉ đỏ, xanh nước biển Artos, đen/trắng. Màu riêng nhân vật (thẻ, băng tên, viền) theo nhân vật, không bị cấm màu (Clair 28/11). */
-.lab-ok{--lab-bg:#EAF0F6;--lab-card:rgba(255,255,255,.72);--lab-grid:rgba(31,79,140,.07);--lab-sys:#1F5C99;--lab-red:#C0344D;--lab-glow:rgba(31,92,153,.10)}
-.lab-ok[data-theme="dark"]{--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}
-@media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]){--lab-bg:#050A13;--lab-card:rgba(10,20,36,.78);--lab-grid:rgba(79,143,214,.065);--lab-sys:#5E9BDB;--lab-red:#E2566C;--lab-glow:rgba(44,104,180,.22)}}
+/* 28/11 (Clair chốt): cả trang nhuốm chút màu mascot Aka (đỏ, đen, trắng) thay cho xanh đêm hệ thống. Màu riêng nhân vật trong ngăn giữ nguyên. */
+.lab-ok{--lab-bg:#F6F2F2;--lab-card:rgba(255,255,255,.78);--lab-grid:rgba(140,24,44,.055);--lab-sys:#9E2438;--lab-red:#D3263F;--lab-glow:rgba(200,30,55,.10);--aka-red:#D3263F}
+.lab-ok[data-theme="dark"]{--lab-bg:#080506;--lab-card:rgba(22,10,13,.8);--lab-grid:rgba(235,80,100,.055);--lab-sys:#E8667A;--lab-red:#FF3B52;--lab-glow:rgba(190,25,50,.24);--aka-red:#FF3B52}
+@media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]){--lab-bg:#080506;--lab-card:rgba(22,10,13,.8);--lab-grid:rgba(235,80,100,.055);--lab-sys:#E8667A;--lab-red:#FF3B52;--lab-glow:rgba(190,25,50,.24);--aka-red:#FF3B52}}
+/* ảnh bìa Aka: viền ảnh tan vào nền trang, nốt nhạc nhỏ bay lên chậm quanh; chạm vào thì cận cảnh hai mắt (mat2.js aka-eye2) + nốt nhạc bung */
+.aka{position:relative;margin:0 -16px .4em}
+.aka-pic{display:block;position:relative;width:100%;max-width:40rem;margin:0 auto;padding:0;border:0;background:none;cursor:pointer;aspect-ratio:1150/610;-webkit-tap-highlight-color:transparent;
+ -webkit-mask-image:radial-gradient(ellipse 58% 54% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 58% 54% at 50% 50%,#000 60%,transparent 100%)}
+/* 28/11 (Clair): bìa là sketch nửa mặt của hiệu ứng mắt (cận hai mắt), cho trông giống dải cận cảnh lúc chạm cho cùng kiểu cận cảnh mắt; nền trong suốt, nền tối nét sáng, nền sáng nét mực; mống mắt đỏ */
+.aka-pic .t-sang{display:none}
+.lab-ok:not([data-theme="dark"]) .aka-pic .t-toi{display:none}.lab-ok:not([data-theme="dark"]) .aka-pic .t-sang{display:block}
+@media (prefers-color-scheme: dark){.lab-ok:not([data-theme="light"]) .aka-pic .t-toi{display:block}.lab-ok:not([data-theme="light"]) .aka-pic .t-sang{display:none}}
+.lab-ok[data-theme="dark"] .aka-pic .t-toi{filter:drop-shadow(0 0 5px rgba(255,59,82,.28))}
+.aka-pic img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .5s}
+.aka-pic:active img,.aka-pic.on img{transform:scale(1.03)}
+.aka-pic:focus-visible{outline:2px solid var(--aka-red);outline-offset:-6px}
+.aka-notes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.aka-n{position:absolute;width:var(--s,14px);height:var(--s,14px);color:var(--aka-red);opacity:0;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--aka-red) 60%,transparent));animation:akafloat var(--d,6s) ease-in-out forwards}
+.aka-n svg,.aka-b svg{display:block;width:100%;height:100%;fill:currentColor}
+@keyframes akafloat{0%{opacity:0;transform:translate(0,0) rotate(var(--r0,-8deg))}15%{opacity:.85}50%{transform:translate(var(--x,10px),-70px) rotate(var(--r1,8deg))}85%{opacity:.7}100%{opacity:0;transform:translate(calc(var(--x,10px) * -.4),-140px) rotate(var(--r0,-8deg))}}
+.aka-burst{position:fixed;left:0;top:0;width:0;height:0;z-index:6;pointer-events:none}
+.aka-b{position:absolute;left:0;top:0;width:var(--s,18px);height:var(--s,18px);margin:calc(var(--s,18px) / -2) 0 0 calc(var(--s,18px) / -2);color:var(--aka-red);filter:drop-shadow(0 0 6px var(--aka-red));animation:akaburst var(--d,1.3s) cubic-bezier(.15,.7,.3,1) forwards}
+.aka-b.w{color:#FFF3F4}
+@keyframes akaburst{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}12%{opacity:1}70%{opacity:.9}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1) rotate(var(--r,30deg))}}
+.aka-cap{position:relative;margin:-.8em 16px 0}
+.aka-cap .hint{margin:.2em 0 0;font-size:.72em;letter-spacing:.06em;color:var(--soft)}
+.aka-cap .hint b{color:var(--aka-red);font-weight:600}
 .lab-ok body{background-color:var(--lab-bg);background-image:radial-gradient(120% 60% at 50% -10%,var(--lab-glow),transparent 70%),linear-gradient(var(--lab-grid) 1px,transparent 1px),linear-gradient(90deg,var(--lab-grid) 1px,transparent 1px);background-size:100% 100%,28px 28px,28px 28px;background-attachment:fixed}
 .lab-ok .bar{background:color-mix(in srgb,var(--lab-bg) 88%,transparent)}
 .lab{--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;max-width:42rem;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 16px calc(170px + env(safe-area-inset-bottom))}
@@ -896,7 +920,7 @@ html[data-ui~="c"][data-ui~="b"] .chapno .lb{color:inherit}
 .panel .tg2 input{width:20px;height:20px;accent-color:var(--lab-sys)}
 .rm-note{display:none;grid-column:1/-1;color:var(--soft)}
 body.sim-reduce .rm-note{display:block}
-@media (prefers-reduced-motion: reduce){.lab .sys i,.scr .scan,.m2idle *{animation:none!important}}
+@media (prefers-reduced-motion: reduce){.lab .sys i,.scr .scan,.m2idle *{animation:none!important}.aka-notes,.aka-burst{display:none}}
 </style>
 </head>
 <body data-lab="1">
@@ -914,9 +938,15 @@ body.sim-reduce .rm-note{display:block}
   <a class="go" href="index.html">Về đọc truyện</a>
 </div>
 <main class="lab labwrap">
-  <p class="sys"><i></i>Artos · Hệ thống · Tác giả</p>
-  <h1>Skill Lab</h1>
-  <p class="lead">Chiêu của từng nhân vật. Bật Tiếng ở góc trên để nghe.</p>
+  <section class="aka" aria-label="Aka, mascot của tác giả">
+    <button type="button" class="aka-pic" id="aka" aria-label="Chạm vào Aka"><img class="t-toi" src="aka/aka-bia-toi.webp" alt="Aka, mascot của tác giả, vẽ nét cận hai mắt: tóc mái, mắt đỏ, nốt ruồi dưới mắt trái" width="1150" height="610" decoding="async"><img class="t-sang" src="aka/aka-bia-sang.webp" alt="Aka, mascot của tác giả, vẽ nét cận hai mắt: tóc mái, mắt đỏ, nốt ruồi dưới mắt trái" width="1150" height="610" decoding="async"></button>
+    <div class="aka-notes" aria-hidden="true"></div>
+    <div class="aka-cap">
+      <p class="sys"><i></i>Artos · Hệ thống · Tác giả</p>
+      <h1>Skill Lab</h1>
+      <p class="lead">Chiêu của từng nhân vật. Bật Tiếng ở góc trên để nghe.</p>
+    </div>
+  </section>
   <nav class="tabs" role="tablist" aria-label="Nhân vật"><button type="button" class="tab" role="tab" data-tab="luke" style="--c:var(--pw-luke)"><span class="tn">Luke</span><span class="ta">Anomaly Sense · Protect</span><span class="n">4 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="leon" style="--c:var(--pw-leon)"><span class="tn">Leon</span><span class="ta">Xích</span><span class="n">8 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="clevia" style="--c:var(--pw-clevia)"><span class="tn">Clevia</span><span class="ta">Unlock</span><span class="n">5 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="riina" style="--c:var(--pw-riina)"><span class="tn">Riina</span><span class="ta">Parasol (Vũ trang, S+)</span><span class="n">6 hiệu ứng</span></button><button type="button" class="tab" role="tab" data-tab="chung" style="--c:var(--lab-sys)"><span class="tn">Chung</span><span class="ta">Không khí</span><span class="n"><b id="nchung"></b> hiệu ứng</span></button><span class="tab soon" title="Nhân vật chính mới sẽ có ngăn riêng">+ Nhân vật sau</span></nav>
 
   <div class="pane" role="tabpanel" data-pane="luke" style="--c:var(--pw-luke)" hidden>
@@ -1159,6 +1189,39 @@ body.sim-reduce .rm-note{display:block}
   var tb=document.getElementById('theme');function label(){tb.textContent=isDark()?'Sáng':'Tối'}label();
   tb.onclick=function(){var t=isDark()?'light':'dark';root.setAttribute('data-theme',t);store('a07-theme',t);label();dispatchEvent(new Event('a07-theme'))};
   if(!root.classList.contains('lab-ok'))return;
+  // Aka (mascot tác giả, 28/11): nốt nhạc nhỏ bay lên chậm quanh tranh; chạm vào thì cận cảnh hai mắt (mắt sáng đỏ, gợn sóng) + nốt nhạc bung một đợt
+  (function(){
+    var pic=document.getElementById('aka'),box=document.querySelector('.aka-notes');if(!pic||!box)return;
+    var calm0=matchMedia('(prefers-reduced-motion: reduce)').matches,N=['M10 3h2v12.6a3.4 2.9 0 1 1-2-2.6z M12 3c3.2 1 5.2 3.2 5 6.4-1.1-1.7-3-2.7-5-2.8z','M8 5.2L19 3v12.4a3 2.6 0 1 1-2-2.4V7.3l-7 1.4v8.8a3 2.6 0 1 1-2-2.4z'];
+    function note(cls,i){var e=document.createElement('i');e.className=cls;e.innerHTML='<svg viewBox="0 0 24 24"><path d="'+N[i%2]+'"/></svg>';return e}
+    var k=0;
+    function drift(){
+      if(document.hidden||box.childElementCount>7)return;
+      var e=note('aka-n',k++),side=k%2?1:-1,x=50+side*(22+Math.random()*22);
+      e.style.left=x+'%';e.style.top=(48+Math.random()*30)+'%';e.style.setProperty('--s',(11+Math.random()*8).toFixed(0)+'px');
+      e.style.setProperty('--x',(side*(6+Math.random()*16)).toFixed(0)+'px');e.style.setProperty('--d',(5+Math.random()*3).toFixed(1)+'s');
+      e.style.setProperty('--r0',(-14+Math.random()*10).toFixed(0)+'deg');e.style.setProperty('--r1',(4+Math.random()*12).toFixed(0)+'deg');
+      e.addEventListener('animationend',function(){e.remove()});box.appendChild(e);
+    }
+    if(!calm0){drift();setTimeout(drift,700);setInterval(drift,1300)}
+    var busy=0;
+    function burst(){
+      if(document.body.classList.contains('sim-reduce'))return;
+      var L=document.createElement('div');L.className='aka-burst';L.setAttribute('aria-hidden','true');
+      L.style.transform='translate('+(innerWidth/2)+'px,'+(innerHeight*0.38)+'px)';
+      for(var j=0;j<16;j++){var a=j/16*6.283+Math.random()*0.3,r=Math.min(innerWidth,innerHeight)*(0.32+Math.random()*0.3),e=note('aka-b'+(j%5===0?' w':''),j);
+        e.style.setProperty('--x',(Math.cos(a)*r*1.3).toFixed(0)+'px');e.style.setProperty('--y',(Math.sin(a)*r*0.8-30).toFixed(0)+'px');
+        e.style.setProperty('--s',(14+Math.random()*12).toFixed(0)+'px');e.style.setProperty('--d',(1.1+Math.random()*0.6).toFixed(2)+'s');
+        e.style.setProperty('--r',(Math.random()*80-40).toFixed(0)+'deg');e.style.animationDelay=(Math.random()*0.12).toFixed(2)+'s';L.appendChild(e)}
+      document.body.appendChild(L);setTimeout(function(){L.remove()},2200);
+    }
+    pic.addEventListener('click',function(){
+      if(busy||!window.a07fx)return;busy=1;pic.classList.add('on');
+      var ln=+(document.getElementById('len')||{}).value||1,pw=+(document.getElementById('pow')||{}).value||1;
+      if(!calm0&&!document.body.classList.contains('sim-reduce')){window.a07fx('aka-eye2',{pow:pw,len:ln,ten:false});setTimeout(burst,950*ln)}
+      setTimeout(function(){busy=0;pic.classList.remove('on')},2900*ln);
+    });
+  })();
   // ngăn nhân vật: nhớ ngăn đang mở; #leon, #luke… mở thẳng ngăn đó
   // dải hai mắt đầu ngăn: dựng lúc ngăn mở lần đầu, chớp mắt thỉnh thoảng (chỉ ngăn đang mở)
   var eyes={},cur_='',calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1201,6 +1264,6 @@ body.sim-reduce .rm-note{display:block}
   fill();
 })();
 </script>
-<script src="mat2-toc-lab-e5a5009661.js"></script><script src="fx-b6c2785398.js"></script>
+<script src="mat2-toc-lab-4de20d06aa.js"></script><script src="fx-91a9b3d703.js"></script>
 </body>
 </html>
