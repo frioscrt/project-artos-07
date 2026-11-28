@@ -1081,9 +1081,9 @@ var D={"max":16,"canon":[{"i":0,"id":"clevia","name":"Clevia","alias":"","nu":0,
   function kc(id,nm,mo,an){
     if(!mo)return '<div class="ke-s"><div class="kc up" role="img" aria-label="Card úp, chưa mở"><span class="kc-in"><span class="kc-f"><img src="the-bai/up-lung.webp" alt="" width="600" height="840" loading="lazy" decoding="async"></span></span></div><p class="ke-n">Chưa mở</p></div>';
     return '<div class="ke-s"><button type="button" class="kc" style="--kc:'+KM[id][0]+'" aria-pressed="false" aria-label="Lật card '+e(nm)+'"><span class="kc-in"><span class="kc-f kc-tr"><img src="the-bai/'+id+'-truoc'+(an||'')+'.webp" alt="Card '+e(nm)+'" width="600" height="840" loading="lazy" decoding="async"></span><span class="kc-f kc-ls"><img src="the-bai/'+id+'-lung.webp" alt="Mặt lưng card '+e(nm)+'" width="600" height="840" loading="lazy" decoding="async"></span></span></button><p class="ke-n"></p></div>'}
-  document.getElementById('kerow').innerHTML=D.canon.map(function(c){return kc(c.id,c.name,c.from<=dn,c.nl&&c.nl<=dn?'':c.he&&c.he<=dn?'-he':'-an')}).join('')+
+  document.getElementById('kerow').innerHTML=D.canon.map(function(c){return kc(c.id,c.name,c.from<=dn,c.nl&&c.nl<=dn?(c.he&&c.he<=dn?'-nlhe':''):c.he&&c.he<=dn?'-he':'-an')}).join('')+
     D.them.map(function(c){if(!(c.mo&&c.mo<=dn))return '<div class="ke-s"><div class="kc-trong" role="img" aria-label="Một chỗ trống"></div><p class="ke-n"></p></div>';
-      var h=kc(c.id,c.ten,true,c.nl&&c.nl<=dn?'':c.he&&c.he<=dn?'-he':'-an');return c.phai&&c.phai<=dn?h.replace('class="kc"','class="kc phai"'):h}).join('');
+      var h=kc(c.id,c.ten,true,c.nl&&c.nl<=dn?(c.he&&c.he<=dn?'-nlhe':''):c.he&&c.he<=dn?'-he':'-an');return c.phai&&c.phai<=dn?h.replace('class="kc"','class="kc phai"'):h}).join('');
   document.getElementById('ke').addEventListener('click',function(ev){var b=ev.target.closest('button.kc');if(!b)return;var on=!b.classList.contains('flipped');
     b.classList.toggle('flipped',on);b.setAttribute('aria-pressed',on);if(window.a07sfx)try{a07sfx('flip')}catch(x){}});
 
